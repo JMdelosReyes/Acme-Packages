@@ -19,7 +19,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public class ProfesionalRecord extends DomainEntity {
+public class ProfessionalRecord extends DomainEntity {
 
 	private String				companyName;
 	private Date				startTime;
