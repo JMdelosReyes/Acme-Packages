@@ -3,6 +3,16 @@ package domain;
 
 import java.util.Collection;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
+@Entity
+@Access(AccessType.PROPERTY)
 public class Customer extends Actor implements Cloneable {
 
 	private Collection<Request>		requests;
@@ -10,7 +20,8 @@ public class Customer extends Actor implements Cloneable {
 	private Finder					finder;
 
 
-	//TENGO QUE PONER LAS ANOTACIONES TODAVIA
+	@NotNull
+	@OneToMany
 	public Collection<Request> getRequests() {
 		return this.requests;
 	}
@@ -19,6 +30,8 @@ public class Customer extends Actor implements Cloneable {
 		this.requests = requests;
 	}
 
+	@NotNull
+	@OneToMany(mappedBy = "customer")
 	public Collection<Evaluation> getEvaluations() {
 		return this.evaluations;
 	}
@@ -26,7 +39,9 @@ public class Customer extends Actor implements Cloneable {
 	public void setEvaluations(Collection<Evaluation> evaluations) {
 		this.evaluations = evaluations;
 	}
-
+	@Valid
+	@NotNull
+	@OneToOne(optional = false)
 	public Finder getFinder() {
 		return this.finder;
 	}

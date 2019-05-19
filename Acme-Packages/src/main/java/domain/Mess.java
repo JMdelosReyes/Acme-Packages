@@ -33,7 +33,6 @@ public class Mess extends DomainEntity {
 	private Collection<String>	tags;
 	private Actor				sender;
 	private Collection<Actor>	recipients;
-	private double				score;
 
 
 	@Past
