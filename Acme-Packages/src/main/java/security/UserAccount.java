@@ -51,6 +51,7 @@ public class UserAccount extends DomainEntity implements UserDetails {
 	private String					username;
 	private String					password;
 	private Collection<Authority>	authorities;
+	private boolean					ban;
 
 
 	@Size(min = 5, max = 32)
@@ -119,10 +120,24 @@ public class UserAccount extends DomainEntity implements UserDetails {
 		return true;
 	}
 
-	@Transient
 	@Override
+	@Transient
 	public boolean isEnabled() {
-		return true;
+		boolean result;
+		if (this.isBan() == false) {
+			result = true;
+		} else {
+			result = false;
+		}
+		return result;
+	}
+
+	public boolean isBan() {
+		return this.ban;
+	}
+
+	public void setBan(final boolean ban) {
+		this.ban = ban;
 	}
 
 }

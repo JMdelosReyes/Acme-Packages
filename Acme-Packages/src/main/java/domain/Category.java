@@ -27,6 +27,7 @@ public class Category extends DomainEntity {
 	public void setEnglishName(final String englishName) {
 		this.englishName = englishName;
 	}
+
 	@NotBlank
 	@SafeHtml
 	public String getSpanishName() {
@@ -36,6 +37,7 @@ public class Category extends DomainEntity {
 	public void setSpanishName(final String spanishName) {
 		this.spanishName = spanishName;
 	}
+
 	@NotBlank
 	@SafeHtml
 	public String getEnglishDescription() {
@@ -45,6 +47,7 @@ public class Category extends DomainEntity {
 	public void setEnglishDescription(final String englishDescription) {
 		this.englishDescription = englishDescription;
 	}
+
 	@NotBlank
 	@SafeHtml
 	public String getSpanishDescription() {

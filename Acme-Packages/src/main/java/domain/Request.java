@@ -61,6 +61,7 @@ public class Request extends DomainEntity implements Cloneable {
 	public void setTicker(String ticker) {
 		this.ticker = ticker;
 	}
+
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
@@ -72,6 +73,7 @@ public class Request extends DomainEntity implements Cloneable {
 	public void setMoment(Date moment) {
 		this.moment = moment;
 	}
+
 	@NotBlank
 	@SafeHtml
 	public String getDescription() {

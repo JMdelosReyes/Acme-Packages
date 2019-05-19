@@ -39,14 +39,16 @@ public class Authority implements GrantedAuthority {
 
 	public static final String	ADMIN		= "ADMIN";
 	public static final String	CUSTOMER	= "CUSTOMER";
-
+	public static final String	CARRIER		= "CARRIER";
+	public static final String	AUDITOR		= "AUDITOR";
+	public static final String	SPONSOR		= "SPONSOR";
 	// Attributes -------------------------------------------------------------
 
 	private String				authority;
 
 
 	@NotBlank
-	@Pattern(regexp = "^" + Authority.ADMIN + "|" + Authority.CUSTOMER + "$")
+	@Pattern(regexp = "^" + Authority.ADMIN + "|" + Authority.CUSTOMER + "|" + Authority.SPONSOR + "|" + Authority.CARRIER + "|" + Authority.AUDITOR + "$")
 	@Override
 	public String getAuthority() {
 		return this.authority;
@@ -70,6 +72,17 @@ public class Authority implements GrantedAuthority {
 		authority.setAuthority(Authority.CUSTOMER);
 		result.add(authority);
 
+		authority = new Authority();
+		authority.setAuthority(Authority.CARRIER);
+		result.add(authority);
+
+		authority = new Authority();
+		authority.setAuthority(Authority.SPONSOR);
+		result.add(authority);
+
+		authority = new Authority();
+		authority.setAuthority(Authority.AUDITOR);
+		result.add(authority);
 		return result;
 	}
 
@@ -84,14 +97,15 @@ public class Authority implements GrantedAuthority {
 	public boolean equals(final Object other) {
 		boolean result;
 
-		if (this == other)
+		if (this == other) {
 			result = true;
-		else if (other == null)
+		} else if (other == null) {
 			result = false;
-		else if (!this.getClass().isInstance(other))
+		} else if (!this.getClass().isInstance(other)) {
 			result = false;
-		else
+		} else {
 			result = (this.getAuthority().equals(((Authority) other).getAuthority()));
+		}
 
 		return result;
 	}
