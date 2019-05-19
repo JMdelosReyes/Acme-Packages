@@ -12,13 +12,22 @@ import org.hibernate.validator.constraints.SafeHtml;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public class Address extends DomainEntity {
+public class Address extends DomainEntity implements Cloneable {
 
 	private String	streetAddress;
 	private String	comment;
 	private Town	town;
 
 
+	@Override
+	public Object clone() {
+		Object o = null;
+		try {
+			o = super.clone();
+		} catch (final CloneNotSupportedException e) {
+		}
+		return o;
+	}
 	@NotBlank
 	@SafeHtml
 	public String getStreetAddress() {

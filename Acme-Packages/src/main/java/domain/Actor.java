@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.URL;
 
@@ -122,6 +123,7 @@ public class Actor extends DomainEntity {
 
 	@NotNull
 	@OneToMany(cascade = CascadeType.ALL)
+	@NotEmpty
 	public Collection<MessBox> getMessageBoxes() {
 		return this.messageBoxes;
 	}

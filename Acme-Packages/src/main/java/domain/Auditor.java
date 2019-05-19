@@ -11,11 +11,21 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public class Auditor extends Actor {
+public class Auditor extends Actor implements Cloneable {
 
 	private Collection<Issue>			issues;
 	private Collection<Solicitation>	solicitations;
 
+
+	@Override
+	public Object clone() {
+		Object o = null;
+		try {
+			o = super.clone();
+		} catch (final CloneNotSupportedException e) {
+		}
+		return o;
+	}
 
 	@NotNull
 	@OneToMany

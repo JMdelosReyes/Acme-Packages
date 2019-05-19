@@ -15,6 +15,7 @@ import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
+import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -51,6 +52,7 @@ public class Evaluation extends DomainEntity {
 		this.mark = mark;
 	}
 
+	@SafeHtml
 	@NotBlank
 	public String getComment() {
 		return this.comment;

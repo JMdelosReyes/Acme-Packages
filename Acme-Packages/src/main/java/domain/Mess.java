@@ -58,7 +58,6 @@ public class Mess extends DomainEntity {
 	}
 
 	@NotBlank
-	@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
 	public String getBody() {
 		return this.body;
 	}
@@ -68,6 +67,7 @@ public class Mess extends DomainEntity {
 	}
 
 	@NotBlank
+	@SafeHtml
 	public String getPriority() {
 		return this.priority;
 	}

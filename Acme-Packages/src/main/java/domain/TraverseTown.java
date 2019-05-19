@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -18,7 +19,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class TraverseTown extends DomainEntity implements Cloneable {
 
 	private int		order;
-	private Date	stimatedDate;
+	private Date	estimatedDate;
 	private boolean	currentTown;
 	private Town	town;
 
@@ -44,12 +45,12 @@ public class TraverseTown extends DomainEntity implements Cloneable {
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
-	public Date getStimatedDate() {
-		return this.stimatedDate;
+	public Date getEstimatedDate() {
+		return this.estimatedDate;
 	}
 
-	public void setStimatedDate(final Date stimatedDate) {
-		this.stimatedDate = stimatedDate;
+	public void setEstimatedDate(Date estimatedDate) {
+		this.estimatedDate = estimatedDate;
 	}
 
 	public boolean isCurrentTown() {
@@ -60,8 +61,9 @@ public class TraverseTown extends DomainEntity implements Cloneable {
 		this.currentTown = currentTown;
 	}
 
+	@Valid
 	@NotNull
-	@ManyToOne
+	@ManyToOne(optional = false)
 	public Town getTown() {
 		return this.town;
 	}

@@ -6,6 +6,7 @@ import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -37,6 +38,7 @@ public class ProfessionalRecord extends DomainEntity {
 	public void setCompanyName(final String companyName) {
 		this.companyName = companyName;
 	}
+
 	@Past
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
@@ -48,6 +50,7 @@ public class ProfessionalRecord extends DomainEntity {
 	public void setStartTime(final Date startTime) {
 		this.startTime = startTime;
 	}
+
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
@@ -58,6 +61,7 @@ public class ProfessionalRecord extends DomainEntity {
 	public void setEndTime(final Date endTime) {
 		this.endTime = endTime;
 	}
+
 	@URL
 	@SafeHtml
 	public String getAttachment() {
@@ -67,7 +71,9 @@ public class ProfessionalRecord extends DomainEntity {
 	public void setAttachment(final String attachment) {
 		this.attachment = attachment;
 	}
+
 	@NotNull
+	@ElementCollection
 	public Collection<String> getComments() {
 		return this.comments;
 	}

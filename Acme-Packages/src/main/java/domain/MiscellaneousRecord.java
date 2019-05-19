@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
@@ -39,7 +40,9 @@ public class MiscellaneousRecord extends DomainEntity {
 	public void setAttachment(final String attachment) {
 		this.attachment = attachment;
 	}
+
 	@NotNull
+	@ElementCollection
 	public Collection<String> getComments() {
 		return this.comments;
 	}

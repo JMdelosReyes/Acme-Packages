@@ -18,13 +18,13 @@ import org.hibernate.validator.constraints.URL;
 @Access(AccessType.PROPERTY)
 public class Curriculum extends DomainEntity {
 
-	private String					fullName;
-	private String					photo;
-	private String					email;
-	private String					phoneNumber;
+	private String							fullName;
+	private String							photo;
+	private String							email;
+	private String							phoneNumber;
 
-	Collection<ProfessionalRecord>	professionalRecord;
-	Collection<MiscellaneousRecord>	miscellaneousRecord;
+	private Collection<ProfessionalRecord>	professionalRecord;
+	private Collection<MiscellaneousRecord>	miscellaneousRecord;
 
 
 	@NotBlank
@@ -36,6 +36,7 @@ public class Curriculum extends DomainEntity {
 	public void setFullName(final String fullName) {
 		this.fullName = fullName;
 	}
+
 	@NotBlank
 	@URL
 	@SafeHtml
@@ -46,6 +47,7 @@ public class Curriculum extends DomainEntity {
 	public void setPhoto(final String photo) {
 		this.photo = photo;
 	}
+
 	@NotBlank
 	@SafeHtml
 	public String getEmail() {
@@ -55,6 +57,7 @@ public class Curriculum extends DomainEntity {
 	public void setEmail(final String email) {
 		this.email = email;
 	}
+
 	@NotBlank
 	@SafeHtml
 	public String getPhoneNumber() {
@@ -74,6 +77,7 @@ public class Curriculum extends DomainEntity {
 	public void setProfesionalRecords(final Collection<ProfessionalRecord> profesionalRecord) {
 		this.professionalRecord = profesionalRecord;
 	}
+
 	@NotNull
 	@OneToMany(cascade = CascadeType.ALL)
 	public Collection<MiscellaneousRecord> getMiscellaneousRecord() {

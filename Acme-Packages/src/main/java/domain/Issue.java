@@ -17,6 +17,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -61,6 +62,7 @@ public class Issue extends DomainEntity {
 		this.closed = closed;
 	}
 
+	@SafeHtml
 	@NotBlank
 	public String getDescription() {
 		return this.description;
@@ -70,12 +72,12 @@ public class Issue extends DomainEntity {
 		this.description = description;
 	}
 
-	@OneToMany(mappedBy = "issue", cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL)
 	public Collection<Comment> getComments() {
 		return this.comments;
 	}
 
-	public void setComment(final Collection<Comment> comments) {
+	public void setComments(Collection<Comment> comments) {
 		this.comments = comments;
 	}
 
