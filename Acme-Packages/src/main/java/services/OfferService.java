@@ -94,6 +94,7 @@ public class OfferService {
 			Assert.isTrue(carrier.getOffers().contains(old));
 			Assert.isTrue(!old.isCanceled());
 			Assert.isTrue(!old.isFinalMode());
+
 			result = this.offerRepository.save(offer);
 			Assert.notNull(result);
 		}
@@ -123,6 +124,14 @@ public class OfferService {
 
 	public void flush() {
 		this.offerRepository.flush();
+	}
+
+	public Offer findByTraverseTown(final int id) {
+		Assert.isTrue(id > 0);
+		final Offer result;
+		result = this.offerRepository.findByTraverseTown(id);
+		Assert.notNull(result);
+		return result;
 	}
 
 }
