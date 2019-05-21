@@ -142,9 +142,6 @@ public class CarrierService {
 
 			Assert.isTrue(Validators.checkCreditCard(carrier.getCreditCard()));
 			Assert.isTrue(this.configurationService.findOne().getMakes().contains(carrier.getCreditCard().getMake()));
-
-			result = this.carrierRepository.save(carrier);
-			Assert.notNull(result);
 		} else {
 			final UserAccount principal = LoginService.getPrincipal();
 			Assert.isTrue(!this.actorService.findActorType().equals("Carrier"));
@@ -152,9 +149,53 @@ public class CarrierService {
 			Assert.notNull(old);
 
 			Assert.isTrue(this.actorService.findByUserAccountId(principal.getId()).getId() == carrier.getId());
+
+			Assert.isTrue(Validators.validEmail(carrier.getEmail()));
+
+			if (carrier.getPhoneNumber() != null) {
+				final String phone = carrier.getPhoneNumber();
+				if (Validators.validPhone(phone))
+					carrier.setPhoneNumber(this.configurationService.findOne().getCountryCode() + phone);
+			}
+
+			Assert.isTrue(Validators.checkCreditCard(carrier.getCreditCard()));
+			Assert.isTrue(this.configurationService.findOne().getMakes().contains(carrier.getCreditCard().getMake()));
+
+			Assert.isTrue(carrier.isBanned()==old.isBanned());
+			Assert.isTrue(carrier.isSpammer()==old.isSpammer());
+			Assert.isTrue(carrier.getScore()==old.getScore());
 		}
 
+		result = this.carrierRepository.save(carrier);
+		Assert.notNull(result);
 		return result;
+	}
+
+	public void delete(final Carrier carrier) {
+		Assert.notNull(carrier);
+		Assert.isTrue(carrier.getId() > 0);
+		Assert.isTrue(this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId() == carrier.getId());
+		// BORRAR MIERDA
+		this.carrierRepository.delete(carrier.getId());
+	}
+
+	public void flush() {
+		this.carrierRepository.flush();
+	}
+
+	public void adminUpdate(final Carrier carrier){
+		Assert.notNull(carrier);
+		Assert.isTrue(carrier.getId()>0);
+		Assert.isTrue(this.actorService.findActorType().equals("Administrador"));
+
+		final Carrier old = this.carrierRepository.findOne(carrier.getId());
+		Assert.notNull(old);
+
+		final Carrier clon = (Carrier) old.clone();
+		clon.setBanned(carrier.isBanned());
+		clon.setSpammer(carrier.isSpammer());
+		clon.setScore(carrier.getScore());
+		this.carrierRepository.save(clon);
 	}
 
 }
