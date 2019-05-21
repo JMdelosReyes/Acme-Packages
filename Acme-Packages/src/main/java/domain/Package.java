@@ -21,6 +21,7 @@ public class Package extends DomainEntity implements Cloneable {
 	private double					height;
 	private double					width;
 	private double					length;
+	private Double					price;
 	private String					description;
 	private Collection<Category>	categories;
 
@@ -30,7 +31,7 @@ public class Package extends DomainEntity implements Cloneable {
 		return this.weight;
 	}
 
-	public void setWeight(double weight) {
+	public void setWeight(final double weight) {
 		this.weight = weight;
 	}
 
@@ -39,7 +40,7 @@ public class Package extends DomainEntity implements Cloneable {
 		return this.height;
 	}
 
-	public void setHeight(double height) {
+	public void setHeight(final double height) {
 		this.height = height;
 	}
 
@@ -48,7 +49,7 @@ public class Package extends DomainEntity implements Cloneable {
 		return this.width;
 	}
 
-	public void setWidth(double width) {
+	public void setWidth(final double width) {
 		this.width = width;
 	}
 
@@ -57,8 +58,17 @@ public class Package extends DomainEntity implements Cloneable {
 		return this.length;
 	}
 
-	public void setLength(double length) {
+	public void setLength(final double length) {
 		this.length = length;
+	}
+
+	@Min(1)
+	public Double getPrice() {
+		return this.price;
+	}
+
+	public void setPrice(final Double price) {
+		this.price = price;
 	}
 
 	@NotBlank
@@ -67,7 +77,7 @@ public class Package extends DomainEntity implements Cloneable {
 		return this.description;
 	}
 
-	public void setDescription(String description) {
+	public void setDescription(final String description) {
 		this.description = description;
 	}
 
@@ -77,7 +87,7 @@ public class Package extends DomainEntity implements Cloneable {
 		return this.categories;
 	}
 
-	public void setCategories(Collection<Category> categories) {
+	public void setCategories(final Collection<Category> categories) {
 		this.categories = categories;
 	}
 

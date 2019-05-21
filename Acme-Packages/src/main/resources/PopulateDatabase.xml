@@ -78,7 +78,7 @@
 		</property>
 	</bean>
 	
-		<bean id="userAccount6" class="security.UserAccount">
+	<bean id="userAccount6" class="security.UserAccount">
 		<property name="username" value="auditor1" />
 		<property name="password" value="175d2e7a63f386554a4dd66e865c3e14" />
 		<property name="authorities">
@@ -160,11 +160,9 @@
 				
 			</list>
 		</property>
-	</bean>
-	
+	</bean>	
 	
 	<!-- AUDITOR -->
-	
 	<bean id="auditor1" class="domain.Auditor">
 		<property name="name" value="Manolita" />
 		<property name="surname" value="Gafotos"/>
@@ -224,7 +222,7 @@
 		</property>
 		<property name="socialProfiles">
 			<list>
-			<ref bean="socialProfile3" />
+                     <ref bean="socialProfile3" />
 			</list>
 		</property>
 		<property name="userAccount" ref="userAccount7" />
@@ -311,9 +309,6 @@
 		
 	</bean>
 	
-	
-	
-	
 	<!-- CARRIER -->
 	
 	
@@ -342,13 +337,10 @@
 	
 	</bean>
 	
-
-	
 	<!-- COMMENT -->
 	
 	
 	<!-- CONFIGURATION -->
-	
 	<bean id="configuration1" class="domain.Configuration">
 		<property name="systemName" value="Acme Rookies" />
 		<property name="banner" value="https://i.pinimg.com/originals/09/56/33/095633056151fa5d0988aacd6f0e6e73.jpg" />
@@ -394,7 +386,6 @@
 	
 
 	</bean>
-	
 	
 	<!-- CREDIT CARD -->
 	<bean id="creditcard1" class="domain.CreditCard">
@@ -489,6 +480,77 @@
 		</property>
 		<property name="finder" ref="finder2" />
 	</bean>
+	<bean id="customer3" class="domain.Customer">
+		<property name="name" value="Bran" />
+		<property name="surname" value="Stark"/>
+		<property name="middleName" value="El tullido" />
+		<property name="email" value="bran@stark.com" />
+		<property name="photo" value="https://media.metrolatam.com/2019/05/16/brangameofthrone-1a41173dca71168881d658461726a0a2-600x400.jpg" />
+		<property name="phoneNumber" value="+034656234165" />
+		<property name="address" value="Avd Cosa Nº Casa Blq Piso 25ºA" />
+		<property name="spammer" value="false" />
+		<property name="creditCard" ref="creditcard1" />
+		<property name="banned" value="false" />
+		<property name="messageBoxes">
+			<list>
+				<ref bean="messageBoxCus3-inbox" />
+				<ref bean="messageBoxCus3-outbox" />
+				<ref bean="messageBoxCus3-spambox" />
+				<ref bean="messageBoxCus3-trashbox" />
+				<ref bean="messageBoxCus3-notibox" />
+			</list>
+		</property>
+		<property name="socialProfiles">
+			<list>
+			</list>
+		</property>
+		<property name="userAccount" ref="userAccount4" />
+		<property name="requests">
+			<list>
+			</list>
+		</property>
+		<property name="evaluations">
+			<list>
+			</list>
+		</property>
+		<property name="finder" ref="finder3" />
+	</bean>
+	
+	<bean id="customer4" class="domain.Customer">
+		<property name="name" value="Arya" />
+		<property name="surname" value="Stark"/>
+		<property name="middleName" value="MVP" />
+		<property name="email" value="arya@stark.com" />
+		<property name="photo" value="https://vignette.wikia.nocookie.net/gameofthrones/images/5/54/AryaLastoftheStarks.PNG/revision/latest?cb=20190515193848" />
+		<property name="phoneNumber" value="+034666666666" />
+		<property name="address" value="" />
+		<property name="spammer" value="false" />
+		<property name="creditCard" ref="creditcard1" />
+		<property name="banned" value="false" />
+		<property name="messageBoxes">
+			<list>
+				<ref bean="messageBoxCus4-inbox" />
+				<ref bean="messageBoxCus4-outbox" />
+				<ref bean="messageBoxCus4-spambox" />
+				<ref bean="messageBoxCus4-trashbox" />
+				<ref bean="messageBoxCus4-notibox" />
+			</list>
+		</property>
+		<property name="socialProfiles">
+			<list>
+			</list>
+		</property>
+		<property name="userAccount" ref="userAccount5" />
+		<property name="requests">
+			<list>
+			</list>
+		</property>
+		<property name="evaluations">
+			<list>
+			</list>
+		</property>
+		<property name="finder" ref="finder4" />
+	</bean>
 	
 	<!-- EVALUATION -->
 	
@@ -519,6 +581,28 @@
 			</list>
 		</property>	
 	</bean>
+	<bean id="finder3" class="domain.Finder">
+		<property name="town" value="" />
+		<property name="maxPrice" value="" />
+		<property name="category" value="" />
+		<property name="minWeight" value="" />
+		<property name="lastUpdate" value="05/01/2019 11:00" />
+		<property name="offers">
+			<list>
+			</list>
+		</property>	
+	</bean>
+	<bean id="finder4" class="domain.Finder">
+		<property name="town" value="" />
+		<property name="maxPrice" value="" />
+		<property name="category" value="" />
+		<property name="minWeight" value="" />
+		<property name="lastUpdate" value="05/01/2019 10:00" />
+		<property name="offers">
+			<list>
+			</list>
+		</property>	
+	</bean>
 	
 	<!-- ISSUE -->
 	
@@ -528,97 +612,6 @@
 	
 	<!-- MESSBOX -->
 	<!-- <property name="parent" ref="messageBoxAd-Custom1"/> -->
-	<bean id="messageBoxCus1-inbox" class="domain.MessBox">
-		<property name="name" value="In box"/>
-		<property name="isSystem" value="false"></property>
-		<property name="messages">
-			<list>
-			</list>
-		</property>	
-		
-	</bean>
-	<bean id="messageBoxCus1-outbox" class="domain.MessBox">
-		<property name="name" value="Out box"/>
-		<property name="isSystem" value="false"></property>
-		<property name="messages">
-			<list>
-			</list>
-		</property>	
-		
-	</bean>
-	<bean id="messageBoxCus1-spambox" class="domain.MessBox">
-		<property name="name" value="Spam box"/>
-		<property name="isSystem" value="false"></property>
-		<property name="messages">
-			<list>
-			</list>
-		</property>	
-		
-	</bean>
-	<bean id="messageBoxCus1-trashbox" class="domain.MessBox">
-		<property name="name" value="Trash box"/>
-		<property name="isSystem" value="false"></property>
-		<property name="messages">
-			<list>
-			</list>
-		</property>	
-		
-	</bean>
-	<bean id="messageBoxCus1-notibox" class="domain.MessBox">
-		<property name="name" value="Notification box"/>
-		<property name="isSystem" value="false"></property>
-		<property name="messages">
-			<list>
-			</list>
-		</property>	
-		
-	</bean>
-	<bean id="messageBoxCus2-inbox" class="domain.MessBox">
-		<property name="name" value="In box"/>
-		<property name="isSystem" value="false"></property>
-		<property name="messages">
-			<list>
-			</list>
-		</property>	
-		
-	</bean>
-	<bean id="messageBoxCus2-outbox" class="domain.MessBox">
-		<property name="name" value="Out box"/>
-		<property name="isSystem" value="false"></property>
-		<property name="messages">
-			<list>
-			</list>
-		</property>	
-		
-	</bean>
-	<bean id="messageBoxCus2-spambox" class="domain.MessBox">
-		<property name="name" value="Spam box"/>
-		<property name="isSystem" value="false"></property>
-		<property name="messages">
-			<list>
-			</list>
-		</property>	
-		
-	</bean>
-	<bean id="messageBoxCus2-trashbox" class="domain.MessBox">
-		<property name="name" value="Trash box"/>
-		<property name="isSystem" value="false"></property>
-		<property name="messages">
-			<list>
-			</list>
-		</property>	
-		
-	</bean>
-	<bean id="messageBoxCus2-notibox" class="domain.MessBox">
-		<property name="name" value="Notification box"/>
-		<property name="isSystem" value="false"></property>
-		<property name="messages">
-			<list>
-			</list>
-		</property>	
-		
-	</bean>
-	
 	<bean id="messageBoxAd-inbox" class="domain.MessBox">
 		<property name="name" value="In box"/>
 		<property name="isSystem" value="true"></property>
@@ -854,6 +847,186 @@
 		
 	</bean>
 	
+	<bean id="messageBoxCus1-inbox" class="domain.MessBox">
+		<property name="name" value="In box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	<bean id="messageBoxCus1-outbox" class="domain.MessBox">
+		<property name="name" value="Out box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	<bean id="messageBoxCus1-spambox" class="domain.MessBox">
+		<property name="name" value="Spam box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	<bean id="messageBoxCus1-trashbox" class="domain.MessBox">
+		<property name="name" value="Trash box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	<bean id="messageBoxCus1-notibox" class="domain.MessBox">
+		<property name="name" value="Notification box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	<bean id="messageBoxCus2-inbox" class="domain.MessBox">
+		<property name="name" value="In box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	<bean id="messageBoxCus2-outbox" class="domain.MessBox">
+		<property name="name" value="Out box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	<bean id="messageBoxCus2-spambox" class="domain.MessBox">
+		<property name="name" value="Spam box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	<bean id="messageBoxCus2-trashbox" class="domain.MessBox">
+		<property name="name" value="Trash box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	<bean id="messageBoxCus2-notibox" class="domain.MessBox">
+		<property name="name" value="Notification box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	<bean id="messageBoxCus3-inbox" class="domain.MessBox">
+		<property name="name" value="In box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	<bean id="messageBoxCus3-outbox" class="domain.MessBox">
+		<property name="name" value="Out box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	<bean id="messageBoxCus3-spambox" class="domain.MessBox">
+		<property name="name" value="Spam box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	<bean id="messageBoxCus3-trashbox" class="domain.MessBox">
+		<property name="name" value="Trash box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	<bean id="messageBoxCus3-notibox" class="domain.MessBox">
+		<property name="name" value="Notification box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	<bean id="messageBoxCus4-inbox" class="domain.MessBox">
+		<property name="name" value="In box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	<bean id="messageBoxCus4-outbox" class="domain.MessBox">
+		<property name="name" value="Out box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	<bean id="messageBoxCus4-spambox" class="domain.MessBox">
+		<property name="name" value="Spam box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	<bean id="messageBoxCus4-trashbox" class="domain.MessBox">
+		<property name="name" value="Trash box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	<bean id="messageBoxCus4-notibox" class="domain.MessBox">
+		<property name="name" value="Notification box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
 	<!-- MISCELLANEOUS RECORD -->
 	
 	
@@ -870,8 +1043,6 @@
 	
 	
 	<!-- SOCIAL PROFILE -->
-	
-	
 	<bean id="socialProfile1" class="domain.SocialProfile">
 		<property name="nick" value="Paco" />
 		<property name="socialNetwork" value="Facebook" />
@@ -897,13 +1068,13 @@
 	</bean>
 	
 	<bean id="socialProfile5" class="domain.SocialProfile">
-		<property name="nick" value="Hermandad Macarena" />
+		<property name="nick" value="Los del Betis" />
 		<property name="socialNetwork" value="Twitter" />
 		<property name="profileLink" value="https://www.twitter.com" /> 			
 	</bean>
 	
 	<bean id="socialProfile6" class="domain.SocialProfile">
-		<property name="nick" value="Hermandad Triana" />
+		<property name="nick" value="Los de las penas" />
 		<property name="socialNetwork" value="Twitter" />
 		<property name="profileLink" value="https://www.twitter.com" /> 			
 	</bean>
@@ -928,7 +1099,6 @@
 		<property name="profileLink" value="https://www.twitter.com" /> 			
 	</bean>
 	
-	
 	<!-- SOLICITATION -->
 	
 	
@@ -939,7 +1109,46 @@
 	
 	
 	<!-- TOWN -->
-	
+	<bean id="town1" class="domain.Town">
+		<property name="name" value="Huesca" />
+		<property name="zipCode" value="22001"/>
+		<property name="country" value="Spain" />
+	</bean>
+	<bean id="town2" class="domain.Town">
+		<property name="name" value="Zaragoza" />
+		<property name="zipCode" value="50001"/>
+		<property name="country" value="Spain" />
+	</bean>
+	<bean id="town3" class="domain.Town">
+		<property name="name" value="Huesca" />
+		<property name="zipCode" value="44001"/>
+		<property name="country" value="Spain" />
+	</bean>
+	<bean id="town4" class="domain.Town">
+		<property name="name" value="Sevilla" />
+		<property name="zipCode" value="41008"/>
+		<property name="country" value="Spain" />
+	</bean>
+	<bean id="town5" class="domain.Town">
+		<property name="name" value="Cádiz" />
+		<property name="zipCode" value="11001"/>
+		<property name="country" value="Spain" />
+	</bean>
+	<bean id="town6" class="domain.Town">
+		<property name="name" value="Córdoba" />
+		<property name="zipCode" value="44001"/>
+		<property name="country" value="Spain" />
+	</bean>
+	<bean id="town7" class="domain.Town">
+		<property name="name" value="Huelva" />
+		<property name="zipCode" value="21001"/>
+		<property name="country" value="Spain" />
+	</bean>
+	<bean id="town8" class="domain.Town">
+		<property name="name" value="Almería" />
+		<property name="zipCode" value="04001"/>
+		<property name="country" value="Spain" />
+	</bean>
 	
 	<!-- TRAVERSE TOWN -->
 	

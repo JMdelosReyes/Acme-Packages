@@ -50,11 +50,11 @@ public class SocialProfile extends DomainEntity implements Cloneable {
 
 	@NotBlank
 	@URL
-	public String getLink() {
+	public String getProfileLink() {
 		return this.profileLink;
 	}
 
-	public void setLink(final String profileLink) {
+	public void setProfileLink(final String profileLink) {
 		this.profileLink = profileLink;
 	}
 }

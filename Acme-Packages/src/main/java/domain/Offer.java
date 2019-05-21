@@ -27,6 +27,7 @@ public class Offer extends DomainEntity implements Cloneable {
 	private Date						maxDateToRequest;
 	private boolean						canceled;
 	private double						score;
+	private double						totalPrice;
 	private Collection<Fare>			fares;
 	private Vehicle						vehicle;
 	private Collection<Evaluation>		evaluations;
@@ -86,6 +87,14 @@ public class Offer extends DomainEntity implements Cloneable {
 
 	public void setScore(final double score) {
 		this.score = score;
+	}
+
+	public double getTotalPrice() {
+		return this.totalPrice;
+	}
+
+	public void setTotalPrice(final double totalPrice) {
+		this.totalPrice = totalPrice;
 	}
 
 	@NotNull
