@@ -174,6 +174,41 @@
 		</property>
 	</bean>
 	
+	<bean id="userAccount14" class="security.UserAccount">
+		<property name="username" value="sponsor1" />
+		<property name="password" value="42c63ad66d4dc07ed17753772bef96d6" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="SPONSOR" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="userAccount15" class="security.UserAccount">
+		<property name="username" value="sponsor2" />
+		<property name="password" value="3dc67f80a03324e01b1640f45d107485" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="SPONSOR" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="userAccount16" class="security.UserAccount">
+		<property name="username" value="sponsor3" />
+		<property name="password" value="857a54956061fdc1b88d7722cafe6519" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="SPONSOR" />
+				</bean>
+			</list>
+		</property>
+	</bean>	
 	<!-- ADDRESS -->
 	
 	
@@ -387,6 +422,7 @@
 		<property name="score" value="2"></property>
 		<property name="curricula">
 			<list>
+				<ref bean="curriculum1"/>
 			</list>
 		</property>
 		<property name="fares">
@@ -432,6 +468,7 @@
 		<property name="score" value="5"></property>
 		<property name="curricula">
 			<list>
+				<ref bean="curriculum2"/>
 			</list>
 		</property>
 		<property name="fares">
@@ -477,6 +514,7 @@
 		<property name="score" value="10"></property>
 		<property name="curricula">
 			<list>
+				<ref bean="curriculum3"/>
 			</list>
 		</property>
 		<property name="fares">
@@ -622,9 +660,120 @@
 		<property name="cvv" value="102"/>
 		<property name="number" value="4495840606545807"/>
 	</bean>
-	
+		
 	<!-- CURRICULUM -->
 	
+	<bean id="curriculum1" class="domain.Curriculum">
+		<property name="fullName" value="Vinicius Junior" />
+		<property name="photo" value="http://e00-co-marca.uecdn.es/claro/assets/multimedia/imagenes/2019/03/05/15518185642905.jpg" />
+		<property name="email" value="vinicius@madrid.es" />
+		<property name="phoneNumber" value="654123987" />
+		<property name="professionalRecords">
+			<list>
+				<ref bean="professionalRecord1"/>		
+				<ref bean="professionalRecord2"/>	
+			</list>
+		</property>
+		<property name="miscellaneousRecords">
+				<ref bean="miscellaneousRecord1"/>		
+		</property>
+	</bean>
+	
+	<bean id="curriculum2" class="domain.Curriculum">
+		<property name="fullName" value="Novak Djokovic" />
+		<property name="photo" value="http://www.laprensa.com.uy/images/stories/articulos/2011/09/20/deportes__Djokovic.jpg" />
+		<property name="email" value="novak@atp.com" />
+		<property name="phoneNumber" value="656128687" />
+		<property name="professionalRecords">
+			<list>
+				<ref bean="professionalRecord3"/>		
+			</list>
+		</property>
+		<property name="miscellaneousRecords">
+			<list>
+			<ref bean="miscellaneousRecord2"/>		
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="curriculum3" class="domain.Curriculum">
+		<property name="fullName" value="Diego Simeone" />
+		<property name="photo" value="https://www.elegimaldia.es/wp-content/uploads/2017/04/20111228dasdasftb_56-4.png" />
+		<property name="email" value="cholo@atm.com" />
+		<property name="phoneNumber" value="600128687" />
+		<property name="professionalRecords">
+			<list>
+			</list>
+		</property>
+		<property name="miscellaneousRecords">
+			<list>
+				<ref bean="miscellaneousRecord3"/>				
+			</list>
+		</property>
+	</bean>
+	<!-- PROFESSIONAL RECORD -->
+	
+	<bean id="professionalRecord1" class="domain.ProfessionalRecord">
+		<property name="companyName" value="Google"/>
+		<property name="startTime" value="10/10/2017"/>
+		<property name="endTime" value="10/10/2018"/>
+		<property name="attachment" value="https://www.google.com"/>
+		<property name="comments">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="professionalRecord2" class="domain.ProfessionalRecord">
+		<property name="companyName" value="Zara"/>
+		<property name="startTime" value="10/10/2016"/>
+		<property name="endTime" value="10/10/2018"/>
+		<property name="attachment" value="https://www.zara.com"/>
+		<property name="comments">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="professionalRecord3" class="domain.ProfessionalRecord">
+		<property name="companyName" value="Mr. Pizza"/>
+		<property name="startTime" value="10/10/2015"/>
+		<property name="endTime" value="10/10/2017"/>
+		<property name="attachment" value="https://www.mrpizza.com.es/"/>
+		<property name="comments">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- MISCELLANEOUS RECORD -->
+
+	<bean id="miscellaneousRecord1" class="domain.MiscellaneousRecord">
+		<property name="title" value="Se hablar 8 lenguas"/>	
+		<property name="attachment" value="https://www.link.com"/>
+		<property name="comments">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="miscellaneousRecord2" class="domain.MiscellaneousRecord">
+		<property name="title" value="Tengo un 12,5 en selectividad"/>	
+		<property name="attachment" value="https://www.link.com"/>
+		<property name="comments">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="miscellaneousRecord3" class="domain.MiscellaneousRecord">
+		<property name="title" value="Se tocar la flauta"/>	
+		<property name="attachment" value="https://www.link.com"/>
+		<property name="comments">
+			<list>
+			</list>
+		</property>
+	</bean>
 	
 	<!-- CUSTOMER -->
 	
@@ -1434,6 +1583,140 @@
 		</property>			
 	</bean>
 	
+	<bean id="messageBoxSp1-inbox" class="domain.MessBox">
+		<property name="name" value="In box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+	</bean>
+	
+	<bean id="messageBoxSp1-outbox" class="domain.MessBox">
+		<property name="name" value="Out box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>		
+	</bean>
+	
+	<bean id="messageBoxSp1-spambox" class="domain.MessBox">
+		<property name="name" value="Spam box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>		
+	</bean>
+	
+	<bean id="messageBoxSp1-trashbox" class="domain.MessBox">
+		<property name="name" value="Trash box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+	</bean>
+	
+	<bean id="messageBoxSp1-notibox" class="domain.MessBox">
+		<property name="name" value="Notification box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>			
+	</bean>
+
+	<bean id="messageBoxSp2-inbox" class="domain.MessBox">
+		<property name="name" value="In box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+	</bean>
+	
+	<bean id="messageBoxSp2-outbox" class="domain.MessBox">
+		<property name="name" value="Out box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>		
+	</bean>
+	
+	<bean id="messageBoxSp2-spambox" class="domain.MessBox">
+		<property name="name" value="Spam box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>		
+	</bean>
+	
+	<bean id="messageBoxSp2-trashbox" class="domain.MessBox">
+		<property name="name" value="Trash box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+	</bean>
+	
+	<bean id="messageBoxSp2-notibox" class="domain.MessBox">
+		<property name="name" value="Notification box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>			
+	</bean>	
+	
+	<bean id="messageBoxSp3-inbox" class="domain.MessBox">
+		<property name="name" value="In box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+	</bean>
+	
+	<bean id="messageBoxSp3-outbox" class="domain.MessBox">
+		<property name="name" value="Out box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>		
+	</bean>
+	
+	<bean id="messageBoxSp3-spambox" class="domain.MessBox">
+		<property name="name" value="Spam box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>		
+	</bean>
+	
+	<bean id="messageBoxSp3-trashbox" class="domain.MessBox">
+		<property name="name" value="Trash box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+	</bean>
+	
+	<bean id="messageBoxSp3-notibox" class="domain.MessBox">
+		<property name="name" value="Notification box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>			
+	</bean>	
 	<!-- MISCELLANEOUS RECORD -->
 	
 	
@@ -1508,12 +1791,142 @@
 	
 	<!-- SOLICITATION -->
 	
-	
-	<!-- SPONSORSHIP -->
-	
-	
 	<!-- SPONSOR -->
+	<bean id="sponsor1" class="domain.Sponsor">
+		<property name="name" value="Amancio" />
+		<property name="surname" value="Ortega"/>
+		<property name="middleName" value="" />
+		<property name="email" value="amancio@slave.com" />
+		<property name="photo" value="https://ep00.epimg.net/elpais/imagenes/2017/06/29/album/1498746433_850270_1498746596_album_normal.jpg" />
+		<property name="phoneNumber" value="+034656289265" />
+		<property name="address" value="Avd Cosa Nº Casa Blq Piso 44ºA" />
+		<property name="nif" value="46018584T" />
+		<property name="spammer" value="false" />
+		<property name="creditCard" ref="creditcard1" />
+		<property name="banned" value="false" />
+		<property name="messageBoxes">
+			<list>
+				<ref bean="messageBoxSp1-inbox" />
+				<ref bean="messageBoxSp1-outbox" />
+				<ref bean="messageBoxSp1-spambox" />
+				<ref bean="messageBoxSp1-trashbox" />
+				<ref bean="messageBoxSp1-notibox" />			
+			</list>
+		</property>
+		<property name="socialProfiles">
+			<list>
+			</list>
+		</property>
+		<property name="userAccount" ref="userAccount14" />
+		<property name="sponsorships">
+			<list>
+				<ref bean="sponsorship1"/>
+				<ref bean="sponsorship2"/>
+			</list>
+		</property>
+		
+	</bean>	
 	
+
+	<bean id="sponsor2" class="domain.Sponsor">
+		<property name="name" value="Mark" />
+		<property name="surname" value="Zuckerberg"/>
+		<property name="middleName" value="" />
+		<property name="email" value="mark@facebook.com" />
+		<property name="photo" value="https://www.elsiglodetorreon.com.mx/m/i/2018/04/1049342.jpeg" />
+		<property name="phoneNumber" value="+034656289275" />
+		<property name="address" value="Avd Cosa Nº Casa Blq Piso 45ºA" />
+		<property name="nif" value="46038584T" />
+		<property name="spammer" value="false" />
+		<property name="creditCard" ref="creditcard1" />
+		<property name="banned" value="false" />
+		<property name="messageBoxes">
+			<list>
+				<ref bean="messageBoxSp2-inbox" />
+				<ref bean="messageBoxSp2-outbox" />
+				<ref bean="messageBoxSp2-spambox" />
+				<ref bean="messageBoxSp2-trashbox" />
+				<ref bean="messageBoxSp2-notibox" />	
+			</list>
+		</property>
+		<property name="socialProfiles">
+			<list>
+			</list>
+		</property>
+		<property name="userAccount" ref="userAccount15" />
+		<property name="sponsorships">
+			<list>
+				<ref bean="sponsorship3"/>
+			</list>
+		</property>
+		
+	</bean>	
+	
+
+	<bean id="sponsor3" class="domain.Sponsor">
+		<property name="name" value="Marcelo" />
+		<property name="surname" value="Da silva"/>
+		<property name="middleName" value="" />
+		<property name="email" value="marcelo@madrid.com" />
+		<property name="photo" value="https://www.diariogol.com/uploads/s1/59/69/14/4/marcelo.jpeg" />
+		<property name="phoneNumber" value="+034656289275" />
+		<property name="address" value="Avd Cosa Nº Casa Blq Piso 47ºA" />
+		<property name="nif" value="46018584X" />
+		<property name="spammer" value="false" />
+		<property name="creditCard" ref="creditcard1" />
+		<property name="banned" value="false" />
+		<property name="messageBoxes">
+			<list>
+				<ref bean="messageBoxSp3-inbox" />
+				<ref bean="messageBoxSp3-outbox" />
+				<ref bean="messageBoxSp3-spambox" />
+				<ref bean="messageBoxSp3-trashbox" />
+				<ref bean="messageBoxSp3-notibox" />	
+			</list>
+		</property>
+		<property name="socialProfiles">
+			<list>
+			</list>
+		</property>
+		<property name="userAccount" ref="userAccount16" />
+		
+		<property name="sponsorships">
+			<list>
+				
+			</list>
+		</property>
+		
+	</bean>		
+	
+	<!-- SPONSORSHIPS -->
+	<bean id="sponsorship1" class="domain.Sponsorship">
+		<property name="banner" value="https://www.sivasdescalzo.com/skin/frontend/sivasdescalzo/opentrends/svd-siglas.svg" />
+		<property name="target" value="https://www.sivasdescalzo.com/es/lifestyle"/>
+		<property name="valid" value="true" />
+		<property name="count" value="10" />
+		<property name="expirationDate" value="05/05/2020" />
+		<property name="totalCount" value="10" />
+
+	</bean>
+	
+	<bean id="sponsorship2" class="domain.Sponsorship">
+		<property name="banner" value="https://production-static.hboespana.com/v3.8.3/images/tenant/hboe-main.svg" />
+		<property name="target" value="https://es.hboespana.com/"/>
+		<property name="valid" value="false" />
+		<property name="count" value="0" />
+		<property name="totalCount" value="0" />
+
+	</bean>
+
+	<bean id="sponsorship3" class="domain.Sponsorship">
+		<property name="banner" value="https://footdistrict.com/en/media/extendware/ewimageopt/media/skin/ae/9/logo-foot-district.png" />
+		<property name="target" value="https://footdistrict.com/en/"/>
+		<property name="valid" value="true" />
+		<property name="count" value="0" />
+		<property name="expirationDate" value="10/10/2019" />
+		<property name="totalCount" value="0" />
+
+	</bean>	
 	
 	<!-- TOWN -->
 	<bean id="town1" class="domain.Town">
