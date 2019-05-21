@@ -3,9 +3,8 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
+import org.hibernate.engine.config.spi.ConfigurationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -43,7 +42,7 @@ public class CarrierService {
 	private ActorService actorService;
 
 	@Autowired
-	@private ConfigurationService configurationService;
+	private ConfigurationService configurationService;
 
 
 	public CarrierService() {
@@ -175,7 +174,7 @@ public class CarrierService {
 		Assert.notNull(carrier);
 		Assert.isTrue(carrier.getId() > 0);
 		Assert.isTrue(this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId() == carrier.getId());
-		// BORRAR MIERDA
+		//TODO BORRAR MIERDA
 		this.carrierRepository.delete(carrier.getId());
 	}
 
