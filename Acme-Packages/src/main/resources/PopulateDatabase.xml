@@ -114,7 +114,7 @@
 		</property>
 	</bean>
 	
-		<bean id="userAccount9" class="security.UserAccount">
+	<bean id="userAccount9" class="security.UserAccount">
 		<property name="username" value="auditor4" />
 		<property name="password" value="6cc8affcba51a854192a33af68c08f49" />
 		<property name="authorities">
@@ -126,6 +126,53 @@
 		</property>
 	</bean>
 	
+	<bean id="userAccount10" class="security.UserAccount">
+		<property name="username" value="carrier1" />
+		<property name="password" value="8d2f089b195fc8ca1415db70968a461f" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="CARRIER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="userAccount11" class="security.UserAccount">
+		<property name="username" value="carrier2" />
+		<property name="password" value="e9c83d20abca1fe451b73b6f74d9f411" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="CARRIER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="userAccount12" class="security.UserAccount">
+		<property name="username" value="carrier3" />
+		<property name="password" value="8dee391cf2bfda3504283d0dc1af7a2e" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="CARRIER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="userAccount13" class="security.UserAccount">
+		<property name="username" value="carrier4" />
+		<property name="password" value="cde726b4067344e0cf4228f72f213c19" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="CARRIER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
 	
 	<!-- ADDRESS -->
 	
@@ -311,6 +358,185 @@
 	
 	<!-- CARRIER -->
 	
+	<bean id="carrier1" class="domain.Carrier">
+		<property name="name" value="Paco" />
+		<property name="surname" value="Jémez"/>
+		<property name="middleName" value="Calvo" />
+		<property name="email" value="paco@jemez.com" />
+		<property name="photo" value="https://media1.tenor.com/images/f74f4ab7ec209c423eaa4dbcd74081af/tenor.gif?itemid=11007657" />
+		<property name="phoneNumber" value="+034656234565" />
+		<property name="address" value="Avd Cosa Nº Casa Blq Piso 25ºA" />
+		<property name="spammer" value="false" />
+		<property name="creditCard" ref="creditcard1" />
+		<property name="banned" value="false" />
+		<property name="messageBoxes">
+			<list>
+				<ref bean="messageBoxCa1-inbox" />
+				<ref bean="messageBoxCa1-outbox" />
+				<ref bean="messageBoxCa1-spambox" />
+				<ref bean="messageBoxCa1-trashbox" />
+				<ref bean="messageBoxCa1-notibox" />
+			</list>
+		</property>
+		<property name="socialProfiles">
+			<list>
+			</list>
+		</property>
+		<property name="userAccount" ref="userAccount10" />
+		<property name="vat" value="CZ12345678" />
+		<property name="score" value="2"></property>
+		<property name="curricula">
+			<list>
+			</list>
+		</property>
+		<property name="fares">
+			<list>
+			</list>
+		</property>
+		<property name="offers">
+			<list>
+			</list>
+		</property>
+		<property name="vehicles">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="carrier2" class="domain.Carrier">
+		<property name="name" value="Michael" />
+		<property name="surname" value="Jackson"/>
+		<property name="middleName" value="Ayuwoki" />
+		<property name="email" value="mike@jack.com" />
+		<property name="photo" value="https://thumbs.gfycat.com/SphericalVictoriousBlackrhino-size_restricted.gif" />
+		<property name="phoneNumber" value="+034656534565" />
+		<property name="address" value="Avd Cosa Nº Casa Blq Piso 25ºA" />
+		<property name="spammer" value="false" />
+		<property name="creditCard" ref="creditcard1" />
+		<property name="banned" value="false" />
+		<property name="messageBoxes">
+			<list>
+				<ref bean="messageBoxCa2-inbox" />
+				<ref bean="messageBoxCa2-outbox" />
+				<ref bean="messageBoxCa2-spambox" />
+				<ref bean="messageBoxCa2-trashbox" />
+				<ref bean="messageBoxCa2-notibox" />
+			</list>
+		</property>
+		<property name="socialProfiles">
+			<list>
+			</list>
+		</property>
+		<property name="userAccount" ref="userAccount11" />
+		<property name="vat" value="CZ12345678" />
+		<property name="score" value="5"></property>
+		<property name="curricula">
+			<list>
+			</list>
+		</property>
+		<property name="fares">
+			<list>
+			</list>
+		</property>
+		<property name="offers">
+			<list>
+			</list>
+		</property>
+		<property name="vehicles">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="carrier3" class="domain.Carrier">
+		<property name="name" value="Julio" />
+		<property name="surname" value="Maldonado"/>
+		<property name="middleName" value="Maldini" />
+		<property name="email" value="jul@mal.com" />
+		<property name="photo" value="https://media.giphy.com/media/iJDMSw4A1MBxJ5H9YD/giphy.gif" />
+		<property name="phoneNumber" value="+034656534565" />
+		<property name="address" value="Avd Cosa Nº Casa Blq Piso 25ºA" />
+		<property name="spammer" value="false" />
+		<property name="creditCard" ref="creditcard1" />
+		<property name="banned" value="false" />
+		<property name="messageBoxes">
+			<list>
+				<ref bean="messageBoxCa3-inbox" />
+				<ref bean="messageBoxCa3-outbox" />
+				<ref bean="messageBoxCa3-spambox" />
+				<ref bean="messageBoxCa3-trashbox" />
+				<ref bean="messageBoxCa3-notibox" />
+			</list>
+		</property>
+		<property name="socialProfiles">
+			<list>
+			</list>
+		</property>
+		<property name="userAccount" ref="userAccount12" />
+		<property name="vat" value="CZ12345678" />
+		<property name="score" value="10"></property>
+		<property name="curricula">
+			<list>
+			</list>
+		</property>
+		<property name="fares">
+			<list>
+			</list>
+		</property>
+		<property name="offers">
+			<list>
+			</list>
+		</property>
+		<property name="vehicles">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="carrier4" class="domain.Carrier">
+		<property name="name" value="Niño" />
+		<property name="surname" value="Bebe"/>
+		<property name="middleName" value="Mal" />
+		<property name="email" value="nino@mal.com" />
+		<property name="photo" value="https://media.giphy.com/media/iJDMSw4A1MBxJ5H9YD/giphy.gif" />
+		<property name="phoneNumber" value="+034656534565" />
+		<property name="address" value="Avd Cosa Nº Casa Blq Piso 25ºA" />
+		<property name="spammer" value="false" />
+		<property name="creditCard" ref="creditcard1" />
+		<property name="banned" value="false" />
+		<property name="messageBoxes">
+			<list>
+				<ref bean="messageBoxCa4-inbox" />
+				<ref bean="messageBoxCa4-outbox" />
+				<ref bean="messageBoxCa4-spambox" />
+				<ref bean="messageBoxCa4-trashbox" />
+				<ref bean="messageBoxCa4-notibox" />
+			</list>
+		</property>
+		<property name="socialProfiles">
+			<list>
+			</list>
+		</property>
+		<property name="userAccount" ref="userAccount13" />
+		<property name="vat" value="CZ12345678" />
+		<property name="score" value="10"></property>
+		<property name="curricula">
+			<list>
+			</list>
+		</property>
+		<property name="fares">
+			<list>
+			</list>
+		</property>
+		<property name="offers">
+			<list>
+			</list>
+		</property>
+		<property name="vehicles">
+			<list>
+			</list>
+		</property>
+	</bean>
 	
 	<!-- CATEGORY -->
 	<bean id="category1" class="domain.Category">
@@ -1027,6 +1253,187 @@
 		</property>	
 		
 	</bean>
+	
+	<bean id="messageBoxCa1-inbox" class="domain.MessBox">
+		<property name="name" value="In box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+	</bean>
+	
+	<bean id="messageBoxCa1-outbox" class="domain.MessBox">
+		<property name="name" value="Out box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>		
+	</bean>
+	
+	<bean id="messageBoxCa1-spambox" class="domain.MessBox">
+		<property name="name" value="Spam box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>		
+	</bean>
+	
+	<bean id="messageBoxCa1-trashbox" class="domain.MessBox">
+		<property name="name" value="Trash box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+	</bean>
+	
+	<bean id="messageBoxCa1-notibox" class="domain.MessBox">
+		<property name="name" value="Notification box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>			
+	</bean>
+	
+	<bean id="messageBoxCa2-inbox" class="domain.MessBox">
+		<property name="name" value="In box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+	</bean>
+	
+	<bean id="messageBoxCa2-outbox" class="domain.MessBox">
+		<property name="name" value="Out box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>		
+	</bean>
+	
+	<bean id="messageBoxCa2-spambox" class="domain.MessBox">
+		<property name="name" value="Spam box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>		
+	</bean>
+	
+	<bean id="messageBoxCa2-trashbox" class="domain.MessBox">
+		<property name="name" value="Trash box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+	</bean>
+	
+	<bean id="messageBoxCa2-notibox" class="domain.MessBox">
+		<property name="name" value="Notification box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>			
+	</bean>
+	
+	<bean id="messageBoxCa3-inbox" class="domain.MessBox">
+		<property name="name" value="In box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+	</bean>
+	
+	<bean id="messageBoxCa3-outbox" class="domain.MessBox">
+		<property name="name" value="Out box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>		
+	</bean>
+	
+	<bean id="messageBoxCa3-spambox" class="domain.MessBox">
+		<property name="name" value="Spam box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>		
+	</bean>
+	
+	<bean id="messageBoxCa3-trashbox" class="domain.MessBox">
+		<property name="name" value="Trash box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+	</bean>
+	
+	<bean id="messageBoxCa3-notibox" class="domain.MessBox">
+		<property name="name" value="Notification box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>			
+	</bean>
+	
+	<bean id="messageBoxCa4-inbox" class="domain.MessBox">
+		<property name="name" value="In box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+	</bean>
+	
+	<bean id="messageBoxCa4-outbox" class="domain.MessBox">
+		<property name="name" value="Out box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>		
+	</bean>
+	
+	<bean id="messageBoxCa4-spambox" class="domain.MessBox">
+		<property name="name" value="Spam box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>		
+	</bean>
+	
+	<bean id="messageBoxCa4-trashbox" class="domain.MessBox">
+		<property name="name" value="Trash box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+	</bean>
+	
+	<bean id="messageBoxCa4-notibox" class="domain.MessBox">
+		<property name="name" value="Notification box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>			
+	</bean>
+	
 	<!-- MISCELLANEOUS RECORD -->
 	
 	
@@ -1114,36 +1521,43 @@
 		<property name="zipCode" value="22001"/>
 		<property name="country" value="Spain" />
 	</bean>
+	
 	<bean id="town2" class="domain.Town">
 		<property name="name" value="Zaragoza" />
 		<property name="zipCode" value="50001"/>
 		<property name="country" value="Spain" />
 	</bean>
+	
 	<bean id="town3" class="domain.Town">
 		<property name="name" value="Huesca" />
 		<property name="zipCode" value="44001"/>
 		<property name="country" value="Spain" />
 	</bean>
+	
 	<bean id="town4" class="domain.Town">
 		<property name="name" value="Sevilla" />
 		<property name="zipCode" value="41008"/>
 		<property name="country" value="Spain" />
 	</bean>
+	
 	<bean id="town5" class="domain.Town">
 		<property name="name" value="Cádiz" />
 		<property name="zipCode" value="11001"/>
 		<property name="country" value="Spain" />
 	</bean>
+	
 	<bean id="town6" class="domain.Town">
 		<property name="name" value="Córdoba" />
 		<property name="zipCode" value="44001"/>
 		<property name="country" value="Spain" />
 	</bean>
+	
 	<bean id="town7" class="domain.Town">
 		<property name="name" value="Huelva" />
 		<property name="zipCode" value="21001"/>
 		<property name="country" value="Spain" />
 	</bean>
+	
 	<bean id="town8" class="domain.Town">
 		<property name="name" value="Almería" />
 		<property name="zipCode" value="04001"/>
@@ -1151,10 +1565,149 @@
 	</bean>
 	
 	<!-- TRAVERSE TOWN -->
+
 	
 	
 	<!-- VEHICLE -->
 	
+	<bean id="vehicle1" class="domain.Vehicle">
+		<property name="type" value="CAR" />
+		<property name="plate" value="4561ASD"/>
+		<property name="maxVolume" value="500" />
+		<property name="maxWeight" value="5000" />
+		<property name="pictures">
+			<list>
+				<value>http://sevillasecreta.co/wp-content/uploads/2016/03/Macarena.jpg</value>
+				<value>http://madafrica.es/kaaybarrios/wp-content/uploads/sites/5/2018/02/macarena.jpg</value>
+			</list>
+		</property>
+		<property name="comment" value="Multipla" />
+		<property name="solicitations">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="vehicle2" class="domain.Vehicle">
+		<property name="type" value="CAR" />
+		<property name="plate" value="4561AFG"/>
+		<property name="maxVolume" value="550" />
+		<property name="maxWeight" value="6000" />
+		<property name="pictures">
+			<list>
+				<value>http://sevillasecreta.co/wp-content/uploads/2016/03/Macarena.jpg</value>
+			</list>
+		</property>
+		<property name="comment" value="" />
+		<property name="solicitations">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="vehicle3" class="domain.Vehicle">
+		<property name="type" value="TRUCK" />
+		<property name="plate" value="7894AFG"/>
+		<property name="maxVolume" value="550" />
+		<property name="maxWeight" value="6000" />
+		<property name="pictures">
+			<list>
+				<value>http://sevillasecreta.co/wp-content/uploads/2016/03/Macarena.jpg</value>
+			</list>
+		</property>
+		<property name="comment" value="" />
+		<property name="solicitations">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="vehicle4" class="domain.Vehicle">
+		<property name="type" value="MOTORCYCLE" />
+		<property name="plate" value="9856AFG"/>
+		<property name="maxVolume" value="550" />
+		<property name="maxWeight" value="6000" />
+		<property name="pictures">
+			<list>
+				<value>http://madafrica.es/kaaybarrios/wp-content/uploads/sites/5/2018/02/macarena.jpg</value>
+			</list>
+		</property>
+		<property name="comment" value="" />
+		<property name="solicitations">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="vehicle5" class="domain.Vehicle">
+		<property name="type" value="VAN" />
+		<property name="plate" value="1235AFG"/>
+		<property name="maxVolume" value="550" />
+		<property name="maxWeight" value="6000" />
+		<property name="pictures">
+			<list>
+				<value>http://sevillasecreta.co/wp-content/uploads/2016/03/Macarena.jpg</value>
+			</list>
+		</property>
+		<property name="comment" value="" />
+		<property name="solicitations">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="vehicle6" class="domain.Vehicle">
+		<property name="type" value="VAN" />
+		<property name="plate" value="6123AFG"/>
+		<property name="maxVolume" value="550" />
+		<property name="maxWeight" value="6000" />
+		<property name="pictures">
+			<list>
+				<value>http://sevillasecreta.co/wp-content/uploads/2016/03/Macarena.jpg</value>
+			</list>
+		</property>
+		<property name="comment" value="" />
+		<property name="solicitations">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="vehicle7" class="domain.Vehicle">
+		<property name="type" value="TRUCK" />
+		<property name="plate" value="7415AFG"/>
+		<property name="maxVolume" value="550" />
+		<property name="maxWeight" value="6000" />
+		<property name="pictures">
+			<list>
+				<value>http://sevillasecreta.co/wp-content/uploads/2016/03/Macarena.jpg</value>
+				<value>http://madafrica.es/kaaybarrios/wp-content/uploads/sites/5/2018/02/macarena.jpg</value>
+			</list>
+		</property>
+		<property name="comment" value="" />
+		<property name="solicitations">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="vehicle8" class="domain.Vehicle">
+		<property name="type" value="CAR" />
+		<property name="plate" value="9635AFG"/>
+		<property name="maxVolume" value="550" />
+		<property name="maxWeight" value="6000" />
+		<property name="pictures">
+			<list>
+				<value>http://sevillasecreta.co/wp-content/uploads/2016/03/Macarena.jpg</value>
+				<value>http://madafrica.es/kaaybarrios/wp-content/uploads/sites/5/2018/02/macarena.jpg</value>
+			</list>
+		</property>
+		<property name="comment" value="" />
+		<property name="solicitations">
+			<list>
+			</list>
+		</property>
+	</bean>
 	
 	
 	
