@@ -20,7 +20,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public class ProfessionalRecord extends DomainEntity {
+public class ProfessionalRecord extends DomainEntity implements Cloneable {
 
 	private String				companyName;
 	private Date				startTime;
@@ -28,6 +28,16 @@ public class ProfessionalRecord extends DomainEntity {
 	private String				attachment;
 	private Collection<String>	comments;
 
+
+	@Override
+	public Object clone() {
+		Object o = null;
+		try {
+			o = super.clone();
+		} catch (final CloneNotSupportedException ex) {
+		}
+		return o;
+	}
 
 	@NotBlank
 	@SafeHtml

@@ -15,12 +15,22 @@ import org.hibernate.validator.constraints.URL;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public class MiscellaneousRecord extends DomainEntity {
+public class MiscellaneousRecord extends DomainEntity implements Cloneable {
 
 	private String				title;
 	private String				attachment;
 	private Collection<String>	comments;
 
+
+	@Override
+	public Object clone() {
+		Object o = null;
+		try {
+			o = super.clone();
+		} catch (final CloneNotSupportedException ex) {
+		}
+		return o;
+	}
 
 	@NotBlank
 	@SafeHtml

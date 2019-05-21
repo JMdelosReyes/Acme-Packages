@@ -16,7 +16,7 @@ import org.hibernate.validator.constraints.URL;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public class Curriculum extends DomainEntity {
+public class Curriculum extends DomainEntity implements Cloneable {
 
 	private String							fullName;
 	private String							photo;
@@ -26,6 +26,16 @@ public class Curriculum extends DomainEntity {
 	private Collection<ProfessionalRecord>	professionalRecords;
 	private Collection<MiscellaneousRecord>	miscellaneousRecords;
 
+
+	@Override
+	public Object clone() {
+		Object o = null;
+		try {
+			o = super.clone();
+		} catch (final CloneNotSupportedException ex) {
+		}
+		return o;
+	}
 
 	@NotBlank
 	@SafeHtml
