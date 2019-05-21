@@ -1,5 +1,21 @@
 #./src/main/resources/Entities.map
-#Sun May 19 11:45:10 CEST 2019
-userAccount3=6
-userAccount2=5
-userAccount1=4
+#Tue May 21 10:48:49 CEST 2019
+messageBoxCus2-inbox=34
+messageBoxCus2-spambox=36
+messageBoxCus1-spambox=29
+messageBoxCus2-trashbox=37
+messageBoxCus2-outbox=35
+userAccount5=24
+userAccount4=23
+userAccount3=22
+messageBoxCus2-notibox=38
+userAccount2=21
+userAccount1=20
+messageBoxCus1-notibox=31
+finder2=33
+finder1=26
+customer2=32
+customer1=25
+messageBoxCus1-inbox=27
+messageBoxCus1-trashbox=30
+messageBoxCus1-outbox=28

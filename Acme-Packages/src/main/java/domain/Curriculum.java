@@ -23,8 +23,8 @@ public class Curriculum extends DomainEntity {
 	private String							email;
 	private String							phoneNumber;
 
-	private Collection<ProfessionalRecord>	professionalRecord;
-	private Collection<MiscellaneousRecord>	miscellaneousRecord;
+	private Collection<ProfessionalRecord>	professionalRecords;
+	private Collection<MiscellaneousRecord>	miscellaneousRecords;
 
 
 	@NotBlank
@@ -70,22 +70,22 @@ public class Curriculum extends DomainEntity {
 
 	@NotNull
 	@OneToMany(cascade = CascadeType.ALL)
-	public Collection<ProfessionalRecord> getProfesionalRecord() {
-		return this.professionalRecord;
+	public Collection<ProfessionalRecord> getProfessionalRecords() {
+		return this.professionalRecords;
 	}
 
-	public void setProfesionalRecords(final Collection<ProfessionalRecord> profesionalRecord) {
-		this.professionalRecord = profesionalRecord;
+	public void setProfessionalRecords(final Collection<ProfessionalRecord> professionalRecords) {
+		this.professionalRecords = professionalRecords;
 	}
 
 	@NotNull
 	@OneToMany(cascade = CascadeType.ALL)
-	public Collection<MiscellaneousRecord> getMiscellaneousRecord() {
-		return this.miscellaneousRecord;
+	public Collection<MiscellaneousRecord> getMiscellaneousRecords() {
+		return this.miscellaneousRecords;
 	}
 
-	public void setMiscellaneousRecord(final Collection<MiscellaneousRecord> miscellaneousRecord) {
-		this.miscellaneousRecord = miscellaneousRecord;
+	public void setMiscellaneousRecords(final Collection<MiscellaneousRecord> miscellaneousRecords) {
+		this.miscellaneousRecords = miscellaneousRecords;
 	}
 
 }

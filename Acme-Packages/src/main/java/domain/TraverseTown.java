@@ -18,7 +18,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Access(AccessType.PROPERTY)
 public class TraverseTown extends DomainEntity implements Cloneable {
 
-	private int		order;
+	private int		number;
 	private Date	estimatedDate;
 	private boolean	currentTown;
 	private Town	town;
@@ -34,12 +34,12 @@ public class TraverseTown extends DomainEntity implements Cloneable {
 		return o;
 	}
 
-	public int getOrder() {
-		return this.order;
+	public int getNumber() {
+		return this.number;
 	}
 
-	public void setOrder(final int order) {
-		this.order = order;
+	public void setNumber(final int number) {
+		this.number = number;
 	}
 
 	@NotNull
@@ -49,7 +49,7 @@ public class TraverseTown extends DomainEntity implements Cloneable {
 		return this.estimatedDate;
 	}
 
-	public void setEstimatedDate(Date estimatedDate) {
+	public void setEstimatedDate(final Date estimatedDate) {
 		this.estimatedDate = estimatedDate;
 	}
 

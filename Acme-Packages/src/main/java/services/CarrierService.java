@@ -4,7 +4,6 @@ package services;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.hibernate.engine.config.spi.ConfigurationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -33,16 +32,16 @@ import domain.Vehicle;
 public class CarrierService {
 
 	@Autowired
-	private CarrierRepository	carrierRepository;
+	private CarrierRepository		carrierRepository;
 
 	@Autowired
-	private UserAccountService	userAccountService;
+	private UserAccountService		userAccountService;
 
 	@Autowired
-	private ActorService actorService;
+	private ActorService			actorService;
 
 	@Autowired
-	private ConfigurationService configurationService;
+	private ConfigurationService	configurationService;
 
 
 	public CarrierService() {
@@ -160,9 +159,9 @@ public class CarrierService {
 			Assert.isTrue(Validators.checkCreditCard(carrier.getCreditCard()));
 			Assert.isTrue(this.configurationService.findOne().getMakes().contains(carrier.getCreditCard().getMake()));
 
-			Assert.isTrue(carrier.isBanned()==old.isBanned());
-			Assert.isTrue(carrier.isSpammer()==old.isSpammer());
-			Assert.isTrue(carrier.getScore()==old.getScore());
+			Assert.isTrue(carrier.isBanned() == old.isBanned());
+			Assert.isTrue(carrier.isSpammer() == old.isSpammer());
+			Assert.isTrue(carrier.getScore() == old.getScore());
 		}
 
 		result = this.carrierRepository.save(carrier);
@@ -182,9 +181,9 @@ public class CarrierService {
 		this.carrierRepository.flush();
 	}
 
-	public void adminUpdate(final Carrier carrier){
+	public void adminUpdate(final Carrier carrier) {
 		Assert.notNull(carrier);
-		Assert.isTrue(carrier.getId()>0);
+		Assert.isTrue(carrier.getId() > 0);
 		Assert.isTrue(this.actorService.findActorType().equals("Administrador"));
 
 		final Carrier old = this.carrierRepository.findOne(carrier.getId());

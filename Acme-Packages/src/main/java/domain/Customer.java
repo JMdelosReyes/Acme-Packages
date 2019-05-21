@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -21,7 +22,7 @@ public class Customer extends Actor implements Cloneable {
 
 
 	@NotNull
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	public Collection<Request> getRequests() {
 		return this.requests;
 	}
@@ -31,7 +32,7 @@ public class Customer extends Actor implements Cloneable {
 	}
 
 	@NotNull
-	@OneToMany(mappedBy = "customer")
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
 	public Collection<Evaluation> getEvaluations() {
 		return this.evaluations;
 	}
@@ -41,7 +42,7 @@ public class Customer extends Actor implements Cloneable {
 	}
 	@Valid
 	@NotNull
-	@OneToOne(optional = false)
+	@OneToOne(optional = false, cascade = CascadeType.ALL)
 	public Finder getFinder() {
 		return this.finder;
 	}
