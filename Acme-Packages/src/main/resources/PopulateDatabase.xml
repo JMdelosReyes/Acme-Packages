@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- 
  * PopulateDatabase.xml
@@ -78,26 +78,322 @@
 		</property>
 	</bean>
 	
+		<bean id="userAccount6" class="security.UserAccount">
+		<property name="username" value="auditor1" />
+		<property name="password" value="175d2e7a63f386554a4dd66e865c3e14" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="AUDITOR" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+		<bean id="userAccount7" class="security.UserAccount">
+		<property name="username" value="auditor2" />
+		<property name="password" value="04dd94ba3212ac52ad3a1f4cbfb52d4f" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="AUDITOR" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+		<bean id="userAccount8" class="security.UserAccount">
+		<property name="username" value="auditor3" />
+		<property name="password" value="fc2073dbe4f65dfd71e46602f8e6a5f3" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="AUDITOR" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+		<bean id="userAccount9" class="security.UserAccount">
+		<property name="username" value="auditor4" />
+		<property name="password" value="6cc8affcba51a854192a33af68c08f49" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="AUDITOR" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
 	
 	<!-- ADDRESS -->
 	
 	
 	<!-- ADMINISTRATOR -->
 	
+	<bean id="administrator" class="domain.Administrator">
+		<property name="name" value="Pepe" />
+		<property name="middleName" value="PV" />
+		<property name="surname" value="Viyuela" />
+		<property name="photo"
+			value="http://i.imgur.com/uGe5LfM.png" />
+		<property name="phoneNumber" value="+034656234123" />
+		<property name="email" value="admin@email.com" />
+		<property name="address" value="Avd Cosa Nº Casa Blq Piso 22ºA" />
+		<property name="spammer" value="false" />
+		<property name="banned" value="false" />
+	    <property name="creditCard" ref="creditcard1" />
+		<property name="socialProfiles">
+			<list>
+				<ref bean="socialProfile1" />
+			</list>
+		</property>
+		<property name="userAccount" ref="userAccount1" />
+		<property name="messageBoxes">
+			<list>
+				<ref bean="messageBoxAd-inbox" />
+				<ref bean="messageBoxAd-outbox" />
+				<ref bean="messageBoxAd-trashbox" />
+				<ref bean="messageBoxAd-spambox" />
+				<ref bean="messageBoxAd-notibox" />
+				
+			</list>
+		</property>
+	</bean>
+	
 	
 	<!-- AUDITOR -->
+	
+	<bean id="auditor1" class="domain.Auditor">
+		<property name="name" value="Manolita" />
+		<property name="surname" value="Gafotos"/>
+		<property name="middleName" value="" />
+		<property name="email" value="manolita@gafotos.com" />
+		<property name="photo" value="http://1.bp.blogspot.com/-reFIlIJEIsI/XGTUp4FXvlI/AAAAAAAADxA/tmYImyJKCnEipNZG2aVjizm7jsU1izy1QCK4BGAYYCw/s1600/08.png" />
+		<property name="phoneNumber" value="+034656234165" />
+		<property name="address" value="Avd Cosa Nº Casa Blq Piso 25ºA" />
+		<property name="spammer" value="false" />
+		<property name="creditCard" ref="creditcard1" />
+		<property name="banned" value="false" />
+		<property name="messageBoxes">
+			<list>
+				<ref bean="messageBoxAU1-inbox" />
+				<ref bean="messageBoxAU1-outbox" />
+				<ref bean="messageBoxAU1-spambox" />
+				<ref bean="messageBoxAU1-trashbox" />
+				<ref bean="messageBoxAU1-notibox" />
+			</list>
+		</property>
+		<property name="socialProfiles">
+			<list>
+			<ref bean="socialProfile2" />
+			</list>
+		</property>
+		<property name="userAccount" ref="userAccount6" />
+		<property name="issues">
+			<list>
+			</list>
+		</property>
+		<property name="solicitations">
+			<list>
+			</list>
+		</property>
+		
+	</bean>
+	
+	<bean id="auditor2" class="domain.Auditor">
+		<property name="name" value="Susan" />
+		<property name="surname" value="Prez"/>
+		<property name="middleName" value="" />
+		<property name="email" value="perez@ggmail.com" />
+		<property name="photo" value="http://1.bp.blogspot.com/-reFIlIJEIsI/XGTUp4FXvlI/AAAAAAAADxA/tmYImyJKCnEipNZG2aVjizm7jsU1izy1QCK4BGAYYCw/s1600/08.png" />
+		<property name="phoneNumber" value="+034656234165" />
+		<property name="address" value="Avd Cosa Nº Casa Blq Piso 25ºA" />
+		<property name="spammer" value="false" />
+		<property name="creditCard" ref="creditcard1" />
+		<property name="banned" value="false" />
+		<property name="messageBoxes">
+			<list>
+				<ref bean="messageBoxAU2-inbox" />
+				<ref bean="messageBoxAU2-outbox" />
+				<ref bean="messageBoxAU2-spambox" />
+				<ref bean="messageBoxAU2-trashbox" />
+				<ref bean="messageBoxAU2-notibox" />
+			</list>
+		</property>
+		<property name="socialProfiles">
+			<list>
+                     <ref bean="socialProfile3" />
+			</list>
+		</property>
+		<property name="userAccount" ref="userAccount7" />
+		<property name="issues">
+			<list>
+			</list>
+		</property>
+		<property name="solicitations">
+			<list>
+			</list>
+		</property>
+		
+	</bean>
+	
+	<bean id="auditor3" class="domain.Auditor">
+		<property name="name" value="Paco" />
+		<property name="surname" value="Grid"/>
+		<property name="middleName" value="" />
+		<property name="email" value="paco@grid.com" />
+		<property name="photo" value="http://1.bp.blogspot.com/-reFIlIJEIsI/XGTUp4FXvlI/AAAAAAAADxA/tmYImyJKCnEipNZG2aVjizm7jsU1izy1QCK4BGAYYCw/s1600/08.png" />
+		<property name="phoneNumber" value="+034656234165" />
+		<property name="address" value="Avd Cosa Nº Casa Blq Piso 25ºA" />
+		<property name="spammer" value="false" />
+		<property name="creditCard" ref="creditcard1" />
+		<property name="banned" value="false" />
+		<property name="messageBoxes">
+			<list>
+				<ref bean="messageBoxAU3-inbox" />
+				<ref bean="messageBoxAU3-outbox" />
+				<ref bean="messageBoxAU3-spambox" />
+				<ref bean="messageBoxAU3-trashbox" />
+				<ref bean="messageBoxAU3-notibox" />
+			</list>
+		</property>
+		<property name="socialProfiles">
+			<list>
+			</list>
+		</property>
+		<property name="userAccount" ref="userAccount8" />
+		<property name="issues">
+			<list>
+			</list>
+		</property>
+		<property name="solicitations">
+			<list>
+			</list>
+		</property>
+		
+	</bean>
+	
+	<bean id="auditor4" class="domain.Auditor">
+		<property name="name" value="Juanito" />
+		<property name="surname" value="Loren"/>
+		<property name="middleName" value="" />
+		<property name="email" value="juanito@gafotos.com" />
+		<property name="photo" value="http://1.bp.blogspot.com/-reFIlIJEIsI/XGTUp4FXvlI/AAAAAAAADxA/tmYImyJKCnEipNZG2aVjizm7jsU1izy1QCK4BGAYYCw/s1600/08.png" />
+		<property name="phoneNumber" value="+034656234165" />
+		<property name="address" value="Avd Cosa Nº Casa Blq Piso 25ºA" />
+		<property name="spammer" value="false" />
+		<property name="creditCard" ref="creditcard1" />
+		<property name="banned" value="false" />
+		<property name="messageBoxes">
+			<list>
+				<ref bean="messageBoxAU4-inbox" />
+				<ref bean="messageBoxAU4-outbox" />
+				<ref bean="messageBoxAU4-spambox" />
+				<ref bean="messageBoxAU4-trashbox" />
+				<ref bean="messageBoxAU4-notibox" />
+			</list>
+		</property>
+		<property name="socialProfiles">
+			<list>
+			</list>
+		</property>
+		<property name="userAccount" ref="userAccount9" />
+		<property name="issues">
+			<list>
+			</list>
+		</property>
+		<property name="solicitations">
+			<list>
+			</list>
+		</property>
+		
+	</bean>
+	
+	
 	
 	
 	<!-- CARRIER -->
 	
 	
 	<!-- CATEGORY -->
+	<bean id="category1" class="domain.Category">
+	    <property name="englishName" value="Heavy" />
+		<property name="spanishName" value="Pesado" />
+		<property name="englishDescription" value="More than 25KG" />
+		<property name="spanishDescription" value="Mas de 25kg" />
 	
+	</bean>
+	
+	<bean id="category2" class="domain.Category">
+	    <property name="englishName" value="Fragile" />
+		<property name="spanishName" value="Fragil" />
+		<property name="englishDescription" value="Package with fragile content" />
+		<property name="spanishDescription" value="Paquete con contenido fragil" />
+	
+	</bean>
+	
+	<bean id="category3" class="domain.Category">
+	    <property name="englishName" value="Urgent" />
+		<property name="spanishName" value="Urgente" />
+		<property name="englishDescription" value="Urgent package" />
+		<property name="spanishDescription" value="Paquete urgente" />
+	
+	</bean>
+	
+
 	
 	<!-- COMMENT -->
 	
 	
 	<!-- CONFIGURATION -->
+	
+	<bean id="configuration1" class="domain.Configuration">
+		<property name="systemName" value="Acme Rookies" />
+		<property name="banner" value="https://i.pinimg.com/originals/09/56/33/095633056151fa5d0988aacd6f0e6e73.jpg" />
+		<property name="englishMessage"
+			value="Welcome to Acme Rookies! We're IT rookie's favourite job marketplace!" />
+		<property name="spanishMessage"
+			value="¡Bienvenidos a Acme Rookies! ¡Somos el mercado de trabajo favorito de los profesionales de las TICs!" />
+		<property name="spamWords">
+			<list>
+				<value>sex</value>
+				<value>viagra</value>
+				<value>cialis</value>
+				<value>one million</value>
+				<value>you've been selected</value>
+				<value>Nigeria</value>
+				<value>sexo</value>
+				<value>un millón</value>
+				<value>ha sido seleccionado</value>
+			</list>
+		</property>
+		<property name="finderTime" value="1" />
+		<property name="finderResults" value="10" />
+		<property name="makes">
+			<list>
+				<value>VISA</value>
+				<value>MASTER</value>
+				<value>AMEX</value>
+				<value>DINNERS</value>
+				
+			</list>
+		</property>
+		<property name="countryCode" value="+34" />
+		
+		<property name="vat" value="21" />
+		<property name="messPriorities">
+			<list>
+				<value>HIGH</value>
+				<value>NEUTRAL</value>
+				<value>LOW</value>
+
+			</list>
+		</property>
+	
+
+	</bean>
 	
 	
 	<!-- CREDIT CARD -->
@@ -137,6 +433,10 @@
 		</property>
 		<property name="socialProfiles">
 			<list>
+			<ref bean="socialProfile4" />
+			<ref bean="socialProfile5" />
+			<ref bean="socialProfile6" />
+			<ref bean="socialProfile7" />
 			</list>
 		</property>
 		<property name="userAccount" ref="userAccount2" />
@@ -173,6 +473,9 @@
 		</property>
 		<property name="socialProfiles">
 			<list>
+			<ref bean="socialProfile8" />
+			<ref bean="socialProfile9" />
+			<ref bean="socialProfile10" />
 			</list>
 		</property>
 		<property name="userAccount" ref="userAccount3" />
@@ -316,6 +619,241 @@
 		
 	</bean>
 	
+	<bean id="messageBoxAd-inbox" class="domain.MessBox">
+		<property name="name" value="In box"/>
+		<property name="isSystem" value="true"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	
+	<bean id="messageBoxAd-outbox" class="domain.MessBox">
+		<property name="name" value="Out box"/>
+		<property name="isSystem" value="true"></property>
+		<property name="messages">
+			<list>
+			
+			</list>
+		</property>	
+		
+	</bean>
+	
+	<bean id="messageBoxAd-trashbox" class="domain.MessBox">
+		<property name="name" value="Trash box"/>
+		<property name="isSystem" value="true"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	
+	<bean id="messageBoxAd-spambox" class="domain.MessBox">
+		<property name="name" value="Spam box"/>
+		<property name="isSystem" value="true"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	
+	<bean id="messageBoxAd-notibox" class="domain.MessBox">
+		<property name="name" value="Notification box"/>
+		<property name="isSystem" value="true"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	
+	<bean id="messageBoxAU1-inbox" class="domain.MessBox">
+		<property name="name" value="In box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	<bean id="messageBoxAU1-outbox" class="domain.MessBox">
+		<property name="name" value="Out box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	<bean id="messageBoxAU1-spambox" class="domain.MessBox">
+		<property name="name" value="Spam box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	<bean id="messageBoxAU1-trashbox" class="domain.MessBox">
+		<property name="name" value="Trash box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	<bean id="messageBoxAU1-notibox" class="domain.MessBox">
+		<property name="name" value="Notification box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	
+	<bean id="messageBoxAU2-inbox" class="domain.MessBox">
+		<property name="name" value="In box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	<bean id="messageBoxAU2-outbox" class="domain.MessBox">
+		<property name="name" value="Out box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	<bean id="messageBoxAU2-spambox" class="domain.MessBox">
+		<property name="name" value="Spam box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	<bean id="messageBoxAU2-trashbox" class="domain.MessBox">
+		<property name="name" value="Trash box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	<bean id="messageBoxAU2-notibox" class="domain.MessBox">
+		<property name="name" value="Notification box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	
+	<bean id="messageBoxAU3-inbox" class="domain.MessBox">
+		<property name="name" value="In box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	<bean id="messageBoxAU3-outbox" class="domain.MessBox">
+		<property name="name" value="Out box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	<bean id="messageBoxAU3-spambox" class="domain.MessBox">
+		<property name="name" value="Spam box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	<bean id="messageBoxAU3-trashbox" class="domain.MessBox">
+		<property name="name" value="Trash box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	<bean id="messageBoxAU3-notibox" class="domain.MessBox">
+		<property name="name" value="Notification box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	
+	<bean id="messageBoxAU4-inbox" class="domain.MessBox">
+		<property name="name" value="In box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	<bean id="messageBoxAU4-outbox" class="domain.MessBox">
+		<property name="name" value="Out box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	<bean id="messageBoxAU4-spambox" class="domain.MessBox">
+		<property name="name" value="Spam box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	<bean id="messageBoxAU4-trashbox" class="domain.MessBox">
+		<property name="name" value="Trash box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	<bean id="messageBoxAU4-notibox" class="domain.MessBox">
+		<property name="name" value="Notification box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	
 	<!-- MISCELLANEOUS RECORD -->
 	
 	
@@ -332,6 +870,63 @@
 	
 	
 	<!-- SOCIAL PROFILE -->
+	
+	
+	<bean id="socialProfile1" class="domain.SocialProfile">
+		<property name="nick" value="Paco" />
+		<property name="socialNetwork" value="Facebook" />
+		<property name="profileLink" value="https://www.facebook.com" /> 			
+	</bean>
+	
+	<bean id="socialProfile2" class="domain.SocialProfile">
+		<property name="nick" value="Miguel" />
+		<property name="socialNetwork" value="Facebook" />
+		<property name="profileLink" value="https://www.facebook.com" /> 			
+	</bean>
+	
+	<bean id="socialProfile3" class="domain.SocialProfile">
+		<property name="nick" value="Antonio" />
+		<property name="socialNetwork" value="Twitter" />
+		<property name="profileLink" value="https://www.twitter.com" /> 			
+	</bean>
+	
+	<bean id="socialProfile4" class="domain.SocialProfile">
+		<property name="nick" value="Welinton" />
+		<property name="socialNetwork" value="Twitter" />
+		<property name="profileLink" value="https://www.twitter.com" /> 			
+	</bean>
+	
+	<bean id="socialProfile5" class="domain.SocialProfile">
+		<property name="nick" value="Hermandad Macarena" />
+		<property name="socialNetwork" value="Twitter" />
+		<property name="profileLink" value="https://www.twitter.com" /> 			
+	</bean>
+	
+	<bean id="socialProfile6" class="domain.SocialProfile">
+		<property name="nick" value="Hermandad Triana" />
+		<property name="socialNetwork" value="Twitter" />
+		<property name="profileLink" value="https://www.twitter.com" /> 			
+	</bean>
+	<bean id="socialProfile7" class="domain.SocialProfile">
+		<property name="nick" value="Chapter1996" />
+		<property name="socialNetwork" value="Twitter" />
+		<property name="profileLink" value="https://www.twitter.com" /> 			
+	</bean>
+	<bean id="socialProfile8" class="domain.SocialProfile">
+		<property name="nick" value="Chap221" />
+		<property name="socialNetwork" value="Twitter" />
+		<property name="profileLink" value="https://www.twitter.com" /> 			
+	</bean>
+	<bean id="socialProfile9" class="domain.SocialProfile">
+		<property name="nick" value="sp21" />
+		<property name="socialNetwork" value="Twitter" />
+		<property name="profileLink" value="https://www.twitter.com" /> 			
+	</bean>
+	<bean id="socialProfile10" class="domain.SocialProfile">
+		<property name="nick" value="sp22" />
+		<property name="socialNetwork" value="Twitter" />
+		<property name="profileLink" value="https://www.twitter.com" /> 			
+	</bean>
 	
 	
 	<!-- SOLICITATION -->
