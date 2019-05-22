@@ -25,7 +25,8 @@ public class Finder extends DomainEntity implements Cloneable {
 	private Date				minDate;
 	private Date				maxDate;
 	private String				category;
-	private Integer				minWeight;
+	private Double				weight;
+	private Double				volume;
 	private Date				lastUpdate;
 	private Collection<Offer>	offers;
 
@@ -86,14 +87,6 @@ public class Finder extends DomainEntity implements Cloneable {
 		this.category = category;
 	}
 
-	public Integer getMinWeight() {
-		return this.minWeight;
-	}
-
-	public void setMinWeight(final Integer minWeight) {
-		this.minWeight = minWeight;
-	}
-
 	@NotNull
 	@Past
 	@Temporal(TemporalType.TIMESTAMP)
@@ -114,6 +107,22 @@ public class Finder extends DomainEntity implements Cloneable {
 
 	public void setOffers(final Collection<Offer> offers) {
 		this.offers = offers;
+	}
+
+	public Double getWeight() {
+		return this.weight;
+	}
+
+	public void setWeight(final Double weight) {
+		this.weight = weight;
+	}
+
+	public Double getVolume() {
+		return this.volume;
+	}
+
+	public void setVolume(final Double volume) {
+		this.volume = volume;
 	}
 
 }
