@@ -181,8 +181,8 @@ public class CustomerService {
 				final UserAccount principal = LoginService.getPrincipal();
 				Assert.isTrue(this.actorService.findByUserAccountId(principal.getId()).getId() == cus.getId());
 
-				Assert.isTrue(old.isBanned() != cus.isBanned());
-				Assert.isTrue(old.isSpammer() != cus.isSpammer());
+				Assert.isTrue(old.getBanned() != cus.getBanned());
+				Assert.isTrue(old.getSpammer() != cus.getSpammer());
 				//The email must be a valid one
 				final String email = cus.getEmail();
 				final String pattern = "^[a-zA-Z0-9]{1,}@[a-zA-Z0-9\\.]{1,}|^[a-zA-Z0-9\\s]{1,}<[a-zA-Z0-9]{1,}@[a-zA-Z0-9\\.]{1,}>";

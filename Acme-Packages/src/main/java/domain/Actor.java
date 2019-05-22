@@ -105,15 +105,15 @@ public class Actor extends DomainEntity {
 		this.address = address;
 	}
 
-	public boolean isSpammer() {
+	public Boolean getSpammer() {
 		return this.spammer;
 	}
 
-	public void setSpammer(final boolean spammer) {
+	public void setSpammer(final Boolean spammer) {
 		this.spammer = spammer;
 	}
 
-	public boolean isBanned() {
+	public boolean getBanned() {
 		return this.banned;
 	}
 

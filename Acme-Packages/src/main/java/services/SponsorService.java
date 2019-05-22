@@ -68,8 +68,9 @@ public class SponsorService {
 		authentication = context.getAuthentication();
 
 		boolean check = false;
-		if ((authentication == null) || (authentication.getPrincipal().hashCode() == 1105384920))
+		if ((authentication == null) || (authentication.getPrincipal().hashCode() == 1105384920)) {
 			check = true;
+		}
 		Assert.isTrue(check);
 
 		final Sponsor result = new Sponsor();
@@ -114,8 +115,9 @@ public class SponsorService {
 			authentication = context.getAuthentication();
 
 			boolean check = false;
-			if ((authentication == null) || (authentication.getPrincipal().hashCode() == 1105384920))
+			if ((authentication == null) || (authentication.getPrincipal().hashCode() == 1105384920)) {
 				check = true;
+			}
 			Assert.isTrue(check);
 
 			UserAccount uc = sponsor.getUserAccount();
@@ -127,8 +129,9 @@ public class SponsorService {
 
 			if (sponsor.getPhoneNumber() != null) {
 				final String phone = sponsor.getPhoneNumber();
-				if (Validators.validPhone(phone))
+				if (Validators.validPhone(phone)) {
 					sponsor.setPhoneNumber(this.configurationService.findOne().getCountryCode() + phone);
+				}
 			}
 
 		} else {
@@ -144,12 +147,13 @@ public class SponsorService {
 
 				if (sponsor.getPhoneNumber() != null) {
 					final String phone = sponsor.getPhoneNumber();
-					if (Validators.validPhone(phone))
+					if (Validators.validPhone(phone)) {
 						sponsor.setPhoneNumber(this.configurationService.findOne().getCountryCode() + phone);
+					}
 				}
 
-				Assert.isTrue(sponsor.isBanned() == old.isBanned());
-				Assert.isTrue(sponsor.isSpammer() == old.isSpammer());
+				Assert.isTrue(sponsor.getBanned() == old.getBanned());
+				Assert.isTrue(sponsor.getSpammer() == old.getSpammer());
 				Assert.isTrue(sponsor.getNif() == old.getNif());
 			} else if (this.actorService.findActorType().equals("Administrator")) {
 				final Sponsor old = this.sponsorRepository.findOne(sponsor.getId());
@@ -184,8 +188,8 @@ public class SponsorService {
 		Assert.notNull(old);
 
 		final Sponsor clon = (Sponsor) old.clone();
-		clon.setBanned(sponsor.isBanned());
-		clon.setSpammer(sponsor.isSpammer());
+		clon.setBanned(sponsor.getBanned());
+		clon.setSpammer(sponsor.getSpammer());
 		clon.setSponsorships(sponsor.getSponsorships());
 		this.sponsorRepository.save(clon);
 	}

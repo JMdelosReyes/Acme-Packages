@@ -172,8 +172,8 @@ public class AuditorService {
 				Assert.isTrue(this.actorService.findByUserAccountId(principal.getId()).getId() == auditor.getId());
 
 				//The auditor can't change his or her privileges nor his or her boolean attributes
-				Assert.isTrue(auditor.isSpammer() == old.isSpammer());
-				Assert.isTrue(auditor.isBanned() == old.isBanned());
+				Assert.isTrue(auditor.getSpammer() == old.getSpammer());
+				Assert.isTrue(auditor.getBanned() == old.getBanned());
 				Assert.isTrue(auditor.getUserAccount().getAuthorities().equals(old.getUserAccount().getAuthorities()));
 
 				//The email must be a valid one

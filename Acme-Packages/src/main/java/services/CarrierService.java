@@ -43,6 +43,9 @@ public class CarrierService {
 	@Autowired
 	private ConfigurationService	configurationService;
 
+	@Autowired
+	private MessBoxService			messBoxService;
+
 
 	public CarrierService() {
 
@@ -71,8 +74,9 @@ public class CarrierService {
 		authentication = context.getAuthentication();
 
 		boolean check = false;
-		if ((authentication == null) || (authentication.getPrincipal().hashCode() == 1105384920))
+		if ((authentication == null) || (authentication.getPrincipal().hashCode() == 1105384920)) {
 			check = true;
+		}
 		Assert.isTrue(check);
 
 		final Carrier result = new Carrier();
@@ -121,25 +125,31 @@ public class CarrierService {
 			authentication = context.getAuthentication();
 
 			boolean check = false;
-			if ((authentication == null) || (authentication.getPrincipal().hashCode() == 1105384920))
+			if ((authentication == null) || (authentication.getPrincipal().hashCode() == 1105384920)) {
 				check = true;
+			}
 			Assert.isTrue(check);
 
 			UserAccount uc = carrier.getUserAccount();
 			uc.setPassword(HashPasswordParameter.generateHashPassword(uc.getPassword()));
 			uc = this.userAccountService.save(uc);
+			Assert.notNull(uc);
 			carrier.setUserAccount(uc);
+
+			carrier.setMessageBoxes(this.messBoxService.saveSystemBoxes(this.messBoxService.createSystemMessageBoxes()));
 
 			Assert.isTrue(Validators.validEmail(carrier.getEmail()));
 
 			if (carrier.getPhoneNumber() != null) {
 				final String phone = carrier.getPhoneNumber();
-				if (Validators.validPhone(phone))
+				if (Validators.validPhone(phone)) {
 					carrier.setPhoneNumber(this.configurationService.findOne().getCountryCode() + phone);
+				}
 			}
 
 			Assert.isTrue(Validators.checkCreditCard(carrier.getCreditCard()));
 			Assert.isTrue(this.configurationService.findOne().getMakes().contains(carrier.getCreditCard().getMake()));
+
 		} else {
 			final UserAccount principal = LoginService.getPrincipal();
 			Assert.isTrue(!this.actorService.findActorType().equals("Carrier"));
@@ -152,15 +162,16 @@ public class CarrierService {
 
 			if (carrier.getPhoneNumber() != null) {
 				final String phone = carrier.getPhoneNumber();
-				if (Validators.validPhone(phone))
+				if (Validators.validPhone(phone)) {
 					carrier.setPhoneNumber(this.configurationService.findOne().getCountryCode() + phone);
+				}
 			}
 
 			Assert.isTrue(Validators.checkCreditCard(carrier.getCreditCard()));
 			Assert.isTrue(this.configurationService.findOne().getMakes().contains(carrier.getCreditCard().getMake()));
 
-			Assert.isTrue(carrier.isBanned() == old.isBanned());
-			Assert.isTrue(carrier.isSpammer() == old.isSpammer());
+			Assert.isTrue(carrier.getBanned() == old.getBanned());
+			Assert.isTrue(carrier.getSpammer() == old.getSpammer());
 			Assert.isTrue(carrier.getScore() == old.getScore());
 		}
 
@@ -168,7 +179,6 @@ public class CarrierService {
 		Assert.notNull(result);
 		return result;
 	}
-
 	public void delete(final Carrier carrier) {
 		Assert.notNull(carrier);
 		Assert.isTrue(carrier.getId() > 0);
@@ -190,8 +200,8 @@ public class CarrierService {
 		Assert.notNull(old);
 
 		final Carrier clon = (Carrier) old.clone();
-		clon.setBanned(carrier.isBanned());
-		clon.setSpammer(carrier.isSpammer());
+		clon.setBanned(carrier.getBanned());
+		clon.setSpammer(carrier.getSpammer());
 		clon.setScore(carrier.getScore());
 		this.carrierRepository.save(clon);
 	}
