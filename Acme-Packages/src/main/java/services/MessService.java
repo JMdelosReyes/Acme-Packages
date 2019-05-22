@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.hibernate.engine.config.spi.ConfigurationService;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -87,7 +86,7 @@ public class MessService {
 		Assert.isTrue((mess.getSubject() != null) && (mess.getSubject() != ""));
 		Assert.notEmpty(mess.getRecipients());
 		Assert.isTrue((mess.getBody() != null) && (mess.getBody() != ""));
-		Assert.isTrue(this.confService.findOne().getPriorities().contains(mess.getPriority()));
+		Assert.isTrue(this.confService.findOne().getMessPriorities().contains(mess.getPriority()));
 
 		if (!noti) {
 			final UserAccount principal = LoginService.getPrincipal();
@@ -98,8 +97,6 @@ public class MessService {
 		if (type != "Administrator") {
 			Assert.isTrue(mess.getRecipients().size() <= (total - 2));
 		}
-
-		mess.setScore(this.computeScore(mess));
 
 		//Save in BBDD
 		final Mess result = this.messRepository.save(mess);
@@ -200,7 +197,6 @@ public class MessService {
 		result = mess;
 		result.setSendDate(DateTime.now().minusMillis(1000).toDate());
 		result.setSender(a);
-		result.setScore(this.computeScore(mess));
 
 		this.validator.validate(result, binding);
 
@@ -216,7 +212,6 @@ public class MessService {
 		result = mess;
 		result.setSendDate(DateTime.now().minusMillis(1000).toDate());
 		result.setSender(a);
-		result.setScore(this.computeScore(mess));
 		final Collection<Actor> all = this.actorService.findAll();
 		all.remove(a);
 		mess.setRecipients(all);

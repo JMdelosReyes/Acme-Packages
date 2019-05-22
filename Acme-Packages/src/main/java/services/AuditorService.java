@@ -140,8 +140,9 @@ public class AuditorService {
 			//Add ZipCode phoneNumber
 			if (auditor.getPhoneNumber() != null) {
 				final String phone = auditor.getPhoneNumber();
-				if (Validators.validPhone(phone))
+				if (Validators.validPhone(phone)) {
 					auditor.setPhoneNumber(this.configurationService.findOne().getCountryCode() + phone);
+				}
 			}
 
 			//COMPROBAR CREDITCARD
@@ -180,8 +181,9 @@ public class AuditorService {
 
 				if (auditor.getPhoneNumber() != null) {
 					final String phone = auditor.getPhoneNumber();
-					if (Validators.validPhone(phone))
+					if (Validators.validPhone(phone)) {
 						auditor.setPhoneNumber(this.configurationService.findOne().getCountryCode() + phone);
+					}
 				}
 
 				Assert.isTrue(Validators.checkCreditCard(auditor.getCreditCard()));

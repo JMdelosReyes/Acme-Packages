@@ -54,6 +54,16 @@ public class Request extends DomainEntity implements Cloneable {
 	public static final String	SUBMITTED	= "SUBMITTED";
 
 
+	@Override
+	public Object clone() {
+		Object o = null;
+		try {
+			o = super.clone();
+		} catch (final CloneNotSupportedException e) {
+		}
+		return o;
+	}
+
 	@NotBlank
 	public String getTicker() {
 		return this.ticker;

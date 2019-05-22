@@ -131,8 +131,9 @@ public class AdministratorService {
 			//Comprobacion de phonenumber
 			if (administrator.getPhoneNumber() != null) {
 				final String phone = administrator.getPhoneNumber();
-				if (Validators.validPhone(phone))
+				if (Validators.validPhone(phone)) {
 					administrator.setPhoneNumber(this.configurationService.findOne().getCountryCode() + phone);
+				}
 			}
 			//COMPROBAR CREDITCARD
 			Assert.isTrue(Validators.checkCreditCard(administrator.getCreditCard()));
@@ -148,8 +149,9 @@ public class AdministratorService {
 			//Comprobacion de phonenumber
 			if (administrator.getPhoneNumber() != null) {
 				final String phone = administrator.getPhoneNumber();
-				if (Validators.validPhone(phone))
+				if (Validators.validPhone(phone)) {
 					administrator.setPhoneNumber(this.configurationService.findOne().getCountryCode() + phone);
+				}
 			}
 			//COMPROBAR CREDITCARD
 			Assert.isTrue(Validators.checkCreditCard(administrator.getCreditCard()));

@@ -28,7 +28,6 @@ import domain.Sponsor;
 public class ActorService {
 
 	// Managed repository
-
 	@Autowired
 	private ActorRepository			actorRepository;
 
@@ -70,24 +69,29 @@ public class ActorService {
 			final Authority auth = new Authority();
 
 			auth.setAuthority(Authority.ADMIN);
-			if (userAccount.getAuthorities().contains(auth))
+			if (userAccount.getAuthorities().contains(auth)) {
 				type = "Administrator";
+			}
 
 			auth.setAuthority(Authority.AUDITOR);
-			if (userAccount.getAuthorities().contains(auth))
+			if (userAccount.getAuthorities().contains(auth)) {
 				type = "Auditor";
+			}
 
 			auth.setAuthority(Authority.CARRIER);
-			if (userAccount.getAuthorities().contains(auth))
+			if (userAccount.getAuthorities().contains(auth)) {
 				type = "Carrier";
+			}
 
 			auth.setAuthority(Authority.CUSTOMER);
-			if (userAccount.getAuthorities().contains(auth))
+			if (userAccount.getAuthorities().contains(auth)) {
 				type = "Customer";
+			}
 
 			auth.setAuthority(Authority.SPONSOR);
-			if (userAccount.getAuthorities().contains(auth))
+			if (userAccount.getAuthorities().contains(auth)) {
 				type = "Sponsor";
+			}
 
 		} catch (final Exception e) {
 		}
@@ -103,24 +107,29 @@ public class ActorService {
 		final Authority auth = new Authority();
 
 		auth.setAuthority(Authority.ADMIN);
-		if (userAccount.getAuthorities().contains(auth))
+		if (userAccount.getAuthorities().contains(auth)) {
 			type = "Administrator";
+		}
 
 		auth.setAuthority(Authority.AUDITOR);
-		if (userAccount.getAuthorities().contains(auth))
+		if (userAccount.getAuthorities().contains(auth)) {
 			type = "Auditor";
+		}
 
 		auth.setAuthority(Authority.CARRIER);
-		if (userAccount.getAuthorities().contains(auth))
+		if (userAccount.getAuthorities().contains(auth)) {
 			type = "Carrier";
+		}
 
 		auth.setAuthority(Authority.CUSTOMER);
-		if (userAccount.getAuthorities().contains(auth))
+		if (userAccount.getAuthorities().contains(auth)) {
 			type = "Customer";
+		}
 
 		auth.setAuthority(Authority.SPONSOR);
-		if (userAccount.getAuthorities().contains(auth))
+		if (userAccount.getAuthorities().contains(auth)) {
 			type = "Sponsor";
+		}
 
 		return type;
 	}

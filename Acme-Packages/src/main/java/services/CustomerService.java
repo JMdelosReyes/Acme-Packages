@@ -23,10 +23,7 @@ import utilities.HashPasswordParameter;
 import utilities.Validators;
 import domain.Actor;
 import domain.Customer;
-import domain.Evaluation;
-import domain.Finder;
 import domain.MessBox;
-import domain.Request;
 import domain.SocialProfile;
 
 @Service
@@ -73,8 +70,9 @@ public class CustomerService {
 		authentication = context.getAuthentication();
 
 		boolean check = false;
-		if ((authentication == null) || (authentication.getPrincipal().hashCode() == 1105384920))
+		if ((authentication == null) || (authentication.getPrincipal().hashCode() == 1105384920)) {
 			check = true;
+		}
 		Assert.isTrue(check);
 
 		final Customer res = new Customer();
@@ -95,9 +93,9 @@ public class CustomerService {
 		res.setUserAccount(userCus);
 
 		//Customer
-		res.setFinder(this.finderService.create());
-		res.setRequests(new ArrayList<Request>());
-		res.setEvaluations(new ArrayList<Evaluation>());
+		//		res.setFinder(this.finderService.create());
+		//		res.setRequests(new ArrayList<Request>());
+		//		res.setEvaluations(new ArrayList<Evaluation>());
 
 		return res;
 	}
@@ -113,8 +111,9 @@ public class CustomerService {
 			authentication = context.getAuthentication();
 
 			boolean check = false;
-			if ((authentication == null) || (authentication.getPrincipal().hashCode() == 1105384920))
+			if ((authentication == null) || (authentication.getPrincipal().hashCode() == 1105384920)) {
 				check = true;
+			}
 			Assert.isTrue(check);
 
 			//Hash password
@@ -124,9 +123,9 @@ public class CustomerService {
 			cus.setUserAccount(uc);
 
 			//Save finder
-			Assert.notNull(cus.getFinder());
-			final Finder finderSaved = this.finderService.save(cus.getFinder());
-			cus.setFinder(finderSaved);
+			//			Assert.notNull(cus.getFinder());
+			//			final Finder finderSaved = this.finderService.save(cus.getFinder());
+			//			cus.setFinder(finderSaved);
 
 			//The email must be a valid one
 			final String email = cus.getEmail();
@@ -141,8 +140,9 @@ public class CustomerService {
 				final String pattern2 = "^[0-9]{4,9}";
 				final Pattern r2 = Pattern.compile(pattern2);
 				final Matcher m2 = r2.matcher(phone);
-				if (m2.find())
+				if (m2.find()) {
 					cus.setPhoneNumber(this.confService.findOne().getCountryCode() + phone);
+				}
 			}
 			//Check credit card
 			Assert.isTrue(Validators.checkCreditCard(cus.getCreditCard()));
@@ -196,8 +196,9 @@ public class CustomerService {
 					final String pattern2 = "^[0-9]{4,9}";
 					final Pattern r2 = Pattern.compile(pattern2);
 					final Matcher m2 = r2.matcher(phone);
-					if (m2.find())
+					if (m2.find()) {
 						cus.setPhoneNumber(this.confService.findOne().getCountryCode() + phone);
+					}
 				}
 				//Check credit card
 				Assert.isTrue(Validators.checkCreditCard(cus.getCreditCard()));
