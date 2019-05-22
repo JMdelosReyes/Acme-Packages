@@ -130,7 +130,11 @@ public class CarrierService {
 			}
 			Assert.isTrue(check);
 
-			UserAccount uc = carrier.getUserAccount();
+			UserAccount uc = new UserAccount();
+			Authority auth = new Authority();
+			auth.setAuthority(Authority.CARRIER);
+			uc.addAuthority(auth);
+			uc.setUsername(carrier.getUserAccount().getUsername());
 			uc.setPassword(HashPasswordParameter.generateHashPassword(uc.getPassword()));
 			uc = this.userAccountService.save(uc);
 			Assert.notNull(uc);
@@ -152,9 +156,11 @@ public class CarrierService {
 
 		} else {
 			final UserAccount principal = LoginService.getPrincipal();
-			Assert.isTrue(!this.actorService.findActorType().equals("Carrier"));
+			Assert.isTrue(this.actorService.findActorType().equals("Carrier"));
 			final Carrier old = this.carrierRepository.findOne(carrier.getId());
 			Assert.notNull(old);
+
+			Assert.isTrue(carrier.getUserAccount().getUsername().equals(old.getUserAccount().getUsername()));
 
 			Assert.isTrue(this.actorService.findByUserAccountId(principal.getId()).getId() == carrier.getId());
 
