@@ -209,9 +209,6 @@
 			</list>
 		</property>
 	</bean>	
-	<!-- ADDRESS -->
-	
-	
 	<!-- ADMINISTRATOR -->
 	
 	<bean id="administrator" class="domain.Administrator">
@@ -711,72 +708,8 @@
 			</list>
 		</property>
 	</bean>
-	<!-- PROFESSIONAL RECORD -->
-	
-	<bean id="professionalRecord1" class="domain.ProfessionalRecord">
-		<property name="companyName" value="Google"/>
-		<property name="startTime" value="10/10/2017"/>
-		<property name="endTime" value="10/10/2018"/>
-		<property name="attachment" value="https://www.google.com"/>
-		<property name="comments">
-			<list>
-			</list>
-		</property>
-	</bean>
-	
-	<bean id="professionalRecord2" class="domain.ProfessionalRecord">
-		<property name="companyName" value="Zara"/>
-		<property name="startTime" value="10/10/2016"/>
-		<property name="endTime" value="10/10/2018"/>
-		<property name="attachment" value="https://www.zara.com"/>
-		<property name="comments">
-			<list>
-			</list>
-		</property>
-	</bean>
-	
-	<bean id="professionalRecord3" class="domain.ProfessionalRecord">
-		<property name="companyName" value="Mr. Pizza"/>
-		<property name="startTime" value="10/10/2015"/>
-		<property name="endTime" value="10/10/2017"/>
-		<property name="attachment" value="https://www.mrpizza.com.es/"/>
-		<property name="comments">
-			<list>
-			</list>
-		</property>
-	</bean>
-	
-	<!-- MISCELLANEOUS RECORD -->
-
-	<bean id="miscellaneousRecord1" class="domain.MiscellaneousRecord">
-		<property name="title" value="Se hablar 8 lenguas"/>	
-		<property name="attachment" value="https://www.link.com"/>
-		<property name="comments">
-			<list>
-			</list>
-		</property>
-	</bean>
-	
-	<bean id="miscellaneousRecord2" class="domain.MiscellaneousRecord">
-		<property name="title" value="Tengo un 12,5 en selectividad"/>	
-		<property name="attachment" value="https://www.link.com"/>
-		<property name="comments">
-			<list>
-			</list>
-		</property>
-	</bean>
-	
-	<bean id="miscellaneousRecord3" class="domain.MiscellaneousRecord">
-		<property name="title" value="Se tocar la flauta"/>	
-		<property name="attachment" value="https://www.link.com"/>
-		<property name="comments">
-			<list>
-			</list>
-		</property>
-	</bean>
 	
 	<!-- CUSTOMER -->
-	
 	<bean id="customer1" class="domain.Customer">
 		<property name="name" value="Manolito" />
 		<property name="surname" value="Gafotas"/>
@@ -808,6 +741,8 @@
 		<property name="userAccount" ref="userAccount2" />
 		<property name="requests">
 			<list>
+			<ref bean="request1"/>
+			<ref bean="request2"/>		
 			</list>
 		</property>
 		<property name="evaluations">
@@ -987,7 +922,57 @@
 	
 	
 	<!-- MESS -->
-	
+	<bean id="messageAd1Out" class="domain.Mess">
+		<property name="sendDate" value="10/20/2018 09:00"/>
+		<property name="subject" value="Message Ad1-->CUS1/CAR1"/>
+		<property name="body" value="Message Ad1-->CUS1/CAR1"/>
+		<property name="priority" value="HIGH" />
+		<property name="tags">
+			<list>
+			</list>
+		</property>
+		<property name="sender" ref="administrator"/>
+		<property name="recipients">
+			<list>
+				<ref bean="customer1"/>
+				<ref bean="carrier1"/>
+			</list>
+		</property>	
+	</bean>
+	<bean id="messageAd1InCus1" class="domain.Mess">
+		<property name="sendDate" value="10/20/2018 09:00"/>
+		<property name="subject" value="Message Ad1-->CUS1/CAR1"/>
+		<property name="body" value="Message Ad1-->CUS1/CAR1"/>
+		<property name="priority" value="HIGH" />
+		<property name="tags">
+			<list>
+			</list>
+		</property>
+		<property name="sender" ref="administrator"/>
+		<property name="recipients">
+			<list>
+				<ref bean="customer1"/>
+				<ref bean="carrier1"/>
+			</list>
+		</property>	
+	</bean>
+	<bean id="messageAd1InCar1" class="domain.Mess">
+		<property name="sendDate" value="10/20/2018 09:00"/>
+		<property name="subject" value="Message Ad1-->CUS1/CAR1"/>
+		<property name="body" value="Message Ad1-->CUS1/CAR1"/>
+		<property name="priority" value="HIGH" />
+		<property name="tags">
+			<list>
+			</list>
+		</property>
+		<property name="sender" ref="administrator"/>
+		<property name="recipients">
+			<list>
+				<ref bean="customer1"/>
+				<ref bean="carrier1"/>
+			</list>
+		</property>	
+	</bean>
 	
 	<!-- MESSBOX -->
 	<!-- <property name="parent" ref="messageBoxAd-Custom1"/> -->
@@ -1006,7 +991,7 @@
 		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
-			
+			<ref bean="messageAd1Out"/>
 			</list>
 		</property>	
 		
@@ -1231,6 +1216,7 @@
 		<property name="isSystem" value="false"></property>
 		<property name="messages">
 			<list>
+			<ref bean="messageAd1InCus1"/>
 			</list>
 		</property>	
 		
@@ -1412,6 +1398,7 @@
 		<property name="isSystem" value="false"></property>
 		<property name="messages">
 			<list>
+			<ref bean="messageAd1InCar1"/>
 			</list>
 		</property>	
 	</bean>
@@ -1722,19 +1709,171 @@
 		</property>			
 	</bean>	
 	<!-- MISCELLANEOUS RECORD -->
+
+	<bean id="miscellaneousRecord1" class="domain.MiscellaneousRecord">
+		<property name="title" value="Se hablar 8 lenguas"/>	
+		<property name="attachment" value="https://www.link.com"/>
+		<property name="comments">
+			<list>
+			</list>
+		</property>
+	</bean>
 	
+	<bean id="miscellaneousRecord2" class="domain.MiscellaneousRecord">
+		<property name="title" value="Tengo un 12,5 en selectividad"/>	
+		<property name="attachment" value="https://www.link.com"/>
+		<property name="comments">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="miscellaneousRecord3" class="domain.MiscellaneousRecord">
+		<property name="title" value="Se tocar la flauta"/>	
+		<property name="attachment" value="https://www.link.com"/>
+		<property name="comments">
+			<list>
+			</list>
+		</property>
+	</bean>
 	
 	<!-- OFFER -->
 	
 	
 	<!-- PACKAGE -->
-	
+	<bean id="package1" class="domain.Package">
+		<property name="weight" value="1500" />
+		<property name="height" value="1.5" />
+		<property name="width" value="1.5" />
+		<property name="length" value="1" /> 		
+		<property name="price" value="" />
+		<property name="description" value="Mi play 5" />
+		<property name="categories">
+			<list>
+			<ref bean="category1"/>
+			</list>
+		</property>
+	</bean>
+	<bean id="package2" class="domain.Package">
+		<property name="weight" value="1500" />
+		<property name="height" value="2" />
+		<property name="width" value="2" />
+		<property name="length" value="1" /> 		
+		<property name="price" value="" />
+		<property name="description" value="Mi play 6" />
+		<property name="categories">
+			<list>
+			<ref bean="category2"/>
+			</list>
+		</property>
+	</bean>
+	<bean id="package3" class="domain.Package">
+		<property name="weight" value="7000" />
+		<property name="height" value="5" />
+		<property name="width" value="5" />
+		<property name="length" value="3" /> 		
+		<property name="price" value="" />
+		<property name="description" value="Mi play 2" />
+		<property name="categories">
+			<list>
+			<ref bean="category3"/>
+			</list>
+		</property>
+	</bean>
+	<bean id="package4" class="domain.Package">
+		<property name="weight" value="4400" />
+		<property name="height" value="20" />
+		<property name="width" value="40" />
+		<property name="length" value="10" /> 		
+		<property name="price" value="" />
+		<property name="description" value="Mi play 3" />
+		<property name="categories">
+			<list>
+			<ref bean="category2"/>
+			</list>
+		</property>
+	</bean>
 	
 	<!-- PROFESSIONAL RECORD -->
 	
+	<bean id="professionalRecord1" class="domain.ProfessionalRecord">
+		<property name="companyName" value="Google"/>
+		<property name="startTime" value="10/10/2017"/>
+		<property name="endTime" value="10/10/2018"/>
+		<property name="attachment" value="https://www.google.com"/>
+		<property name="comments">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="professionalRecord2" class="domain.ProfessionalRecord">
+		<property name="companyName" value="Zara"/>
+		<property name="startTime" value="10/10/2016"/>
+		<property name="endTime" value="10/10/2018"/>
+		<property name="attachment" value="https://www.zara.com"/>
+		<property name="comments">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="professionalRecord3" class="domain.ProfessionalRecord">
+		<property name="companyName" value="Mr. Pizza"/>
+		<property name="startTime" value="10/10/2015"/>
+		<property name="endTime" value="10/10/2017"/>
+		<property name="attachment" value="https://www.mrpizza.com.es/"/>
+		<property name="comments">
+			<list>
+			</list>
+		</property>
+	</bean>
 	
 	<!-- REQUEST -->
-	
+	<bean id="request1" class="domain.Request">
+		<property name="ticker" value="010119-XNNM23" />
+		<property name="moment" value="01/01/2019 10:00" />
+		<property name="description" value="Tened mucho cuidaito" />
+		<property name="maxPrice" value="100"/>
+		<property name="deadline" value="10/06/2019" />
+		<property name="finalMode" value="false" /> 
+		<property name="volume" value="1.5"/>
+		<property name="weight" value="1500" />
+		<property name="streetAddress" value="Calle pinta" />
+		<property name="comment" value="Cuidadito con el envio, rufianes" />
+		<property name="town" ref="town1" />
+		<!--  <property name="status" ></property>-->
+		<!-- <property name="offer" ref="" /> -->
+		<property name="packages">
+			<list>
+			<ref bean="package1"/>
+			<ref bean="package2"/>
+			</list>
+		</property>
+		<!--  <property name="issue" value="false" /> -->		 			
+	</bean>
+	<bean id="request2" class="domain.Request">
+		<property name="ticker" value="020219-CMCPL" />
+		<property name="moment" value="02/02/2019 10:00" />
+		<property name="description" value="Tened aun mas cuidadito" />
+		<property name="maxPrice" value="50"/>
+		<property name="deadline" value="10/07/2019" />
+		<property name="finalMode" value="false" /> 
+		<property name="volume" value="8075"/>
+		<property name="weight" value="11400" />
+		<property name="streetAddress" value="Calle la niña de las flores" />
+		<property name="comment" value="Cuidadito con el envio, rufianes" />
+		<property name="town" ref="town2" />
+		<!--  <property name="status" ></property>-->
+		<!-- <property name="offer" ref="" /> -->
+		<property name="packages">
+			<list>
+			<ref bean="package3"/>
+			<ref bean="package4"/>
+			</list>
+		</property>
+		<!--  <property name="issue" value="false" /> -->		 			
+	</bean>
 	
 	<!-- SOCIAL PROFILE -->
 	<bean id="socialProfile1" class="domain.SocialProfile">

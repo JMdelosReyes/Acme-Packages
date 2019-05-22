@@ -6,7 +6,6 @@ import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -42,10 +41,12 @@ public class Request extends DomainEntity implements Cloneable {
 	private double				volume;
 	private double				weight;
 	private String				status;
+	private String				streetAddress;
+	private String				comment;
 
+	private Town				town;
 	private Offer				offer;
 	private Collection<Package>	packages;
-	private Address				address;
 	private Issue				issue;
 
 	public static final String	ACCEPTED	= "ACCEPTED";
@@ -106,7 +107,7 @@ public class Request extends DomainEntity implements Cloneable {
 
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	public Date getDeadline() {
 		return this.deadline;
 	}
@@ -148,6 +149,34 @@ public class Request extends DomainEntity implements Cloneable {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	@NotBlank
+	@SafeHtml
+	public String getStreetAddress() {
+		return this.streetAddress;
+	}
+
+	public void setStreetAddress(String streetAddress) {
+		this.streetAddress = streetAddress;
+	}
+	@NotBlank
+	@SafeHtml
+	public String getComment() {
+		return this.comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+	@ManyToOne(optional = false)
+	@Valid
+	public Town getTown() {
+		return this.town;
+	}
+
+	public void setTown(Town town) {
+		this.town = town;
+	}
 
 	@Valid
 	@ManyToOne(optional = true)
@@ -169,15 +198,6 @@ public class Request extends DomainEntity implements Cloneable {
 		this.packages = packages;
 	}
 
-	@Valid
-	@ManyToOne(optional = false, cascade = CascadeType.ALL)
-	public Address getAddress() {
-		return this.address;
-	}
-
-	public void setAddress(Address address) {
-		this.address = address;
-	}
 	@Valid
 	@OneToOne(optional = true)
 	public Issue getIssue() {
