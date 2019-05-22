@@ -938,7 +938,8 @@
 		<property name="town" value="" />
 		<property name="maxPrice" value="" />
 		<property name="category" value="" />
-		<property name="minWeight" value="" />
+		<property name="weight" value="" />
+		<property name="volume" value="" />
 		<property name="lastUpdate" value="05/01/2019 11:00" />
 		<property name="offers">
 			<list>
@@ -949,7 +950,8 @@
 		<property name="town" value="" />
 		<property name="maxPrice" value="" />
 		<property name="category" value="" />
-		<property name="minWeight" value="" />
+		<property name="weight" value="" />
+		<property name="volume" value="" />
 		<property name="lastUpdate" value="05/01/2019 10:00" />
 		<property name="offers">
 			<list>
@@ -960,7 +962,8 @@
 		<property name="town" value="" />
 		<property name="maxPrice" value="" />
 		<property name="category" value="" />
-		<property name="minWeight" value="" />
+		<property name="weight" value="" />
+		<property name="volume" value="" />
 		<property name="lastUpdate" value="05/01/2019 11:00" />
 		<property name="offers">
 			<list>
@@ -971,7 +974,8 @@
 		<property name="town" value="" />
 		<property name="maxPrice" value="" />
 		<property name="category" value="" />
-		<property name="minWeight" value="" />
+		<property name="weight" value="" />
+		<property name="volume" value="" />
 		<property name="lastUpdate" value="05/01/2019 10:00" />
 		<property name="offers">
 			<list>
