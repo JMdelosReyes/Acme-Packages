@@ -76,6 +76,7 @@ public class IssueService {
 		return result;
 	}
 
+	//El requestId solo es necesario para la creación, para edición se puede pasar null
 	public Issue save(final Issue issue, final Integer requestId) {
 		Assert.notNull(issue);
 		Issue result = null;
@@ -110,7 +111,7 @@ public class IssueService {
 			final Customer customer = this.customerService.findOne(id);
 			Assert.notNull(customer);
 
-			//TODO: Comprobar que sea el dueño de la request
+			Assert.isTrue(this.findIssuesOfCustomer(id).contains(old));
 
 			Assert.isTrue(old.getDescription().equals(issue.getDescription()));
 			Assert.isTrue(old.getMoment().equals(issue.getMoment()));
@@ -175,7 +176,7 @@ public class IssueService {
 		final Customer customer = this.customerService.findOne(id);
 		Assert.notNull(customer);
 
-		//TODO COMPROBAR QUE PERTENECE AL CUSTOMER
+		Assert.isTrue(this.findIssuesOfCustomer(id).contains(old));
 
 		Assert.isTrue(old.isClosed());
 
@@ -184,6 +185,12 @@ public class IssueService {
 
 	public void flush() {
 		this.issueRepository.flush();
+	}
+
+	public Collection<Issue> findIssuesOfCustomer(int idCustomer) {
+		final Collection<Issue> issue = this.issueRepository.issuesOfCustomer(idCustomer);
+		Assert.notNull(issue);
+		return issue;
 	}
 
 }

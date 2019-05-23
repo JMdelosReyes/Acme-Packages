@@ -70,6 +70,7 @@ public class SolicitationService {
 		return result;
 	}
 
+	//VehicleId solo es necesario cuando es una nueva solicitud, en otro caso se puede pasar null
 	public Solicitation save(final Solicitation solicitation, final Integer vehicleId) {
 		Assert.notNull(solicitation);
 		Solicitation result = null;
@@ -102,11 +103,7 @@ public class SolicitationService {
 			final Carrier carrier = this.carrierService.findOne(id);
 			Assert.notNull(carrier);
 
-			final Vehicle vehicle = this.vehicleService.findOne(vehicleId);
-
-			Assert.isTrue(carrier.getVehicles().contains(vehicle));
-
-			Assert.isTrue(vehicle.getSolicitations().contains(old));
+			Assert.isTrue(this.findSolicitationsOfCarrier(id).contains(old));
 
 			Assert.isTrue(old.getStatus().equals("PENDING"));
 			Assert.isTrue(old.getStatus().equals(solicitation.getStatus()));
@@ -149,7 +146,7 @@ public class SolicitationService {
 		final Carrier carrier = this.carrierService.findOne(id);
 		Assert.notNull(carrier);
 
-		//TODO COMPROBAR QUE PERTENECE AL CARRIER
+		Assert.isTrue(this.findSolicitationsOfCarrier(id).contains(old));
 
 		Assert.isTrue(old.getStatus().equals("PENDING"));
 
@@ -158,6 +155,12 @@ public class SolicitationService {
 
 	public void flush() {
 		this.solicitationRepository.flush();
+	}
+
+	public Collection<Solicitation> findSolicitationsOfCarrier(int idCarrier) {
+		final Collection<Solicitation> solicitations = this.solicitationRepository.solicitationsOfCarrier(idCarrier);
+		Assert.notNull(solicitations);
+		return solicitations;
 	}
 
 }

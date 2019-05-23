@@ -87,7 +87,7 @@ public class CommentService {
 			this.issueService.save(issue, null);
 		} catch (Throwable t) {
 			this.commentRepository.delete(result);
-			throw new IllegalArgumentException();
+			throw t;
 		}
 
 		return result;

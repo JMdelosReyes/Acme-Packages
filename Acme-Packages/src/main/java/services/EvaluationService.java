@@ -79,7 +79,8 @@ public class EvaluationService {
 		evaluation.setCustomer(customer);
 		evaluation.setMoment(DateTime.now().minusMillis(1000).toDate());
 
-		//TODO Comprobar que tenga una request con esa offer
+		Assert.isTrue(this.findOffersOfCustomer(id).contains(evaluation.getOffer()));
+		Assert.isTrue(!this.findOffersOfCustomerEvaluated(id).contains(evaluation.getOffer()));
 
 		result = this.evaluationRepository.save(evaluation);
 		Assert.notNull(result);
@@ -96,6 +97,18 @@ public class EvaluationService {
 
 	public void flush() {
 		this.evaluationRepository.flush();
+	}
+
+	private Collection<Offer> findOffersOfCustomer(int idCustomer) {
+		final Collection<Offer> issue = this.evaluationRepository.offerOfCustomer(idCustomer);
+		Assert.notNull(issue);
+		return issue;
+	}
+
+	private Collection<Offer> findOffersOfCustomerEvaluated(int idCustomer) {
+		final Collection<Offer> issue = this.evaluationRepository.offerOfCustomerEvaluateds(idCustomer);
+		Assert.notNull(issue);
+		return issue;
 	}
 
 }
