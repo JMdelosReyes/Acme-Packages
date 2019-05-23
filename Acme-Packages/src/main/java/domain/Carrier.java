@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
@@ -56,7 +57,7 @@ public class Carrier extends Actor implements Cloneable {
 	}
 
 	@NotNull
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	public Collection<Curriculum> getCurricula() {
 		return this.curricula;
 	}
@@ -66,7 +67,7 @@ public class Carrier extends Actor implements Cloneable {
 	}
 
 	@NotNull
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	public Collection<Fare> getFares() {
 		return this.fares;
 	}
@@ -76,7 +77,7 @@ public class Carrier extends Actor implements Cloneable {
 	}
 
 	@NotNull
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	public Collection<Offer> getOffers() {
 		return this.offers;
 	}
@@ -86,7 +87,7 @@ public class Carrier extends Actor implements Cloneable {
 	}
 
 	@NotNull
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	public Collection<Vehicle> getVehicles() {
 		return this.vehicles;
 	}

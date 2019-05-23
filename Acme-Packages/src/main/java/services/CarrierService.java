@@ -189,7 +189,7 @@ public class CarrierService {
 		Assert.notNull(carrier);
 		Assert.isTrue(carrier.getId() > 0);
 		Assert.isTrue(this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId() == carrier.getId());
-		//TODO BORRAR MIERDA
+		//TODO BORRAR MIERDA (de momento no falla nada)
 		this.carrierRepository.delete(carrier.getId());
 	}
 
