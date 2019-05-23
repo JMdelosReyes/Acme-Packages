@@ -11,6 +11,7 @@ import org.springframework.util.Assert;
 
 import repositories.VehicleRepository;
 import security.LoginService;
+import utilities.Validators;
 import domain.Carrier;
 import domain.Solicitation;
 import domain.Vehicle;
@@ -74,7 +75,7 @@ public class VehicleService {
 		final Carrier carrier = this.carrierService.findOne(id);
 		Assert.notNull(carrier);
 
-		// TODO Comprobar cosas en reconstruct
+		Assert.isTrue(Validators.checkImageCollection(vehicle.getPictures()));
 
 		if (vehicle.getId() == 0) {
 			result = this.vehicleRepository.save(vehicle);
@@ -86,13 +87,21 @@ public class VehicleService {
 			Assert.notNull(old);
 			Assert.isTrue(carrier.getVehicles().contains(old));
 
+			if (old.getSolicitations().size() > 0) {
+				Assert.isTrue(old.getMaxVolume().equals(vehicle.getMaxVolume()));
+				Assert.isTrue(old.getMaxWeight().equals(vehicle.getMaxWeight()));
+				Assert.isTrue(old.getPictures().equals(vehicle.getPictures()));
+				Assert.isTrue(old.getPlate().equals(vehicle.getPlate()));
+				Assert.isTrue(old.getComment().equals(vehicle.getComment()));
+				Assert.isTrue(old.getType().equals(vehicle.getType()));
+			}
+
 			result = this.vehicleRepository.save(vehicle);
 			Assert.notNull(result);
 		}
 
 		return result;
 	}
-
 	public void delete(final Vehicle vehicle) {
 		Assert.notNull(vehicle);
 		Assert.isTrue(vehicle.getId() > 0);
@@ -106,7 +115,7 @@ public class VehicleService {
 		Assert.notNull(old);
 		Assert.isTrue(carrier.getVehicles().contains(old));
 
-		// TODO Comprobar cosas previas antes de borrar
+		Assert.isTrue(this.vehicleRepository.canBeDeleted(vehicle.getId()));
 
 		carrier.getVehicles().remove(old);
 		this.vehicleRepository.delete(old.getId());
