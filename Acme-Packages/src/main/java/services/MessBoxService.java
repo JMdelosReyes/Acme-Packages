@@ -408,4 +408,10 @@ public class MessBoxService {
 
 		return result;
 	}
+
+	public Collection<MessBox> findAll() {
+		Collection<MessBox> res;
+		res = this.messBoxRepository.findAll();
+		return res;
+	}
 }

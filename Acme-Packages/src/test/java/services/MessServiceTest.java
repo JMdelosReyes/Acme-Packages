@@ -162,7 +162,7 @@ public class MessServiceTest extends AbstractTest {
 	}
 	/*
 	 * Requirement tested: An actor can copy mess to any mess box that are not system boxes
-	 * Sentence coverage: 95.5%
+	 * Sentence coverage: 95.7%
 	 * Data coverage: 40% as we've tested 3 out of 5 possible combinations, one per each actor
 	 */
 	@Test

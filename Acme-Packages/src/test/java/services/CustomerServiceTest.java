@@ -42,7 +42,7 @@ public class CustomerServiceTest extends AbstractTest {
 	}
 	/*
 	 * Sentence coverage: 100%
-	 * Data coverage: 100% as the method does not receive any parameter
+	 * Data coverage: 100% as we have tested valid and invalid ids
 	 */
 	@Test
 	public void driverFindOne() {
@@ -84,8 +84,8 @@ public class CustomerServiceTest extends AbstractTest {
 	}
 
 	/*
-	 * Sentence coverage: 100%
-	 * Data coverage: 100% as the method does not receive any parameter
+	 * Sentence coverage: 73.1%
+	 * Data coverage: 0.045%, as we have tested 8 of 17496 possibilities
 	 */
 
 	@Test
@@ -172,7 +172,7 @@ public class CustomerServiceTest extends AbstractTest {
 
 	/*
 	 * Sentence coverage: 73.1%
-	 * Data coverage: as we have tested XX of XX posibilities
+	 * Data coverage: 0.051%, as we have tested 9 of 17496 possibilities
 	 */
 	@Test
 	public void driverSave() {

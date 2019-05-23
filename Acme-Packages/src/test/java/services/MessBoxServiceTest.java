@@ -1,6 +1,8 @@
 
 package services;
 
+import java.util.Collection;
+
 import javax.transaction.Transactional;
 
 import org.junit.Test;
@@ -8,6 +10,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.util.Assert;
 
 import security.LoginService;
 import security.UserAccount;
@@ -30,8 +33,58 @@ public class MessBoxServiceTest extends AbstractTest {
 
 
 	/*
+	 * Sentence coverage: 100%
+	 * Data coverage: 100% as the method does not receive any parameter
+	 */
+	@Test
+	public void testFindAll() {
+		Collection<MessBox> messBoxes;
+		messBoxes = this.messageBoxService.findAll();
+		Assert.notNull(messBoxes);
+	}
+	/*
+	 * Sentence coverage: 93.3%
+	 * Data coverage: 100% as have tested with a valid and not valid id
+	 */
+	@Test
+	public void driverFindOne() {
+		Object testingData[][] = {
+			{
+				// Correct: The customer exists in the database
+				super.getEntityId("messageBoxAd-inbox"), null
+			}, {
+				// Correct: The customer exists in the database
+				super.getEntityId("messageBoxAU1-inbox"), null
+			}, {
+				// Correct: The customer exists in the database
+				super.getEntityId("messageBoxCus1-inbox"), null
+			}, {
+				// Incorrect: The id must be higher than zero
+				0, IllegalArgumentException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++) {
+			this.testFindOne((int) testingData[i][0], (Class<?>) testingData[i][1]);
+		}
+	}
+	protected void testFindOne(int id, Class<?> expected) {
+		Class<?> caught;
+		MessBox messBox;
+
+		caught = null;
+		try {
+			messBox = this.messageBoxService.findOne(id);
+		} catch (Throwable oops) {
+			caught = oops.getClass();
+		}
+
+		this.checkExceptions(expected, caught);
+	}
+
+	/*
 	 * Requirement tested: An actor can be able to create a new mess box in database
-	 * Sentence coverage: 86.3%
+	 * Sentence coverage: 98.4%
 	 * Data coverage: 36.666% as we've tested 11 out of 30 possible combinations
 	 */
 	@Test
@@ -93,7 +146,7 @@ public class MessBoxServiceTest extends AbstractTest {
 	}
 	/*
 	 * Requirement tested: An actor can create and update a mess box
-	 * Sentence coverage: 86.3%
+	 * Sentence coverage: 98.4%
 	 * Data coverage: 36.666% as we've tested 11 out of 30 possible combinations
 	 */
 	@Test
