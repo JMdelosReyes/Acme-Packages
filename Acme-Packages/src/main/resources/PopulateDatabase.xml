@@ -2491,52 +2491,59 @@
 	</bean>	
 	
 	<!-- TOWN -->
+	
 	<bean id="town1" class="domain.Town">
 		<property name="name" value="Huesca" />
 		<property name="zipCode" value="22001"/>
-		<property name="country" value="Spain" />
+		<property name="county" value="Huesca" />
 	</bean>
 	
 	<bean id="town2" class="domain.Town">
 		<property name="name" value="Zaragoza" />
-		<property name="zipCode" value="50001"/>
-		<property name="country" value="Spain" />
+		<property name="zipCode" value="45678"/>
+		<property name="county" value="Zaragoza" />
 	</bean>
 	
 	<bean id="town3" class="domain.Town">
-		<property name="name" value="Huesca" />
+		<property name="name" value="Madrid" />
 		<property name="zipCode" value="44001"/>
-		<property name="country" value="Spain" />
+		<property name="county" value="Madrid" />
 	</bean>
 	
 	<bean id="town4" class="domain.Town">
 		<property name="name" value="Sevilla" />
-		<property name="zipCode" value="41008"/>
-		<property name="country" value="Spain" />
+		<property name="zipCode" value="45612"/>
+		<property name="county" value="Sevilla" />
 	</bean>
 	
 	<bean id="town5" class="domain.Town">
 		<property name="name" value="Cádiz" />
-		<property name="zipCode" value="11001"/>
-		<property name="country" value="Spain" />
+		<property name="zipCode" value="98745"/>
+		<property name="county" value="Cádiz" />
 	</bean>
 	
 	<bean id="town6" class="domain.Town">
 		<property name="name" value="Córdoba" />
-		<property name="zipCode" value="44001"/>
-		<property name="country" value="Spain" />
+		<property name="zipCode" value="62589"/>
+		<property name="county" value="Córdoba" />
 	</bean>
 	
 	<bean id="town7" class="domain.Town">
 		<property name="name" value="Huelva" />
-		<property name="zipCode" value="21001"/>
-		<property name="country" value="Spain" />
+		<property name="zipCode" value="456954"/>
+		<property name="county" value="Huelva" />
 	</bean>
 	
 	<bean id="town8" class="domain.Town">
 		<property name="name" value="Almería" />
 		<property name="zipCode" value="04001"/>
-		<property name="country" value="Spain" />
+		<property name="county" value="Almería" />
+	</bean>
+	
+	<bean id="town9" class="domain.Town">
+		<property name="name" value="Málaga" />
+		<property name="zipCode" value="04081"/>
+		<property name="county" value="Málaga" />
 	</bean>
 	
 	<!-- TRAVERSE TOWN -->
