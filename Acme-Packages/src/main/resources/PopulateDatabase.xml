@@ -424,14 +424,24 @@
 		</property>
 		<property name="fares">
 			<list>
+				<ref bean="fare1" />
+				<ref bean="fare2" />
+				<ref bean="fare3" />
+				<ref bean="fare4" />
 			</list>
 		</property>
 		<property name="offers">
 			<list>
+				<ref bean="offer1"/>
+				<ref bean="offer2"/>
+				<ref bean="offer3"/>
+				<ref bean="offer4"/>
 			</list>
 		</property>
 		<property name="vehicles">
 			<list>
+				<ref bean="vehicle1" />
+				<ref bean="vehicle2" />
 			</list>
 		</property>
 	</bean>
@@ -470,14 +480,20 @@
 		</property>
 		<property name="fares">
 			<list>
+				<ref bean="fare5" />
+				<ref bean="fare6" />
 			</list>
 		</property>
 		<property name="offers">
 			<list>
+				<ref bean="offer5"/>
+				<ref bean="offer6"/>
 			</list>
 		</property>
 		<property name="vehicles">
 			<list>
+				<ref bean="vehicle3" />
+				<ref bean="vehicle4" />
 			</list>
 		</property>
 	</bean>
@@ -516,14 +532,22 @@
 		</property>
 		<property name="fares">
 			<list>
+				<ref bean="fare7" />
+				<ref bean="fare8" />
+				<ref bean="fare9" />
+				<ref bean="fare10" />
 			</list>
 		</property>
 		<property name="offers">
 			<list>
+				<ref bean="offer7"/>
+				<ref bean="offer8"/>
 			</list>
 		</property>
 		<property name="vehicles">
 			<list>
+				<ref bean="vehicle5" />
+				<ref bean="vehicle6" />
 			</list>
 		</property>
 	</bean>
@@ -533,7 +557,7 @@
 		<property name="surname" value="Bebe"/>
 		<property name="middleName" value="Mal" />
 		<property name="email" value="nino@mal.com" />
-		<property name="photo" value="https://media.giphy.com/media/iJDMSw4A1MBxJ5H9YD/giphy.gif" />
+		<property name="photo" value="https://media.tenor.com/images/03d14473d64a6a3b486e53f9d2600b4a/tenor.gif" />
 		<property name="phoneNumber" value="+034656534565" />
 		<property name="address" value="Avd Cosa Nº Casa Blq Piso 25ºA" />
 		<property name="spammer" value="false" />
@@ -561,6 +585,8 @@
 		</property>
 		<property name="fares">
 			<list>
+				<ref bean="fare11" />
+				<ref bean="fare12" />
 			</list>
 		</property>
 		<property name="offers">
@@ -569,6 +595,8 @@
 		</property>
 		<property name="vehicles">
 			<list>
+				<ref bean="vehicle7" />
+				<ref bean="vehicle8" />
 			</list>
 		</property>
 	</bean>
@@ -866,6 +894,102 @@
 	
 	
 	<!-- FARE -->
+	
+	<bean id="fare1" class="domain.Fare">
+		<property name="minWeight" value="0" />
+		<property name="maxWeight" value="5" />
+		<property name="minVolume" value="0" />
+		<property name="maxVolume" value="1" />
+		<property name="price" value="5.95" />
+	</bean>
+	
+	<bean id="fare2" class="domain.Fare">
+		<property name="minWeight" value="0" />
+		<property name="maxWeight" value="5" />
+		<property name="minVolume" value="1" />
+		<property name="maxVolume" value="3" />
+		<property name="price" value="7.95" />
+	</bean>
+	
+	<bean id="fare3" class="domain.Fare">
+		<property name="minWeight" value="6" />
+		<property name="maxWeight" value="10" />
+		<property name="minVolume" value="0" />
+		<property name="maxVolume" value="1" />
+		<property name="price" value="8.95" />
+	</bean>
+	
+	<bean id="fare4" class="domain.Fare">
+		<property name="minWeight" value="6" />
+		<property name="maxWeight" value="10" />
+		<property name="minVolume" value="1" />
+		<property name="maxVolume" value="3" />
+		<property name="price" value="9.95" />
+	</bean>
+	
+	<bean id="fare5" class="domain.Fare">
+		<property name="minWeight" value="0" />
+		<property name="maxWeight" value="5" />
+		<property name="minVolume" value="0" />
+		<property name="maxVolume" value="1" />
+		<property name="price" value="5.95" />
+	</bean>
+	
+	<bean id="fare6" class="domain.Fare">
+		<property name="minWeight" value="6" />
+		<property name="maxWeight" value="15" />
+		<property name="minVolume" value="1" />
+		<property name="maxVolume" value="3" />
+		<property name="price" value="8.95" />
+	</bean>
+	
+	<bean id="fare7" class="domain.Fare">
+		<property name="minWeight" value="0" />
+		<property name="maxWeight" value="10" />
+		<property name="minVolume" value="0" />
+		<property name="maxVolume" value="2" />
+		<property name="price" value="6.95" />
+	</bean>
+	
+	<bean id="fare8" class="domain.Fare">
+		<property name="minWeight" value="11" />
+		<property name="maxWeight" value="20" />
+		<property name="minVolume" value="0" />
+		<property name="maxVolume" value="2" />
+		<property name="price" value="9.95" />
+	</bean>
+	
+	<bean id="fare9" class="domain.Fare">
+		<property name="minWeight" value="0" />
+		<property name="maxWeight" value="10" />
+		<property name="minVolume" value="3" />
+		<property name="maxVolume" value="5" />
+		<property name="price" value="10.95" />
+	</bean>
+	
+	<bean id="fare10" class="domain.Fare">
+		<property name="minWeight" value="11" />
+		<property name="maxWeight" value="20" />
+		<property name="minVolume" value="3" />
+		<property name="maxVolume" value="5" />
+		<property name="price" value="14.95" />
+	</bean>
+	
+	<bean id="fare11" class="domain.Fare">
+		<property name="minWeight" value="0" />
+		<property name="maxWeight" value="5" />
+		<property name="minVolume" value="0" />
+		<property name="maxVolume" value="1" />
+		<property name="price" value="5.95" />
+	</bean>
+	
+	<bean id="fare12" class="domain.Fare">
+		<property name="minWeight" value="6" />
+		<property name="maxWeight" value="15" />
+		<property name="minVolume" value="1" />
+		<property name="maxVolume" value="3" />
+		<property name="price" value="8.95" />
+	</bean>
 	
 	
 	<!-- FINDER -->
@@ -1739,6 +1863,262 @@
 	
 	<!-- OFFER -->
 	
+	<bean id="offer1" class="domain.Offer">
+		<property name="ticker" value="190523-ASD123" />
+		<property name="finalMode" value="true" />
+		<property name="maxDateToRequest" value="05/05/2020" />
+		<property name="canceled" value="false" /> 		
+		<property name="score" value="5" />
+		<property name="totalPrice" value="500" />
+		<property name="fares">
+			<list>
+				<ref bean="fare1"/>
+				<ref bean="fare2"/>
+				<ref bean="fare3"/>
+				<ref bean="fare4"/>
+			</list>
+		</property>
+		<property name="vehicle" ref="vehicle1" />
+		<property name="evaluations">
+			<list>
+			</list>
+		</property>
+		<property name="requests">
+			<list>
+			</list>
+		</property>
+		<property name="traverseTowns">
+			<list>
+				<ref bean="traverseTown1"/>
+				<ref bean="traverseTown2"/>
+				<ref bean="traverseTown3"/>
+				<ref bean="traverseTown4"/>
+				<ref bean="traverseTown5"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="offer2" class="domain.Offer">
+		<property name="ticker" value="190523-ASD125" />
+		<property name="finalMode" value="true" />
+		<property name="maxDateToRequest" value="04/04/2020" />
+		<property name="canceled" value="false" /> 		
+		<property name="score" value="5" />
+		<property name="totalPrice" value="700" />
+		<property name="fares">
+			<list>
+				<ref bean="fare1"/>
+				<ref bean="fare2"/>
+				<ref bean="fare3"/>
+				<ref bean="fare4"/>
+			</list>
+		</property>
+		<property name="vehicle" ref="vehicle1" />
+		<property name="evaluations">
+			<list>
+			</list>
+		</property>
+		<property name="requests">
+			<list>
+			</list>
+		</property>
+		<property name="traverseTowns">
+			<list>
+				<ref bean="traverseTown6"/>
+				<ref bean="traverseTown7"/>
+				<ref bean="traverseTown8"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="offer3" class="domain.Offer">
+		<property name="ticker" value="190523-ASD456" />
+		<property name="finalMode" value="true" />
+		<property name="maxDateToRequest" value="05/05/2020" />
+		<property name="canceled" value="true" /> 		
+		<property name="score" value="5" />
+		<property name="totalPrice" value="0" />
+		<property name="fares">
+			<list>
+				<ref bean="fare1"/>
+				<ref bean="fare2"/>
+				<ref bean="fare3"/>
+				<ref bean="fare4"/>
+			</list>
+		</property>
+		<property name="vehicle" ref="vehicle1" />
+		<property name="evaluations">
+			<list>
+			</list>
+		</property>
+		<property name="requests">
+			<list>
+			</list>
+		</property>
+		<property name="traverseTowns">
+			<list>
+				<ref bean="traverseTown9"/>
+				<ref bean="traverseTown10"/>
+				<ref bean="traverseTown11"/>
+				<ref bean="traverseTown12"/>
+				<ref bean="traverseTown13"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="offer4" class="domain.Offer">
+		<property name="ticker" value="190523-ASD987" />
+		<property name="finalMode" value="false" />
+		<property name="maxDateToRequest" value="05/05/2020" />
+		<property name="canceled" value="false" /> 		
+		<property name="score" value="5" />
+		<property name="totalPrice" value="500" />
+		<property name="fares">
+			<list>
+			</list>
+		</property>
+		<property name="vehicle" ref="vehicle1" />
+		<property name="evaluations">
+			<list>
+			</list>
+		</property>
+		<property name="requests">
+			<list>
+			</list>
+		</property>
+		<property name="traverseTowns">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="offer5" class="domain.Offer">
+		<property name="ticker" value="190523-ASD159" />
+		<property name="finalMode" value="true" />
+		<property name="maxDateToRequest" value="05/05/2020" />
+		<property name="canceled" value="false" /> 		
+		<property name="score" value="0" />
+		<property name="totalPrice" value="100" />
+		<property name="fares">
+			<list>
+				<ref bean="fare5"/>
+				<ref bean="fare6"/>
+			</list>
+		</property>
+		<property name="vehicle" ref="vehicle3" />
+		<property name="evaluations">
+			<list>
+			</list>
+		</property>
+		<property name="requests">
+			<list>
+			</list>
+		</property>
+		<property name="traverseTowns">
+			<list>
+				<ref bean="traverseTown14"/>
+				<ref bean="traverseTown15"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="offer6" class="domain.Offer">
+		<property name="ticker" value="190523-ASD682" />
+		<property name="finalMode" value="true" />
+		<property name="maxDateToRequest" value="05/05/2020" />
+		<property name="canceled" value="false" /> 		
+		<property name="score" value="0" />
+		<property name="totalPrice" value="500" />
+		<property name="fares">
+			<list>
+				<ref bean="fare5"/>
+				<ref bean="fare6"/>
+			</list>
+		</property>
+		<property name="vehicle" ref="vehicle3" />
+		<property name="evaluations">
+			<list>
+			</list>
+		</property>
+		<property name="requests">
+			<list>
+			</list>
+		</property>
+		<property name="traverseTowns">
+			<list>
+				<ref bean="traverseTown16"/>
+				<ref bean="traverseTown17"/>
+				<ref bean="traverseTown18"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="offer7" class="domain.Offer">
+		<property name="ticker" value="190523-LKJ123" />
+		<property name="finalMode" value="true" />
+		<property name="maxDateToRequest" value="05/05/2019" />
+		<property name="canceled" value="false" /> 		
+		<property name="score" value="5" />
+		<property name="totalPrice" value="500" />
+		<property name="fares">
+			<list>
+				<ref bean="fare7"/>
+				<ref bean="fare8"/>
+				<ref bean="fare9"/>
+				<ref bean="fare10"/>
+			</list>
+		</property>
+		<property name="vehicle" ref="vehicle5" />
+		<property name="evaluations">
+			<list>
+			</list>
+		</property>
+		<property name="requests">
+			<list>
+			</list>
+		</property>
+		<property name="traverseTowns">
+			<list>
+				<ref bean="traverseTown19"/>
+				<ref bean="traverseTown20"/>
+				<ref bean="traverseTown21"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="offer8" class="domain.Offer">
+		<property name="ticker" value="190523-POI123" />
+		<property name="finalMode" value="true" />
+		<property name="maxDateToRequest" value="05/05/2020" />
+		<property name="canceled" value="false" /> 		
+		<property name="score" value="5" />
+		<property name="totalPrice" value="500" />
+		<property name="fares">
+			<list>
+				<ref bean="fare7"/>
+				<ref bean="fare8"/>
+				<ref bean="fare9"/>
+				<ref bean="fare10"/>
+			</list>
+		</property>
+		<property name="vehicle" ref="vehicle5" />
+		<property name="evaluations">
+			<list>
+			</list>
+		</property>
+		<property name="requests">
+			<list>
+			</list>
+		</property>
+		<property name="traverseTowns">
+			<list>
+				<ref bean="traverseTown22"/>
+				<ref bean="traverseTown23"/>
+				<ref bean="traverseTown24"/>
+			</list>
+		</property>
+	</bean>
+	
 	
 	<!-- PACKAGE -->
 	<bean id="package1" class="domain.Package">
@@ -2121,8 +2501,174 @@
 	</bean>
 	
 	<!-- TRAVERSE TOWN -->
-
 	
+	<bean id="traverseTown1" class="domain.TraverseTown">
+		<property name="number" value="1" />
+		<property name="estimatedDate" value="05/06/2020"/>
+		<property name="currentTown" value="false" />
+		<property name="town" ref="town1" />
+	</bean>
+	
+	<bean id="traverseTown2" class="domain.TraverseTown">
+		<property name="number" value="2" />
+		<property name="estimatedDate" value="05/07/2020"/>
+		<property name="currentTown" value="false" />
+		<property name="town" ref="town2" />
+	</bean>
+	
+	<bean id="traverseTown3" class="domain.TraverseTown">
+		<property name="number" value="3" />
+		<property name="estimatedDate" value="05/08/2020"/>
+		<property name="currentTown" value="false" />
+		<property name="town" ref="town3" />
+	</bean>
+	
+	<bean id="traverseTown4" class="domain.TraverseTown">
+		<property name="number" value="4" />
+		<property name="estimatedDate" value="05/09/2020"/>
+		<property name="currentTown" value="false" />
+		<property name="town" ref="town4" />
+	</bean>
+	
+	<bean id="traverseTown5" class="domain.TraverseTown">
+		<property name="number" value="5" />
+		<property name="estimatedDate" value="05/10/2020"/>
+		<property name="currentTown" value="false" />
+		<property name="town" ref="town5" />
+	</bean>
+	
+	<bean id="traverseTown6" class="domain.TraverseTown">
+		<property name="number" value="1" />
+		<property name="estimatedDate" value="04/05/2020"/>
+		<property name="currentTown" value="false" />
+		<property name="town" ref="town3" />
+	</bean>
+	
+	<bean id="traverseTown7" class="domain.TraverseTown">
+		<property name="number" value="2" />
+		<property name="estimatedDate" value="04/06/2020"/>
+		<property name="currentTown" value="false" />
+		<property name="town" ref="town4" />
+	</bean>
+	
+	<bean id="traverseTown8" class="domain.TraverseTown">
+		<property name="number" value="3" />
+		<property name="estimatedDate" value="04/07/2020"/>
+		<property name="currentTown" value="false" />
+		<property name="town" ref="town5" />
+	</bean>
+	
+	<bean id="traverseTown9" class="domain.TraverseTown">
+		<property name="number" value="1" />
+		<property name="estimatedDate" value="05/06/2020"/>
+		<property name="currentTown" value="false" />
+		<property name="town" ref="town1" />
+	</bean>
+	
+	<bean id="traverseTown10" class="domain.TraverseTown">
+		<property name="number" value="2" />
+		<property name="estimatedDate" value="05/07/2020"/>
+		<property name="currentTown" value="false" />
+		<property name="town" ref="town2" />
+	</bean>
+	
+	<bean id="traverseTown11" class="domain.TraverseTown">
+		<property name="number" value="3" />
+		<property name="estimatedDate" value="05/08/2020"/>
+		<property name="currentTown" value="false" />
+		<property name="town" ref="town3" />
+	</bean>
+	
+	<bean id="traverseTown12" class="domain.TraverseTown">
+		<property name="number" value="4" />
+		<property name="estimatedDate" value="05/09/2020"/>
+		<property name="currentTown" value="false" />
+		<property name="town" ref="town4" />
+	</bean>
+	
+	<bean id="traverseTown13" class="domain.TraverseTown">
+		<property name="number" value="5" />
+		<property name="estimatedDate" value="05/10/2020"/>
+		<property name="currentTown" value="false" />
+		<property name="town" ref="town5" />
+	</bean>
+	
+	<bean id="traverseTown14" class="domain.TraverseTown">
+		<property name="number" value="1" />
+		<property name="estimatedDate" value="05/09/2020"/>
+		<property name="currentTown" value="false" />
+		<property name="town" ref="town6" />
+	</bean>
+	
+	<bean id="traverseTown15" class="domain.TraverseTown">
+		<property name="number" value="2" />
+		<property name="estimatedDate" value="05/10/2020"/>
+		<property name="currentTown" value="false" />
+		<property name="town" ref="town7" />
+	</bean>
+	
+	<bean id="traverseTown16" class="domain.TraverseTown">
+		<property name="number" value="1" />
+		<property name="estimatedDate" value="05/09/2020"/>
+		<property name="currentTown" value="false" />
+		<property name="town" ref="town6" />
+	</bean>
+	
+	<bean id="traverseTown17" class="domain.TraverseTown">
+		<property name="number" value="2" />
+		<property name="estimatedDate" value="05/10/2020"/>
+		<property name="currentTown" value="false" />
+		<property name="town" ref="town7" />
+	</bean>
+	
+	<bean id="traverseTown18" class="domain.TraverseTown">
+		<property name="number" value="3" />
+		<property name="estimatedDate" value="05/11/2020"/>
+		<property name="currentTown" value="false" />
+		<property name="town" ref="town8" />
+	</bean>
+	
+	<bean id="traverseTown19" class="domain.TraverseTown">
+		<property name="number" value="1" />
+		<property name="estimatedDate" value="05/09/2019"/>
+		<property name="currentTown" value="false" />
+		<property name="town" ref="town6" />
+	</bean>
+	
+	<bean id="traverseTown20" class="domain.TraverseTown">
+		<property name="number" value="2" />
+		<property name="estimatedDate" value="05/10/2019"/>
+		<property name="currentTown" value="false" />
+		<property name="town" ref="town7" />
+	</bean>
+	
+	<bean id="traverseTown21" class="domain.TraverseTown">
+		<property name="number" value="3" />
+		<property name="estimatedDate" value="05/11/2019"/>
+		<property name="currentTown" value="false" />
+		<property name="town" ref="town8" />
+	</bean>
+
+	<bean id="traverseTown22" class="domain.TraverseTown">
+		<property name="number" value="1" />
+		<property name="estimatedDate" value="05/09/2020"/>
+		<property name="currentTown" value="false" />
+		<property name="town" ref="town6" />
+	</bean>
+	
+	<bean id="traverseTown23" class="domain.TraverseTown">
+		<property name="number" value="2" />
+		<property name="estimatedDate" value="05/10/2020"/>
+		<property name="currentTown" value="false" />
+		<property name="town" ref="town7" />
+	</bean>
+	
+	<bean id="traverseTown24" class="domain.TraverseTown">
+		<property name="number" value="3" />
+		<property name="estimatedDate" value="05/11/2020"/>
+		<property name="currentTown" value="false" />
+		<property name="town" ref="town8" />
+	</bean>
 	
 	<!-- VEHICLE -->
 	
@@ -2133,8 +2679,8 @@
 		<property name="maxWeight" value="5000" />
 		<property name="pictures">
 			<list>
-				<value>http://sevillasecreta.co/wp-content/uploads/2016/03/Macarena.jpg</value>
-				<value>http://madafrica.es/kaaybarrios/wp-content/uploads/sites/5/2018/02/macarena.jpg</value>
+				<value>https://cdn.topgear.es/sites/navi.axelspringer.es/public/styles/main_element/public/media/image/2018/02/fiat-multipla-primera-generacion-1998.jpg</value>
+				<value>http://hablemosdecoches.com/wp-content/uploads/2017/11/Multipla-main.jpg</value>
 			</list>
 		</property>
 		<property name="comment" value="Multipla" />
@@ -2151,7 +2697,7 @@
 		<property name="maxWeight" value="6000" />
 		<property name="pictures">
 			<list>
-				<value>http://sevillasecreta.co/wp-content/uploads/2016/03/Macarena.jpg</value>
+				<value>https://secretscotland.files.wordpress.com/2018/02/fiatmultipla.jpg</value>
 			</list>
 		</property>
 		<property name="comment" value="" />
@@ -2168,7 +2714,7 @@
 		<property name="maxWeight" value="6000" />
 		<property name="pictures">
 			<list>
-				<value>http://sevillasecreta.co/wp-content/uploads/2016/03/Macarena.jpg</value>
+				<value>https://i.ytimg.com/vi/_IN8ImNyS68/maxresdefault.jpg</value>
 			</list>
 		</property>
 		<property name="comment" value="" />
@@ -2185,7 +2731,7 @@
 		<property name="maxWeight" value="6000" />
 		<property name="pictures">
 			<list>
-				<value>http://madafrica.es/kaaybarrios/wp-content/uploads/sites/5/2018/02/macarena.jpg</value>
+				<value>https://ae01.alicdn.com/kf/HTB1gHNBIpXXXXXPXVXXq6xXFXXXY/Tourfella-Aluminum-motorcycle-panniers-system-for-R1200GS-F800GS-F650.jpg_640x640.jpg</value>
 			</list>
 		</property>
 		<property name="comment" value="" />
@@ -2202,7 +2748,7 @@
 		<property name="maxWeight" value="6000" />
 		<property name="pictures">
 			<list>
-				<value>http://sevillasecreta.co/wp-content/uploads/2016/03/Macarena.jpg</value>
+				<value>https://awesomestuff365.com/wp-content/uploads/2018/04/Scooby-Doo-Mystery-Machine-Van-9.jpg</value>
 			</list>
 		</property>
 		<property name="comment" value="" />
@@ -2219,7 +2765,7 @@
 		<property name="maxWeight" value="6000" />
 		<property name="pictures">
 			<list>
-				<value>http://sevillasecreta.co/wp-content/uploads/2016/03/Macarena.jpg</value>
+				<value>https://www.chevroletbuickgmcofmurfreesboro.com/assets/stock/colormatched/white/640/cc_2019chv33_03_640/cc_2019chv330001_03_640_gaz.jpg</value>
 			</list>
 		</property>
 		<property name="comment" value="" />
@@ -2236,8 +2782,7 @@
 		<property name="maxWeight" value="6000" />
 		<property name="pictures">
 			<list>
-				<value>http://sevillasecreta.co/wp-content/uploads/2016/03/Macarena.jpg</value>
-				<value>http://madafrica.es/kaaybarrios/wp-content/uploads/sites/5/2018/02/macarena.jpg</value>
+				<value>https://media.wired.com/photos/5b9c3d5e7d9d332cf364ad66/master/pass/AV-Trucks-187479297.jpg</value>
 			</list>
 		</property>
 		<property name="comment" value="" />
@@ -2254,17 +2799,14 @@
 		<property name="maxWeight" value="6000" />
 		<property name="pictures">
 			<list>
-				<value>http://sevillasecreta.co/wp-content/uploads/2016/03/Macarena.jpg</value>
-				<value>http://madafrica.es/kaaybarrios/wp-content/uploads/sites/5/2018/02/macarena.jpg</value>
+				<value>https://i.ytimg.com/vi/gAwqvynkMeY/maxresdefault.jpg</value>
 			</list>
 		</property>
-		<property name="comment" value="" />
+		<property name="comment" value="Who you gonna call?" />
 		<property name="solicitations">
 			<list>
 			</list>
 		</property>
 	</bean>
-	
-	
-	
+
 </beans>
