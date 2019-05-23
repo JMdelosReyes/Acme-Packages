@@ -626,6 +626,36 @@
 		<property name="spanishDescription" value="Paquete urgente" />
 	
 	</bean>
+	<bean id="category4" class="domain.Category">
+	    <property name="englishName" value="Category 4" />
+		<property name="spanishName" value="Categoria 4" />
+		<property name="englishDescription" value="Category 4" />
+		<property name="spanishDescription" value="Categoria 4" />
+	
+	</bean>
+	<bean id="category5" class="domain.Category">
+	    <property name="englishName" value="Category 5" />
+		<property name="spanishName" value="Category 5" />
+		<property name="englishDescription" value="Category 5" />
+		<property name="spanishDescription" value="Categoria 5" />
+	
+	</bean>
+	<bean id="category6" class="domain.Category">
+	    <property name="englishName" value="Category 6" />
+		<property name="spanishName" value="Categoria 6" />
+		<property name="englishDescription" value="Category 6" />
+		<property name="spanishDescription" value="Categoria 6" />
+	
+	</bean>
+	<bean id="category7" class="domain.Category">
+	    <property name="englishName" value="Category 7" />
+		<property name="spanishName" value="Categoria 7" />
+		<property name="englishDescription" value="Category 7" />
+		<property name="spanishDescription" value="Categoria 7" />
+	
+	</bean>
+
+	
 	
 	<!-- COMMENT -->
 	
