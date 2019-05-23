@@ -74,22 +74,17 @@ public class TraverseTownService {
 		final Carrier carrier = this.carrierService.findOne(id);
 		Assert.notNull(carrier);
 
-		// TODO Hay que comprobar el orden, las fechas...
-
 		if (traverseTown.getId() == 0) {
+			traverseTown.setCurrentTown(false);
 			result = this.traverseTownRepository.save(traverseTown);
 			Assert.notNull(result);
-			// Se añade a la offer fuera del método
 		} else {
+			// La numeración y el cambio de los booleanos se hace por fuera
 			final TraverseTown old = this.traverseTownRepository.findOne(traverseTown.getId());
 			Assert.notNull(old);
 			final Offer offer = this.offerService.findByTraverseTown(old.getId());
 			Assert.notNull(offer);
 			Assert.isTrue(carrier.getOffers().contains(offer));
-
-			if (!old.isCurrentTown() && traverseTown.isCurrentTown()) {
-				// TODO Poner a false el resto de TT de la offer
-			}
 
 			result = this.traverseTownRepository.save(traverseTown);
 			Assert.notNull(result);
