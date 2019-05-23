@@ -26,6 +26,9 @@ public class FareService {
 	@Autowired
 	private CarrierService	carrierService;
 
+	@Autowired
+	private OfferService	offerService;
+
 
 	public FareService() {
 
@@ -90,6 +93,7 @@ public class FareService {
 			final Fare old = this.fareRepository.findOne(fare.getId());
 			Assert.notNull(old);
 			Assert.isTrue(carrier.getFares().contains(old));
+			Assert.isTrue(this.offerService.findByFare(fare.getId()).size() == 0);
 
 			result = this.fareRepository.save(fare);
 			Assert.notNull(result);
@@ -111,7 +115,7 @@ public class FareService {
 		Assert.notNull(carrier);
 		Assert.isTrue(carrier.getFares().contains(old));
 
-		//TODO QUITAR DE LAS OFFERS Y DEMÁS SITIOS
+		Assert.isTrue(this.offerService.findByFare(fare.getId()).size() == 0);
 
 		carrier.getFares().remove(old);
 		this.fareRepository.delete(old.getId());

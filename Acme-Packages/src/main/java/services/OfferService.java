@@ -134,4 +134,12 @@ public class OfferService {
 		return result;
 	}
 
+	public Collection<Offer> findByFare(int id) {
+		Assert.isTrue(id > 0);
+		final Collection<Offer> result;
+		result = this.offerRepository.findByFare(id);
+		Assert.notNull(result);
+		return result;
+	}
+
 }

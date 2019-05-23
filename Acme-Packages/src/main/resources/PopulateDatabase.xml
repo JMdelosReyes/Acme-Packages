@@ -428,6 +428,7 @@
 				<ref bean="fare2" />
 				<ref bean="fare3" />
 				<ref bean="fare4" />
+				<ref bean="fare13" />
 			</list>
 		</property>
 		<property name="offers">
@@ -984,6 +985,14 @@
 	</bean>
 	
 	<bean id="fare12" class="domain.Fare">
+		<property name="minWeight" value="6" />
+		<property name="maxWeight" value="15" />
+		<property name="minVolume" value="1" />
+		<property name="maxVolume" value="3" />
+		<property name="price" value="8.95" />
+	</bean>
+	
+	<bean id="fare13" class="domain.Fare">
 		<property name="minWeight" value="6" />
 		<property name="maxWeight" value="15" />
 		<property name="minVolume" value="1" />
