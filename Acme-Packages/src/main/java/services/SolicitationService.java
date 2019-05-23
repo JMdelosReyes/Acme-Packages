@@ -4,6 +4,7 @@ package services;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -81,12 +82,14 @@ public class SolicitationService {
 			final Carrier carrier = this.carrierService.findOne(id);
 			Assert.notNull(carrier);
 
-			result = this.solicitationRepository.save(solicitation);
-			Assert.notNull(result);
-
 			final Vehicle vehicle = this.vehicleService.findOne(vehicleId);
 
 			Assert.isTrue(carrier.getVehicles().contains(vehicle));
+
+			solicitation.setMoment(DateTime.now().minusMillis(1000).toDate());
+
+			result = this.solicitationRepository.save(solicitation);
+			Assert.notNull(result);
 
 			vehicle.getSolicitations().add(result);
 

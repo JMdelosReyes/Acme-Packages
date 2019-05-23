@@ -16,8 +16,8 @@ import domain.Offer;
 @Repository
 public interface FinderRepository extends JpaRepository<Finder, Integer> {
 
-	@Query("select distinct o from Offer o join o.traverseTowns t join o.fares f join o.vehicle.solicitations s where o.canceled=0 AND o.maxDateToRequest>=CURRENT_DATE AND" + " (?1='' OR (t.town=?1)) AND"
-		+ "(?2=null OR (f.minWeight<=?2 AND ?2<=<f.maxWeight AND f.minVolume<=?3 AND ?3<=f.maxVolume AND ?4<=f.price)) AND" + "(?5=null OR (o.maxDateToRequest>=?5)) AND (?6=null OR (o.maxDateToRequest<=?6)) AND"
+	@Query("select distinct o from Offer o join o.traverseTowns t join o.fares f join o.vehicle.solicitations s where o.canceled=0 AND o.maxDateToRequest>=CURRENT_DATE AND" + " (?1='' OR (t.town.name=?1)) AND"
+		+ "(?2=null OR (f.minWeight<=?2 AND ?2<=f.maxWeight AND f.minVolume<=?3 AND ?3<=f.maxVolume AND ?4<=f.price)) AND" + "(?5=null OR (o.maxDateToRequest>=?5)) AND (?6=null OR (o.maxDateToRequest<=?6)) AND"
 		+ "(s.status='ACCEPTED' AND s.category.name=?7)")
 	Page<Offer> findOffers(String town, Double weight, Double volume, Double maxPrice, Date minimumDate, Date maxDate, String category, Pageable pageable);
 
