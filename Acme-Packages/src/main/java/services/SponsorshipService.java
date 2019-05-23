@@ -65,44 +65,48 @@ public class SponsorshipService {
 
 	public Sponsorship save(final Sponsorship spon) {
 		Assert.notNull(spon);
-		Assert.isTrue(this.actorService.findActorType().equals("Sponsor"));
-		final UserAccount principal = LoginService.getPrincipal();
-		final Sponsor sponsor = this.sponsorService.findOne(this.actorService.findByUserAccountId(principal.getId()).getId());
+		Assert.isTrue(this.actorService.findActorType().equals("Sponsor") || (this.actorService.findActorType().equals("Administrator")));
 		Sponsorship res;
 		if (spon.getId() == 0) {
+			Assert.isTrue(this.actorService.findActorType().equals("Sponsor"));
+			final UserAccount principal = LoginService.getPrincipal();
+			final Sponsor sponsor = this.sponsorService.findOne(this.actorService.findByUserAccountId(principal.getId()).getId());
 			Assert.isTrue(spon.isValid() == false);
-			Assert.isTrue(spon.getExpirationDate() == null);
-			Assert.isTrue(spon.getCount() == 0 && spon.getTotalCount() == 0);
+			Assert.isNull(spon.getExpirationDate());
+			Assert.isTrue((spon.getCount() == 0) && (spon.getTotalCount() == 0));
 			res = this.sponsorshipRepository.save(spon);
 			Assert.notNull(res);
 			sponsor.getSponsorships().add(res);
 			this.sponsorService.save(sponsor);
 		} else {
+			final Sponsorship old = this.sponsorshipRepository.findOne(spon.getId());
+			Assert.notNull(old);
 			if (this.actorService.findActorType().equals("Administrator")) {
-				final Sponsorship old = this.sponsorshipRepository.findOne(spon.getId());
-				Assert.notNull(old);
+
 				if (old.getExpirationDate() == null) {
-					final Date date = new Date();
+					final Date date = new Date(System.currentTimeMillis() - 1000);
 					final Calendar cal = Calendar.getInstance();
 					cal.setTime(date);
 					final int anyoActual = cal.get(Calendar.YEAR);
 
 					final Calendar cal2 = Calendar.getInstance();
-					cal.setTime(spon.getExpirationDate());
+					cal2.setTime(spon.getExpirationDate());
 					final int anyoSpon = cal2.get(Calendar.YEAR);
 
 					Assert.isTrue(spon.isValid());
 					Assert.isTrue(anyoSpon == (anyoActual + 1));
 				} else {
-					Assert.isTrue(old.getBanner() == spon.getBanner());
-					Assert.isTrue(old.getTarget() == spon.getTarget());
+					Assert.isTrue(old.getBanner().equals(spon.getBanner()));
+					Assert.isTrue(old.getTarget().equals(spon.getTarget()));
 					Assert.isTrue(old.isValid() == spon.isValid());
 					Assert.isTrue(old.getExpirationDate() == spon.getExpirationDate());
 				}
 			} else if (this.actorService.findActorType().equals("Sponsor")) {
-				Assert.isTrue(spon.isValid());
-				Assert.notNull(spon.getExpirationDate());
-				Assert.isTrue(spon.getExpirationDate().after(new Date(System.currentTimeMillis() - 1000)));
+				final UserAccount principal = LoginService.getPrincipal();
+				final Sponsor sponsor = this.sponsorService.findOne(this.actorService.findByUserAccountId(principal.getId()).getId());
+				Assert.isTrue(sponsor.getSponsorships().contains(old));
+				Assert.isTrue(old.isValid());
+				Assert.isTrue(old.getExpirationDate().after(new Date(System.currentTimeMillis() - 1000)));
 			}
 
 			res = this.sponsorshipRepository.save(spon);
@@ -113,7 +117,7 @@ public class SponsorshipService {
 		Assert.notNull(id);
 		Assert.isTrue(id != 0);
 		final Sponsorship res = this.sponsorshipRepository.findOne(id);
-		Assert.isTrue(this.actorService.findActorType().equals("Provider") || (this.actorService.findActorType().equals("Administrator")));
+		Assert.isTrue(this.actorService.findActorType().equals("Sponsor") || (this.actorService.findActorType().equals("Administrator")));
 		//Borro el sponsorship del provider
 		if (this.actorService.findActorType().equals("Sponsor")) {
 			//Quitar de la position(creo que es automatico)
@@ -134,6 +138,14 @@ public class SponsorshipService {
 			//Borrar el sponsorship
 			this.sponsorshipRepository.delete(id);
 		}
+	}
+
+	public void updateCount(Sponsorship sponsorship) {
+		Sponsorship clon = (Sponsorship) sponsorship.clone();
+		clon.setCount(sponsorship.getCount() + 1);
+		clon.setTotalCount(sponsorship.getTotalCount() + 1);
+		sponsorship = clon;
+		this.sponsorshipRepository.save(sponsorship);
 	}
 
 	//	public Sponsorship reconstruct(final Sponsorship sponsorship, final BindingResult binding) {

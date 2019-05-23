@@ -16,7 +16,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public class Sponsorship extends DomainEntity {
+public class Sponsorship extends DomainEntity implements Cloneable {
 
 	private String	banner;
 	private String	target;
@@ -25,6 +25,16 @@ public class Sponsorship extends DomainEntity {
 	private int		totalCount;
 	private Date	expirationDate;
 
+
+	@Override
+	public Object clone() {
+		Object o = null;
+		try {
+			o = super.clone();
+		} catch (final CloneNotSupportedException ex) {
+		}
+		return o;
+	}
 
 	@NotBlank
 	@URL

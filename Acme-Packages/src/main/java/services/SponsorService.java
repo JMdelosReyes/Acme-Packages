@@ -38,6 +38,9 @@ public class SponsorService {
 	private ActorService			actorService;
 
 	@Autowired
+	private MessBoxService			messBoxService;
+
+	@Autowired
 	private ConfigurationService	configurationService;
 
 
@@ -125,6 +128,8 @@ public class SponsorService {
 			uc = this.userAccountService.save(uc);
 			sponsor.setUserAccount(uc);
 
+			sponsor.setMessageBoxes(this.messBoxService.saveSystemBoxes(this.messBoxService.createSystemMessageBoxes()));
+
 			Assert.isTrue(Validators.validEmail(sponsor.getEmail()));
 
 			if (sponsor.getPhoneNumber() != null) {
@@ -136,6 +141,7 @@ public class SponsorService {
 
 		} else {
 			final UserAccount principal = LoginService.getPrincipal();
+			Assert.isTrue(this.actorService.findActorType().equals("Sponsor") || this.actorService.findActorType().equals("Administrator"));
 			if (this.actorService.findActorType().equals("Sponsor")) {
 
 				final Sponsor old = this.sponsorRepository.findOne(sponsor.getId());
@@ -154,7 +160,7 @@ public class SponsorService {
 
 				Assert.isTrue(sponsor.getBanned() == old.getBanned());
 				Assert.isTrue(sponsor.getSpammer() == old.getSpammer());
-				Assert.isTrue(sponsor.getNif() == old.getNif());
+				Assert.isTrue(sponsor.getNif().equals(old.getNif()));
 			} else if (this.actorService.findActorType().equals("Administrator")) {
 				final Sponsor old = this.sponsorRepository.findOne(sponsor.getId());
 				Assert.notNull(old);
