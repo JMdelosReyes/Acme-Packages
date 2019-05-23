@@ -41,13 +41,10 @@ public class TownService {
 	}
 
 	public Town create() {
-		//		Assert.isTrue(this.actorService.findActorType().equals("Carrier"));
-		//		final int id = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
-		//		final Carrier carrier = this.carrierService.findOne(id);
-		//		Assert.notNull(carrier);
+		Assert.isTrue(this.actorService.findActorType().equals("Administrator"));
 
 		final Town result = new Town();
-		result.setCountry("");
+		result.setCounty("");
 		result.setName("");
 		result.setZipCode("");
 		return result;
@@ -57,10 +54,7 @@ public class TownService {
 		Assert.notNull(town);
 		final Town result;
 
-		//		Assert.isTrue(this.actorService.findActorType().equals("Carrier"));
-		//		final int id = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
-		//		final Carrier carrier = this.carrierService.findOne(id);
-		//		Assert.notNull(carrier);
+		Assert.isTrue(this.actorService.findActorType().equals("Administrator"));
 
 		if (town.getId() == 0) {
 			result = this.townRepository.save(town);
@@ -80,15 +74,13 @@ public class TownService {
 		Assert.notNull(town);
 		Assert.isTrue(town.getId() > 0);
 
-		//		Assert.isTrue(this.actorService.findActorType().equals("Carrier"));
-		//		final int id = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
-		//		final Carrier carrier = this.carrierService.findOne(id);
-		//		Assert.notNull(carrier);
+		Assert.isTrue(this.actorService.findActorType().equals("Administrator"));
 
 		final Town old = this.townRepository.findOne(town.getId());
 		Assert.notNull(old);
 
-		// TODO Alguna comprobación
+		Assert.isTrue(this.townRepository.findNumberOfRequests(town.getId()) == 0);
+		Assert.isTrue(this.townRepository.findNumberOfTraverseTowns(town.getId()) == 0);
 
 		this.townRepository.delete(old.getId());
 	}

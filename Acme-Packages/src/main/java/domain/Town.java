@@ -4,17 +4,22 @@ package domain;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 
 @Entity
 @Access(AccessType.PROPERTY)
+@Table(uniqueConstraints = {
+	@UniqueConstraint(columnNames = "zipCode")
+})
 public class Town extends DomainEntity implements Cloneable {
 
 	private String	name;
 	private String	zipCode;
-	private String	country;
+	private String	county;
 
 
 	@Override
@@ -49,12 +54,12 @@ public class Town extends DomainEntity implements Cloneable {
 
 	@NotBlank
 	@SafeHtml
-	public String getCountry() {
-		return this.country;
+	public String getCounty() {
+		return this.county;
 	}
 
-	public void setCountry(final String country) {
-		this.country = country;
+	public void setCounty(final String county) {
+		this.county = county;
 	}
 
 }
