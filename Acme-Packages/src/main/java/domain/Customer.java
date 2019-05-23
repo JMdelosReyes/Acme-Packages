@@ -21,6 +21,16 @@ public class Customer extends Actor implements Cloneable {
 	private Finder					finder;
 
 
+	@Override
+	public Object clone() {
+		Object o = null;
+		try {
+			o = super.clone();
+		} catch (final CloneNotSupportedException ex) {
+		}
+		return o;
+	}
+
 	@NotNull
 	@OneToMany(cascade = CascadeType.ALL)
 	public Collection<Request> getRequests() {

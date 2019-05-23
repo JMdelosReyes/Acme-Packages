@@ -154,6 +154,7 @@ public class RequestService {
 
 	public void delete(Request req) {
 		Assert.notNull(req);
+		Assert.isTrue(!req.isFinalMode());
 
 		this.reqRepository.delete(req);
 	}

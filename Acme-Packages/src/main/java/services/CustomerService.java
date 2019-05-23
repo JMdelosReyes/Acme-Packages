@@ -23,7 +23,10 @@ import utilities.HashPasswordParameter;
 import utilities.Validators;
 import domain.Actor;
 import domain.Customer;
+import domain.Evaluation;
+import domain.Finder;
 import domain.MessBox;
+import domain.Request;
 import domain.SocialProfile;
 
 @Service
@@ -43,6 +46,8 @@ public class CustomerService {
 	private ActorService			actorService;
 	@Autowired
 	private ConfigurationService	confService;
+	@Autowired
+	private FinderService			finderService;
 
 
 	//Constructor
@@ -54,7 +59,7 @@ public class CustomerService {
 		Assert.isTrue(id != 0);
 		Customer res;
 		res = this.custRepository.findOne(id);
-		Assert.notNull(id);
+		Assert.notNull(res);
 		return res;
 	}
 	public Collection<Customer> findAll() {
@@ -93,9 +98,9 @@ public class CustomerService {
 		res.setUserAccount(userCus);
 
 		//Customer
-		//		res.setFinder(this.finderService.create());
-		//		res.setRequests(new ArrayList<Request>());
-		//		res.setEvaluations(new ArrayList<Evaluation>());
+		res.setFinder(this.finderService.create());
+		res.setRequests(new ArrayList<Request>());
+		res.setEvaluations(new ArrayList<Evaluation>());
 
 		return res;
 	}
@@ -123,9 +128,9 @@ public class CustomerService {
 			cus.setUserAccount(uc);
 
 			//Save finder
-			//			Assert.notNull(cus.getFinder());
-			//			final Finder finderSaved = this.finderService.save(cus.getFinder());
-			//			cus.setFinder(finderSaved);
+			Assert.notNull(cus.getFinder());
+			Finder finderSaved = this.finderService.save(cus.getFinder());
+			cus.setFinder(finderSaved);
 
 			//The email must be a valid one
 			final String email = cus.getEmail();
@@ -146,7 +151,13 @@ public class CustomerService {
 			}
 			//Check credit card
 			Assert.isTrue(Validators.checkCreditCard(cus.getCreditCard()));
-
+			boolean makeOkey = false;
+			for (String s : this.confService.findMakes()) {
+				if (s.equals(cus.getCreditCard().getMake())) {
+					makeOkey = true;
+				}
+			}
+			Assert.isTrue(makeOkey);
 			//Save messBoxes
 			final Collection<MessBox> sysBoxes = this.messBoxService.saveSystemBoxes(cus.getMessageBoxes());
 			cus.setMessageBoxes(sysBoxes);
@@ -202,6 +213,13 @@ public class CustomerService {
 				}
 				//Check credit card
 				Assert.isTrue(Validators.checkCreditCard(cus.getCreditCard()));
+				boolean makeOkey = false;
+				for (String s : this.confService.findMakes()) {
+					if (s.equals(cus.getCreditCard().getMake())) {
+						makeOkey = true;
+					}
+				}
+				Assert.isTrue(makeOkey);
 
 				res = this.custRepository.save(cus);
 			}
@@ -219,13 +237,13 @@ public class CustomerService {
 		final Customer oldCus = this.custRepository.findOne(cus.getId());
 		Assert.isTrue(oldCus.getId() == aLogged.getId());
 
-		this.messBoxService.deleteMessBoxes();
-
-		this.custRepository.delete(cus);
+		this.custRepository.delete(cus.getId());
 	}
-	//	public Customer reconstruct(Customer cus, BindingResult){
-	//		
-	//	}
+
 	//Business methods
+	public void flush() {
+		this.custRepository.flush();
+
+	}
 
 }

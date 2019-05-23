@@ -6,6 +6,7 @@ import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -189,7 +190,7 @@ public class Request extends DomainEntity implements Cloneable {
 	}
 
 	@NotEmpty
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	public Collection<Package> getPackages() {
 		return this.packages;
 	}
@@ -199,7 +200,7 @@ public class Request extends DomainEntity implements Cloneable {
 	}
 
 	@Valid
-	@OneToOne(optional = true)
+	@OneToOne(optional = true, cascade = CascadeType.ALL)
 	public Issue getIssue() {
 		return this.issue;
 	}
