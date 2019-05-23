@@ -58,7 +58,6 @@ public class Solicitation extends DomainEntity {
 		this.status = status;
 	}
 
-	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
 	public Date getStartDate() {
@@ -69,7 +68,6 @@ public class Solicitation extends DomainEntity {
 		this.startDate = startDate;
 	}
 
-	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
 	public Date getEndDate() {

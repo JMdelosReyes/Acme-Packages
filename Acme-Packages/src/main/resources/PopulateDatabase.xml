@@ -2695,6 +2695,7 @@
 		<property name="comment" value="Multipla" />
 		<property name="solicitations">
 			<list>
+				<ref bean="solicitation1" />
 			</list>
 		</property>
 	</bean>
@@ -2712,6 +2713,9 @@
 		<property name="comment" value="" />
 		<property name="solicitations">
 			<list>
+				<ref bean="solicitation2" />
+				<ref bean="solicitation3" />
+				
 			</list>
 		</property>
 	</bean>
@@ -2729,6 +2733,7 @@
 		<property name="comment" value="" />
 		<property name="solicitations">
 			<list>
+				<ref bean="solicitation4" />
 			</list>
 		</property>
 	</bean>
@@ -2817,5 +2822,59 @@
 			</list>
 		</property>
 	</bean>
+	
+	<bean id="solicitation1" class="domain.Solicitation">
+		<property name="moment" value="05/05/2019" />
+		<property name="status" value="ACCEPTED"/>
+		<property name="startDate" value="05/05/2019" />
+		<property name="endDate" value="05/11/2021" />
+		<property name="comments">
+			<list>
+				<value>Lo necesito para darle de comer a mi gato</value>
+			</list>
+		</property>
+		<property name="category" ref="category2" />
+		
+	</bean>
+	
+	<bean id="solicitation2" class="domain.Solicitation">
+		<property name="moment" value="05/05/2019" />
+		<property name="status" value="ACCEPTED"/>
+		<property name="startDate" value="05/05/2019" />
+		<property name="endDate" value="05/11/2021" />
+		<property name="comments">
+			<list>
+				<value>Lo necesito para darle de comer a mi gato</value>
+			</list>
+		</property>
+		<property name="category" ref="category1" />
+		
+	</bean>
+	
+	<bean id="solicitation3" class="domain.Solicitation">
+		<property name="moment" value="05/05/2019" />
+		<property name="status" value="PENDING"/>
+		<property name="comments">
+			<list>
+				<value>Tengo los permisos necesarios para transportar esa mercancía</value>
+			</list>
+		</property>
+		<property name="category" ref="category3" />
+		
+	</bean>
+	
+	<bean id="solicitation4" class="domain.Solicitation">
+		<property name="moment" value="05/05/2019" />
+		<property name="status" value="REJECTED"/>
+		<property name="comments">
+			<list>
+				<value>Lo necesito para mi negocio</value>
+			</list>
+		</property>
+		<property name="category" ref="category1" />
+		
+	</bean>
+	
+	
 
 </beans>
