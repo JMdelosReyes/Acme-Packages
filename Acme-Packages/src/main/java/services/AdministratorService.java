@@ -18,8 +18,10 @@ import security.UserAccountService;
 import utilities.HashPasswordParameter;
 import utilities.Validators;
 import domain.Administrator;
+import domain.Carrier;
 import domain.MessBox;
 import domain.SocialProfile;
+import domain.Sponsorship;
 
 @Service
 @Transactional
@@ -176,9 +178,437 @@ public class AdministratorService {
 		Assert.isTrue(principal.getAuthorities().contains(auth));
 		Assert.isTrue(this.actorService.findByUserAccountId(principal.getId()).getId() == admin.getId());
 
-		this.messBoxService.deleteMessBoxes();
-
 		this.administratorRepository.delete(admin.getId());
 	}
 
+	//Dashboard
+	//The average, the minimum, the maximum, and the standard deviation of times that a sponsorship has been shown.
+
+	public Double avgSPShow() {
+
+		final UserAccount principal = LoginService.getPrincipal();
+		Assert.notNull(principal);
+
+		final Authority auth = new Authority();
+		auth.setAuthority(Authority.ADMIN);
+		Assert.isTrue(principal.getAuthorities().contains(auth));
+		Double result;
+		result = this.administratorRepository.avgSPShow();
+		if (result == null) {
+			result = 0.0;
+		}
+		return result;
+
+	}
+	public Double minSPShow() {
+
+		final UserAccount principal = LoginService.getPrincipal();
+		Assert.notNull(principal);
+
+		final Authority auth = new Authority();
+		auth.setAuthority(Authority.ADMIN);
+		Assert.isTrue(principal.getAuthorities().contains(auth));
+		Double result;
+		result = this.administratorRepository.minSPShow();
+		if (result == null) {
+			result = 0.0;
+		}
+		return result;
+
+	}
+	public Double maxSPShow() {
+
+		final UserAccount principal = LoginService.getPrincipal();
+		Assert.notNull(principal);
+
+		final Authority auth = new Authority();
+		auth.setAuthority(Authority.ADMIN);
+		Assert.isTrue(principal.getAuthorities().contains(auth));
+		Double result;
+		result = this.administratorRepository.maxSPShow();
+		if (result == null) {
+			result = 0.0;
+		}
+		return result;
+
+	}
+	public Double stddevSPShow() {
+
+		final UserAccount principal = LoginService.getPrincipal();
+		Assert.notNull(principal);
+
+		final Authority auth = new Authority();
+		auth.setAuthority(Authority.ADMIN);
+		Assert.isTrue(principal.getAuthorities().contains(auth));
+		Double result;
+		result = this.administratorRepository.stddevSPShow();
+		if (result == null) {
+			result = 0.0;
+		}
+		return result;
+
+	}
+
+	//The average, the minimum, the maximum, and the standard deviation of scores from registered carriers.
+
+	public Double avgScoreCarriers() {
+
+		final UserAccount principal = LoginService.getPrincipal();
+		Assert.notNull(principal);
+
+		final Authority auth = new Authority();
+		auth.setAuthority(Authority.ADMIN);
+		Assert.isTrue(principal.getAuthorities().contains(auth));
+		Double result;
+		result = this.administratorRepository.avgScoreCarriers();
+		if (result == null) {
+			result = 0.0;
+		}
+		return result;
+
+	}
+	public Double minScoreCarriers() {
+
+		final UserAccount principal = LoginService.getPrincipal();
+		Assert.notNull(principal);
+
+		final Authority auth = new Authority();
+		auth.setAuthority(Authority.ADMIN);
+		Assert.isTrue(principal.getAuthorities().contains(auth));
+		Double result;
+		result = this.administratorRepository.minScoreCarriers();
+		if (result == null) {
+			result = 0.0;
+		}
+		return result;
+
+	}
+	public Double maxScoreCarriers() {
+
+		final UserAccount principal = LoginService.getPrincipal();
+		Assert.notNull(principal);
+
+		final Authority auth = new Authority();
+		auth.setAuthority(Authority.ADMIN);
+		Assert.isTrue(principal.getAuthorities().contains(auth));
+		Double result;
+		result = this.administratorRepository.maxScoreCarriers();
+		if (result == null) {
+			result = 0.0;
+		}
+		return result;
+
+	}
+	public Double stddevScoreCarriers() {
+
+		final UserAccount principal = LoginService.getPrincipal();
+		Assert.notNull(principal);
+
+		final Authority auth = new Authority();
+		auth.setAuthority(Authority.ADMIN);
+		Assert.isTrue(principal.getAuthorities().contains(auth));
+		Double result;
+		result = this.administratorRepository.stddevScoreCarriers();
+		if (result == null) {
+			result = 0.0;
+		}
+		return result;
+
+	}
+
+	//The average, the minimum, the maximum, and the standard deviation of evaluations made by customers.
+
+	public Double avgEvaluationByCustomer() {
+
+		final UserAccount principal = LoginService.getPrincipal();
+		Assert.notNull(principal);
+
+		final Authority auth = new Authority();
+		auth.setAuthority(Authority.ADMIN);
+		Assert.isTrue(principal.getAuthorities().contains(auth));
+		Double result;
+		result = this.administratorRepository.avgEvaluationByCustomer();
+		if (result == null) {
+			result = 0.0;
+		}
+		return result;
+
+	}
+	public Double minEvaluationByCustomer() {
+
+		final UserAccount principal = LoginService.getPrincipal();
+		Assert.notNull(principal);
+
+		final Authority auth = new Authority();
+		auth.setAuthority(Authority.ADMIN);
+		Assert.isTrue(principal.getAuthorities().contains(auth));
+		Double result;
+		result = this.administratorRepository.minEvaluationByCustomer();
+		if (result == null) {
+			result = 0.0;
+		}
+		return result;
+
+	}
+	public Double maxEvaluationByCustomer() {
+
+		final UserAccount principal = LoginService.getPrincipal();
+		Assert.notNull(principal);
+
+		final Authority auth = new Authority();
+		auth.setAuthority(Authority.ADMIN);
+		Assert.isTrue(principal.getAuthorities().contains(auth));
+		Double result;
+		result = this.administratorRepository.maxEvaluationByCustomer();
+		if (result == null) {
+			result = 0.0;
+		}
+		return result;
+
+	}
+	public Double stddevEvaluationByCustomer() {
+
+		final UserAccount principal = LoginService.getPrincipal();
+		Assert.notNull(principal);
+
+		final Authority auth = new Authority();
+		auth.setAuthority(Authority.ADMIN);
+		Assert.isTrue(principal.getAuthorities().contains(auth));
+		Double result;
+		result = this.administratorRepository.stddevEvaluationByCustomer();
+		if (result == null) {
+			result = 0.0;
+		}
+		return result;
+
+	}
+
+	//The average, the minimum, the maximum, and the standard deviation of comments per issues.
+
+	public Double avgCommentsPerIssue() {
+
+		final UserAccount principal = LoginService.getPrincipal();
+		Assert.notNull(principal);
+
+		final Authority auth = new Authority();
+		auth.setAuthority(Authority.ADMIN);
+		Assert.isTrue(principal.getAuthorities().contains(auth));
+		Double result;
+		result = this.administratorRepository.avgCommentsPerIssue();
+		if (result == null) {
+			result = 0.0;
+		}
+		return result;
+
+	}
+	public Double minCommentsPerIssue() {
+
+		final UserAccount principal = LoginService.getPrincipal();
+		Assert.notNull(principal);
+
+		final Authority auth = new Authority();
+		auth.setAuthority(Authority.ADMIN);
+		Assert.isTrue(principal.getAuthorities().contains(auth));
+		Double result;
+		result = this.administratorRepository.minCommentsPerIssue();
+		if (result == null) {
+			result = 0.0;
+		}
+		return result;
+
+	}
+	public Double maxCommentsPerIssue() {
+
+		final UserAccount principal = LoginService.getPrincipal();
+		Assert.notNull(principal);
+
+		final Authority auth = new Authority();
+		auth.setAuthority(Authority.ADMIN);
+		Assert.isTrue(principal.getAuthorities().contains(auth));
+		Double result;
+		result = this.administratorRepository.maxCommentsPerIssue();
+		if (result == null) {
+			result = 0.0;
+		}
+		return result;
+
+	}
+	public Double stddevCommentsPerIssue() {
+
+		final UserAccount principal = LoginService.getPrincipal();
+		Assert.notNull(principal);
+
+		final Authority auth = new Authority();
+		auth.setAuthority(Authority.ADMIN);
+		Assert.isTrue(principal.getAuthorities().contains(auth));
+		Double result;
+		result = this.administratorRepository.stddevCommentsPerIssue();
+		if (result == null) {
+			result = 0.0;
+		}
+		return result;
+
+	}
+	//Top-3 most shown sponsorships.
+
+	public Collection<Sponsorship> top3ShownSponsorships() {
+
+		final UserAccount principal = LoginService.getPrincipal();
+		Assert.notNull(principal);
+
+		final Authority auth = new Authority();
+		auth.setAuthority(Authority.ADMIN);
+		Assert.isTrue(principal.getAuthorities().contains(auth));
+		List<Sponsorship> result = new ArrayList<>(this.administratorRepository.top3ShownSponsorships());
+		final Integer last = result.size();
+		if (last == 1) {
+			result = result.subList(0, 1);
+		} else if (last == 2) {
+			result = result.subList(0, 2);
+		} else if (last >= 3) {
+			result = result.subList(0, 3);
+		} else {
+			result = new ArrayList<Sponsorship>();
+		}
+		return result;
+	}
+
+	//Top-3 carriers with the highest score.
+
+	public Collection<Carrier> top3CarriersWithHigherScore() {
+
+		final UserAccount principal = LoginService.getPrincipal();
+		Assert.notNull(principal);
+
+		final Authority auth = new Authority();
+		auth.setAuthority(Authority.ADMIN);
+		Assert.isTrue(principal.getAuthorities().contains(auth));
+		List<Carrier> result = new ArrayList<>(this.administratorRepository.top3CarriersWithHigherScore());
+		final Integer last = result.size();
+		if (last == 1) {
+			result = result.subList(0, 1);
+		} else if (last == 2) {
+			result = result.subList(0, 2);
+		} else if (last >= 3) {
+			result = result.subList(0, 3);
+		} else {
+			result = new ArrayList<Carrier>();
+		}
+		return result;
+	}
+
+	//Top-5 most visited towns.
+	//	//TODO
+	//	public Collection<Town> top5MostVisitedTowns() {
+	//
+	//		final UserAccount principal = LoginService.getPrincipal();
+	//		Assert.notNull(principal);
+	//
+	//		final Authority auth = new Authority();
+	//		auth.setAuthority(Authority.ADMIN);
+	//		Assert.isTrue(principal.getAuthorities().contains(auth));
+	//		List<Town> result = new ArrayList<>(this.administratorRepository.top5MostVisitedTowns());
+	//		final Integer last = result.size();
+	//		if (last == 1) {
+	//			result = result.subList(0, 1);
+	//		} else if (last == 2) {
+	//			result = result.subList(0, 2);
+	//		} else if (last == 3) {
+	//			result = result.subList(0, 2);
+	//		} else if (last == 4) {
+	//			result = result.subList(0, 2);
+	//		} else if (last >= 5) {
+	//			result = result.subList(0, 3);
+	//		} else {
+	//			result = new ArrayList<Town>();
+	//		}
+	//		return result;
+	//	}
+
+	//The ratio of empty versus non-empty finders.
+	public Double RatioNonEmptyFinders() {
+
+		final UserAccount principal = LoginService.getPrincipal();
+		Assert.notNull(principal);
+
+		final Authority auth = new Authority();
+		auth.setAuthority(Authority.ADMIN);
+		Assert.isTrue(principal.getAuthorities().contains(auth));
+		Double result;
+		result = this.administratorRepository.RatioNonEmptyFinders();
+		if (result == null) {
+			result = 0.0;
+		}
+		return result;
+
+	}
+	public Double RatioEmptyFinders() {
+
+		final UserAccount principal = LoginService.getPrincipal();
+		Assert.notNull(principal);
+
+		final Authority auth = new Authority();
+		auth.setAuthority(Authority.ADMIN);
+		Assert.isTrue(principal.getAuthorities().contains(auth));
+		Double result;
+		result = this.administratorRepository.RatioEmptyFinders();
+		if (result == null) {
+			result = 0.0;
+		}
+		return result;
+
+	}
+	//The ratio of closed versus non-closed issues.
+	public Double ratioClosedIssue() {
+
+		final UserAccount principal = LoginService.getPrincipal();
+		Assert.notNull(principal);
+
+		final Authority auth = new Authority();
+		auth.setAuthority(Authority.ADMIN);
+		Assert.isTrue(principal.getAuthorities().contains(auth));
+		Double result;
+		result = this.administratorRepository.ratioClosedIssue();
+		if (result == null) {
+			result = 0.0;
+		}
+		return result;
+
+	}
+	public Double ratioNonClosedIssue() {
+
+		final UserAccount principal = LoginService.getPrincipal();
+		Assert.notNull(principal);
+
+		final Authority auth = new Authority();
+		auth.setAuthority(Authority.ADMIN);
+		Assert.isTrue(principal.getAuthorities().contains(auth));
+		Double result;
+		result = this.administratorRepository.ratioNonClosedIssue();
+		if (result == null) {
+			result = 0.0;
+		}
+		return result;
+
+	}
+
+	//TODO
+	//The listing of auditors who have got at least 10% of issues closed above the average. 
+	//	public Collection<Auditor> AudiorsWith10percentmoreIsuseClosedThanAVG() {
+	//
+	//		final UserAccount principal = LoginService.getPrincipal();
+	//		Assert.notNull(principal);
+	//
+	//		final Authority auth = new Authority();
+	//		auth.setAuthority(Authority.ADMIN);
+	//		Assert.isTrue(principal.getAuthorities().contains(auth));
+	//		List<Auditor> result = new ArrayList<>(this.administratorRepository.AudiorsWith10percentmoreIsuseClosedThanAVG());
+	//		final int size = result.size();
+	//
+	//		if (size == 0) {
+	//			result = new ArrayList<>();
+	//		}
+	//		return result;
+	//
+	//	}
 }

@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
@@ -28,7 +29,7 @@ public class Auditor extends Actor implements Cloneable {
 	}
 
 	@NotNull
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	public Collection<Issue> getIssues() {
 		return this.issues;
 	}
@@ -38,7 +39,7 @@ public class Auditor extends Actor implements Cloneable {
 	}
 
 	@NotNull
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	public Collection<Solicitation> getSolicitations() {
 		return this.solicitations;
 	}

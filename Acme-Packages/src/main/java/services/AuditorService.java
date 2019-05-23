@@ -224,8 +224,6 @@ public class AuditorService {
 		final Auditor old = this.auditorRepository.findOne(auditor.getId());
 		Assert.isTrue(hLogged.getId() == old.getId());
 
-		this.messBoxService.deleteMessBoxes();
-
 		this.auditorRepository.delete(auditor);
 
 	}

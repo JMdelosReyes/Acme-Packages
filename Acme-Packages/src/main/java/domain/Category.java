@@ -10,13 +10,23 @@ import org.hibernate.validator.constraints.SafeHtml;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public class Category extends DomainEntity {
+public class Category extends DomainEntity implements Cloneable {
 
 	private String	englishName;
 	private String	spanishName;
 	private String	englishDescription;
 	private String	spanishDescription;
 
+
+	@Override
+	public Object clone() {
+		Object o = null;
+		try {
+			o = super.clone();
+		} catch (final CloneNotSupportedException ex) {
+		}
+		return o;
+	}
 
 	@NotBlank
 	@SafeHtml
