@@ -106,7 +106,7 @@ public class MiscellaneousRecordService {
 			final MiscellaneousRecord old = this.miscellaneousRecordRepository.findOne(miscellaneousRecord.getId());
 			Assert.notNull(old);
 
-			//The miscellaneous data must be owned by the logged rookie
+			//The miscellaneous data must be owned by the logged carrier
 			Assert.isTrue(curriculum.getMiscellaneousRecords().contains(old));
 
 			result = this.miscellaneousRecordRepository.save(miscellaneousRecord);

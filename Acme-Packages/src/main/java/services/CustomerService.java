@@ -3,8 +3,6 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -128,24 +126,17 @@ public class CustomerService {
 			cus.setUserAccount(uc);
 
 			//Save finder
-			Assert.notNull(cus.getFinder());
-			Finder finderSaved = this.finderService.save(cus.getFinder());
+			Finder fin = this.finderService.create();
+			Finder finderSaved = this.finderService.save(fin);
 			cus.setFinder(finderSaved);
 
 			//The email must be a valid one
-			final String email = cus.getEmail();
-			final String pattern = "^[a-zA-Z0-9]{1,}@[a-zA-Z0-9\\.]{1,}|^[a-zA-Z0-9\\s]{1,}<[a-zA-Z0-9]{1,}@[a-zA-Z0-9\\.]{1,}>";
-			final Pattern r = Pattern.compile(pattern);
-			final Matcher m = r.matcher(email);
-			Assert.isTrue(m.find());
+			Assert.isTrue(Validators.validEmail(cus.getEmail()));
 
-			//Add ZipCode phoneNumber
+			//zipCode
 			if (cus.getPhoneNumber() != null) {
 				final String phone = cus.getPhoneNumber();
-				final String pattern2 = "^[0-9]{4,9}";
-				final Pattern r2 = Pattern.compile(pattern2);
-				final Matcher m2 = r2.matcher(phone);
-				if (m2.find()) {
+				if (Validators.validPhone(phone)) {
 					cus.setPhoneNumber(this.confService.findOne().getCountryCode() + phone);
 				}
 			}
@@ -159,7 +150,7 @@ public class CustomerService {
 			}
 			Assert.isTrue(makeOkey);
 			//Save messBoxes
-			final Collection<MessBox> sysBoxes = this.messBoxService.saveSystemBoxes(cus.getMessageBoxes());
+			final Collection<MessBox> sysBoxes = this.messBoxService.saveSystemBoxes(this.messBoxService.createSystemMessageBoxes());
 			cus.setMessageBoxes(sysBoxes);
 
 			//Save customer
@@ -194,20 +185,14 @@ public class CustomerService {
 
 				Assert.isTrue(old.getBanned() == cus.getBanned());
 				Assert.isTrue(old.getSpammer() == cus.getSpammer());
-				//The email must be a valid one
-				final String email = cus.getEmail();
-				final String pattern = "^[a-zA-Z0-9]{1,}@[a-zA-Z0-9\\.]{1,}|^[a-zA-Z0-9\\s]{1,}<[a-zA-Z0-9]{1,}@[a-zA-Z0-9\\.]{1,}>";
-				final Pattern r = Pattern.compile(pattern);
-				final Matcher m = r.matcher(email);
-				Assert.isTrue(m.find());
 
-				//Add ZipCode phoneNumber
+				//The email must be a valid one
+				Assert.isTrue(Validators.validEmail(cus.getEmail()));
+
+				//zipCode
 				if (cus.getPhoneNumber() != null) {
 					final String phone = cus.getPhoneNumber();
-					final String pattern2 = "^[0-9]{4,9}";
-					final Pattern r2 = Pattern.compile(pattern2);
-					final Matcher m2 = r2.matcher(phone);
-					if (m2.find()) {
+					if (Validators.validPhone(phone)) {
 						cus.setPhoneNumber(this.confService.findOne().getCountryCode() + phone);
 					}
 				}

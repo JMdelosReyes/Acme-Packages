@@ -10,9 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.ConfigurationRepository;
-import security.Authority;
-import security.LoginService;
-import security.UserAccount;
 import domain.Configuration;
 
 @Service
@@ -24,8 +21,10 @@ public class ConfigurationService {
 	@Autowired
 	private ConfigurationRepository	configurationRepository;
 
-
 	// Supporting services
+	@Autowired
+	private ActorService			actorService;
+
 
 	// Constructor
 
@@ -53,20 +52,7 @@ public class ConfigurationService {
 		Assert.notNull(configuration);
 
 		// Only administrators can modify the configuration
-		final UserAccount principal = LoginService.getPrincipal();
-		Assert.notNull(principal);
-		final Authority auth = new Authority();
-		auth.setAuthority(Authority.ADMIN);
-		Assert.isTrue(principal.getAuthorities().contains(auth));
-
-		Assert.isTrue((configuration.getSystemName() != null) && !configuration.getSystemName().equals(""));
-		Assert.isTrue((configuration.getBanner() != null) && !configuration.getBanner().equals(""));
-		Assert.isTrue((configuration.getCountryCode() != null) && !configuration.getCountryCode().equals(""));
-		Assert.isTrue((configuration.getEnglishMessage() != null) && !configuration.getEnglishMessage().equals(""));
-		Assert.isTrue((configuration.getSpanishMessage() != null) && !configuration.getSpanishMessage().equals(""));
-		Assert.isTrue(configuration.getMakes() != null);
-		Assert.isTrue(configuration.getSpamWords() != null);
-		Assert.isTrue(configuration.getMessPriorities() != null);
+		Assert.isTrue(this.actorService.findActorType().equals("Administrator"));
 
 		return this.configurationRepository.save(configuration);
 	}

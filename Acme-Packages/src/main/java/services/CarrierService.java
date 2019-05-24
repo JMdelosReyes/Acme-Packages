@@ -200,7 +200,7 @@ public class CarrierService {
 	public void adminUpdate(final Carrier carrier) {
 		Assert.notNull(carrier);
 		Assert.isTrue(carrier.getId() > 0);
-		Assert.isTrue(this.actorService.findActorType().equals("Administrador"));
+		Assert.isTrue(this.actorService.findActorType().equals("Administrator"));
 
 		final Carrier old = this.carrierRepository.findOne(carrier.getId());
 		Assert.notNull(old);

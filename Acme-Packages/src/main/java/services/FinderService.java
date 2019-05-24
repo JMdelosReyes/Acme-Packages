@@ -93,17 +93,15 @@ public class FinderService {
 		Assert.notNull(finder);
 		Finder result;
 
-		if (finder.getId() == 0)
+		if (finder.getId() == 0) {
 			result = this.finderRepository.save(finder);
-		else {
+		} else {
 			final Finder old = this.finderRepository.findOne(finder.getId());
 			Assert.notNull(old);
 
 			UserAccount userAccount;
 			userAccount = LoginService.getPrincipal();
-			final Authority auth = new Authority();
-			auth.setAuthority(Authority.CUSTOMER);
-			Assert.isTrue(userAccount.getAuthorities().contains(auth));
+			Assert.isTrue(this.actorService.findActorType().equals("Customer"));
 
 			final int id = this.actorService.findByUserAccountId(userAccount.getId()).getId();
 			final Customer customer = this.customerService.findOne(id);
@@ -111,20 +109,25 @@ public class FinderService {
 
 			Assert.isTrue(customer.getFinder().getId() == finder.getId());
 
-			if (finder.getCategory() == null)
+			if (finder.getCategory() == null) {
 				finder.setCategory("");
+			}
 
-			if (finder.getTown() == null)
+			if (finder.getTown() == null) {
 				finder.setTown("");
+			}
 
-			if (finder.getVolume() == null || finder.getVolume() < 0)
+			if ((finder.getVolume() == null) || (finder.getVolume() < 0)) {
 				finder.setVolume(0.);
+			}
 
-			if ((finder.getWeight() == null) || (finder.getWeight() < 0))
+			if ((finder.getWeight() == null) || (finder.getWeight() < 0)) {
 				finder.setWeight(0.);
+			}
 
-			if ((finder.getMaxPrice() == null) || (finder.getMaxPrice() < 0))
+			if ((finder.getMaxPrice() == null) || (finder.getMaxPrice() < 0)) {
 				finder.setMaxPrice(0.);
+			}
 
 			final Configuration conf = this.configurationService.findOne();
 

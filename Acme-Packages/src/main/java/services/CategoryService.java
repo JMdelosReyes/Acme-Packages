@@ -23,8 +23,10 @@ public class CategoryService {
 	@Autowired
 	private CategoryRepository	categoryRepository;
 
-
 	//Suporting services
+	@Autowired
+	private ActorService		actorService;
+
 
 	// Constructors
 
@@ -60,12 +62,16 @@ public class CategoryService {
 		Category result;
 		UserAccount userAccount;
 		//Check that is an administrator
-		userAccount = LoginService.getPrincipal();
-		final Authority auth = new Authority();
-		auth.setAuthority(Authority.ADMIN);
-		Assert.isTrue(userAccount.getAuthorities().contains(auth));
-
-		result = this.categoryRepository.save(category);
+		Assert.isTrue(this.actorService.findActorType().equals("Administrator"));
+		if (category.getId() == 0) {
+			result = this.categoryRepository.save(category);
+		} else {
+			Category old = this.categoryRepository.findOne(category.getId());
+			Assert.isTrue(category.getSpanishName().equals(old.getSpanishName()));
+			Assert.isTrue(category.getEnglishName().equals(old.getEnglishDescription()));
+			result = this.categoryRepository.save(category);
+		}
+		Assert.notNull(result);
 		return result;
 	}
 	public Collection<Category> findAll() {
@@ -85,12 +91,7 @@ public class CategoryService {
 		Assert.notNull(category);
 
 		//Check that is an administrator
-		UserAccount userAccount;
-		userAccount = LoginService.getPrincipal();
-		final Authority auth = new Authority();
-		auth.setAuthority(Authority.ADMIN);
-		Assert.isTrue(userAccount.getAuthorities().contains(auth));
-
+		Assert.isTrue(this.actorService.findActorType().equals("Administrator"));
 		this.categoryRepository.delete(category);
 
 	}

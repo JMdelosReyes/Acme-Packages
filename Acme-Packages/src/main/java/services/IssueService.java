@@ -93,9 +93,10 @@ public class IssueService {
 
 			Assert.isTrue(customer.getRequests().contains(request));
 			Assert.isTrue(request.getIssue() == null);
-
+			//TODO: TICKER MAL ARREGLALO ADRIBRON
 			issue.setTicker(Tickers.generateTicker());
 			issue.setMoment(DateTime.now().minusMillis(1000).toDate());
+			issue.setClosed(false);
 
 			result = this.issueRepository.save(issue);
 			Assert.notNull(result);

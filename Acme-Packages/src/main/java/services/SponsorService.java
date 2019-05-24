@@ -138,7 +138,8 @@ public class SponsorService {
 					sponsor.setPhoneNumber(this.configurationService.findOne().getCountryCode() + phone);
 				}
 			}
-
+			Assert.isTrue(Validators.checkCreditCard(sponsor.getCreditCard()));
+			Assert.isTrue(this.configurationService.findOne().getMakes().contains(sponsor.getCreditCard().getMake()));
 		} else {
 			final UserAccount principal = LoginService.getPrincipal();
 			Assert.isTrue(this.actorService.findActorType().equals("Sponsor") || this.actorService.findActorType().equals("Administrator"));
@@ -157,6 +158,8 @@ public class SponsorService {
 						sponsor.setPhoneNumber(this.configurationService.findOne().getCountryCode() + phone);
 					}
 				}
+				Assert.isTrue(Validators.checkCreditCard(sponsor.getCreditCard()));
+				Assert.isTrue(this.configurationService.findOne().getMakes().contains(sponsor.getCreditCard().getMake()));
 
 				Assert.isTrue(sponsor.getBanned() == old.getBanned());
 				Assert.isTrue(sponsor.getSpammer() == old.getSpammer());
@@ -164,6 +167,7 @@ public class SponsorService {
 			} else if (this.actorService.findActorType().equals("Administrator")) {
 				final Sponsor old = this.sponsorRepository.findOne(sponsor.getId());
 				Assert.notNull(old);
+				//TODO: COMPROBAR QUE EL ADMIN NO CAMBIE NADA MAS
 				Assert.isTrue(old.getSponsorships() != sponsor.getSponsorships());
 			}
 

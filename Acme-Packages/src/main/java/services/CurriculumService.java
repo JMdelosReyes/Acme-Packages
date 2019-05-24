@@ -85,12 +85,11 @@ public class CurriculumService {
 		final Curriculum result;
 		Carrier carrier;
 		if (curriculum.getId() == 0) {
+			Assert.isTrue(this.actorService.findActorType().equals("Carrier"));
 			result = this.curriculumRepository.save(curriculum);
 			Assert.notNull(result);
-			Assert.isTrue(this.actorService.findActorType().equals("Carrier"));
 			final int id = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
 			carrier = this.carrierService.findOne(id);
-			Assert.notNull(carrier);
 			carrier.getCurricula().add(result);
 			this.carrierService.save(carrier);
 

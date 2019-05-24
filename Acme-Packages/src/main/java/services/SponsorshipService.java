@@ -82,7 +82,7 @@ public class SponsorshipService {
 			final Sponsorship old = this.sponsorshipRepository.findOne(spon.getId());
 			Assert.notNull(old);
 			if (this.actorService.findActorType().equals("Administrator")) {
-
+				//TODO: QUITAR EL COMPROBAR EL EXPIRATION DATE
 				if (old.getExpirationDate() == null) {
 					final Date date = new Date(System.currentTimeMillis() - 1000);
 					final Calendar cal = Calendar.getInstance();
@@ -118,10 +118,7 @@ public class SponsorshipService {
 		Assert.isTrue(id != 0);
 		final Sponsorship res = this.sponsorshipRepository.findOne(id);
 		Assert.isTrue(this.actorService.findActorType().equals("Sponsor") || (this.actorService.findActorType().equals("Administrator")));
-		//Borro el sponsorship del provider
 		if (this.actorService.findActorType().equals("Sponsor")) {
-			//Quitar de la position(creo que es automatico)
-			//Quitar del provider
 			final UserAccount principal = LoginService.getPrincipal();
 			final Sponsor sponsor = this.sponsorService.findOne(this.actorService.findByUserAccountId(principal.getId()).getId());
 			Assert.isTrue(sponsor.getSponsorships().contains(res));

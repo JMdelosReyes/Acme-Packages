@@ -64,7 +64,7 @@ public class ProfessionalRecordService {
 		//The logged user must be a carrier
 		Assert.isTrue(this.actorService.findActorType().equals("Carrier"));
 
-		//The logged rookie must at least have one curriculum
+		//The logged carrier must at least have one curriculum
 		UserAccount userAccount;
 		userAccount = LoginService.getPrincipal();
 		final int id = this.actorService.findByUserAccountId(userAccount.getId()).getId();
@@ -100,8 +100,9 @@ public class ProfessionalRecordService {
 
 		if (professionalRecord.getId() == 0) {
 
-			if (professionalRecord.getEndTime() != null)
+			if (professionalRecord.getEndTime() != null) {
 				Assert.isTrue(professionalRecord.getStartTime().before(professionalRecord.getEndTime()));
+			}
 
 			result = this.professionalRecordRepository.save(professionalRecord);
 			this.professionalRecordRepository.flush();

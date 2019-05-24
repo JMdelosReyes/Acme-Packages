@@ -119,9 +119,7 @@ public class AuditorService {
 			final UserAccount principal = LoginService.getPrincipal();
 			Assert.notNull(principal);
 
-			final Authority auth = new Authority();
-			auth.setAuthority(Authority.ADMIN);
-			Assert.isTrue(principal.getAuthorities().contains(auth));
+			Assert.isTrue(this.actorService.findActorType().equals("Administrator"));
 
 			//Hash password	
 			UserAccount uc = auditor.getUserAccount();

@@ -120,7 +120,7 @@ public class Configuration extends DomainEntity implements Cloneable {
 		this.countryCode = countryCode;
 	}
 
-	@NotNull
+	@NotEmpty
 	@ElementCollection
 	public Collection<String> getMakes() {
 		return this.makes;
