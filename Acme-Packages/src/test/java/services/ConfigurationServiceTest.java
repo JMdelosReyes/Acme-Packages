@@ -2,6 +2,7 @@
 package services;
 
 import javax.transaction.Transactional;
+import javax.validation.ConstraintViolationException;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -51,7 +52,7 @@ public class ConfigurationServiceTest extends AbstractTest {
 				"admin", "test", "hola", null
 			}, {
 				//Fields must not be blank	
-				"admin", "", "", IllegalArgumentException.class
+				"admin", "", "", ConstraintViolationException.class
 			}, {
 				//carrier cannot update configuration
 				"carrier1", "test", "hola", IllegalArgumentException.class
@@ -68,10 +69,11 @@ public class ConfigurationServiceTest extends AbstractTest {
 
 	//TEMPLATES
 	protected void testUpdate(final String username, final String text, final String spanishMessage, final Class<?> expected) {
-		Class<?> caugth;
-		caugth = null;
-
+		Class<?> caught;
+		caught = null;
 		try {
+
+			super.startTransaction();
 			this.authenticate(username);
 			Configuration conf = this.configurationService.findOne();
 			final Configuration clon = (Configuration) conf.clone();
@@ -79,11 +81,15 @@ public class ConfigurationServiceTest extends AbstractTest {
 			clon.setSpanishMessage(spanishMessage);
 			conf = clon;
 			this.configurationService.save(conf);
+			this.configurationService.flush();
 			this.unauthenticate();
-		} catch (final Throwable oops) {
-			caugth = oops.getClass();
-		}
-		super.checkExceptions(expected, caugth);
-	}
 
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			super.rollbackTransaction();
+		}
+
+		this.checkExceptions(expected, caught);
+	}
 }

@@ -13,6 +13,10 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Category;
+import domain.Package;
+import domain.Solicitation;
+
+;
 
 @Service
 @Transactional
@@ -68,7 +72,7 @@ public class CategoryService {
 		} else {
 			Category old = this.categoryRepository.findOne(category.getId());
 			Assert.isTrue(category.getSpanishName().equals(old.getSpanishName()));
-			Assert.isTrue(category.getEnglishName().equals(old.getEnglishDescription()));
+			Assert.isTrue(category.getEnglishName().equals(old.getEnglishName()));
 			result = this.categoryRepository.save(category);
 		}
 		Assert.notNull(result);
@@ -92,10 +96,15 @@ public class CategoryService {
 
 		//Check that is an administrator
 		Assert.isTrue(this.actorService.findActorType().equals("Administrator"));
+
+		Collection<Package> lista = this.categoryRepository.CategoryInUsePackage(category.getId());
+		Collection<Solicitation> lista2 = this.categoryRepository.CategoryInUseSolicitation(category.getId());
+
+		Assert.isTrue(lista.isEmpty());
+		Assert.isTrue(lista2.isEmpty());
+
 		this.categoryRepository.delete(category);
-
 	}
-
 	public void flush() {
 		this.categoryRepository.flush();
 	}

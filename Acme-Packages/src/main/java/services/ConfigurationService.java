@@ -43,6 +43,7 @@ public class ConfigurationService {
 
 	public Configuration findOne() {
 		Configuration result;
+
 		result = this.configurationRepository.findAll().get(0);
 		Assert.notNull(result);
 		return result;
@@ -79,6 +80,10 @@ public class ConfigurationService {
 		final double result = this.configurationRepository.findVatTax();
 		Assert.isTrue(result > 0);
 		return result;
+	}
+
+	public void flush() {
+		this.configurationRepository.flush();
 	}
 
 }

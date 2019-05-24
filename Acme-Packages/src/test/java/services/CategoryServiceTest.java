@@ -10,11 +10,11 @@ import javax.validation.ConstraintViolationException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
+import repositories.CategoryRepository;
 import utilities.AbstractTest;
 import domain.Category;
 
@@ -26,7 +26,10 @@ import domain.Category;
 public class CategoryServiceTest extends AbstractTest {
 
 	@Autowired
-	private CategoryService	categoryService;
+	private CategoryService		categoryService;
+
+	@Autowired
+	private CategoryRepository	REPO;
 
 
 	/*
@@ -133,7 +136,7 @@ public class CategoryServiceTest extends AbstractTest {
 				"admin", "category7", null
 			}, {
 				//Category is assigned
-				"admin", "category1", DataIntegrityViolationException.class
+				"admin", "category1", IllegalArgumentException.class
 			}, {
 				//Is not admin
 				"carrier1", "category1", IllegalArgumentException.class
@@ -156,6 +159,7 @@ public class CategoryServiceTest extends AbstractTest {
 		try {
 			cat = this.categoryService.findOne(id);
 			Assert.notNull(cat);
+
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
 		}
@@ -179,7 +183,7 @@ public class CategoryServiceTest extends AbstractTest {
 			Category cat = this.categoryService.findOne(id);
 			Category clon = (Category) cat.clone();
 
-			clon.setSpanishName(spanish1);
+			clon.setSpanishDescription(spanish1);
 
 			cat = clon;
 			this.categoryService.save(cat);
