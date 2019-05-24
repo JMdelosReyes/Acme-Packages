@@ -87,7 +87,7 @@ public class VehicleService {
 			Assert.notNull(old);
 			Assert.isTrue(carrier.getVehicles().contains(old));
 
-			if (old.getSolicitations().size() > 0) {
+			if (!this.vehicleRepository.canBeEditedOrDeleted(vehicle.getId())) {
 				Assert.isTrue(old.getMaxVolume().equals(vehicle.getMaxVolume()));
 				Assert.isTrue(old.getMaxWeight().equals(vehicle.getMaxWeight()));
 				Assert.isTrue(old.getPictures().equals(vehicle.getPictures()));
@@ -115,7 +115,7 @@ public class VehicleService {
 		Assert.notNull(old);
 		Assert.isTrue(carrier.getVehicles().contains(old));
 
-		Assert.isTrue(this.vehicleRepository.canBeDeleted(vehicle.getId()));
+		Assert.isTrue(this.vehicleRepository.canBeEditedOrDeleted(vehicle.getId()));
 
 		carrier.getVehicles().remove(old);
 		this.vehicleRepository.delete(old.getId());
@@ -123,6 +123,11 @@ public class VehicleService {
 
 	public void flush() {
 		this.vehicleRepository.flush();
+	}
+
+	public Boolean canBeEditedOrDeleted(int id) {
+		Assert.isTrue(id > 0);
+		return this.canBeEditedOrDeleted(id);
 	}
 
 }

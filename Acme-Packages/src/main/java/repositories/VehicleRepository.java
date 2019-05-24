@@ -10,7 +10,7 @@ import domain.Vehicle;
 @Repository
 public interface VehicleRepository extends JpaRepository<Vehicle, Integer> {
 
-	@Query("select case when (count(o)>0) then false else true end from Offer o join o.vehicle v join o.traverseTowns tt where v.id=?1 and tt.estimatedDate>current_date and o.finalMode=1 and o.canceled=0")
-	Boolean canBeDeleted(int id);
+	@Query("select case when ((count(s)+count(o))>0) then false else true end from Offer o join o.vehicle v join v.solicitations s where v.id=?1 and s.status!='REJECTED'")
+	Boolean canBeEditedOrDeleted(int id);
 
 }

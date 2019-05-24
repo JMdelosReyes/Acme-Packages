@@ -117,6 +117,42 @@ public class VehicleServiceTest extends AbstractTest {
 	}
 
 	@Test
+	public void driverSave() {
+		final Object testingData[][] = {
+			{
+				// Correct: All the parameters are OK
+				"carrier1", "vehicle2", "VAN", "4567ASD", 500., 3000., "http://asd.com,http://asd2.com", "comment", null
+			}, {
+				// Incorrect: The vehicle has been used or has any accepted or pending solicitation
+				"carrier1", "vehicle1", "VAN", "4567ASD", 500., 3000., "http://asd.com,http://asd2.com", "comment", IllegalArgumentException.class
+			}, {
+				// Incorrect: The user is not a carrier
+				"admin", "vehicle2", "VAN", "4567ASD", 500., 3000., "http://asd.com,http://asd2.com", "comment", IllegalArgumentException.class
+			}, {
+				// Incorrect: The type is not correct
+				"carrier1", "vehicle2", "furgo", "4567ASD", 500., 3000., "http://asd.com,http://asd2.com", "comment", ConstraintViolationException.class
+			}, {
+				// Incorrect: The plate cannot be blank
+				"carrier1", "vehicle2", "VAN", "", 500., 3000., "http://asd.com,http://asd2.com", "comment", ConstraintViolationException.class
+			}, {
+				// Incorrect: The maximum volume cannot be lower than 1
+				"carrier1", "vehicle2", "VAN", "4567ASD", 0., 3000., "http://asd.com,http://asd2.com", "comment", ConstraintViolationException.class
+			}, {
+				// Incorrect: The maximum weight cannot be lower than 1
+				"carrier1", "vehicle2", "VAN", "4567ASD", 500., 0., "http://asd.com,http://asd2.com", "comment", ConstraintViolationException.class
+			}, {
+				// Incorrect: The pictures must be URLs
+				"carrier1", "vehicle2", "VAN", "4567ASD", 500., 3000., "pic1,pic2", "comment", IllegalArgumentException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++) {
+			this.testSave((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (String) testingData[i][3], (Double) testingData[i][4], (Double) testingData[i][5], (String) testingData[i][6], (String) testingData[i][7],
+				(Class<?>) testingData[i][8]);
+		}
+	}
+
+	@Test
 	public void driverDelete() {
 		final Object testingData[][] = {
 			{
@@ -190,6 +226,41 @@ public class VehicleServiceTest extends AbstractTest {
 			vehicle.setPictures(photos);
 			vehicle.setPlate(plate);
 			vehicle.setType(type);
+
+			this.vehicleService.save(vehicle);
+			this.vehicleService.flush();
+
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			super.rollbackTransaction();
+		}
+
+		this.checkExceptions(expected, caught);
+	}
+
+	protected void testSave(String carrier, String vehicleBean, String type, String plate, Double maxVolume, Double maxWeight, String pictures, String comment, final Class<?> expected) {
+		Class<?> caught;
+		caught = null;
+		try {
+			super.startTransaction();
+			super.authenticate(carrier);
+
+			Vehicle vehicle = this.vehicleService.findOne(super.getEntityId(vehicleBean));
+
+			Vehicle clon = (Vehicle) vehicle.clone();
+
+			String[] pics = pictures.split(",");
+			List<String> photos = Arrays.asList(pics);
+
+			clon.setComment(comment);
+			clon.setMaxVolume(maxVolume);
+			clon.setMaxWeight(maxWeight);
+			clon.setPictures(photos);
+			clon.setPlate(plate);
+			clon.setType(type);
+
+			vehicle = clon;
 
 			this.vehicleService.save(vehicle);
 			this.vehicleService.flush();
