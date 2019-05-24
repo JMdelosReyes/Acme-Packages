@@ -166,8 +166,8 @@ public class SponsorshipServiceTest extends AbstractTest {
 				//Can delete as is not valid that sponsorship
 				"admin", "sponsorship2", null
 			}, {
-				//Unlogged users cannot delete sponsorships
-				null, "sponsorship2", IllegalArgumentException.class
+				//Carrier users cannot delete sponsorships
+				"carrier1", "sponsorship2", IllegalArgumentException.class
 			}
 		};
 

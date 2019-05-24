@@ -90,10 +90,10 @@ public class SponsorServiceTest extends AbstractTest {
 				"", "", "middlename", "", "email@gmail.com", "123", "", "", "password", 102, "Nombre", "4495840606545807", "VISA", 1, 90, "wadawdawd", ConstraintViolationException.class
 			}, {
 				// Credit card mut be valid /not expired
-				"name", "surname", "middlename", "https://www.photo.com", "email@gmail.com", "123456789", "address", "sponsor69", "password", 102, "Nombre", "", "VISA", 1, 2, "wadawdawd", ConstraintViolationException.class
+				"name", "surname", "middlename", "https://www.photo.com", "email@gmail.com", "123456789", "address", "sponsor69", "password", 102, "Nombre", "", "VISA", 1, 2, "wadawdawd", IllegalArgumentException.class
 			}, {
 				// Credit card cannot be expired
-				"name", "surname", "middlename", "https://www.photo.com", "email@gmail.com", "123456789", "address", "sponsor69", "password", 102, "Nombre", "4495840606545807", "VISA", 1, 2, "wadawdawd", ConstraintViolationException.class
+				"name", "surname", "middlename", "https://www.photo.com", "email@gmail.com", "123456789", "address", "sponsor69", "password", 102, "Nombre", "4495840606545807", "VISA", 1, 2, "wadawdawd", IllegalArgumentException.class
 			}
 		};
 
