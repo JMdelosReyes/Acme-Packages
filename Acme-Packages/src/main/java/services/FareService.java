@@ -65,9 +65,7 @@ public class FareService {
 	public Fare create() {
 		Assert.isTrue(this.actorService.findActorType().equals("Carrier"));
 		final Fare result = new Fare();
-		result.setMinWeight(0);
 		result.setMaxWeight(0);
-		result.setMinVolume(0);
 		result.setMaxVolume(0);
 		result.setPrice(0);
 		return result;
@@ -80,9 +78,6 @@ public class FareService {
 		final int id = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
 		final Carrier carrier = this.carrierService.findOne(id);
 		Assert.notNull(carrier);
-
-		Assert.isTrue(fare.getMinWeight() < fare.getMaxWeight());
-		Assert.isTrue(fare.getMinVolume() < fare.getMaxVolume());
 
 		if (fare.getId() == 0) {
 			result = this.fareRepository.save(fare);

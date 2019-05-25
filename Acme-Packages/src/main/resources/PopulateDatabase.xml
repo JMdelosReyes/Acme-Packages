@@ -927,105 +927,79 @@
 	<!-- FARE -->
 	
 	<bean id="fare1" class="domain.Fare">
-		<property name="minWeight" value="0" />
 		<property name="maxWeight" value="5" />
-		<property name="minVolume" value="0" />
 		<property name="maxVolume" value="1" />
 		<property name="price" value="5.95" />
 	</bean>
 	
 	<bean id="fare2" class="domain.Fare">
-		<property name="minWeight" value="0" />
 		<property name="maxWeight" value="5" />
-		<property name="minVolume" value="1" />
 		<property name="maxVolume" value="3" />
 		<property name="price" value="7.95" />
 	</bean>
 	
 	<bean id="fare3" class="domain.Fare">
-		<property name="minWeight" value="6" />
 		<property name="maxWeight" value="10" />
-		<property name="minVolume" value="0" />
 		<property name="maxVolume" value="1" />
 		<property name="price" value="8.95" />
 	</bean>
 	
 	<bean id="fare4" class="domain.Fare">
-		<property name="minWeight" value="6" />
 		<property name="maxWeight" value="10" />
-		<property name="minVolume" value="1" />
 		<property name="maxVolume" value="3" />
 		<property name="price" value="9.95" />
 	</bean>
 	
 	<bean id="fare5" class="domain.Fare">
-		<property name="minWeight" value="0" />
 		<property name="maxWeight" value="5" />
-		<property name="minVolume" value="0" />
 		<property name="maxVolume" value="1" />
 		<property name="price" value="5.95" />
 	</bean>
 	
 	<bean id="fare6" class="domain.Fare">
-		<property name="minWeight" value="6" />
 		<property name="maxWeight" value="15" />
-		<property name="minVolume" value="1" />
 		<property name="maxVolume" value="3" />
 		<property name="price" value="8.95" />
 	</bean>
 	
 	<bean id="fare7" class="domain.Fare">
-		<property name="minWeight" value="0" />
 		<property name="maxWeight" value="10" />
-		<property name="minVolume" value="0" />
 		<property name="maxVolume" value="2" />
 		<property name="price" value="6.95" />
 	</bean>
 	
 	<bean id="fare8" class="domain.Fare">
-		<property name="minWeight" value="11" />
 		<property name="maxWeight" value="20" />
-		<property name="minVolume" value="0" />
 		<property name="maxVolume" value="2" />
 		<property name="price" value="9.95" />
 	</bean>
 	
 	<bean id="fare9" class="domain.Fare">
-		<property name="minWeight" value="0" />
 		<property name="maxWeight" value="10" />
-		<property name="minVolume" value="3" />
 		<property name="maxVolume" value="5" />
 		<property name="price" value="10.95" />
 	</bean>
 	
 	<bean id="fare10" class="domain.Fare">
-		<property name="minWeight" value="11" />
 		<property name="maxWeight" value="20" />
-		<property name="minVolume" value="3" />
 		<property name="maxVolume" value="5" />
 		<property name="price" value="14.95" />
 	</bean>
 	
 	<bean id="fare11" class="domain.Fare">
-		<property name="minWeight" value="0" />
 		<property name="maxWeight" value="5" />
-		<property name="minVolume" value="0" />
 		<property name="maxVolume" value="1" />
 		<property name="price" value="5.95" />
 	</bean>
 	
 	<bean id="fare12" class="domain.Fare">
-		<property name="minWeight" value="6" />
 		<property name="maxWeight" value="15" />
-		<property name="minVolume" value="1" />
 		<property name="maxVolume" value="3" />
 		<property name="price" value="8.95" />
 	</bean>
 	
 	<bean id="fare13" class="domain.Fare">
-		<property name="minWeight" value="6" />
 		<property name="maxWeight" value="15" />
-		<property name="minVolume" value="1" />
 		<property name="maxVolume" value="3" />
 		<property name="price" value="8.95" />
 	</bean>

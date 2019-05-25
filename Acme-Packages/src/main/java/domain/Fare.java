@@ -10,9 +10,7 @@ import javax.validation.constraints.Min;
 @Access(AccessType.PROPERTY)
 public class Fare extends DomainEntity implements Cloneable {
 
-	private double	minWeight;
 	private double	maxWeight;
-	private double	minVolume;
 	private double	maxVolume;
 	private double	price;
 
@@ -27,15 +25,7 @@ public class Fare extends DomainEntity implements Cloneable {
 		return o;
 	}
 
-	@Min(0)
-	public double getMinWeight() {
-		return this.minWeight;
-	}
-
-	public void setMinWeight(final double minWeight) {
-		this.minWeight = minWeight;
-	}
-
+	@Min(1)
 	public double getMaxWeight() {
 		return this.maxWeight;
 	}
@@ -44,15 +34,7 @@ public class Fare extends DomainEntity implements Cloneable {
 		this.maxWeight = maxWeight;
 	}
 
-	@Min(0)
-	public double getMinVolume() {
-		return this.minVolume;
-	}
-
-	public void setMinVolume(final double minVolume) {
-		this.minVolume = minVolume;
-	}
-
+	@Min(1)
 	public double getMaxVolume() {
 		return this.maxVolume;
 	}

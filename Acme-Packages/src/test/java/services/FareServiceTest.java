@@ -86,30 +86,21 @@ public class FareServiceTest extends AbstractTest {
 		final Object testingData[][] = {
 			{
 				// Correct: All the parameters are OK
-				"carrier1", 0., 5., 0., 3., 5.95, null
+				"carrier1", 1., 1., 5.95, null
 			}, {
 				// Incorrect: The user must be a carrier
-				"admin", 0., 5., 0., 3., 5.95, IllegalArgumentException.class
+				"admin", 1., 1., 5.95, IllegalArgumentException.class
 			}, {
-				// Incorrect: The minimum weight cannot be lower than 0
-				"carrier1", -1., 5., 0., 3., 5.95, ConstraintViolationException.class
+				// Incorrect: The minimum weight cannot be lower than 1
+				"carrier1", 0., 1., 5.95, ConstraintViolationException.class
 			}, {
-				// Incorrect: The minimum volume cannot be lower than 0
-				"carrier1", 0., 5., -1., 3., 5.95, ConstraintViolationException.class
-			}, {
-				// Incorrect: The price cannot be lower than 1
-				"carrier1", 0., 5., 0., 3., 0., ConstraintViolationException.class
-			}, {
-				// Incorrect: The maximum weight cannot be lower than the minimum weight
-				"carrier1", 2., 1., 0., 3., 5.95, IllegalArgumentException.class
-			}, {
-				// Incorrect: The maximum volume cannot be lower than the minimum volume
-				"carrier1", 2., 3., 2., 1., 5.95, IllegalArgumentException.class
+				// Incorrect: The minimum volume cannot be lower than 1
+				"carrier1", 1., 0., 5.95, ConstraintViolationException.class
 			}
 		};
 
 		for (int i = 0; i < testingData.length; i++) {
-			this.testCreateAndSave((String) testingData[i][0], (Double) testingData[i][1], (Double) testingData[i][2], (Double) testingData[i][3], (Double) testingData[i][4], (Double) testingData[i][5], (Class<?>) testingData[i][6]);
+			this.testCreateAndSave((String) testingData[i][0], (Double) testingData[i][1], (Double) testingData[i][2], (Double) testingData[i][3], (Class<?>) testingData[i][4]);
 		}
 	}
 
@@ -118,33 +109,24 @@ public class FareServiceTest extends AbstractTest {
 		final Object testingData[][] = {
 			{
 				// Correct: All the parameters are OK
-				"carrier1", "fare13", 0., 5., 0., 3., 5.95, null
+				"carrier1", "fare13", 5., 3., 5.95, null
 			}, {
 				// Incorrect: The fare is being used
-				"carrier1", "fare11", 0., 5., 0., 3., 5.95, IllegalArgumentException.class
+				"carrier1", "fare11", 5., 3., 5.95, IllegalArgumentException.class
 			}, {
 				// Incorrect: The carrier is not the owner of the fare
-				"carrier2", "fare13", 0., 5., 0., 3., 5.95, IllegalArgumentException.class
+				"carrier2", "fare13", 5., 3., 5.95, IllegalArgumentException.class
 			}, {
-				// Incorrect: The minimum weight cannot be lower than 0
-				"carrier1", "fare13", -1., 5., 0., 3., 5.95, ConstraintViolationException.class
+				// Incorrect: The minimum weight cannot be lower than 1
+				"carrier1", "fare13", 0., 1., 5.95, ConstraintViolationException.class
 			}, {
-				// Incorrect: The minimum volume cannot be lower than 0
-				"carrier1", "fare13", 0., 5., -1., 3., 5.95, ConstraintViolationException.class
-			}, {
-				// Incorrect: The price cannot be lower than 1
-				"carrier1", "fare13", 0., 5., 0., 3., 0., ConstraintViolationException.class
-			}, {
-				// Incorrect: The maximum weight cannot be lower than the minimum weight
-				"carrier1", "fare13", 2., 1., 0., 3., 5.95, IllegalArgumentException.class
-			}, {
-				// Incorrect: The maximum volume cannot be lower than the minimum volume
-				"carrier1", "fare13", 2., 3., 2., 1., 5.95, IllegalArgumentException.class
+				// Incorrect: The minimum volume cannot be lower than 1
+				"carrier1", "fare13", 1., 0., 5.95, ConstraintViolationException.class
 			}
 		};
 
 		for (int i = 0; i < testingData.length; i++) {
-			this.testSave((String) testingData[i][0], (String) testingData[i][1], (Double) testingData[i][2], (Double) testingData[i][3], (Double) testingData[i][4], (Double) testingData[i][5], (Double) testingData[i][6], (Class<?>) testingData[i][7]);
+			this.testSave((String) testingData[i][0], (String) testingData[i][1], (Double) testingData[i][2], (Double) testingData[i][3], (Double) testingData[i][4], (Class<?>) testingData[i][5]);
 		}
 	}
 
@@ -204,7 +186,7 @@ public class FareServiceTest extends AbstractTest {
 		this.checkExceptions(expected, caught);
 	}
 
-	protected void testCreateAndSave(final String carrier, final Double minWeight, final Double maxWeight, Double minVolume, Double maxVolume, Double price, final Class<?> expected) {
+	protected void testCreateAndSave(final String carrier, final Double maxWeight, Double maxVolume, Double price, final Class<?> expected) {
 		Class<?> caught;
 		caught = null;
 		try {
@@ -213,9 +195,7 @@ public class FareServiceTest extends AbstractTest {
 
 			Fare fare = this.fareService.create();
 
-			fare.setMinWeight(minWeight);
 			fare.setMaxWeight(maxWeight);
-			fare.setMinVolume(minVolume);
 			fare.setMaxVolume(maxVolume);
 			fare.setPrice(price);
 
@@ -231,7 +211,7 @@ public class FareServiceTest extends AbstractTest {
 		this.checkExceptions(expected, caught);
 	}
 
-	protected void testSave(final String carrier, String fareBean, final Double minWeight, final Double maxWeight, Double minVolume, Double maxVolume, Double price, final Class<?> expected) {
+	protected void testSave(final String carrier, String fareBean, final Double maxWeight, Double maxVolume, Double price, final Class<?> expected) {
 		Class<?> caught;
 		caught = null;
 		try {
@@ -242,9 +222,7 @@ public class FareServiceTest extends AbstractTest {
 
 			Fare clon = (Fare) fare.clone();
 
-			clon.setMinWeight(minWeight);
 			clon.setMaxWeight(maxWeight);
-			clon.setMinVolume(minVolume);
 			clon.setMaxVolume(maxVolume);
 			clon.setPrice(price);
 
