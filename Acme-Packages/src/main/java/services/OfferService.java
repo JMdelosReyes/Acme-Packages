@@ -150,8 +150,6 @@ public class OfferService {
 		Assert.isTrue(carrier.getOffers().contains(old));
 		Assert.isTrue(!old.isFinalMode());
 
-		//TODO Quitar de más sitios
-
 		carrier.getOffers().remove(old);
 		this.offerRepository.delete(old.getId());
 	}
@@ -177,10 +175,31 @@ public class OfferService {
 	}
 
 	public void cancelOffer(int id) {
+		Assert.isTrue(id > 0);
+		Offer offer = this.offerRepository.findOne(id);
+		Assert.notNull(offer);
 
+		Assert.isTrue(offer.isFinalMode());
+		Assert.isTrue(!offer.isCanceled());
+
+		final int actorId = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
+		final Carrier carrier = this.carrierService.findOne(actorId);
+		Assert.notNull(carrier);
+
+		Assert.isTrue(carrier.getOffers().contains(offer));
+
+		Offer clon = (Offer) offer.clone();
+		clon.setCanceled(true);
+		offer = clon;
+
+		this.offerRepository.save(offer);
 	}
 
 	public void addTraverseTown(TraverseTown traverseTown, int offerId) {
+
+	}
+
+	public void removeTraverseTown(TraverseTown traverseTown) {
 
 	}
 
@@ -189,6 +208,10 @@ public class OfferService {
 	}
 
 	public void addEvaluation(Evaluation evaluation, int offerId) {
+
+	}
+
+	public void removeEvaluation(Evaluation evaluation) {
 
 	}
 
