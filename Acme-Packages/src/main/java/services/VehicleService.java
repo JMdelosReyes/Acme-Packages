@@ -127,7 +127,11 @@ public class VehicleService {
 
 	public Boolean canBeEditedOrDeleted(int id) {
 		Assert.isTrue(id > 0);
-		return this.canBeEditedOrDeleted(id);
+		return this.vehicleRepository.canBeEditedOrDeleted(id);
 	}
 
+	public Boolean canBeUsed(int id) {
+		Assert.isTrue(id > 0);
+		return this.vehicleRepository.canBeUsed(id);
+	}
 }

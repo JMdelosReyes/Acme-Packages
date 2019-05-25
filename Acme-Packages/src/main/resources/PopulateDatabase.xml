@@ -1984,8 +1984,8 @@
 		<property name="finalMode" value="false" />
 		<property name="maxDateToRequest" value="05/05/2020" />
 		<property name="canceled" value="false" /> 		
-		<property name="score" value="5" />
-		<property name="totalPrice" value="500" />
+		<property name="score" value="0" />
+		<property name="totalPrice" value="0" />
 		<property name="fares">
 			<list>
 			</list>

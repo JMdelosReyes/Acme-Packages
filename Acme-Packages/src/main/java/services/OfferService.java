@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.util.Assert;
 
 import repositories.OfferRepository;
 import security.LoginService;
+import utilities.Tickers;
 import domain.Carrier;
 import domain.Evaluation;
 import domain.Fare;
@@ -31,6 +33,9 @@ public class OfferService {
 
 	@Autowired
 	private CarrierService	carrierService;
+
+	@Autowired
+	private VehicleService	vehicleService;
 
 
 	public OfferService() {
@@ -59,7 +64,7 @@ public class OfferService {
 		Assert.notNull(carrier);
 
 		final Offer result = new Offer();
-		result.setTicker(""); // En el reconstruct
+		result.setTicker("");
 		result.setFinalMode(false);
 		result.setMaxDateToRequest(DateTime.now().minusMillis(1000).toDate());
 		result.setCanceled(false);
@@ -81,9 +86,27 @@ public class OfferService {
 		final Carrier carrier = this.carrierService.findOne(id);
 		Assert.notNull(carrier);
 
+		Assert.isTrue(offer.getVehicle() != null);
+		Assert.isTrue(carrier.getVehicles().contains(offer.getVehicle()));
+		Assert.isTrue(this.vehicleService.canBeUsed(offer.getVehicle().getId()));
+
+		Assert.isTrue(carrier.getFares().equals(offer.getFares()) || carrier.getFares().containsAll(offer.getFares()));
+
 		Offer result;
-		// TODO Restricciones aquó o en el reconstruct
+
 		if (offer.getId() == 0) {
+			offer.setCanceled(false);
+			offer.setFinalMode(false);
+			offer.setScore(0);
+			offer.setTicker(Tickers.generateTicker());
+			offer.setTotalPrice(0);
+			offer.setEvaluations(new ArrayList<Evaluation>());
+			offer.setFares(new ArrayList<Fare>());
+			offer.setRequests(new ArrayList<Request>());
+			offer.setTraverseTowns(new ArrayList<TraverseTown>());
+
+			Assert.isTrue(offer.getMaxDateToRequest().after(new Date(System.currentTimeMillis() - 1000)));
+
 			result = this.offerRepository.save(offer);
 			Assert.notNull(result);
 			carrier.getOffers().add(result);
@@ -91,9 +114,21 @@ public class OfferService {
 		} else {
 			final Offer old = this.offerRepository.findOne(offer.getId());
 			Assert.notNull(old);
+
 			Assert.isTrue(carrier.getOffers().contains(old));
 			Assert.isTrue(!old.isCanceled());
 			Assert.isTrue(!old.isFinalMode());
+
+			if ((offer.isFinalMode() && !old.isFinalMode()) || (!offer.isFinalMode() && !old.isFinalMode())) {
+				Assert.isTrue(offer.getMaxDateToRequest().after(new Date(System.currentTimeMillis() - 1000)));
+				Assert.isTrue(offer.getTotalPrice() == 0);
+				Assert.isTrue(offer.getScore() == 0);
+			}
+
+			if (offer.isFinalMode() && !old.isFinalMode()) {
+				Assert.isTrue(offer.getFares().size() > 0);
+				Assert.isTrue(offer.getTraverseTowns().size() > 0);
+			}
 
 			result = this.offerRepository.save(offer);
 			Assert.notNull(result);
@@ -101,7 +136,6 @@ public class OfferService {
 
 		return result;
 	}
-
 	public void delete(final Offer offer) {
 		Assert.notNull(offer);
 		Assert.isTrue(offer.getId() > 0);
@@ -140,6 +174,22 @@ public class OfferService {
 		result = this.offerRepository.findByFare(id);
 		Assert.notNull(result);
 		return result;
+	}
+
+	public void cancelOffer(int id) {
+
+	}
+
+	public void addTraverseTown(TraverseTown traverseTown, int offerId) {
+
+	}
+
+	public void addRequest(Request request, int offerId) {
+
+	}
+
+	public void addEvaluation(Evaluation evaluation, int offerId) {
+
 	}
 
 }
