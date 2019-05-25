@@ -21,7 +21,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public class Solicitation extends DomainEntity {
+public class Solicitation extends DomainEntity implements Cloneable {
 
 	private Date				moment;
 	private String				status;
@@ -96,6 +96,16 @@ public class Solicitation extends DomainEntity {
 
 	public void setCategory(final Category category) {
 		this.category = category;
+	}
+
+	@Override
+	public Object clone() {
+		Object o = null;
+		try {
+			o = super.clone();
+		} catch (final CloneNotSupportedException e) {
+		}
+		return o;
 	}
 
 }

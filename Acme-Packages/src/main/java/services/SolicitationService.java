@@ -89,6 +89,10 @@ public class SolicitationService {
 
 			solicitation.setMoment(DateTime.now().minusMillis(1000).toDate());
 
+			solicitation.setStatus("PENDING");
+			solicitation.setEndDate(null);
+			solicitation.setStartDate(null);
+
 			result = this.solicitationRepository.save(solicitation);
 			Assert.notNull(result);
 
@@ -100,16 +104,14 @@ public class SolicitationService {
 			Assert.notNull(old);
 
 			final int id = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
-			final Carrier carrier = this.carrierService.findOne(id);
-			Assert.notNull(carrier);
 
-			Assert.isTrue(this.findSolicitationsOfCarrier(id).contains(old));
+			Assert.isTrue(this.isSolicitationofCarrier(old, id));
 
 			Assert.isTrue(old.getStatus().equals("PENDING"));
 			Assert.isTrue(old.getStatus().equals(solicitation.getStatus()));
-			Assert.isTrue(old.getEndDate().equals(solicitation.getEndDate()));
+			Assert.isTrue(((old.getEndDate() == null) && (solicitation.getEndDate() == null)) || old.getEndDate().equals(solicitation.getEndDate()));
 			Assert.isTrue(old.getMoment().equals(solicitation.getMoment()));
-			Assert.isTrue(old.getStartDate().equals(solicitation.getStartDate()));
+			Assert.isTrue(((old.getStartDate() == null) && (solicitation.getStartDate() == null)) || old.getStartDate().equals(solicitation.getStartDate()));
 
 			result = this.solicitationRepository.save(solicitation);
 			Assert.notNull(result);
@@ -150,6 +152,9 @@ public class SolicitationService {
 
 		Assert.isTrue(old.getStatus().equals("PENDING"));
 
+		Vehicle v = this.vehicleOfSolicitation(old.getId());
+		v.getSolicitations().remove(old);
+
 		this.solicitationRepository.delete(old.getId());
 	}
 
@@ -158,9 +163,18 @@ public class SolicitationService {
 	}
 
 	public Collection<Solicitation> findSolicitationsOfCarrier(int idCarrier) {
-		final Collection<Solicitation> solicitations = this.solicitationRepository.solicitationsOfCarrier(idCarrier);
+		final Collection<Solicitation> solicitations = new ArrayList<>(this.solicitationRepository.solicitationsOfCarrier(idCarrier));
 		Assert.notNull(solicitations);
 		return solicitations;
+	}
+
+	private Vehicle vehicleOfSolicitation(int idVehicle) {
+		return this.solicitationRepository.vehicleOfSolicitation(idVehicle);
+	}
+
+	private Boolean isSolicitationofCarrier(Solicitation s, int idCarrier) {
+
+		return this.findSolicitationsOfCarrier(idCarrier).contains(s);
 	}
 
 }
