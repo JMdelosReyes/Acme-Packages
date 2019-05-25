@@ -18,6 +18,7 @@ import domain.Carrier;
 import domain.Comment;
 import domain.Customer;
 import domain.Issue;
+import domain.Offer;
 import domain.Request;
 
 @Service
@@ -191,6 +192,15 @@ public class IssueService {
 		final Collection<Issue> issue = this.issueRepository.issuesOfCustomer(idCustomer);
 		Assert.notNull(issue);
 		return issue;
+	}
+
+	public void deleteIssuesOfOffer(Offer o) {
+		for (Issue i : this.issueRepository.findIssuesOfOffer(o.getId())) {
+			Auditor auditor = this.issueRepository.findAuditorOfIssue(i.getId());
+			auditor.getIssues().remove(i);
+			this.issueRepository.delete(i.getId());
+		}
+
 	}
 
 }

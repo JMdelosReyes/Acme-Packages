@@ -217,4 +217,11 @@ public class RequestService {
 		old = clon;
 		this.reqRepository.save(old);
 	}
+
+	public void deleteRequestOfOffer(Offer o) {
+		for (Request r : o.getRequests()) {
+			this.reqRepository.findCustomerByRequestId(r.getId()).getRequests().remove(r);
+			this.reqRepository.delete(r);
+		}
+	}
 }

@@ -30,23 +30,23 @@ public class AuditorService {
 
 	//Managed repository
 	@Autowired
-	AuditorRepository		auditorRepository;
+	private AuditorRepository		auditorRepository;
 
 	//Supporting services
 	@Autowired
-	ActorService			actorService;
+	private ActorService			actorService;
 
 	@Autowired
-	UserAccountService		userAccountService;
+	private UserAccountService		userAccountService;
 
 	@Autowired
-	ConfigurationService	configurationService;
+	private ConfigurationService	configurationService;
 
 	@Autowired
-	MessService				messService;
+	private MessService				messService;
 
 	@Autowired
-	MessBoxService			messBoxService;
+	private MessBoxService			messBoxService;
 
 
 	public AuditorService() {

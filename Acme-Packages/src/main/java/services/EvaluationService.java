@@ -111,4 +111,10 @@ public class EvaluationService {
 		return issue;
 	}
 
+	public void deleteEvaluationsOfOffer(Offer o) {
+		for (Evaluation e : o.getEvaluations()) {
+			this.evaluationRepository.delete(e);
+		}
+	}
+
 }

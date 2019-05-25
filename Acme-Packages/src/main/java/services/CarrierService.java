@@ -46,6 +46,15 @@ public class CarrierService {
 	@Autowired
 	private MessBoxService			messBoxService;
 
+	@Autowired
+	private IssueService			issueService;
+
+	@Autowired
+	private EvaluationService		evaluationService;
+
+	@Autowired
+	private RequestService			requestService;
+
 
 	public CarrierService() {
 
@@ -189,10 +198,15 @@ public class CarrierService {
 		Assert.notNull(carrier);
 		Assert.isTrue(carrier.getId() > 0);
 		Assert.isTrue(this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId() == carrier.getId());
-		//TODO BORRAR MIERDA (de momento no falla nada)
+
+		for (Offer o : carrier.getOffers()) {
+			this.issueService.deleteIssuesOfOffer(o);
+			this.evaluationService.deleteEvaluationsOfOffer(o);
+			this.requestService.deleteRequestOfOffer(o);
+		}
+
 		this.carrierRepository.delete(carrier.getId());
 	}
-
 	public void flush() {
 		this.carrierRepository.flush();
 	}
