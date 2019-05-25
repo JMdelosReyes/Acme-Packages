@@ -46,6 +46,11 @@ public class OfferServiceTest extends AbstractTest {
 		Assert.notNull(offers);
 	}
 
+	/*
+	 * Requirement tested: The actors of the system can see the offers of the system
+	 * Sentence coverage: 100%
+	 * Data coverage: 100%, as we tested the limit id (0), some real offers id's and a non offer id
+	 */
 	@Test
 	public void driverFindOne() {
 		final Object testingData[][] = {
@@ -72,6 +77,11 @@ public class OfferServiceTest extends AbstractTest {
 		}
 	}
 
+	/*
+	 * Requirement tested: An actor who is authenticated as a carrier must be able to create offers
+	 * Sentence coverage: 100%
+	 * Data coverage: 100%, as we've tested the method with a carrier and with a non carrier user
+	 */
 	@Test
 	public void driverCreate() {
 		final Object testingData[][] = {
@@ -89,6 +99,11 @@ public class OfferServiceTest extends AbstractTest {
 		}
 	}
 
+	/*
+	 * Requirement tested: An actor who is authenticated as a carrier must be able to create and save offers
+	 * Sentence coverage: 92.5%
+	 * Data coverage: 22.22%, as we've tested 8 out of 36 possible combinations
+	 */
 	@Test
 	public void driverCreateAndSave() {
 		final Object testingData[][] = {
@@ -124,6 +139,11 @@ public class OfferServiceTest extends AbstractTest {
 		}
 	}
 
+	/*
+	 * Requirement tested: An authenticated carrier must be able to modify his offers
+	 * Sentence coverage: 92.5%
+	 * Data coverage: 5.55%, as we've tested 8 out of 144 possible combinations
+	 */
 	@Test
 	public void driverSave() {
 		final Object testingData[][] = {
@@ -159,6 +179,11 @@ public class OfferServiceTest extends AbstractTest {
 		}
 	}
 
+	/*
+	 * Requirement tested: Carriers can delete their offers as long as they are not in final mode
+	 * Sentence coverage: 95.2%
+	 * Data coverage: 100%, as we tried to delete offers in final and not final mode with its owners and with other users
+	 */
 	@Test
 	public void driverDelete() {
 		final Object testingData[][] = {

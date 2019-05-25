@@ -39,6 +39,11 @@ public class TownServiceTest extends AbstractTest {
 		Assert.notNull(towns);
 	}
 
+	/*
+	 * Requirement tested: The actors of the system can see the available towns
+	 * Sentence coverage: 100%
+	 * Data coverage: 100%, as we tested the limit id (0), some real town id's and a non town id
+	 */
 	@Test
 	public void driverFindOne() {
 		final Object testingData[][] = {
@@ -65,6 +70,11 @@ public class TownServiceTest extends AbstractTest {
 		}
 	}
 
+	/*
+	 * Requirement tested: Administrators can create towns
+	 * Sentence coverage: 100%
+	 * Data coverage: 100%, as we've tested the method with an administrator and a a non administrator user
+	 */
 	@Test
 	public void driverCreate() {
 		final Object testingData[][] = {
@@ -82,6 +92,11 @@ public class TownServiceTest extends AbstractTest {
 		}
 	}
 
+	/*
+	 * Requirement tested: Administrators can create and save towns
+	 * Sentence coverage: 100%
+	 * Data coverage: 25%, as we've tested 6 out of 24 possible combinations
+	 */
 	@Test
 	public void driverCreateAndSave() {
 		final Object testingData[][] = {
@@ -111,6 +126,11 @@ public class TownServiceTest extends AbstractTest {
 		}
 	}
 
+	/*
+	 * Requirement tested: Administrators can modify towns
+	 * Sentence coverage: 100%
+	 * Data coverage: 25%, as we've tested 6 out of 24 possible combinations
+	 */
 	@Test
 	public void driverSave() {
 		final Object testingData[][] = {
@@ -140,6 +160,11 @@ public class TownServiceTest extends AbstractTest {
 		}
 	}
 
+	/*
+	 * Requirement tested: Administrators can delete towns
+	 * Sentence coverage: 96.3%
+	 * Data coverage: 100%, as we tried to delete a town that's being used and a non administrator user
+	 */
 	@Test
 	public void driverDelete() {
 		final Object testingData[][] = {

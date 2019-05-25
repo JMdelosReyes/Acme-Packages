@@ -41,6 +41,11 @@ public class CarrierServiceTest extends AbstractTest {
 		Assert.notNull(carriers);
 	}
 
+	/*
+	 * Requirement tested: The actors of the system can see the profile of any carrier
+	 * Sentence coverage: 100%
+	 * Data coverage: 100%, as we tested the limit id (0), some real carriers id's and a non carrier id
+	 */
 	@Test
 	public void driverFindOne() {
 		final Object testingData[][] = {
@@ -67,6 +72,11 @@ public class CarrierServiceTest extends AbstractTest {
 		}
 	}
 
+	/*
+	 * Requirement tested: An actor who is not authenticated must be able to create a carrier account
+	 * Sentence coverage: 100%
+	 * Data coverage: 100%, as we've tested the method with a logged and a a non logged user
+	 */
 	@Test
 	public void driverCreate() {
 		final Object testingData[][] = {
@@ -84,6 +94,11 @@ public class CarrierServiceTest extends AbstractTest {
 		}
 	}
 
+	/*
+	 * Requirement tested: An actor who is not authenticated must be able to register to the system as a carrier
+	 * Sentence coverage: 96%
+	 * Data coverage: 3.5%, as we've tested 9 out of 256 possible combinations
+	 */
 	@Test
 	public void driverCreateAndSave() {
 		final Object testingData[][] = {
@@ -124,6 +139,11 @@ public class CarrierServiceTest extends AbstractTest {
 		}
 	}
 
+	/*
+	 * Requirement tested: An authenticated carrier must be able to modify his or her profile
+	 * Sentence coverage: 96%
+	 * Data coverage: 1.75%, as we've tested 9 out of 512 possible combinations
+	 */
 	@Test
 	public void driverSave() {
 		final Object testingData[][] = {
@@ -164,6 +184,11 @@ public class CarrierServiceTest extends AbstractTest {
 		}
 	}
 
+	/*
+	 * Requirement tested: Every actor of the system must be able to delete his or her account
+	 * Sentence coverage: 96.6%
+	 * Data coverage: 100%, as we test the method using a carrier and a non carrier user
+	 */
 	@Test
 	public void driverDelete() {
 		final Object testingData[][] = {

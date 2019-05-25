@@ -43,6 +43,11 @@ public class TraverseTownServiceTest extends AbstractTest {
 		Assert.notNull(traverseTowns);
 	}
 
+	/*
+	 * Requirement tested: The actors of the system can see the traverse towns of an offer
+	 * Sentence coverage: 100%
+	 * Data coverage: 100%, as we tested the limit id (0), some real traverse towns id's and a non traverse town id
+	 */
 	@Test
 	public void driverFindOne() {
 		final Object testingData[][] = {
@@ -69,6 +74,11 @@ public class TraverseTownServiceTest extends AbstractTest {
 		}
 	}
 
+	/*
+	 * Requirement tested: An actor who is authenticated as a carrier must be able to create traverse towns
+	 * Sentence coverage: 100%
+	 * Data coverage: 100%, as we've tested the method with a carrier and a a non carrier user
+	 */
 	@Test
 	public void driverCreate() {
 		final Object testingData[][] = {
@@ -86,6 +96,11 @@ public class TraverseTownServiceTest extends AbstractTest {
 		}
 	}
 
+	/*
+	 * Requirement tested: An actor who is authenticated as a carrier must be able to create and save traverse towns
+	 * Sentence coverage: 100%
+	 * Data coverage: 25%, as we've tested 4 out of 16 possible combinations
+	 */
 	@Test
 	public void driverCreateAndSave() {
 		final Object testingData[][] = {
@@ -109,6 +124,11 @@ public class TraverseTownServiceTest extends AbstractTest {
 		}
 	}
 
+	/*
+	 * Requirement tested: An authenticated carrier must be able to modify his or her traverse towns
+	 * Sentence coverage: 100%
+	 * Data coverage: 15.6%, as we've tested 5 out of 32 possible combinations
+	 */
 	@Test
 	public void driverSave() {
 		final Object testingData[][] = {
@@ -135,6 +155,11 @@ public class TraverseTownServiceTest extends AbstractTest {
 		}
 	}
 
+	/*
+	 * Requirement tested: Carriers must be able to delete their traverse towns
+	 * Sentence coverage: 98.4%
+	 * Data coverage: 100%, as we test the method using the carrier owner and other users
+	 */
 	@Test
 	public void driverDelete() {
 		final Object testingData[][] = {

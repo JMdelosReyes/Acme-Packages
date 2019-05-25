@@ -110,9 +110,15 @@ public class TraverseTownService {
 
 		offer.getTraverseTowns().remove(old);
 		this.traverseTownRepository.delete(old.getId());
+
+		//TODO Reordenar traverse towns
 	}
 
 	public void flush() {
 		this.traverseTownRepository.flush();
+	}
+
+	public void reOrder(Offer offer) {
+
 	}
 }

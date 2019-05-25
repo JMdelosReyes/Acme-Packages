@@ -40,6 +40,11 @@ public class VehicleServiceTest extends AbstractTest {
 		Assert.notNull(vehicles);
 	}
 
+	/*
+	 * Requirement tested: Actor of the system can see the vehicles of the offers
+	 * Sentence coverage: 100%
+	 * Data coverage: 100%, as we tested the limit id (0), some real vehicles id's and a non vehicle id
+	 */
 	@Test
 	public void driverFindOne() {
 		final Object testingData[][] = {
@@ -66,6 +71,11 @@ public class VehicleServiceTest extends AbstractTest {
 		}
 	}
 
+	/*
+	 * Requirement tested: Carriers can create vehicles
+	 * Sentence coverage: 100%
+	 * Data coverage: 100%, as we've tested the method with a logged and a a non logged carrier
+	 */
 	@Test
 	public void driverCreate() {
 		final Object testingData[][] = {
@@ -83,6 +93,11 @@ public class VehicleServiceTest extends AbstractTest {
 		}
 	}
 
+	/*
+	 * Requirement tested: Carrier can create and save vehicles
+	 * Sentence coverage: 69%
+	 * Data coverage: 7.29%, as we've tested 9 out of 96 possible combinations
+	 */
 	@Test
 	public void driverCreateAndSave() {
 		final Object testingData[][] = {
@@ -116,6 +131,11 @@ public class VehicleServiceTest extends AbstractTest {
 		}
 	}
 
+	/*
+	 * Requirement tested: An authenticated carrier must be able to modify his or her vehicles
+	 * Sentence coverage: 69%
+	 * Data coverage: 4.16%, as we've tested 9 out of 192 possible combinations
+	 */
 	@Test
 	public void driverSave() {
 		final Object testingData[][] = {
@@ -152,6 +172,11 @@ public class VehicleServiceTest extends AbstractTest {
 		}
 	}
 
+	/*
+	 * Requirement tested: Carriers can delete their vehicles
+	 * Sentence coverage: 98.4%
+	 * Data coverage: 100%, as we test the method using the owner of the vehicle and another user and a vehicle being used
+	 */
 	@Test
 	public void driverDelete() {
 		final Object testingData[][] = {

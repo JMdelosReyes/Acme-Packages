@@ -38,6 +38,11 @@ public class FareServiceTest extends AbstractTest {
 		Assert.notNull(fares);
 	}
 
+	/*
+	 * Requirement tested: Actors of the system can see the fares of any offer
+	 * Sentence coverage: 100%
+	 * Data coverage: 100%, as we tested the limit id (0), some real fares id's and a non fare id
+	 */
 	@Test
 	public void driverFindOne() {
 		final Object testingData[][] = {
@@ -64,6 +69,11 @@ public class FareServiceTest extends AbstractTest {
 		}
 	}
 
+	/*
+	 * Requirement tested: Carriers can create his own fares
+	 * Sentence coverage: 100%
+	 * Data coverage: 100%, as we tried to create a fare with a carrier and with a non carrier user
+	 */
 	@Test
 	public void driverCreate() {
 		final Object testingData[][] = {
@@ -81,6 +91,12 @@ public class FareServiceTest extends AbstractTest {
 		}
 	}
 
+	/*
+	 * Requirement tested: Carriers can create and save his own fares
+	 * Sentence coverage: 98.8%
+	 * Data coverage: 100%, as we tried to create a fare with a carrier and with a non carrier user and all the
+	 * numeric constraints have been tested
+	 */
 	@Test
 	public void driverCreateAndSave() {
 		final Object testingData[][] = {
@@ -96,6 +112,9 @@ public class FareServiceTest extends AbstractTest {
 			}, {
 				// Incorrect: The minimum volume cannot be lower than 1
 				"carrier1", 1., 0., 5.95, ConstraintViolationException.class
+			}, {
+				// Incorrect: The price cannot be lower than 1
+				"carrier1", 1., 1., 0., ConstraintViolationException.class
 			}
 		};
 
@@ -104,15 +123,18 @@ public class FareServiceTest extends AbstractTest {
 		}
 	}
 
+	/*
+	 * Requirement tested: Carriers can edit his fares
+	 * Sentence coverage: 98.8%
+	 * Data coverage: 100%, as we tried to edit a fare by his carrier and by a carrier who's not its owner, in addition
+	 * all the numeric constraints have been tested
+	 */
 	@Test
 	public void driverSave() {
 		final Object testingData[][] = {
 			{
 				// Correct: All the parameters are OK
 				"carrier1", "fare13", 5., 3., 5.95, null
-			}, {
-				// Incorrect: The fare is being used
-				"carrier1", "fare11", 5., 3., 5.95, IllegalArgumentException.class
 			}, {
 				// Incorrect: The carrier is not the owner of the fare
 				"carrier2", "fare13", 5., 3., 5.95, IllegalArgumentException.class
@@ -122,6 +144,9 @@ public class FareServiceTest extends AbstractTest {
 			}, {
 				// Incorrect: The minimum volume cannot be lower than 1
 				"carrier1", "fare13", 1., 0., 5.95, ConstraintViolationException.class
+			}, {
+				// Incorrect: The price cannot be lower than 1
+				"carrier1", "fare13", 1., 1., 0., ConstraintViolationException.class
 			}
 		};
 
@@ -130,6 +155,11 @@ public class FareServiceTest extends AbstractTest {
 		}
 	}
 
+	/*
+	 * Requirement tested: Carriers can delete their fares
+	 * Sentence coverage: 98.5%
+	 * Data coverage: 100%, as we tried to delete a fare using its owner, a user who is not the owner and a fare that's already being used
+	 */
 	@Test
 	public void driverDelete() {
 		final Object testingData[][] = {

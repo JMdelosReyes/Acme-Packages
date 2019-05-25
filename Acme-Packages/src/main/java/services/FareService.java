@@ -88,7 +88,7 @@ public class FareService {
 			final Fare old = this.fareRepository.findOne(fare.getId());
 			Assert.notNull(old);
 			Assert.isTrue(carrier.getFares().contains(old));
-			Assert.isTrue(this.offerService.findByFare(fare.getId()).size() == 0);
+			//Assert.isTrue(this.offerService.findByFare(fare.getId()).size() == 0);
 
 			result = this.fareRepository.save(fare);
 			Assert.notNull(result);
