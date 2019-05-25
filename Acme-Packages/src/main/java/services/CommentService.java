@@ -83,13 +83,7 @@ public class CommentService {
 		Issue issue = this.issueService.findOne(issueId);
 		issue.getComments().add(result);
 
-		//TODO: Comproba que pasa sin el trycatch adribron
-		try {
-			this.issueService.save(issue, null);
-		} catch (Throwable t) {
-			this.commentRepository.delete(result);
-			throw t;
-		}
+		this.issueService.save(issue, null);
 
 		return result;
 	}

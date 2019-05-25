@@ -270,6 +270,7 @@
 		<property name="userAccount" ref="userAccount6" />
 		<property name="issues">
 			<list>
+				<ref bean="issue1" />
 			</list>
 		</property>
 		<property name="solicitations">
@@ -437,6 +438,7 @@
 				<ref bean="offer2"/>
 				<ref bean="offer3"/>
 				<ref bean="offer4"/>
+				
 			</list>
 		</property>
 		<property name="vehicles">
@@ -801,11 +803,14 @@
 		<property name="requests">
 			<list>
 			<ref bean="request1"/>
-			<ref bean="request2"/>		
+			<ref bean="request2"/>
+			<ref bean="request3"/>
+					
 			</list>
 		</property>
 		<property name="evaluations">
 			<list>
+				<ref bean="evaluation1"/>
 			</list>
 		</property>
 		<property name="finder" ref="finder1" />
@@ -1894,10 +1899,12 @@
 		<property name="vehicle" ref="vehicle1" />
 		<property name="evaluations">
 			<list>
+				<ref bean="evaluation1"/>
 			</list>
 		</property>
 		<property name="requests">
 			<list>
+				<ref bean="request2"/>				
 			</list>
 		</property>
 		<property name="traverseTowns">
@@ -1933,6 +1940,7 @@
 		</property>
 		<property name="requests">
 			<list>
+				<ref bean="request3"/>
 			</list>
 		</property>
 		<property name="traverseTowns">
@@ -2186,6 +2194,19 @@
 			</list>
 		</property>
 	</bean>
+	<bean id="package5" class="domain.Package">
+		<property name="weight" value="4400" />
+		<property name="height" value="20" />
+		<property name="width" value="40" />
+		<property name="length" value="10" /> 		
+		<property name="price" value="" />
+		<property name="description" value="Mi play 3" />
+		<property name="categories">
+			<list>
+			<ref bean="category2"/>
+			</list>
+		</property>
+	</bean>
 	
 	<!-- PROFESSIONAL RECORD -->
 	
@@ -2251,21 +2272,41 @@
 		<property name="description" value="Tened aun mas cuidadito" />
 		<property name="maxPrice" value="50"/>
 		<property name="deadline" value="10/07/2019" />
-		<property name="finalMode" value="false" /> 
+		<property name="finalMode" value="true" /> 
 		<property name="volume" value="8075"/>
 		<property name="weight" value="11400" />
 		<property name="streetAddress" value="Calle la niña de las flores" />
 		<property name="comment" value="Cuidadito con el envio, rufianes" />
 		<property name="town" ref="town2" />
 		<!--  <property name="status" ></property>-->
-		<!-- <property name="offer" ref="" /> -->
+		<property name="offer" ref="offer1" />
 		<property name="packages">
 			<list>
 			<ref bean="package3"/>
 			<ref bean="package4"/>
 			</list>
 		</property>
-		<!--  <property name="issue" value="false" /> -->		 			
+		<property name="issue" ref="issue1" />		 			
+	</bean>
+	<bean id="request3" class="domain.Request">
+		<property name="ticker" value="020219-CMCPZ" />
+		<property name="moment" value="02/02/2019 10:00" />
+		<property name="description" value="Tened aun mas cuidadito" />
+		<property name="maxPrice" value="50"/>
+		<property name="deadline" value="10/07/2019" />
+		<property name="finalMode" value="true" /> 
+		<property name="volume" value="8075"/>
+		<property name="weight" value="11400" />
+		<property name="streetAddress" value="Calle la niña de las flores" />
+		<property name="comment" value="Cuidadito con el envio, rufianes" />
+		<property name="town" ref="town2" />
+		<!--  <property name="status" ></property>-->
+		<property name="offer" ref="offer2" />
+		<property name="packages">
+			<list>
+			<ref bean="package5"/>
+			</list>
+		</property>		 			
 	</bean>
 	
 	<!-- SOCIAL PROFILE -->
@@ -2883,6 +2924,28 @@
 			</list>
 		</property>
 		<property name="category" ref="category1" />
+		
+	</bean>
+	
+	<bean id="issue1" class="domain.Issue">
+		<property name="ticker" value="190523-ASD123-AA" />
+		<property name="moment" value="05/24/2019" />
+		<property name="closed" value="false" />
+		<property name="description" value="Ha llegado roto al destinatario"/>
+		<property name="comments">
+			<list>
+			</list>
+		</property>
+		<property name="offer" ref="offer1" />
+		
+	</bean>
+	
+	<bean id="evaluation1" class="domain.Evaluation">
+		<property name="moment" value="05/24/2019" />
+		<property name="mark" value="4" />
+		<property name="comment" value="Bad" />
+		<property name="customer" ref="customer1"/>
+		<property name="offer" ref="offer1" />
 		
 	</bean>
 	

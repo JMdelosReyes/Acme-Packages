@@ -63,7 +63,7 @@ public class IssueService {
 
 	public Issue create() {
 
-		Assert.isTrue(this.actorService.findActorType().equals("Carrier"));
+		Assert.isTrue(this.actorService.findActorType().equals("Customer"));
 
 		final Issue result = new Issue();
 		result.setClosed(false);

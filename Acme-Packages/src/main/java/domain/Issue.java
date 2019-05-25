@@ -22,7 +22,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public class Issue extends DomainEntity {
+public class Issue extends DomainEntity implements Cloneable {
 
 	private String				ticker;
 	private Date				moment;
@@ -89,6 +89,15 @@ public class Issue extends DomainEntity {
 
 	public void setOffer(final Offer offer) {
 		this.offer = offer;
+	}
+	@Override
+	public Object clone() {
+		Object o = null;
+		try {
+			o = super.clone();
+		} catch (final CloneNotSupportedException ex) {
+		}
+		return o;
 	}
 
 }

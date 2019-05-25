@@ -72,7 +72,7 @@ public class SolicitationServiceTest extends AbstractTest {
 		final Object testingData[][] = {
 			{
 				// Correct: The user is a actor
-				"actor1", null
+				"carrier1", null
 			}, {
 				// Incorrect: The user is not a actor
 				"admin", IllegalArgumentException.class
@@ -92,7 +92,7 @@ public class SolicitationServiceTest extends AbstractTest {
 		final Object testingData[][] = {
 			{
 				// Correct: All the parameters are OK
-				"actor1", "category3", "comment", "vehicle2", null
+				"carrier1", "category3", "comment", "vehicle2", null
 			}, {
 				// Incorrect: The user must be a actor
 				"admin", "category3", "comment", "vehicle2", IllegalArgumentException.class
@@ -112,13 +112,13 @@ public class SolicitationServiceTest extends AbstractTest {
 		final Object testingData[][] = {
 			{
 				// Correct: All the parameters are OK
-				"actor1", "solicitation3", "category2", "comment", null, null, null, null
+				"carrier1", "solicitation3", "category2", "comment", null, null, null, null
 			}, {
 				// Incorrect: The solicitation is being used
-				"actor1", "solicitation3", "category2", "comment", null, null, "ACCEPTED", IllegalArgumentException.class
+				"carrier1", "solicitation3", "category2", "comment", null, null, "ACCEPTED", IllegalArgumentException.class
 			}, {
 				// Incorrect: The actor is not the owner of the solicitation
-				"actor2", "solicitation3", "category2", "comment", null, null, null, IllegalArgumentException.class
+				"carrier2", "solicitation3", "category2", "comment", null, null, null, IllegalArgumentException.class
 			}
 		};
 
@@ -132,13 +132,13 @@ public class SolicitationServiceTest extends AbstractTest {
 		final Object testingData[][] = {
 			{
 				// Correct: The actor can delete his solicitation
-				"actor1", "solicitation3", null
+				"carrier1", "solicitation3", null
 			}, {
 				// Incorrect: The solicitation is being used
 				"auditor1", "solicitation2", IllegalArgumentException.class
 			}, {
 				// Incorrect: The actor is not the owner of the solicitation
-				"actor2", "solicitation2", IllegalArgumentException.class
+				"carrier2", "solicitation2", IllegalArgumentException.class
 			}
 		};
 
