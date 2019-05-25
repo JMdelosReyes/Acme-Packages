@@ -81,11 +81,7 @@ public class PackageService {
 		}
 		return res;
 	}
-	public Package firstPackageRequest(Package pac) {
-		Package res;
-		res = this.pacRepository.save(pac);
-		return res;
-	}
+
 	public void delete(Package pac) {
 		Assert.notNull(pac);
 		Request res = this.findRequestByPackageId(pac.getId());

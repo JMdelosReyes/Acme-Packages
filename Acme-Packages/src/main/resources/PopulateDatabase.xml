@@ -984,6 +984,7 @@
 		<property name="userAccount" ref="userAccount5" />
 		<property name="requests">
 			<list>
+				<ref bean="request200"/>
 			</list>
 		</property>
 		<property name="evaluations">
@@ -2311,7 +2312,6 @@
 		<property name="requests">
 			<list>
 			<ref bean="request1"/>
-			<ref bean="request2"/>
 			</list>
 		</property>
 		<property name="traverseTowns">
@@ -2567,7 +2567,7 @@
 		<property name="comment" value="Cuidadito con el envio, rufianes" />
 		<property name="town" ref="town2" />
 		<!--  <property name="status" ></property>-->
-		<property name="offer" ref="offer100" /> 
+		<!--<property name="offer" ref="offer100" />--> 
 		<property name="packages">
 			<list>
 			<ref bean="package10"/>
@@ -2575,6 +2575,54 @@
 			</list>
 		</property>
 		<!--  <property name="issue" value="false" /> -->		 			
+	</bean>
+	<bean id="request200" class="domain.Request">
+		<property name="ticker" value="020219-MMMMMM" />
+		<property name="moment" value="02/02/2019 10:00" />
+		<property name="description" value="Tened aun mas cuidadito" />
+		<property name="maxPrice" value="50"/>
+		<property name="deadline" value="10/07/2019" />
+		<property name="finalMode" value="false" /> 
+		<property name="volume" value="2000"/>
+		<property name="weight" value="1000" />
+		<property name="streetAddress" value="Calle la niña de las flores" />
+		<property name="comment" value="Cuidadito con el envio, rufianes" />
+		<property name="town" ref="town2" />
+		<!--  <property name="status" ></property>-->
+		<!--<property name="offer" ref="offer100" />--> 
+		<property name="packages">
+			<list>
+			<ref bean="package200"/>
+			<ref bean="package201"/>
+			</list>
+		</property>
+		<!--  <property name="issue" value="false" /> -->		 			
+	</bean>
+	<bean id="package200" class="domain.Package">
+		<property name="weight" value="500" />
+		<property name="height" value="10" />
+		<property name="width" value="10" />
+		<property name="length" value="10" /> 		
+		<property name="price" value="" />
+		<property name="description" value="Mi play 200" />
+		<property name="categories">
+			<list>
+			<ref bean="category1"/>
+			</list>
+		</property>
+	</bean>
+	<bean id="package201" class="domain.Package">
+		<property name="weight" value="500" />
+		<property name="height" value="10" />
+		<property name="width" value="10" />
+		<property name="length" value="10" /> 		
+		<property name="price" value="" />
+		<property name="description" value="Mi play 201" />
+		<property name="categories">
+			<list>
+			<ref bean="category1"/>
+			</list>
+		</property>
 	</bean>
 	
 	<!-- SOCIAL PROFILE -->

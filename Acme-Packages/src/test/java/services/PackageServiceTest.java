@@ -34,13 +34,21 @@ public class PackageServiceTest extends AbstractTest {
 	private RequestService	reqService;
 
 
+	/*
+	 * Sentence coverage: 100%
+	 * Data coverage: 100% as the method does not receive any parameter
+	 */
 	@Test
 	public void testFindAll() {
 		Collection<Package> packages;
 		packages = this.pacService.findAll();
 		Assert.notNull(packages);
 	}
-
+	/*
+	 * Requirement tested: The carriers, auditors and customer's owner can find packages
+	 * Sentence coverage: 100%
+	 * Data coverage: 100%, as we tested the limit id (0), some real package id's and a non package id
+	 */
 	@Test
 	public void driverFindOne() {
 		final Object testingData[][] = {
@@ -80,7 +88,11 @@ public class PackageServiceTest extends AbstractTest {
 
 		this.checkExceptions(expected, caught);
 	}
-
+	/*
+	 * Requirement tested: A customer can update a request and save it.
+	 * Sentence coverage: 98.3%
+	 * Data coverage: XX.XX%, we have tested Y from Z posibilities
+	 */
 	@Test
 	public void driverCreateSave() {
 		Object testingData[][] = {
@@ -142,7 +154,11 @@ public class PackageServiceTest extends AbstractTest {
 
 		this.checkExceptions(expected, caught);
 	}
-
+	/*
+	 * Requirement tested: A customer can update a request and save it.
+	 * Sentence coverage: 98.3%
+	 * Data coverage: XX.XX%, we have tested Y from Z posibilities
+	 */
 	@Test
 	public void driverUpdate() {
 		Object testingData[][] = {
@@ -205,7 +221,11 @@ public class PackageServiceTest extends AbstractTest {
 
 		this.checkExceptions(expected, caught);
 	}
-
+	/*
+	 * Requirement tested: A customer can update a request and save it.
+	 * Sentence coverage: 100%
+	 * Data coverage: XX.XX%, we have tested Y from Z posibilities
+	 */
 	@Test
 	public void delete() {
 		Object testingData[][] = {

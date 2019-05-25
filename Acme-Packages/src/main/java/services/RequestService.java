@@ -15,6 +15,7 @@ import org.springframework.util.Assert;
 import repositories.RequestRepository;
 import security.LoginService;
 import security.UserAccount;
+import utilities.Tickers;
 import domain.Carrier;
 import domain.Category;
 import domain.Customer;
@@ -88,8 +89,17 @@ public class RequestService {
 		Assert.notNull(req);
 		Request res;
 		if (req.getId() == 0) {
+			Assert.isTrue(this.actorService.findActorType().equals("Customer"));
+			req.setTicker(Tickers.generateTicker());
+			this.calculateWeightVolume(req);
 			res = this.reqRepository.save(req);
+			UserAccount principal = LoginService.getPrincipal();
+			Customer cus = this.cusService.findOne(this.actorService.findByUserAccountId(principal.getId()).getId());
+			cus.getRequests().add(res);
+			this.cusService.save(cus);
 		} else {
+			Assert.isTrue(req.getId() != 0);
+			this.calculateWeightVolume(req);
 			res = this.reqRepository.save(req);
 		}
 		return res;
@@ -99,18 +109,36 @@ public class RequestService {
 		Assert.notNull(req);
 		Assert.isTrue(!req.isFinalMode());
 
+		Customer cus = this.reqRepository.findCustomerByRequestId(req.getId());
+		cus.getRequests().remove(req);
+		this.cusService.save(cus);
+
 		this.reqRepository.delete(req);
 	}
 
 	private Request calculateWeightVolume(Request req) {
+		double volume = 0.0;
+		double weight = 0.0;
 		Request res = (Request) req.clone();
-		Double volume = this.reqRepository.calculateVolume(res.getId());
-		Double weight = this.reqRepository.calculateWeight(res.getId());
 
+		if (req.getId() != 0) {
+			for (Package p : res.getPackages()) {
+				volume += (p.getHeight() * p.getLength() * p.getWidth());
+				weight += p.getWeight();
+			}
+		} else {
+			List<Package> packs = new ArrayList<>(req.getPackages());
+			Package firstPac = packs.get(0);
+			volume = (firstPac.getHeight() * firstPac.getLength() * firstPac.getWidth());
+			weight = firstPac.getWeight();
+		}
 		res.setVolume(volume);
 		res.setWeight(weight);
-
+		req = res;
 		return res;
+	}
+	public void flush() {
+		this.reqRepository.flush();
 	}
 	//Business methods
 	//Mirar si hay alguna offer para esta request en el controller
@@ -155,10 +183,13 @@ public class RequestService {
 
 	//Anyadir paquetes
 	public void anyadePackage(Package pack, Request req) {
-		Assert.isTrue(!req.isFinalMode());
+		if (req.getId() != 0) {
+			Request old = this.reqRepository.findOne(req.getId());
+			Assert.isTrue(!old.isFinalMode());
+		}
 		Package res = this.pacService.save(pack);
 		req.getPackages().add(res);
-		this.reqRepository.save(req);
+		this.save(req);
 	}
 	//Eliminar paquetes
 	public void eliminaPackage(Package pack) {
@@ -191,6 +222,13 @@ public class RequestService {
 		this.offService.addRequest(this.reqRepository.save(req), of.getId());
 	}
 
+	public void deleteRequestOfOffer(Offer o) {
+		for (Request r : o.getRequests()) {
+			this.reqRepository.findCustomerByRequestId(r.getId()).getRequests().remove(r);
+			this.reqRepository.delete(r);
+		}
+	}
+
 	//Crear una issue
 	public void addIssue(Issue issue, Request req) {
 		Assert.notNull(issue);
@@ -216,12 +254,5 @@ public class RequestService {
 		clon.setStatus(req.getStatus());
 		old = clon;
 		this.reqRepository.save(old);
-	}
-
-	public void deleteRequestOfOffer(Offer o) {
-		for (Request r : o.getRequests()) {
-			this.reqRepository.findCustomerByRequestId(r.getId()).getRequests().remove(r);
-			this.reqRepository.delete(r);
-		}
 	}
 }
