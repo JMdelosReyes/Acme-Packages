@@ -19,7 +19,7 @@ import domain.Evaluation;
 })
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
-public class EvaluationTest extends AbstractTest {
+public class EvaluationServiceTest extends AbstractTest {
 
 	@Autowired
 	private EvaluationService	evaluationService;

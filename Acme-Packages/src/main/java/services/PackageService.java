@@ -14,6 +14,7 @@ import security.LoginService;
 import security.UserAccount;
 import domain.Category;
 import domain.Customer;
+import domain.Fare;
 import domain.Package;
 import domain.Request;
 
@@ -60,34 +61,29 @@ public class PackageService {
 		res.setCategories(new ArrayList<Category>());
 		return res;
 	}
-	public Package save(Package pac, Request req) {
+	public Package save(Package pac) {
 		Assert.notNull(pac);
 		Package res;
 		Assert.isTrue(this.actorService.findActorType().equals("Customer"));
 		if (pac.getId() == 0) {
-			//Comprobar que esa req es de ese customer(solo si ya esta creada la req en bbdd)
-			if ((req.getId() != 0) && !req.isFinalMode()) {
-				Customer cus = this.cusService.findOne(this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId());
-				Assert.isTrue(cus.getRequests().contains(req));
-			}
+			//Reconstruct
 			//Guardo el package
 			res = this.pacRepository.save(pac);
-
-			//Lo incluyo en la request
-			req.getPackages().add(res);
-			this.reqService.save(req);
 		} else {
-			Assert.isTrue(!req.isFinalMode());
 			Package old = this.pacRepository.findOne(pac.getId());
 			//Owner es el customer logged y misma request
 			UserAccount principal = LoginService.getPrincipal();
 			Customer logged = this.cusService.findOne(this.actorService.findByUserAccountId(principal.getId()).getId());
 			Customer owner = this.findCustomerByPackageId(pac.getId());
-			Assert.isTrue(logged.equals(owner));
-			Assert.isTrue(this.findRequestByPackageId(pac.getId()).equals(req.getId()));
+			Assert.isTrue(logged.getId() == owner.getId());
 			//Guardo el package
 			res = this.pacRepository.save(pac);
 		}
+		return res;
+	}
+	public Package firstPackageRequest(Package pac) {
+		Package res;
+		res = this.pacRepository.save(pac);
 		return res;
 	}
 	public void delete(Package pac) {
@@ -119,6 +115,12 @@ public class PackageService {
 		res = this.pacRepository.findRequestByPackageId(id);
 		Assert.notNull(res);
 		return res;
+	}
+	public void changePrice(Package pac, Fare fare) {
+		Package clon = (Package) pac.clone();
+		clon.setPrice(fare.getPrice());
+		pac = clon;
+		this.pacRepository.save(pac);
 	}
 
 }

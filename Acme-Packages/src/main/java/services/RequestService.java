@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import org.joda.time.DateTime;
@@ -12,12 +13,18 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.RequestRepository;
-import utilities.Tickers;
+import security.LoginService;
+import security.UserAccount;
+import domain.Carrier;
+import domain.Category;
+import domain.Customer;
 import domain.Fare;
+import domain.Issue;
 import domain.Offer;
 import domain.Package;
 import domain.Request;
 import domain.Town;
+import domain.TraverseTown;
 
 @Service
 @Transactional
@@ -37,6 +44,8 @@ public class RequestService {
 	private ActorService		actorService;
 	@Autowired
 	private PackageService		pacService;
+	@Autowired
+	private TownService			townService;
 
 
 	//Constructor
@@ -79,79 +88,13 @@ public class RequestService {
 		Assert.notNull(req);
 		Request res;
 		if (req.getId() == 0) {
-			Assert.isTrue(this.actorService.findActorType().equals("Customer"));
-			Assert.notEmpty(req.getPackages());
-			req.setTicker(Tickers.generateTicker());
-			if (req.isFinalMode()) {
-				req.setMoment(DateTime.now().minusMillis(1000).toDate());
-				req.setStatus(Request.SUBMITTED);
-				//this.messService.sendNotiChangeStatus(req);
-			} else {
-				Assert.isTrue(req.getOffer() == null);
-			}
-			for (Package p : req.getPackages()) {
-				Package pac = this.pacService.save(p, req);
-				req.getPackages().add(pac);
-			}
-			//Probar que la offer sea final, que los fares den soporte a todos los 
-			//paquetes de la request, que el vehicle tenga contempladas todas las 
-			//categorias que tienen los paquetes, que la town de la request este en la offer
-			if (req.getOffer() != null) {
-				Offer of = req.getOffer();
-				Assert.isTrue(of.isFinalMode() && !of.isCanceled());
-				List<Fare> fares = new ArrayList<>(of.getFares());
-
-			}
 			res = this.reqRepository.save(req);
 		} else {
-			Request old = this.reqRepository.findOne(req.getId());
-			//Carrier
-			if (this.actorService.findActorType().equals("Carrier")) {
-				Assert.isTrue(old.isFinalMode());
-				//TODO: Controlar en el reconstruct que el Carrier es 
-				//		el propietario de la offer de esta request
-				//		Solo puede modificar el status
-				Assert.isTrue(old.getTicker().equals(req.getTicker()));
-				Assert.isTrue(old.getMoment().equals(req.getMoment()));
-				Assert.isTrue(old.getDescription().equals(req.getDescription()));
-				Assert.isTrue(old.getMaxPrice() == req.getMaxPrice());
-				Assert.isTrue(old.getDeadline().equals(req.getDeadline()));
-				Assert.isTrue(old.getVolume() == req.getVolume());
-				Assert.isTrue(old.getWeight() == req.getWeight());
-				Assert.isTrue(old.isFinalMode() == req.isFinalMode());
-				Assert.isTrue(old.getOffer().equals(req.getOffer()));
-				Assert.isTrue(old.getStreetAddress().equals(req.getStreetAddress()));
-				Assert.isTrue(old.getComment().equals(req.getComment()));
-				Assert.isTrue(old.getTown().equals(req.getTown()));
-				Assert.isTrue(old.getPackages().equals(req.getPackages()));
-				Assert.isTrue(old.getIssue().equals(req.getIssue()));
-				if (!old.getStatus().equals(req.getStatus())) {
-					Assert.isTrue(req.getStatus().equals(Request.ACCEPTED) || req.getStatus().equals(Request.REJECTED) || req.getStatus().equals(Request.DELIVERED));
-					//this.messService.sendNotiChangeStatus(req);
-				}
-				res = this.reqRepository.save(this.calculateWeightVolume(req));
-			}//Customer
-			else {
-				Assert.isTrue(this.actorService.findActorType().equals("Customer"));
-				//TODO: Controlar en el reconstruct que el customer es 
-				//		el propietario de esta request
-				//		Modifica todo menos el ticker 
-				Assert.isTrue(!old.isFinalMode());
-				Assert.isTrue(old.getTicker().equals(req.getTicker()));
-
-				Request recalculated = this.calculateWeightVolume(req);
-
-				if (old.isFinalMode() != recalculated.isFinalMode()) {
-					recalculated.setMoment(DateTime.now().minusMillis(1000).toDate());
-					recalculated.setStatus(Request.SUBMITTED);
-					//this.messService.sendNotiChangeStatus(req);
-				}
-				res = this.reqRepository.save(recalculated);
-			}
+			res = this.reqRepository.save(req);
 		}
 		return res;
-	}
 
+	}
 	public void delete(Request req) {
 		Assert.notNull(req);
 		Assert.isTrue(!req.isFinalMode());
@@ -166,6 +109,7 @@ public class RequestService {
 
 		res.setVolume(volume);
 		res.setWeight(weight);
+
 		return res;
 	}
 	//Business methods
@@ -173,5 +117,104 @@ public class RequestService {
 	public Collection<Offer> findOffersByRequest(Request req) {
 		return null;
 	}
+	public Boolean weightCanBeAddedToOfferByWeightOfRequestAndOfferId(Request req, Offer of) {
+		Boolean res;
+		res = this.reqRepository.weightCanBeAddedToOfferByWeightOfRequestAndOfferId(req.getWeight(), of.getId());
+		return res;
+	}
 
+	public Boolean volumeCanBeAddedToOfferByVolumeOfRequestAndOfferId(Request req, Offer of) {
+		Boolean res;
+		res = this.reqRepository.volumeCanBeAddedToOfferByVolumeOfRequestAndOfferId(req.getWeight(), of.getId());
+		return res;
+	}
+	public Collection<Town> findTownsByOfferId(Offer of) {
+		Collection<Town> res = new ArrayList<Town>();
+		res = this.reqRepository.findTownsByOfferId(of.getId());
+		Assert.notNull(res);
+		return res;
+	}
+	public TraverseTown findTraverseTownOfDestinationTownByRequestId(Request req) {
+		TraverseTown res;
+		res = this.reqRepository.findTraverseTownOfDestinationTownByRequestId(req.getId());
+		Assert.notNull(res);
+		return res;
+	}
+	public Collection<Category> findOfferCategoriesByOfferId(Offer of) {
+		Collection<Category> res = new ArrayList<Category>();
+		res = this.reqRepository.findOfferCategoriesByOfferId(of.getId());
+		Assert.notNull(res);
+		return res;
+	}
+	public Collection<Fare> findFaresOrderedByPriceByPackageId(Package pac) {
+		Collection<Fare> res = new ArrayList<Fare>();
+		res = this.reqRepository.findFaresOrderedByPriceByPackageId(pac.getId());
+		Assert.notEmpty(res);
+		return res;
+	}
+
+	//Anyadir paquetes
+	public void anyadePackage(Package pack, Request req) {
+		Assert.isTrue(!req.isFinalMode());
+		Package res = this.pacService.save(pack);
+		req.getPackages().add(res);
+		this.reqRepository.save(req);
+	}
+	//Eliminar paquetes
+	public void eliminaPackage(Package pack) {
+		Assert.notNull(pack);
+		this.pacService.delete(pack);
+	}
+	//Aplicar a una offer
+	public void applyOffer(Request req, Offer of) {
+		Request old = this.findOne(req.getId());
+		Assert.isTrue(of.isFinalMode());
+
+		Assert.isTrue(this.weightCanBeAddedToOfferByWeightOfRequestAndOfferId(req, of));
+		Assert.isTrue(this.volumeCanBeAddedToOfferByVolumeOfRequestAndOfferId(req, of));
+
+		Assert.isTrue(this.findTownsByOfferId(of).contains(req.getTown()));
+
+		//TODO: Fijo que petardean los formatos de fecha
+		Date estimatedDate = this.findTraverseTownOfDestinationTownByRequestId(req).getEstimatedDate();
+		Assert.isTrue(estimatedDate.after(req.getDeadline()) || estimatedDate.equals(req.getDeadline()));
+
+		List<Category> catAvailables = new ArrayList<>(this.findOfferCategoriesByOfferId(of));
+		for (Package p : req.getPackages()) {
+			Assert.isTrue(catAvailables.containsAll(p.getCategories()) || catAvailables.equals(p.getCategories()));
+			List<Fare> fares = new ArrayList<>();
+			fares = new ArrayList<>(this.findFaresOrderedByPriceByPackageId(p));
+			Assert.notEmpty(fares);
+			this.pacService.changePrice(p, fares.get(0));
+		}
+
+		this.offService.addRequest(this.reqRepository.save(req), of.getId());
+	}
+
+	//Crear una issue
+	public void addIssue(Issue issue, Request req) {
+		Assert.notNull(issue);
+		Assert.notNull(req);
+		Assert.isTrue(req.isFinalMode());
+		UserAccount principal = LoginService.getPrincipal();
+		Customer logged = this.cusService.findOne(this.actorService.findByUserAccountId(principal.getId()).getId());
+		Customer owner = this.reqRepository.findCustomerByRequestId(req.getId());
+		Request clon = (Request) req.clone();
+		clon.setIssue(issue);
+		req = clon;
+		this.reqRepository.save(req);
+	}
+	//Rechazar la request
+	public void changeStatus(Request req) {
+		Assert.isTrue(req.isFinalMode());
+		UserAccount principal = LoginService.getPrincipal();
+		Carrier owner = this.reqRepository.findCarrierByOfferId(req.getOffer().getId());
+		Carrier logged = this.carService.findOne(this.actorService.findByUserAccountId(principal.getId()).getId());
+		Assert.isTrue(owner.getId() == logged.getId());
+		Request old = this.findOne(req.getId());
+		Request clon = (Request) old.clone();
+		clon.setStatus(req.getStatus());
+		old = clon;
+		this.reqRepository.save(old);
+	}
 }

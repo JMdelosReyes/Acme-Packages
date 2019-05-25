@@ -26,6 +26,16 @@ public class Package extends DomainEntity implements Cloneable {
 	private Collection<Category>	categories;
 
 
+	@Override
+	public Object clone() {
+		Object o = null;
+		try {
+			o = super.clone();
+		} catch (final CloneNotSupportedException ex) {
+		}
+		return o;
+	}
+
 	@Min(100)
 	public double getWeight() {
 		return this.weight;

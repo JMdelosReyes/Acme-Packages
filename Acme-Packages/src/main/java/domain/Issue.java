@@ -33,6 +33,16 @@ public class Issue extends DomainEntity implements Cloneable {
 	private Offer				offer;
 
 
+	@Override
+	public Object clone() {
+		Object o = null;
+		try {
+			o = super.clone();
+		} catch (final CloneNotSupportedException ex) {
+		}
+		return o;
+	}
+
 	@NotNull
 	@Past
 	@Temporal(TemporalType.TIMESTAMP)
@@ -89,15 +99,6 @@ public class Issue extends DomainEntity implements Cloneable {
 
 	public void setOffer(final Offer offer) {
 		this.offer = offer;
-	}
-	@Override
-	public Object clone() {
-		Object o = null;
-		try {
-			o = super.clone();
-		} catch (final CloneNotSupportedException ex) {
-		}
-		return o;
 	}
 
 }

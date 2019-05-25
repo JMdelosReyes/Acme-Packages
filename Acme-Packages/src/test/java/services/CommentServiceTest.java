@@ -19,7 +19,7 @@ import domain.Comment;
 })
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
-public class CommentTest extends AbstractTest {
+public class CommentServiceTest extends AbstractTest {
 
 	@Autowired
 	private CommentService	commentService;

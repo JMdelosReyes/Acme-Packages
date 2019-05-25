@@ -209,6 +209,18 @@
 			</list>
 		</property>
 	</bean>	
+	
+	<bean id="userAccount17" class="security.UserAccount">
+		<property name="username" value="carrier5" />
+		<property name="password" value="447b827b64e3dbffe93784f27b09f112" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="CARRIER" />
+				</bean>
+			</list>
+		</property>
+	</bean>	
 	<!-- ADMINISTRATOR -->
 	
 	<bean id="administrator" class="domain.Administrator">
@@ -270,7 +282,7 @@
 		<property name="userAccount" ref="userAccount6" />
 		<property name="issues">
 			<list>
-				<ref bean="issue1" />
+			<ref bean="issue1" />
 			</list>
 		</property>
 		<property name="solicitations">
@@ -384,6 +396,11 @@
 		</property>
 		<property name="solicitations">
 			<list>
+				<ref bean="solicitation100"/>
+				<ref bean="solicitation101"/>
+				<ref bean="solicitation102"/>
+				<ref bean="solicitation103"/>
+				<ref bean="solicitation104"/>
 			</list>
 		</property>
 		
@@ -438,7 +455,6 @@
 				<ref bean="offer2"/>
 				<ref bean="offer3"/>
 				<ref bean="offer4"/>
-				
 			</list>
 		</property>
 		<property name="vehicles">
@@ -603,7 +619,58 @@
 			</list>
 		</property>
 	</bean>
-	
+	<bean id="carrier5" class="domain.Carrier">
+		<property name="name" value="Animalito" />
+		<property name="surname" value="Bebe"/>
+		<property name="middleName" value="Malvado" />
+		<property name="email" value="nino@mal.com" />
+		<property name="photo" value="https://media.tenor.com/images/03d14473d64a6a3b486e53f9d2600b4a/tenor.gif" />
+		<property name="phoneNumber" value="+034656534565" />
+		<property name="address" value="Avd Cosa Nº Casa Blq Piso 25ºA" />
+		<property name="spammer" value="false" />
+		<property name="creditCard" ref="creditcard1" />
+		<property name="banned" value="false" />
+		<property name="messageBoxes">
+			<list>
+				<ref bean="messageBoxCa5-inbox" />
+				<ref bean="messageBoxCa5-outbox" />
+				<ref bean="messageBoxCa5-spambox" />
+				<ref bean="messageBoxCa5-trashbox" />
+				<ref bean="messageBoxCa5-notibox" />
+			</list>
+		</property>
+		<property name="socialProfiles">
+			<list>
+			</list>
+		</property>
+		<property name="userAccount" ref="userAccount17" />
+		<property name="vat" value="CZ12345678" />
+		<property name="score" value="0"></property>
+		<property name="curricula">
+			<list>
+			</list>
+		</property>
+		<property name="fares">
+			<list>
+				<ref bean="fare101" />
+				<ref bean="fare102" />
+				<ref bean="fare103" />
+				<ref bean="fare104" />
+			</list>
+		</property>
+		<property name="offers">
+			<list>
+			<ref bean="offer100" />
+			<ref bean="offer101" />
+			</list>
+		</property>
+		<property name="vehicles">
+			<list>
+				<ref bean="vehicle100" />
+				<ref bean="vehicle101" />
+			</list>
+		</property>
+	</bean>
 	<!-- CATEGORY -->
 	<bean id="category1" class="domain.Category">
 	    <property name="englishName" value="Heavy" />
@@ -804,13 +871,13 @@
 			<list>
 			<ref bean="request1"/>
 			<ref bean="request2"/>
-			<ref bean="request3"/>
-					
+			<ref bean="request3"/>	
+			<ref bean="request10"/>		
 			</list>
 		</property>
 		<property name="evaluations">
 			<list>
-				<ref bean="evaluation1"/>
+			<ref bean="evaluation1"/>
 			</list>
 		</property>
 		<property name="finder" ref="finder1" />
@@ -928,6 +995,14 @@
 	
 	<!-- EVALUATION -->
 	
+	<bean id="evaluation1" class="domain.Evaluation">
+		<property name="moment" value="05/24/2019" />
+		<property name="mark" value="4" />
+		<property name="comment" value="Bad" />
+		<property name="customer" ref="customer1"/>
+		<property name="offer" ref="offer1" />
+		
+	</bean>
 	
 	<!-- FARE -->
 	
@@ -1008,8 +1083,26 @@
 		<property name="maxVolume" value="3" />
 		<property name="price" value="8.95" />
 	</bean>
-	
-	
+	<bean id="fare101" class="domain.Fare">
+		<property name="maxWeight" value="1000" />
+		<property name="maxVolume" value="75" />
+		<property name="price" value="1.95" />
+	</bean>
+	<bean id="fare102" class="domain.Fare">
+		<property name="maxWeight" value="3000" />
+		<property name="maxVolume" value="250" />
+		<property name="price" value="2.50" />
+	</bean>
+	<bean id="fare103" class="domain.Fare">
+		<property name="maxWeight" value="5000" />
+		<property name="maxVolume" value="500" />
+		<property name="price" value="5.00" />
+	</bean>
+	<bean id="fare104" class="domain.Fare">
+		<property name="maxWeight" value="10000" />
+		<property name="maxVolume" value="1000" />
+		<property name="price" value="7.00" />
+	</bean>
 	<!-- FINDER -->
 	<bean id="finder1" class="domain.Finder">
 		<property name="town" value="" />
@@ -1061,7 +1154,18 @@
 	</bean>
 	
 	<!-- ISSUE -->
-	
+	<bean id="issue1" class="domain.Issue">
+		<property name="ticker" value="190523-ASD123-AA" />
+		<property name="moment" value="05/24/2019" />
+		<property name="closed" value="false" />
+		<property name="description" value="Ha llegado roto al destinatario"/>
+		<property name="comments">
+			<list>
+			</list>
+		</property>
+		<property name="offer" ref="offer1" />
+		
+	</bean>
 	
 	<!-- MESS -->
 	<bean id="messageAd1Out" class="domain.Mess">
@@ -1715,6 +1819,50 @@
 			</list>
 		</property>			
 	</bean>
+	<bean id="messageBoxCa5-inbox" class="domain.MessBox">
+		<property name="name" value="In box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+	</bean>
+	
+	<bean id="messageBoxCa5-outbox" class="domain.MessBox">
+		<property name="name" value="Out box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>		
+	</bean>
+	
+	<bean id="messageBoxCa5-spambox" class="domain.MessBox">
+		<property name="name" value="Spam box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>		
+	</bean>
+	
+	<bean id="messageBoxCa5-trashbox" class="domain.MessBox">
+		<property name="name" value="Trash box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+	</bean>
+	
+	<bean id="messageBoxCa5-notibox" class="domain.MessBox">
+		<property name="name" value="Notification box"/>
+		<property name="isSystem" value="false"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>			
+	</bean>
 	
 	<bean id="messageBoxSp1-inbox" class="domain.MessBox">
 		<property name="name" value="In box"/>
@@ -1899,12 +2047,12 @@
 		<property name="vehicle" ref="vehicle1" />
 		<property name="evaluations">
 			<list>
-				<ref bean="evaluation1"/>
+			<ref bean="evaluation1"/>
 			</list>
 		</property>
 		<property name="requests">
 			<list>
-				<ref bean="request2"/>				
+			<ref bean="request2"/>	
 			</list>
 		</property>
 		<property name="traverseTowns">
@@ -1940,7 +2088,7 @@
 		</property>
 		<property name="requests">
 			<list>
-				<ref bean="request3"/>
+			<ref bean="request3"/>
 			</list>
 		</property>
 		<property name="traverseTowns">
@@ -2140,6 +2288,77 @@
 		</property>
 	</bean>
 	
+	<bean id="offer100" class="domain.Offer">
+		<property name="ticker" value="270123-111111" />
+		<property name="finalMode" value="true" />
+		<property name="maxDateToRequest" value="27/01/2020" />
+		<property name="canceled" value="false" /> 		
+		<property name="score" value="0" />
+		<property name="totalPrice" value="0" />
+		<property name="fares">
+			<list>
+				<ref bean="fare101"/>
+				<ref bean="fare102"/>
+				<ref bean="fare103"/>
+				<ref bean="fare104"/>
+			</list>
+		</property>
+		<property name="vehicle" ref="vehicle100" />
+		<property name="evaluations">
+			<list>
+			</list>
+		</property>
+		<property name="requests">
+			<list>
+			<ref bean="request1"/>
+			<ref bean="request2"/>
+			</list>
+		</property>
+		<property name="traverseTowns">
+			<list>
+				<ref bean="traverseTown100"/>
+				<ref bean="traverseTown101"/>
+				<ref bean="traverseTown102"/>
+				<ref bean="traverseTown103"/>
+				<ref bean="traverseTown104"/>
+			</list>
+		</property>
+	</bean>
+	<bean id="offer101" class="domain.Offer">
+		<property name="ticker" value="200123-222222" />
+		<property name="finalMode" value="true" />
+		<property name="maxDateToRequest" value="20/01/2020" />
+		<property name="canceled" value="false" /> 		
+		<property name="score" value="0" />
+		<property name="totalPrice" value="0" />
+		<property name="fares">
+			<list>
+				<ref bean="fare101"/>
+				<ref bean="fare102"/>
+				<ref bean="fare103"/>
+				<ref bean="fare104"/>
+			</list>
+		</property>
+		<property name="vehicle" ref="vehicle101" />
+		<property name="evaluations">
+			<list>
+			</list>
+		</property>
+		<property name="requests">
+			<list>
+			</list>
+		</property>
+		<property name="traverseTowns">
+			<list>
+				<ref bean="traverseTown106"/>
+				<ref bean="traverseTown107"/>
+				<ref bean="traverseTown108"/>
+				<ref bean="traverseTown109"/>
+				<ref bean="traverseTown110"/>
+				<ref bean="traverseTown111"/>
+			</list>
+		</property>
+	</bean>
 	
 	<!-- PACKAGE -->
 	<bean id="package1" class="domain.Package">
@@ -2207,7 +2426,32 @@
 			</list>
 		</property>
 	</bean>
-	
+	<bean id="package10" class="domain.Package">
+		<property name="weight" value="1500" />
+		<property name="height" value="1.5" />
+		<property name="width" value="1.5" />
+		<property name="length" value="1" /> 		
+		<property name="price" value="" />
+		<property name="description" value="Mi play 10" />
+		<property name="categories">
+			<list>
+			<ref bean="category1"/>
+			</list>
+		</property>
+	</bean>
+	<bean id="package11" class="domain.Package">
+		<property name="weight" value="2500" />
+		<property name="height" value="5.5" />
+		<property name="width" value="1.65" />
+		<property name="length" value="100" /> 		
+		<property name="price" value="" />
+		<property name="description" value="Mi play 11" />
+		<property name="categories">
+			<list>
+			<ref bean="category2"/>
+			</list>
+		</property>
+	</bean>
 	<!-- PROFESSIONAL RECORD -->
 	
 	<bean id="professionalRecord1" class="domain.ProfessionalRecord">
@@ -2250,14 +2494,14 @@
 		<property name="description" value="Tened mucho cuidaito" />
 		<property name="maxPrice" value="100"/>
 		<property name="deadline" value="10/06/2019" />
-		<property name="finalMode" value="false" /> 
+		<property name="finalMode" value="true" /> 
 		<property name="volume" value="1.5"/>
 		<property name="weight" value="1500" />
 		<property name="streetAddress" value="Calle pinta" />
 		<property name="comment" value="Cuidadito con el envio, rufianes" />
 		<property name="town" ref="town1" />
 		<!--  <property name="status" ></property>-->
-		<!-- <property name="offer" ref="" /> -->
+		<property name="offer" ref="offer100" />
 		<property name="packages">
 			<list>
 			<ref bean="package1"/>
@@ -2279,15 +2523,16 @@
 		<property name="comment" value="Cuidadito con el envio, rufianes" />
 		<property name="town" ref="town2" />
 		<!--  <property name="status" ></property>-->
-		<property name="offer" ref="offer1" />
+		<property name="offer" ref="offer1" /> 
 		<property name="packages">
 			<list>
 			<ref bean="package3"/>
 			<ref bean="package4"/>
 			</list>
 		</property>
-		<property name="issue" ref="issue1" />		 			
+		<!--  <property name="issue" value="false" /> -->		 			
 	</bean>
+	
 	<bean id="request3" class="domain.Request">
 		<property name="ticker" value="020219-CMCPZ" />
 		<property name="moment" value="02/02/2019 10:00" />
@@ -2307,6 +2552,29 @@
 			<ref bean="package5"/>
 			</list>
 		</property>		 			
+	</bean>
+	
+	<bean id="request10" class="domain.Request">
+		<property name="ticker" value="020219-KKKKKK" />
+		<property name="moment" value="02/02/2019 10:00" />
+		<property name="description" value="Tened aun mas cuidadito" />
+		<property name="maxPrice" value="50"/>
+		<property name="deadline" value="10/07/2019" />
+		<property name="finalMode" value="false" /> 
+		<property name="volume" value="8075"/>
+		<property name="weight" value="11400" />
+		<property name="streetAddress" value="Calle la niña de las flores" />
+		<property name="comment" value="Cuidadito con el envio, rufianes" />
+		<property name="town" ref="town2" />
+		<!--  <property name="status" ></property>-->
+		<property name="offer" ref="offer100" /> 
+		<property name="packages">
+			<list>
+			<ref bean="package10"/>
+			<ref bean="package11"/>
+			</list>
+		</property>
+		<!--  <property name="issue" value="false" /> -->		 			
 	</bean>
 	
 	<!-- SOCIAL PROFILE -->
@@ -2731,6 +2999,73 @@
 		<property name="town" ref="town8" />
 	</bean>
 	
+	<bean id="traverseTown100" class="domain.TraverseTown">
+		<property name="number" value="1" />
+		<property name="estimatedDate" value="28/01/2020"/>
+		<property name="currentTown" value="false" />
+		<property name="town" ref="town1" />
+	</bean>
+	<bean id="traverseTown101" class="domain.TraverseTown">
+		<property name="number" value="2" />
+		<property name="estimatedDate" value="30/01/2020"/>
+		<property name="currentTown" value="false" />
+		<property name="town" ref="town2" />
+	</bean>
+	<bean id="traverseTown102" class="domain.TraverseTown">
+		<property name="number" value="3" />
+		<property name="estimatedDate" value="03/02/2020"/>
+		<property name="currentTown" value="false" />
+		<property name="town" ref="town3" />
+	</bean>
+	<bean id="traverseTown103" class="domain.TraverseTown">
+		<property name="number" value="4" />
+		<property name="estimatedDate" value="05/02/2020"/>
+		<property name="currentTown" value="false" />
+		<property name="town" ref="town4" />
+	</bean>
+	<bean id="traverseTown104" class="domain.TraverseTown">
+		<property name="number" value="5" />
+		<property name="estimatedDate" value="10/02/2020"/>
+		<property name="currentTown" value="false" />
+		<property name="town" ref="town5" />
+	</bean>
+	<bean id="traverseTown106" class="domain.TraverseTown">
+		<property name="number" value="1" />
+		<property name="estimatedDate" value="21/01/2020"/>
+		<property name="currentTown" value="false" />
+		<property name="town" ref="town2" />
+	</bean>
+	<bean id="traverseTown107" class="domain.TraverseTown">
+		<property name="number" value="2" />
+		<property name="estimatedDate" value="26/01/2020"/>
+		<property name="currentTown" value="false" />
+		<property name="town" ref="town4" />
+	</bean>
+	<bean id="traverseTown108" class="domain.TraverseTown">
+		<property name="number" value="3" />
+		<property name="estimatedDate" value="01/02/2020"/>
+		<property name="currentTown" value="false" />
+		<property name="town" ref="town1" />
+	</bean>
+	<bean id="traverseTown109" class="domain.TraverseTown">
+		<property name="number" value="4" />
+		<property name="estimatedDate" value="02/02/2020"/>
+		<property name="currentTown" value="false" />
+		<property name="town" ref="town3" />
+	</bean>
+	<bean id="traverseTown110" class="domain.TraverseTown">
+		<property name="number" value="5" />
+		<property name="estimatedDate" value="05/02/2020"/>
+		<property name="currentTown" value="false" />
+		<property name="town" ref="town5" />
+	</bean>
+	<bean id="traverseTown111" class="domain.TraverseTown">
+		<property name="number" value="6" />
+		<property name="estimatedDate" value="10/02/2020"/>
+		<property name="currentTown" value="false" />
+		<property name="town" ref="town8" />
+	</bean>
+	
 	<!-- VEHICLE -->
 	
 	<bean id="vehicle1" class="domain.Vehicle">
@@ -2785,7 +3120,6 @@
 		<property name="comment" value="" />
 		<property name="solicitations">
 			<list>
-				<ref bean="solicitation4" />
 			</list>
 		</property>
 	</bean>
@@ -2820,6 +3154,7 @@
 		<property name="comment" value="" />
 		<property name="solicitations">
 			<list>
+			<ref bean="solicitation4"/>
 			</list>
 		</property>
 	</bean>
@@ -2875,6 +3210,47 @@
 		</property>
 	</bean>
 	
+	<bean id="vehicle100" class="domain.Vehicle">
+		<property name="type" value="CAR" />
+		<property name="plate" value="5522HDK"/>
+		<property name="maxVolume" value="400000" />
+		<property name="maxWeight" value="600000" />
+		<property name="pictures">
+			<list>
+				<value>https://cdn.topgear.es/sites/navi.axelspringer.es/public/styles/main_element/public/media/image/2018/02/fiat-multipla-primera-generacion-1998.jpg</value>
+				<value>http://hablemosdecoches.com/wp-content/uploads/2017/11/Multipla-main.jpg</value>
+			</list>
+		</property>
+		<property name="comment" value="Multipla" />
+		<property name="solicitations">
+			<list>
+				<ref bean="solicitation100" />
+				<ref bean="solicitation103" />
+			</list>
+		</property>
+	</bean>
+	<bean id="vehicle101" class="domain.Vehicle">
+		<property name="type" value="CAR" />
+		<property name="plate" value="4444HDK"/>
+		<property name="maxVolume" value="200000" />
+		<property name="maxWeight" value="500000" />
+		<property name="pictures">
+			<list>
+				<value>https://cdn.topgear.es/sites/navi.axelspringer.es/public/styles/main_element/public/media/image/2018/02/fiat-multipla-primera-generacion-1998.jpg</value>
+				<value>http://hablemosdecoches.com/wp-content/uploads/2017/11/Multipla-main.jpg</value>
+			</list>
+		</property>
+		<property name="comment" value="Multipla" />
+		<property name="solicitations">
+			<list>
+				<ref bean="solicitation101" />
+				<ref bean="solicitation102" />
+				<ref bean="solicitation104" />
+			</list>
+		</property>
+	</bean>
+	<!-- SOLICITATION -->
+	
 	<bean id="solicitation1" class="domain.Solicitation">
 		<property name="moment" value="05/05/2019" />
 		<property name="status" value="ACCEPTED"/>
@@ -2917,7 +3293,7 @@
 	
 	<bean id="solicitation4" class="domain.Solicitation">
 		<property name="moment" value="05/05/2019" />
-		<property name="status" value="REJECTED"/>
+		<property name="status" value="ACCEPTED"/>
 		<property name="comments">
 			<list>
 				<value>Lo necesito para mi negocio</value>
@@ -2927,28 +3303,69 @@
 		
 	</bean>
 	
-	<bean id="issue1" class="domain.Issue">
-		<property name="ticker" value="190523-ASD123-AA" />
-		<property name="moment" value="05/24/2019" />
-		<property name="closed" value="false" />
-		<property name="description" value="Ha llegado roto al destinatario"/>
+	<bean id="solicitation100" class="domain.Solicitation">
+		<property name="moment" value="05/05/2019" />
+		<property name="status" value="ACCEPTED"/>
+		<property name="startDate" value="05/05/2019" />
+		<property name="endDate" value="05/11/2021" />
 		<property name="comments">
 			<list>
+				<value>Lo necesito para darle de comer a mi gato</value>
 			</list>
 		</property>
-		<property name="offer" ref="offer1" />
+		<property name="category" ref="category1" />
 		
 	</bean>
-	
-	<bean id="evaluation1" class="domain.Evaluation">
-		<property name="moment" value="05/24/2019" />
-		<property name="mark" value="4" />
-		<property name="comment" value="Bad" />
-		<property name="customer" ref="customer1"/>
-		<property name="offer" ref="offer1" />
+	<bean id="solicitation103" class="domain.Solicitation">
+		<property name="moment" value="05/05/2019" />
+		<property name="status" value="ACCEPTED"/>
+		<property name="startDate" value="05/05/2019" />
+		<property name="endDate" value="05/11/2021" />
+		<property name="comments">
+			<list>
+				<value>Lo necesito para darle de comer a mi gato</value>
+			</list>
+		</property>
+		<property name="category" ref="category3" />
 		
 	</bean>
-	
-	
-
+	<bean id="solicitation101" class="domain.Solicitation">
+		<property name="moment" value="05/05/2019" />
+		<property name="status" value="ACCEPTED"/>
+		<property name="startDate" value="05/05/2019" />
+		<property name="endDate" value="05/11/2021" />
+		<property name="comments">
+			<list>
+				<value>Lo necesito para darle de comer a mi gato</value>
+			</list>
+		</property>
+		<property name="category" ref="category1" />
+		
+	</bean>
+	<bean id="solicitation102" class="domain.Solicitation">
+		<property name="moment" value="05/05/2019" />
+		<property name="status" value="ACCEPTED"/>
+		<property name="startDate" value="05/05/2019" />
+		<property name="endDate" value="05/11/2021" />
+		<property name="comments">
+			<list>
+				<value>Lo necesito para darle de comer a mi gato</value>
+			</list>
+		</property>
+		<property name="category" ref="category2" />
+		
+	</bean>
+	<bean id="solicitation104" class="domain.Solicitation">
+		<property name="moment" value="05/05/2019" />
+		<property name="status" value="ACCEPTED"/>
+		<property name="startDate" value="05/05/2019" />
+		<property name="endDate" value="05/11/2021" />
+		<property name="comments">
+			<list>
+				<value>Lo necesito para darle de comer a mi gato</value>
+			</list>
+		</property>
+		<property name="category" ref="category3" />
+		
+	</bean>
 </beans>
