@@ -731,12 +731,12 @@
 	
 	<!-- CONFIGURATION -->
 	<bean id="configuration1" class="domain.Configuration">
-		<property name="systemName" value="Acme Rookies" />
+		<property name="systemName" value="Acme Packages" />
 		<property name="banner" value="https://i.pinimg.com/originals/09/56/33/095633056151fa5d0988aacd6f0e6e73.jpg" />
 		<property name="englishMessage"
-			value="Welcome to Acme Rookies! We're IT rookie's favourite job marketplace!" />
+			value="Welcome to Acme Packages! We're the fastest and best value for money shipping service of the world!" />
 		<property name="spanishMessage"
-			value="¡Bienvenidos a Acme Rookies! ¡Somos el mercado de trabajo favorito de los profesionales de las TICs!" />
+			value="¡Bienvenidos a Acme Packages! ¡Somos el servicio de envio mas rapido y con mejor relación calidad-precio del mundo!" />
 		<property name="spamWords">
 			<list>
 				<value>sex</value>
