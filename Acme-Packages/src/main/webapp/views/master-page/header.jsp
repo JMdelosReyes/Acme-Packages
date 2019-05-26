@@ -14,7 +14,8 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
 <div>
-	<a href="#"><img src="images/logo.png" alt="Acme-Packages Co., Inc." /></a>
+	<a href="#" onClick="javascript:relativeRedir('')"><img
+		src="${ banner }" alt="banner" width="400" height="auto" alt="Acme-PackagesCo., Inc."/></a>
 </div>
 
 <div>
@@ -24,18 +25,7 @@
 			<li><a class="fNiv"><spring:message	code="master.page.administrator" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="administrator/action-1.do"><spring:message code="master.page.administrator.action.1" /></a></li>
-					<li><a href="administrator/action-2.do"><spring:message code="master.page.administrator.action.2" /></a></li>					
-				</ul>
-			</li>
-		</security:authorize>
-		
-		<security:authorize access="hasRole('CUSTOMER')">
-			<li><a class="fNiv"><spring:message	code="master.page.customer" /></a>
-				<ul>
-					<li class="arrow"></li>
-					<li><a href="customer/action-1.do"><spring:message code="master.page.customer.action.1" /></a></li>
-					<li><a href="customer/action-2.do"><spring:message code="master.page.customer.action.2" /></a></li>					
+					<!-- COSAS DE ADMIN -->				
 				</ul>
 			</li>
 		</security:authorize>
@@ -45,6 +35,12 @@
 		</security:authorize>
 		
 		<security:authorize access="isAuthenticated()">
+			<li><a class="fNiv"><spring:message
+						code="master.page.mess" /></a>
+				<ul>
+					<li class="arrow"></li>
+					
+				</ul></li>
 			<li>
 				<a class="fNiv"> 
 					<spring:message code="master.page.profile" /> 
@@ -52,17 +48,33 @@
 				</a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="profile/action-1.do"><spring:message code="master.page.profile.action.1" /></a></li>
-					<li><a href="profile/action-2.do"><spring:message code="master.page.profile.action.2" /></a></li>
-					<li><a href="profile/action-3.do"><spring:message code="master.page.profile.action.3" /></a></li>					
+						<li><a href="actor/display.do"><spring:message code="master.page.display" /></a></li>
+						
+					<security:authorize access="hasRole('ADMIN')">
+						<li><a href="dashboard/administrator/list.do"><spring:message
+									code="master.page.dashboard" /></a></li>
+						<li><a href="configuration/administrator/list.do"><spring:message
+									code="master.page.configuration" /></a></li>
+						<li><a href="actor/create.do"><spring:message
+									code="master.page.createActor" /></a></li>
+						<li><a href="ban/administrator/list.do"><spring:message
+									code="master.page.suspicious" /></a></li>
+					</security:authorize>
+					
 					<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
 				</ul>
 			</li>
 		</security:authorize>
+		<li><a href="welcome/terms.do"><spring:message
+						code="master.page.terms" /></a></li>
 	</ul>
 </div>
 
 <div>
-	<a href="?language=en">en</a> | <a href="?language=es">es</a>
-</div>
+	
+<a href="?language=en"><img src="https://image.flaticon.com/icons/svg/197/197374.svg" alt="en" width="30" height="30"></a> |
+	 <a href="?language=es"><img src="https://image.flaticon.com/icons/svg/197/197593.svg" alt="es" width="30" height="30"></a>
+	 </div>
+
+
 
