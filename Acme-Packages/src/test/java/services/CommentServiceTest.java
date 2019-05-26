@@ -39,6 +39,10 @@ public class CommentServiceTest extends AbstractTest {
 		Assert.notNull(comments);
 	}
 
+	/*
+	 * Sentence coverage: 87.7%
+	 * Data coverage: 75% Are tested 3 of 4 possibles actors and if the actor is the propietary or not
+	 */
 	@Test
 	public void driverCreateAndSave() {
 		final Object testingData[][] = {
@@ -46,10 +50,13 @@ public class CommentServiceTest extends AbstractTest {
 				// Correct: All the parameters are OK
 				"customer1", "comment", "issue1", null
 			}, {
-				// Incorrect: The user must be a actor
+				// Correct: All the parameters are OK
+				"carrier1", "comment", "issue1", null
+			}, {
+				// Incorrect: The user is not a carrier, customer or auditor
 				"admin", "comment", "issue1", IllegalArgumentException.class
 			}, {
-				// Incorrect: The minimum weight cannot be lower than 0
+				// Incorrect: The customer is not the proprietary of the issue
 				"customer2", "des", "issue1", IllegalArgumentException.class
 			}
 		};

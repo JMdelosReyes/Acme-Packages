@@ -3,7 +3,9 @@ package services;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -41,6 +43,10 @@ public class SolicitationServiceTest extends AbstractTest {
 		Assert.notNull(solicitations);
 	}
 
+	/*
+	 * Sentence coverage: 100%
+	 * Data coverage: 100% as the method receive only a parameter
+	 */
 	@Test
 	public void driverFindOne() {
 		final Object testingData[][] = {
@@ -67,17 +73,21 @@ public class SolicitationServiceTest extends AbstractTest {
 		}
 	}
 
+	/*
+	 * Sentence coverage: 100%
+	 * Data coverage: 100% as the method only receive an actor
+	 */
 	@Test
 	public void driverCreate() {
 		final Object testingData[][] = {
 			{
-				// Correct: The user is a actor
+				// Correct: The user is a carrier
 				"carrier1", null
 			}, {
-				// Incorrect: The user is not a actor
+				// Incorrect: The user is not a carrier
 				"admin", IllegalArgumentException.class
 			}, {
-				// Incorrect: The user is not a actor
+				// Incorrect: The user is not a carrier
 				"customer1", IllegalArgumentException.class
 			}
 		};
@@ -87,6 +97,10 @@ public class SolicitationServiceTest extends AbstractTest {
 		}
 	}
 
+	/*
+	 * Sentence coverage: 100%
+	 * Data coverage: 60% the method receive different actor, but the same category and vehicle
+	 */
 	@Test
 	public void driverCreateAndSave() {
 		final Object testingData[][] = {
@@ -94,10 +108,10 @@ public class SolicitationServiceTest extends AbstractTest {
 				// Correct: All the parameters are OK
 				"carrier1", "category3", "comment", "vehicle2", null
 			}, {
-				// Incorrect: The user must be a actor
+				// Incorrect: The user must be a carrier
 				"admin", "category3", "comment", "vehicle2", IllegalArgumentException.class
 			}, {
-				// Incorrect: The minimum weight cannot be lower than 0
+				// Incorrect: the user must be a carrier
 				"auditor1", "category3", "comment", "vehicle2", IllegalArgumentException.class
 			}
 		};
@@ -106,7 +120,10 @@ public class SolicitationServiceTest extends AbstractTest {
 			this.testCreateAndSave((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (String) testingData[i][3], (Class<?>) testingData[i][4]);
 		}
 	}
-
+	/*
+	 * Sentence coverage: 70.5%
+	 * Data coverage: 25%, this save receive many parameters, only 1/4 of the possibilities are tested
+	 */
 	@Test
 	public void driverSave() {
 		final Object testingData[][] = {
@@ -126,7 +143,10 @@ public class SolicitationServiceTest extends AbstractTest {
 			this.testSave((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (String) testingData[i][3], (String) testingData[i][4], (String) testingData[i][5], (String) testingData[i][6], (Class<?>) testingData[i][7]);
 		}
 	}
-
+	/*
+	 * Sentence coverage: 100%
+	 * Data coverage: 100% as the method receive only a parameter and tried all the possibilities
+	 */
 	@Test
 	public void driverDelete() {
 		final Object testingData[][] = {
@@ -219,7 +239,9 @@ public class SolicitationServiceTest extends AbstractTest {
 			if (category != null) {
 				clon.setCategory(this.categoryService.findOne(super.getEntityId(category)));
 			}
-			clon.getComments().add(comment);
+			List<String> comm = new ArrayList<>(clon.getComments());
+			comm.add(comment);
+			clon.setComments(comm);
 			final SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 			try {
 				if (startDate != null) {

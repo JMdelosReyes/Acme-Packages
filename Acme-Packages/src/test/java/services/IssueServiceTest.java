@@ -39,6 +39,10 @@ public class IssueServiceTest extends AbstractTest {
 		Assert.notNull(issues);
 	}
 
+	/*
+	 * Sentence coverage: 100%
+	 * Data coverage: 100% as the method receive only a parameter
+	 */
 	@Test
 	public void driverFindOne() {
 		final Object testingData[][] = {
@@ -59,18 +63,22 @@ public class IssueServiceTest extends AbstractTest {
 		}
 	}
 
+	/*
+	 * Sentence coverage: 100%
+	 * Data coverage: 80%, all actors checked, but not other request
+	 */
 	@Test
 	public void driverCreateAndSave() {
 		final Object testingData[][] = {
 			{
 				// Correct: All the parameters are OK
-				"customer1", "des", "offer2", null
+				"customer1", "des", "request3", null
 			}, {
-				// Incorrect: The user must be a actor
-				"auditor1", "des", "offer2", IllegalArgumentException.class
+				// Incorrect: The user must be a customer
+				"auditor1", "des", "request3", IllegalArgumentException.class
 			}, {
-				// Incorrect: The minimum weight cannot be lower than 0
-				"customer1", "des", "offer1", IllegalArgumentException.class
+				// Incorrect: The carrier is not able to change the description
+				"carrier1", "des", "request3", IllegalArgumentException.class
 			}
 		};
 
@@ -79,6 +87,10 @@ public class IssueServiceTest extends AbstractTest {
 		}
 	}
 
+	/*
+	 * Sentence coverage: 50.1%
+	 * Data coverage: 40% only checked 2 of 3 actors and the same issue
+	 */
 	@Test
 	public void driverSave() {
 		final Object testingData[][] = {
@@ -115,7 +127,7 @@ public class IssueServiceTest extends AbstractTest {
 		this.checkExceptions(expected, caught);
 	}
 
-	protected void testCreateAndSave(final String actor, final String description, final String offer, final Class<?> expected) {
+	protected void testCreateAndSave(final String actor, final String description, final String request, final Class<?> expected) {
 		Class<?> caught;
 		caught = null;
 		try {
@@ -125,9 +137,8 @@ public class IssueServiceTest extends AbstractTest {
 			Issue issue = this.issueService.create();
 
 			issue.setDescription(description);
-			issue.setOffer(this.offerService.findOne(super.getEntityId(offer)));
 
-			this.issueService.save(issue, super.getEntityId("request3"));
+			this.issueService.save(issue, super.getEntityId(request));
 			this.issueService.flush();
 
 		} catch (final Throwable oops) {
