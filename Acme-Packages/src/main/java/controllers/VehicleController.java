@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -116,6 +117,78 @@ public class VehicleController extends AbstractController {
 		return result;
 	}
 
+	// Edit
+	@RequestMapping(value = "/carrier/edit", method = RequestMethod.GET)
+	public ModelAndView edit(@RequestParam(required = false, defaultValue = "0") final String id) {
+		ModelAndView result;
+		Integer intId;
+
+		try {
+			intId = Integer.valueOf(id);
+		} catch (final Throwable oops) {
+			return new ModelAndView("redirect:/");
+		}
+
+		try {
+			final Vehicle vehicle = this.vehicleService.findOne(intId);
+			Assert.isTrue(this.vehicleService.canBeEditedOrDeleted(vehicle.getId()));
+			final int carrierId = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
+			final Carrier carrier = this.carrierService.findOne(carrierId);
+			Assert.isTrue(carrier.getVehicles().contains(vehicle));
+			result = this.createEditModelAndView(vehicle);
+		} catch (final Throwable oops) {
+			return new ModelAndView("redirect:/");
+		}
+		return result;
+	}
+
+	// Save
+	@RequestMapping(value = "/carrier/edit", method = RequestMethod.POST, params = "save")
+	public ModelAndView save(final Vehicle vehicle, final BindingResult binding) {
+		ModelAndView result;
+		Vehicle veh;
+
+		try {
+			veh = this.vehicleService.reconstruct(vehicle, binding);
+		} catch (final Throwable oops) {
+			return new ModelAndView("redirect:/");
+		}
+
+		if (binding.hasErrors()) {
+			result = this.createEditModelAndView(vehicle);
+		} else {
+			try {
+				final Vehicle saved = this.vehicleService.save(veh);
+				result = new ModelAndView("redirect:/vehicle/carrier,auditor/display.do?id=" + saved.getId());
+			} catch (final Throwable oops) {
+				result = this.createEditModelAndView(vehicle, "veh.commit.error");
+			}
+		}
+		return result;
+	}
+
+	// Delete
+	@RequestMapping(value = "/carrier/edit", method = RequestMethod.POST, params = "delete")
+	public ModelAndView delete(@RequestParam(required = false, defaultValue = "0") final String id) {
+		ModelAndView result;
+		int intId;
+
+		try {
+			intId = Integer.valueOf(id);
+		} catch (final Throwable oops) {
+			return new ModelAndView("redirect:/");
+		}
+
+		try {
+			final Vehicle vehicle = this.vehicleService.findOne(intId);
+			this.vehicleService.delete(vehicle);
+			result = new ModelAndView("redirect:/vehicle/carrier/list.do");
+		} catch (final Throwable oops) {
+			return new ModelAndView("redirect:/");
+		}
+		return result;
+	}
+
 	// Ancillary methods ------------------------------------------------------
 
 	protected ModelAndView createEditModelAndView(final Vehicle vehicle) {
@@ -134,7 +207,10 @@ public class VehicleController extends AbstractController {
 			result = new ModelAndView("vehicle/edit");
 		}
 
+		Collection<String> types = this.vehicleService.findVehicleTypes();
+
 		result.addObject("vehicle", vehicle);
+		result.addObject("types", types);
 		result.addObject("message", message);
 
 		return result;

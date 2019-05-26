@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.VehicleRepository;
 import security.LoginService;
@@ -28,6 +30,9 @@ public class VehicleService {
 
 	@Autowired
 	private CarrierService		carrierService;
+
+	@Autowired
+	private Validator			validator;
 
 
 	public VehicleService() {
@@ -140,5 +145,50 @@ public class VehicleService {
 		Collection<Vehicle> vehicles = this.vehicleRepository.findVehiclesAuditedByAuditor(id);
 		Assert.notNull(vehicles);
 		return vehicles;
+	}
+
+	public Collection<String> findVehicleTypes() {
+		Collection<String> types = new ArrayList<String>();
+		types.add("CAR");
+		types.add("TRUCK");
+		types.add("MOTORCYCLE");
+		types.add("VAN");
+		return types;
+	}
+
+	public Vehicle reconstruct(final Vehicle vehicle, final BindingResult binding) {
+		Vehicle result;
+
+		if (vehicle.getId() == 0) {
+			result = vehicle;
+			result.setSolicitations(new ArrayList<Solicitation>());
+		} else {
+			result = this.vehicleRepository.findOne(vehicle.getId());
+			Assert.notNull(result);
+			Assert.isTrue(this.vehicleRepository.canBeEditedOrDeleted(vehicle.getId()));
+
+			final int carrierId = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
+			final Carrier carrier = this.carrierService.findOne(carrierId);
+			Assert.isTrue(carrier.getVehicles().contains(result));
+
+			final Vehicle clon = (Vehicle) result.clone();
+
+			clon.setPlate(vehicle.getPlate());
+			clon.setType(vehicle.getType());
+			clon.setMaxVolume(vehicle.getMaxVolume());
+			clon.setMaxWeight(vehicle.getMaxWeight());
+			clon.setPictures(vehicle.getPictures());
+			clon.setComment(vehicle.getComment());
+
+			result = clon;
+		}
+
+		this.validator.validate(result, binding);
+
+		if (!Validators.checkImageCollection(result.getPictures())) {
+			binding.rejectValue("pictures", "veh.pictures.error");
+		}
+
+		return result;
 	}
 }

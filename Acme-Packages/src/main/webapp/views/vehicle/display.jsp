@@ -41,7 +41,7 @@
 <security:authorize access="hasRole('CARRIER')">
 	<jstl:choose>
 		<jstl:when test="${canBeEditedOrDeleted eq true}">
-			<a href="vehicle/carrier/edit.do?id=${row.id}"> <spring:message
+			<a href="vehicle/carrier/edit.do?id=${vehicle.id}"> <spring:message
 					code="veh.edit"></spring:message>
 			</a>
 		</jstl:when>
@@ -51,40 +51,45 @@
 		</jstl:otherwise>
 	</jstl:choose>
 
+	<jstl:if test="${!empty solicitations}">
 
-	<display:table name="solicitations" id="row" requestURI="${requestURI}"
-		pagesize="5" class="displaytag">
+		<display:table name="solicitations" id="row" requestURI="${requestURI}"
+			pagesize="5" class="displaytag">
+	
+			<display:column titleKey="sol.moment">
+				<jstl:out value="${row.moment}"></jstl:out>
+			</display:column>
+	
+			<display:column titleKey="sol.status">
+				<jstl:out value="${row.status}"></jstl:out>
+			</display:column>
+	
+			<display:column titleKey="sol.startDate">
+				<jstl:out value="${row.startDate}"></jstl:out>
+			</display:column>
+	
+			<display:column titleKey="sol.endDate">
+				<jstl:out value="${row.endDate}"></jstl:out>
+			</display:column>
+	
+			<display:column titleKey="sol.category">
+				<jstl:choose>
+					<jstl:when test="${es eq true}">
+						<jstl:out value="${row.category.spanishName}"></jstl:out>
+					</jstl:when>
+	
+					<jstl:otherwise>
+						<jstl:out value="${row.category.englishName}"></jstl:out>
+					</jstl:otherwise>
+				</jstl:choose>
+	
+			</display:column>
+	
+		</display:table>
+	
+	</jstl:if>
 
-		<display:column titleKey="sol.moment">
-			<jstl:out value="${row.moment}"></jstl:out>
-		</display:column>
-
-		<display:column titleKey="sol.status">
-			<jstl:out value="${row.status}"></jstl:out>
-		</display:column>
-
-		<display:column titleKey="sol.startDate">
-			<jstl:out value="${row.startDate}"></jstl:out>
-		</display:column>
-
-		<display:column titleKey="sol.endDate">
-			<jstl:out value="${row.endDate}"></jstl:out>
-		</display:column>
-
-		<display:column titleKey="sol.category">
-			<jstl:choose>
-				<jstl:when test="${es eq true}">
-					<jstl:out value="${row.category.spanishName}"></jstl:out>
-				</jstl:when>
-
-				<jstl:otherwise>
-					<jstl:out value="${row.category.englishName}"></jstl:out>
-				</jstl:otherwise>
-			</jstl:choose>
-
-		</display:column>
-
-	</display:table>
+	<br>
 
 	<a href="solicitation/carrier/create.do"><spring:message code="veh.newSol"/></a>
 
