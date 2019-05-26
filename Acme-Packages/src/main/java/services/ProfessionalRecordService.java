@@ -114,9 +114,11 @@ public class ProfessionalRecordService {
 			final ProfessionalRecord old = this.professionalRecordRepository.findOne(professionalRecord.getId());
 			Assert.notNull(old);
 
-			//The miscellaneous data must be owned by the logged carrier
+			//The professional record must be owned by the logged carrier
 			Assert.isTrue(curriculum.getProfessionalRecords().contains(old));
-			Assert.isTrue(professionalRecord.getStartTime().before(professionalRecord.getEndTime()));
+			if (professionalRecord.getEndTime() != null) {
+				Assert.isTrue(professionalRecord.getStartTime().before(professionalRecord.getEndTime()));
+			}
 
 			result = this.professionalRecordRepository.save(professionalRecord);
 			Assert.notNull(result);

@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.CurriculumRepository;
@@ -144,38 +145,37 @@ public class CurriculumService {
 		return result;
 	}
 
-	//	//Reconstruct
-	//
-	//	public Curriculum reconstruct(final Curriculum curriculum, final BindingResult binding) {
-	//		Curriculum result;
-	//
-	//		if (curriculum.getId() == 0) {
-	//			result = this.create();
-	//			result.setFullName(curriculum.getFullName());
-	//			result.setStatement(curriculum.getStatement());
-	//			result.setPhoneNumber(curriculum.getPhoneNumber());
-	//			result.setGitHubProfile(curriculum.getGitHubProfile());
-	//			result.setLinkedInProfile(curriculum.getLinkedInProfile());
-	//		} else {
-	//			result = this.curriculumRepository.findOne(curriculum.getId());
-	//			Assert.notNull(result);
-	//			final int rookieId = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
-	//			final Rookie rookie = this.rookieService.findOne(rookieId);
-	//			Assert.isTrue(rookie.getCurricula().contains(result));
-	//
-	//			final Curriculum clon = (Curriculum) result.clone();
-	//
-	//			clon.setFullName(curriculum.getFullName());
-	//			clon.setStatement(curriculum.getStatement());
-	//			clon.setPhoneNumber(curriculum.getPhoneNumber());
-	//			clon.setGitHubProfile(curriculum.getGitHubProfile());
-	//			clon.setLinkedInProfile(curriculum.getLinkedInProfile());
-	//
-	//			result = clon;
-	//		}
-	//
-	//		this.validator.validate(result, binding);
-	//
-	//		return result;
-	//	}
+	//Reconstruct
+
+	public Curriculum reconstruct(final Curriculum curriculum, final BindingResult binding) {
+		Curriculum result;
+
+		if (curriculum.getId() == 0) {
+			result = this.create();
+			result.setFullName(curriculum.getFullName());
+			result.setEmail(curriculum.getEmail());
+			result.setPhoneNumber(curriculum.getPhoneNumber());
+			result.setPhoto(curriculum.getPhoto());
+
+		} else {
+			result = this.curriculumRepository.findOne(curriculum.getId());
+			Assert.notNull(result);
+			final int carrierId = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
+			final Carrier carrier = this.carrierService.findOne(carrierId);
+			Assert.isTrue(carrier.getCurricula().contains(result));
+
+			final Curriculum clon = (Curriculum) result.clone();
+
+			clon.setFullName(curriculum.getFullName());
+			clon.setEmail(curriculum.getEmail());
+			clon.setPhoneNumber(curriculum.getPhoneNumber());
+			clon.setPhoto(curriculum.getPhoto());
+
+			result = clon;
+		}
+
+		this.validator.validate(result, binding);
+
+		return result;
+	}
 }

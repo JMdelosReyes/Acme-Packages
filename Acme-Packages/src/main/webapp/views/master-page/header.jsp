@@ -37,6 +37,9 @@
 		<security:authorize access="hasRole('CARRIER')">
 			<li><a href="vehicle/carrier/list.do"><spring:message
 						code="master.page.vehicles" /></a></li>
+						
+			<li><a href="curriculum/carrier/list.do"><spring:message
+						code="master.page.curriculum" /></a></li>
 		</security:authorize>
 		
 		<security:authorize access="hasRole('AUDITOR')">

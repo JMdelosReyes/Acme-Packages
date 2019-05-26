@@ -29,7 +29,11 @@
 		
 		<value>/views/vehicle/tiles.xml</value>
 		<value>/views/solicitation/tiles.xml</value>
+		<value>/views/curriculum/tiles.xml</value>
+		<value>/views/professionalRecord/tiles.xml</value>
+		<value>/views/miscellaneousRecord/tiles.xml</value>
 		<value>/views/configuration/tiles.xml</value>
+
 	</util:list>
 
 </beans>

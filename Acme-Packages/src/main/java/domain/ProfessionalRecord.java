@@ -61,7 +61,7 @@ public class ProfessionalRecord extends DomainEntity implements Cloneable {
 		this.startTime = startTime;
 	}
 
-	@NotNull
+	@Past
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	public Date getEndTime() {
