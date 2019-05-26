@@ -39,6 +39,10 @@ public class EvaluationServiceTest extends AbstractTest {
 		Assert.notNull(evaluations);
 	}
 
+	/*
+	 * Sentence coverage: 100%
+	 * Data coverage: 100% as the only receive a single parameter
+	 */
 	@Test
 	public void driverFindOne() {
 		final Object testingData[][] = {
@@ -59,6 +63,10 @@ public class EvaluationServiceTest extends AbstractTest {
 		}
 	}
 
+	/*
+	 * Sentence coverage: 100%
+	 * Data coverage: 100% is tested with a actor that is allowed to do the evaluation, an incorrect actor and and actor that doesn´t have a request in that offer
+	 */
 	@Test
 	public void driverCreateAndSave() {
 		final Object testingData[][] = {
@@ -66,10 +74,10 @@ public class EvaluationServiceTest extends AbstractTest {
 				// Correct: All the parameters are OK
 				"customer1", "comment", 4, "offer2", null
 			}, {
-				// Incorrect: The user must be a actor
+				// Incorrect: The user must be a customer
 				"auditor1", "comment", 4, "offer2", IllegalArgumentException.class
 			}, {
-				// Incorrect: The minimum weight cannot be lower than 0
+				// Incorrect: the offer customer doesn´t have any request in that offer
 				"customer1", "des", 5, "offer1", IllegalArgumentException.class
 			}
 		};

@@ -108,8 +108,7 @@ public class FinderServiceTest extends AbstractTest {
 	}
 
 	/*
-	 * Requirement tested: Customers have a finder that they can configure using the following search criteria:
-	 * a single key word, an area, a minimum date, and/or a maximum date.
+	 * Requirement tested: Customers have a finder that they can configure.
 	 * Sentence coverage: 91.9%, as we use some Asserts just for extra security and avoid failure during search
 	 * Data coverage: 100%, as the only way to get a failure is using a non owned finder
 	 */

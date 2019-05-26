@@ -1,7 +1,9 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,7 +73,7 @@ public class CommentService {
 		Assert.isTrue(this.actorService.findActorType().equals("Carrier") || this.actorService.findActorType().equals("Auditor") || this.actorService.findActorType().equals("Customer"));
 
 		final int id = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
-		final Actor a = this.customerService.findOne(id);
+		final Actor a = this.actorService.findOne(id);
 		Assert.notNull(a);
 
 		comment.setUsername(a.getUserAccount().getUsername());
@@ -81,9 +83,12 @@ public class CommentService {
 		Assert.notNull(result);
 
 		Issue issue = this.issueService.findOne(issueId);
-		issue.getComments().add(result);
 
-		this.issueService.save(issue, null);
+		Issue clon = (Issue) issue.clone();
+		List<Comment> comments = new ArrayList<>(clon.getComments());
+		clon.setComments(comments);
+
+		this.issueService.save(clon, null);
 
 		return result;
 	}

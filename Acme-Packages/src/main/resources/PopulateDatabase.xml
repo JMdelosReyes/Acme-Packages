@@ -2530,7 +2530,7 @@
 			<ref bean="package4"/>
 			</list>
 		</property>
-		<!--  <property name="issue" value="false" /> -->		 			
+		<property name="issue" ref="issue1" />	 			
 	</bean>
 	
 	<bean id="request3" class="domain.Request">

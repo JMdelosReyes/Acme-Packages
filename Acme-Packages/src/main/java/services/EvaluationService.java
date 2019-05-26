@@ -89,8 +89,8 @@ public class EvaluationService {
 		this.customerService.save(customer);
 
 		Offer f = result.getOffer();
-		f.getEvaluations().add(result);
-		this.offerService.save(f);
+
+		this.offerService.addEvaluation(result, f.getId());
 
 		return result;
 	}

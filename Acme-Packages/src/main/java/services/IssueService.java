@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.UUID;
 
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,6 @@ import org.springframework.util.Assert;
 
 import repositories.IssueRepository;
 import security.LoginService;
-import utilities.Tickers;
 import domain.Auditor;
 import domain.Carrier;
 import domain.Comment;
@@ -93,17 +93,16 @@ public class IssueService {
 
 			Assert.isTrue(customer.getRequests().contains(request));
 			Assert.isTrue(request.getIssue() == null);
-			//TODO: TICKER MAL ARREGLALO ADRIBRON
-			issue.setTicker(Tickers.generateTicker());
+			issue.setOffer(request.getOffer());
+			issue.setTicker(request.getOffer().getTicker() == null ? "" : request.getOffer().getTicker() + UUID.randomUUID().toString().substring(0, 2).toUpperCase());
 			issue.setMoment(DateTime.now().minusMillis(1000).toDate());
 			issue.setClosed(false);
 
 			result = this.issueRepository.save(issue);
 			Assert.notNull(result);
 
-			request.setIssue(result);
+			this.requestService.addIssue(result, request);
 
-			this.requestService.save(request);
 		} else if (this.actorService.findActorType().equals("Customer")) {
 			final Issue old = this.issueRepository.findOne(issue.getId());
 			Assert.notNull(old);
