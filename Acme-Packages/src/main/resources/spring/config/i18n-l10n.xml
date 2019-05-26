@@ -27,12 +27,16 @@
 		<value>/views/customer/messages</value>
 		<value>/views/profile/messages</value>
 		
+		<!-- Luis -->
+		<value>/views/mess/messages</value>
+		<value>/views/messBox/messages</value>
+		<!-- Luis -->
 		<value>/views/vehicle/messages</value>
 		<value>/views/solicitation/messages</value>
 		<value>/views/configuration/messages</value>
 		<value>/views/curriculum/messages</value>
 		<value>/views/professionalRecord/messages</value>
-		<value>/views/miscellaneousRecord/messages</value>		
+		<value>/views/miscellaneousRecord/messages</value>
 	</util:list>
 
 </beans>

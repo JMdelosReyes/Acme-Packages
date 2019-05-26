@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- 
+ * tiles_es.xml
+ *
+ * Copyright (C) 2018 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+      
+<tiles-definitions>
+	
+	<definition name="mess/display"	extends="master.page">
+		<put-attribute name="title" value ="Vista detallada de mensaje"></put-attribute>
+		<put-attribute name="body" value ="/views/mess/display.jsp"></put-attribute>
+	</definition>
+	<definition name="mess/edit" extends="master.page">
+		<put-attribute name="title" value ="Enviar un mensaje"></put-attribute>
+		<put-attribute name="body" value ="/views/mess/send.jsp"></put-attribute>
+	</definition>
+	<definition name="mess/delete" extends="master.page">
+		<put-attribute name="title" value ="Eliminar un mensaje"></put-attribute>
+		<put-attribute name="body" value ="/views/mess/delete.jsp"></put-attribute>
+	</definition>
+	<definition name="mess/copy" extends="master.page">
+		<put-attribute name="title" value ="Copiar un mensaje"></put-attribute>
+		<put-attribute name="body" value ="/views/mess/copy.jsp"></put-attribute>
+	</definition>
+	<definition name="mess/move" extends="master.page">
+		<put-attribute name="title" value ="Mover un mensaje"></put-attribute>
+		<put-attribute name="body" value ="/views/mess/move.jsp"></put-attribute>
+	</definition>
+	<definition name="messageBox/display" extends="master.page">	
+		<put-attribute name="title" value="Mensajes de la carpeta" />
+		<put-attribute name="body" value="/views/messBox/listMess.jsp" />
+	</definition>
+</tiles-definitions>

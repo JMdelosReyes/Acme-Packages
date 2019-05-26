@@ -8,6 +8,7 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
@@ -98,7 +99,7 @@ public class Mess extends DomainEntity {
 	}
 
 	@NotNull
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	public Collection<Actor> getRecipients() {
 		return this.recipients;
 	}

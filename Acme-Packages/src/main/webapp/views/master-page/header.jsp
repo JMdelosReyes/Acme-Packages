@@ -37,7 +37,6 @@
 		<security:authorize access="hasRole('CARRIER')">
 			<li><a href="vehicle/carrier/list.do"><spring:message
 						code="master.page.vehicles" /></a></li>
-						
 			<li><a href="curriculum/carrier/list.do"><spring:message
 						code="master.page.curriculum" /></a></li>
 		</security:authorize>
@@ -55,12 +54,9 @@
 		</security:authorize>
 		
 		<security:authorize access="isAuthenticated()">
-			<li><a class="fNiv"><spring:message
-						code="master.page.mess" /></a>
-				<ul>
-					<li class="arrow"></li>
-					
-				</ul></li>
+			<li><a class="fNiv" href="messageBox/list.do"><spring:message
+				code="master.page.mess" /></a></li>
+				
 			<li>
 				<a class="fNiv"> 
 					<spring:message code="master.page.profile" /> 

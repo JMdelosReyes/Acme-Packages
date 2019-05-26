@@ -39,12 +39,13 @@
 		<security:intercept-url pattern="/welcome/terms.do" access="permitAll" />
 		<security:intercept-url pattern="/security/login.do" access="permitAll" /> 
 		<security:intercept-url pattern="/security/loginFailure.do" access="permitAll" />
-		
-		<security:intercept-url pattern="/vehicle/carrier/list.do" access="hasRole('CARRIER')" />
-		<security:intercept-url pattern="/vehicle/carrier,auditor/display.do" access="hasAnyRole('CARRIER','AUDITOR')" />
-		<security:intercept-url pattern="/vehicle/carrier/create.do" access="hasRole('CARRIER')" />
-		<security:intercept-url pattern="/vehicle/carrier/edit.do" access="hasRole('CARRIER')" />
-		
+		<!-- Luis -->
+		<security:intercept-url pattern="/mess/**"
+			access="isAuthenticated()" />
+
+		<security:intercept-url pattern="/messageBox/**"
+			access="isAuthenticated()" />
+		<!-- Luis -->
 		<security:intercept-url pattern="/solicitation/auditor/list.do" access="hasRole('AUDITOR')" />
 		<security:intercept-url pattern="/solicitation/auditor/list-assigned.do" access="hasRole('AUDITOR')" />
 		<security:intercept-url pattern="/solicitation/auditor/assign.do" access="hasRole('AUDITOR')" />
@@ -62,7 +63,11 @@
 		<security:intercept-url pattern="/professionalRecord/carrier/create.do" access="hasRole('CARRIER')" />
 		
 		<security:intercept-url pattern="/miscellaneousRecord/carrier/edit.do" access="hasRole('CARRIER')" />
-		<security:intercept-url pattern="/miscellaneousRecord/carrier/create.do" access="hasRole('CARRIER')" />		
+		<security:intercept-url pattern="/miscellaneousRecord/carrier/create.do" access="hasRole('CARRIER')" />
+		<security:intercept-url pattern="/vehicle/carrier/list.do" access="hasRole('CARRIER')" />
+		<security:intercept-url pattern="/vehicle/carrier,auditor/display.do" access="hasAnyRole('CARRIER','AUDITOR')" />
+		<security:intercept-url pattern="/vehicle/carrier/create.do" access="hasRole('CARRIER')" />
+		<security:intercept-url pattern="/vehicle/carrier/edit.do" access="hasRole('CARRIER')" />
 
         <security:intercept-url pattern="/configuration/administrator/edit.do" access="hasRole('ADMIN')" /> 
 		<security:intercept-url pattern="/configuration/administrator/list.do" access="hasRole('ADMIN')" />

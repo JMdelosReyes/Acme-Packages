@@ -18,10 +18,12 @@
 	">
 
 	<util:list id="converters">
-		<!-- 
-			Add your own converters using entries of the following form: 
-			<bean class="converters.Class1ToClass2" /> 
-		-->
+		<bean class="converters.MessBoxToStringConverter" />
+		<bean class="converters.StringToMessBoxConverter" />
+		<bean class="converters.MessToStringConverter" />
+		<bean class="converters.StringToMessConverter" />
+		<bean class="converters.ActorToStringConverter" />
+		<bean class="converters.StringToActorConverter" />
 	</util:list>
 	
 </beans>

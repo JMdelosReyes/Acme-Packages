@@ -732,7 +732,7 @@
 	<!-- CONFIGURATION -->
 	<bean id="configuration1" class="domain.Configuration">
 		<property name="systemName" value="Acme Packages" />
-		<property name="banner" value="https://i.pinimg.com/originals/09/56/33/095633056151fa5d0988aacd6f0e6e73.jpg" />
+		<property name="banner" value="https://i.pinimg.com/originals/f2/5f/31/f25f31af942174c11ca74cc55cfa4b1e.png" />
 		<property name="englishMessage"
 			value="Welcome to Acme Packages! We're the fastest and best value for money shipping service of the world!" />
 		<property name="spanishMessage"
