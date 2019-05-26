@@ -1,5 +1,5 @@
 <%--
- * textbox.tag
+ * submit.tag
  *
  * Copyright (C) 2019 Universidad de Sevilla
  * 
@@ -21,24 +21,9 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 <%-- Attributes --%> 
- 
-<%@ attribute name="path" required="true" %>
-<%@ attribute name="code" required="true" %>
-
-<%@ attribute name="readonly" required="false" %>
-<%@ attribute name="placeholder" required="false" %>
-<%@ attribute name="type" required="false" %>
-
-<jstl:if test="${readonly == null}">
-	<jstl:set var="readonly" value="false" />
-</jstl:if>
 
 <%-- Definition --%>
 
-<div>
-	<form:label path="${path}">
-		<spring:message code="${code}" />
-	</form:label>	
-	<form:input type="${type}" path="${path}" readonly="${readonly}" placeholder="${placeholder}" />	
-	<form:errors path="${path}" cssClass="error" />
-</div>	
+<button type="submit" name="delete" class="btn btn-primary" onclick="return confirm('<spring:message code="confirm.delete" />')">
+	<spring:message code="delete" />
+</button>

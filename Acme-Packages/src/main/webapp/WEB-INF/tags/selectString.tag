@@ -1,5 +1,5 @@
 <%--
- * textbox.tag
+ * select.tag
  *
  * Copyright (C) 2019 Universidad de Sevilla
  * 
@@ -21,17 +21,22 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 <%-- Attributes --%> 
- 
+
 <%@ attribute name="path" required="true" %>
 <%@ attribute name="code" required="true" %>
+<%@ attribute name="items" required="true" type="java.util.Collection" %>
 
-<%@ attribute name="readonly" required="false" %>
-<%@ attribute name="placeholder" required="false" %>
-<%@ attribute name="type" required="false" %>
+<%@ attribute name="id" required="false" %>
+<%@ attribute name="onchange" required="false" %>
 
-<jstl:if test="${readonly == null}">
-	<jstl:set var="readonly" value="false" />
+<jstl:if test="${id == null}">
+	<jstl:set var="id" value="${UUID.randomUUID().toString()}" />
 </jstl:if>
+
+<jstl:if test="${onchange == null}">
+	<jstl:set var="onchange" value="javascript: return true;" />
+</jstl:if>
+
 
 <%-- Definition --%>
 
@@ -39,6 +44,8 @@
 	<form:label path="${path}">
 		<spring:message code="${code}" />
 	</form:label>	
-	<form:input type="${type}" path="${path}" readonly="${readonly}" placeholder="${placeholder}" />	
+	<form:select id="${id}" path="${path}" onchange="${onchange}" >
+		<form:options items="${items}" />
+	</form:select>
 	<form:errors path="${path}" cssClass="error" />
-</div>	
+</div>

@@ -1,5 +1,5 @@
 <%--
- * textbox.tag
+ * select.tag
  *
  * Copyright (C) 2019 Universidad de Sevilla
  * 
@@ -21,24 +21,31 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 <%-- Attributes --%> 
- 
+
+<%@ attribute name="id" required="true" %>
 <%@ attribute name="path" required="true" %>
 <%@ attribute name="code" required="true" %>
 
-<%@ attribute name="readonly" required="false" %>
-<%@ attribute name="placeholder" required="false" %>
-<%@ attribute name="type" required="false" %>
+<%@ attribute name="onchange" required="false" %>
 
-<jstl:if test="${readonly == null}">
-	<jstl:set var="readonly" value="false" />
+<jstl:if test="${id == null}">
+	<jstl:set var="id" value="${UUID.randomUUID().toString()}" />
+</jstl:if>
+
+<jstl:if test="${onchange == null}">
+	<jstl:set var="onchange" value="javascript: return true;" />
 </jstl:if>
 
 <%-- Definition --%>
 
 <div>
 	<form:label path="${path}">
-		<spring:message code="${code}" />
+		<a target="_blank" href="welcome/terms.do">	<spring:message code="${code}" /> </a>
+	
 	</form:label>	
-	<form:input type="${type}" path="${path}" readonly="${readonly}" placeholder="${placeholder}" />	
+	<form:select id="${id}" path="${path}" onchange="${onchange}">
+		<form:option value="false"> <spring:message code="act.select.false" /> </form:option>
+		<form:option value="true"> <spring:message code="act.select.true" /> </form:option>
+	</form:select>
 	<form:errors path="${path}" cssClass="error" />
-</div>	
+</div>
