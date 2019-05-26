@@ -1,6 +1,8 @@
 
 package repositories;
 
+import java.util.Collection;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -15,5 +17,8 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Integer> {
 
 	@Query("select case when (count(s)>0) then true else false end from Vehicle v join v.solicitations s where v.id=?1 and s.endDate>=current_date")
 	Boolean canBeUsed(int id);
+
+	@Query("select v from Vehicle v join v.solicitations s where v.id=?1 and (select count(a) from Auditor a join a.solicitations s2 where s.id=s2.id)>0")
+	Collection<Vehicle> findVehiclesAuditedByAuditor(int id);
 
 }

@@ -134,4 +134,11 @@ public class VehicleService {
 		Assert.isTrue(id > 0);
 		return this.vehicleRepository.canBeUsed(id);
 	}
+
+	public Collection<Vehicle> findVehiclesAuditedByAuditor(int id) {
+		Assert.isTrue(id > 0);
+		Collection<Vehicle> vehicles = this.vehicleRepository.findVehiclesAuditedByAuditor(id);
+		Assert.notNull(vehicles);
+		return vehicles;
+	}
 }
