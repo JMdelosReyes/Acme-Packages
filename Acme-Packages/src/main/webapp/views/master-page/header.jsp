@@ -39,6 +39,18 @@
 						code="master.page.vehicles" /></a></li>
 		</security:authorize>
 		
+		<security:authorize access="hasRole('AUDITOR')">
+			<li><a href="solicitation/auditor/list.do"><spring:message
+						code="master.page.solicitations" /></a>					
+				<ul>
+					<li class="arrow"></li>
+					<li>
+						<a href="solicitation/auditor/list-assigned.do"><spring:message code="master.page.mySolicitations" /></a>
+					</li>
+				</ul>
+			</li>
+		</security:authorize>
+		
 		<security:authorize access="isAuthenticated()">
 			<li><a class="fNiv"><spring:message
 						code="master.page.mess" /></a>

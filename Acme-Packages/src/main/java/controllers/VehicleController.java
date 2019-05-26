@@ -63,7 +63,7 @@ public class VehicleController extends AbstractController {
 
 	// Display
 	@RequestMapping(value = "/carrier,auditor/display", method = RequestMethod.GET)
-	public ModelAndView display(@RequestParam(required = false, defaultValue = "0") final String id) {
+	public ModelAndView display(@RequestParam(required = false, defaultValue = "0") final String id, @RequestParam(required = false, defaultValue = "no") final String sol) {
 		final ModelAndView result;
 		int intId;
 
@@ -71,6 +71,14 @@ public class VehicleController extends AbstractController {
 			intId = Integer.valueOf(id);
 		} catch (final Throwable oops) {
 			return new ModelAndView("redirect:/");
+		}
+
+		if (sol.equals("yes")) {
+			try {
+				intId = this.vehicleService.findBySolicitation(intId).getId();
+			} catch (final Throwable oops) {
+				return new ModelAndView("redirect:/");
+			}
 		}
 
 		try {

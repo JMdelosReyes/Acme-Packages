@@ -177,4 +177,14 @@ public class SolicitationService {
 		return this.findSolicitationsOfCarrier(idCarrier).contains(s);
 	}
 
+	public Collection<Solicitation> findUnassigned() {
+		return this.solicitationRepository.findUnassigned();
+	}
+
+	public void assign(Solicitation solicitation, int auditorId) {
+		Assert.isTrue(this.solicitationRepository.findUnassigned().contains(solicitation));
+		Auditor auditor = this.auditorService.findOne(auditorId);
+		auditor.getSolicitations().add(solicitation);
+	}
+
 }

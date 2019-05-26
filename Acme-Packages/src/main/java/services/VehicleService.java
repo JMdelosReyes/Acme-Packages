@@ -191,4 +191,11 @@ public class VehicleService {
 
 		return result;
 	}
+
+	public Vehicle findBySolicitation(int id) {
+		Assert.isTrue(id > 0);
+		Vehicle vehicle = this.vehicleRepository.findBySolicitation(id);
+		Assert.notNull(vehicle);
+		return vehicle;
+	}
 }

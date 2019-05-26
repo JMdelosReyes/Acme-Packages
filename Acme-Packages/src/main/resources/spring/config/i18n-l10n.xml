@@ -28,6 +28,7 @@
 		<value>/views/profile/messages</value>
 		
 		<value>/views/vehicle/messages</value>
+		<value>/views/solicitation/messages</value>
 		<value>/views/configuration/messages</value>
 	</util:list>
 
