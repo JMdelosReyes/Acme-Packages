@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.CategoryRepository;
 import security.Authority;
@@ -30,6 +32,9 @@ public class CategoryService {
 	//Suporting services
 	@Autowired
 	private ActorService		actorService;
+
+	@Autowired
+	Validator					validator;
 
 
 	// Constructors
@@ -109,4 +114,26 @@ public class CategoryService {
 		this.categoryRepository.flush();
 	}
 
+	public Category reconstructCategory(final Category cat, final BindingResult binding) {
+		Assert.notNull(cat);
+		Category result;
+
+		if (cat.getId() != 0) {
+			result = this.categoryRepository.findOne(cat.getId());
+			Assert.notNull(result);
+
+			final Category clon = (Category) cat.clone();
+
+			clon.setSpanishName(result.getSpanishName());
+			clon.setEnglishName(result.getEnglishName());
+
+			result = clon;
+		} else {
+			result = cat;
+		}
+
+		this.validator.validate(result, binding);
+
+		return result;
+	}
 }

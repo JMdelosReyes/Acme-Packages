@@ -39,6 +39,9 @@
 		<value>/views/miscellaneousRecord/messages</value>
 		<value>/views/actor/messages</value>
 		
+		<value>/views/category/messages</value>
+		<value>/views/socialProfile/messages</value>
+		
 	</util:list>
 
 </beans>
