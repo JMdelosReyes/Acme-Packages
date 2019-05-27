@@ -42,7 +42,10 @@
 			<li><a href="curriculum/carrier/list.do"><spring:message
 						code="master.page.curriculum" /></a></li>
 		</security:authorize>
-		
+		<security:authorize access="hasRole('CUSTOMER')">
+					<li><a class="fNiv" href="finder/customer/search.do"><spring:message
+						code="master.page.finder" /></a></li>
+		</security:authorize>
 		<security:authorize access="hasRole('AUDITOR')">
 			<li><a href="solicitation/auditor/list.do"><spring:message
 						code="master.page.solicitations" /></a>					

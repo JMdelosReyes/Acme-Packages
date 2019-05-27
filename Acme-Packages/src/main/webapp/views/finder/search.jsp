@@ -1,0 +1,49 @@
+<%@page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+
+<%@taglib prefix="jstl"	uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
+<%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+<%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<form:form action="finder/customer/search.do" modelAttribute="finder">
+
+	<form:hidden path="id" />
+	
+	<fieldset>
+		<legend><spring:message code="finder.filters"></spring:message></legend>
+		
+		<acme:textbox code="finder.town" path="town"/>
+		<acme:textbox code="finder.minDate" path="minDate" placeholder="dd/MM/yyyy" />
+		<acme:textbox code="finder.maxDate" path="maxDate" placeholder="dd/MM/yyyy" />
+		<acme:textbox code="finder.maxPrice" type="number" path="maxPrice"/>
+		<acme:textbox code="finder.weight" type="number" path="weight"/>				
+		<acme:textbox code="finder.volume" type="number" path="volume"/>				
+		<acme:textbox code="finder.category" path="category"/>
+
+	
+		<acme:submit name="search" code="finder.search"/>
+    	<acme:submit name="clear" code="finder.clear"/>
+    	<acme:cancel url="" code="finder.cancel"/>	
+	</fieldset>
+	
+</form:form>
+
+<display:table name="offers" id="row" requestURI="${requestURI}"
+				pagesize="5" class="displaytag">
+	
+	<display:column titleKey="of.ticker">
+		<a href="offer/display.do?id=<jstl:out value="${row.id}"/>"><jstl:out value="${row.ticker}"></jstl:out></a>
+	</display:column>
+	
+	<display:column titleKey="of.maxDateToRequest">
+		<fmt:formatDate value="${row.maxDateToRequest}" pattern="dd/MM/yy HH:mm"></fmt:formatDate>
+	</display:column>
+		
+	<display:column titleKey="of.fares">
+		<a href="offer/display.do?id=<jstl:out value="${row.id}"/>"><spring:message code = "of.fares"/></a>
+	</display:column>
+	   
+</display:table>

@@ -42,6 +42,8 @@
 		<value>/views/category/messages</value>
 		<value>/views/socialProfile/messages</value>
 		<value>/views/administrator/messages</value>
+		<value>/views/finder/messages</value>
+		
 		
 	</util:list>
 
