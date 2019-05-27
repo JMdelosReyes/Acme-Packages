@@ -91,6 +91,8 @@ public class AdministratorService {
 		result.setSocialProfiles(soc);
 		result.setCreditCard(null);
 		final List<MessBox> systemBoxes = new ArrayList<MessBox>();
+		systemBoxes.addAll(this.messBoxService.createSystemMessageBoxes());
+
 		result.setMessageBoxes(systemBoxes);
 
 		//CUENTA
@@ -121,10 +123,7 @@ public class AdministratorService {
 			uc = this.userAccountService.save(uc);
 
 			administrator.setUserAccount(uc);
-
 			Collection<MessBox> sb = administrator.getMessageBoxes();
-
-			sb.addAll(this.messBoxService.createSystemMessageBoxes());
 
 			sb = this.messBoxService.saveSystemBoxes(sb);
 

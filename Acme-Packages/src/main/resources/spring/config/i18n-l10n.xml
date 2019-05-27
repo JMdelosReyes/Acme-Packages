@@ -37,6 +37,8 @@
 		<value>/views/curriculum/messages</value>
 		<value>/views/professionalRecord/messages</value>
 		<value>/views/miscellaneousRecord/messages</value>
+		<value>/views/actor/messages</value>
+		
 	</util:list>
 
 </beans>

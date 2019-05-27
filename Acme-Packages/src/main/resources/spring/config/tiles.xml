@@ -37,6 +37,8 @@
 		<value>/views/professionalRecord/tiles.xml</value>
 		<value>/views/miscellaneousRecord/tiles.xml</value>
 		<value>/views/configuration/tiles.xml</value>
+		<value>/views/actor/tiles.xml</value>
+		
 		
 	</util:list>
 

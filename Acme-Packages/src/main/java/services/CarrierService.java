@@ -22,7 +22,6 @@ import utilities.Validators;
 import domain.Carrier;
 import domain.Curriculum;
 import domain.Fare;
-import domain.MessBox;
 import domain.Offer;
 import domain.SocialProfile;
 import domain.Vehicle;
@@ -101,7 +100,7 @@ public class CarrierService {
 		result.setSpammer(false);
 		result.setCreditCard(null);
 		result.setBanned(false);
-		result.setMessageBoxes(new ArrayList<MessBox>());
+		result.setMessageBoxes(this.messBoxService.createSystemMessageBoxes());
 		result.setSocialProfiles(new ArrayList<SocialProfile>());
 
 		// User Account

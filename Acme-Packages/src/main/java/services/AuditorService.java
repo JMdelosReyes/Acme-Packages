@@ -94,6 +94,8 @@ public class AuditorService {
 		result.setSocialProfiles(soc);
 		result.setCreditCard(null);
 		final List<MessBox> systemBoxes = new ArrayList<MessBox>();
+		systemBoxes.addAll(this.messBoxService.createSystemMessageBoxes());
+
 		result.setMessageBoxes(systemBoxes);
 
 		//User Account

@@ -5,9 +5,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.ActorRepository;
 import security.Authority;
@@ -22,6 +27,9 @@ import domain.Customer;
 import domain.MessBox;
 import domain.SocialProfile;
 import domain.Sponsor;
+import forms.DisplayActorForm;
+import forms.EditActorForm;
+import forms.SignUpForm;
 
 @Service
 @Transactional
@@ -49,6 +57,9 @@ public class ActorService {
 
 	@Autowired
 	private UserAccountService		userAccountService;
+
+	@Autowired
+	private Validator				validator;
 
 
 	public ActorService() {
@@ -204,4 +215,388 @@ public class ActorService {
 			this.sponsorService.delete(c);
 		}
 	}
+
+	public DisplayActorForm getDisplayActorForm(final int id) {
+		final DisplayActorForm da = new DisplayActorForm();
+
+		Authentication authentication;
+		SecurityContext context;
+		context = SecurityContextHolder.getContext();
+		Assert.notNull(context);
+		authentication = context.getAuthentication();
+
+		if (authentication.getPrincipal().hashCode() != 1105384920) {
+			//Actor logged searching another one
+			if (id != 0) {
+				final Actor a = this.findOne(id);
+				da.setName(a.getName());
+				da.setMiddleName(a.getMiddleName());
+				da.setSurname(a.getSurname());
+				da.setPhoto(a.getPhoto());
+				da.setEmail(a.getEmail());
+				da.setSpammer(a.getSpammer());
+
+				if (this.findActorType(a.getUserAccount()).equals("Carrier")) {
+					final Carrier c = this.carrierService.findOne(id);
+					da.setVat(c.getVat());
+					da.setScore(c.getScore());
+				}
+				if (this.findActorType(a.getUserAccount()).equals("Sponsor")) {
+					final Sponsor s = this.sponsorService.findOne(id);
+					da.setNif(s.getNif());
+				}
+				//Actor logged looking at itself
+			} else {
+				final UserAccount userAccount = LoginService.getPrincipal();
+				final Actor a = this.findByUserAccountId(userAccount.getId());
+				da.setName(a.getName());
+				da.setMiddleName(a.getMiddleName());
+				da.setSurname(a.getSurname());
+				da.setCreditCard(a.getCreditCard());
+				da.setPhoto(a.getPhoto());
+				da.setEmail(a.getEmail());
+				da.setPhoneNumber(a.getPhoneNumber());
+				da.setAddress(a.getAddress());
+				da.setSpammer(a.getSpammer());
+
+				if (this.findActorType(a.getUserAccount()).equals("Carrier")) {
+					final Carrier c = this.carrierService.findOne(a.getId());
+					da.setVat(c.getVat());
+					da.setScore(c.getScore());
+				}
+				if (this.findActorType(a.getUserAccount()).equals("Sponsor")) {
+					final Sponsor s = this.sponsorService.findOne(a.getId());
+					da.setNif(s.getNif());
+				}
+			}
+			//Not logged actor looking someone
+		} else if (id != 0) {
+			final Actor a = this.findOne(id);
+			da.setName(a.getName());
+			da.setMiddleName(a.getMiddleName());
+			da.setSurname(a.getSurname());
+			da.setPhoto(a.getPhoto());
+			da.setEmail(a.getEmail());
+
+			if (this.findActorType(a.getUserAccount()).equals("Carrier")) {
+				final Carrier c = this.carrierService.findOne(id);
+				da.setVat(c.getVat());
+				da.setScore(c.getScore());
+			}
+			if (this.findActorType(a.getUserAccount()).equals("Sponsor")) {
+				final Sponsor s = this.sponsorService.findOne(id);
+				da.setNif(s.getNif());
+			}
+		} else {
+			throw new IllegalAccessError();
+		}
+		return da;
+	}
+	public SignUpForm getSignUpForm() {
+		final SignUpForm res = new SignUpForm();
+		final String actorType = this.findActorType();
+		if (actorType.equals("None")) {
+			res.setActorType("carrier");
+		} else {
+			res.setActorType("administrator");
+		}
+		return res;
+
+	}
+
+	public void save(final SignUpForm actor, final BindingResult binding) {
+		Assert.notNull(actor);
+
+		final String actorType = actor.getActorType();
+
+		if (actorType.equals("administrator")) {
+
+			final Administrator administrator = this.administratorService.create();
+
+			administrator.setAddress(actor.getAddress());
+			administrator.setCreditCard(actor.getCreditCard());
+			administrator.setEmail(actor.getEmail());
+			administrator.setName(actor.getName());
+			administrator.setMiddleName(actor.getMiddleName());
+			administrator.setSurname(actor.getSurname());
+			administrator.setPhoneNumber(actor.getPhoneNumber());
+			administrator.setPhoto(actor.getPhoto());
+			administrator.getUserAccount().setPassword((actor.getUserAccount().getPassword()));
+			administrator.getUserAccount().setUsername(actor.getUserAccount().getUsername());
+
+			this.validator.validate(administrator, binding);
+			if (!actor.getPassConfirmation().equals(actor.getUserAccount().getPassword())) {
+				binding.rejectValue("passConfirmation", "act.pass.error");
+			}
+			if (!actor.isTermsAccepted()) {
+				binding.rejectValue("termsAccepted", "act.terms.error");
+			}
+
+			if (!binding.hasErrors()) {
+				this.administratorService.save(administrator);
+			}
+
+		} else if (actorType.equals("customer")) {
+
+			Customer customer = this.customerService.create();
+
+			customer.setAddress(actor.getAddress());
+			customer.setCreditCard(actor.getCreditCard());
+			customer.setEmail(actor.getEmail());
+			customer.setName(actor.getName());
+			customer.setMiddleName(actor.getMiddleName());
+			customer.setSurname(actor.getSurname());
+			customer.setPhoneNumber(actor.getPhoneNumber());
+			customer.setPhoto(actor.getPhoto());
+			customer.getUserAccount().setPassword((actor.getUserAccount().getPassword()));
+			customer.getUserAccount().setUsername(actor.getUserAccount().getUsername());
+
+			this.validator.validate(customer, binding);
+
+			if (!actor.getPassConfirmation().equals(actor.getUserAccount().getPassword())) {
+				binding.rejectValue("passConfirmation", "act.pass.error");
+			}
+			if (!actor.isTermsAccepted()) {
+				binding.rejectValue("termsAccepted", "act.terms.error");
+			}
+
+			if (!binding.hasErrors()) {
+				this.customerService.save(customer);
+			}
+
+		} else if (actorType.equals("carrier")) {
+
+			Carrier carrier = this.carrierService.create();
+
+			carrier.setAddress(actor.getAddress());
+			carrier.setCreditCard(actor.getCreditCard());
+			carrier.setEmail(actor.getEmail());
+			carrier.setName(actor.getName());
+			carrier.setMiddleName(actor.getMiddleName());
+			carrier.setSurname(actor.getSurname());
+			carrier.setPhoneNumber(actor.getPhoneNumber());
+			carrier.setPhoto(actor.getPhoto());
+			carrier.getUserAccount().setPassword((actor.getUserAccount().getPassword()));
+			carrier.getUserAccount().setUsername(actor.getUserAccount().getUsername());
+
+			carrier.setVat(actor.getVat());
+
+			this.validator.validate(carrier, binding);
+
+			if (!actor.getPassConfirmation().equals(actor.getUserAccount().getPassword())) {
+				binding.rejectValue("passConfirmation", "act.pass.error");
+			}
+			if (!actor.isTermsAccepted()) {
+				binding.rejectValue("termsAccepted", "act.terms.error");
+			}
+
+			if (!binding.hasErrors()) {
+				this.carrierService.save(carrier);
+			}
+
+		} else if (actorType.equals("auditor")) {
+
+			Auditor auditor = this.auditorService.create();
+
+			auditor.setAddress(actor.getAddress());
+			auditor.setCreditCard(actor.getCreditCard());
+			auditor.setEmail(actor.getEmail());
+			auditor.setName(actor.getName());
+			auditor.setMiddleName(actor.getMiddleName());
+			auditor.setSurname(actor.getSurname());
+			auditor.setPhoneNumber(actor.getPhoneNumber());
+			auditor.setPhoto(actor.getPhoto());
+			auditor.getUserAccount().setPassword((actor.getUserAccount().getPassword()));
+			auditor.getUserAccount().setUsername(actor.getUserAccount().getUsername());
+
+			this.validator.validate(auditor, binding);
+
+			if (!actor.getPassConfirmation().equals(actor.getUserAccount().getPassword())) {
+				binding.rejectValue("passConfirmation", "act.pass.error");
+			}
+			if (!actor.isTermsAccepted()) {
+				binding.rejectValue("termsAccepted", "act.terms.error");
+			}
+
+			if (!binding.hasErrors()) {
+				this.auditorService.save(auditor);
+			}
+
+		} else if (actorType.equals("sponsor")) {
+
+			Sponsor sponsor = this.sponsorService.create();
+
+			sponsor.setAddress(actor.getAddress());
+			sponsor.setCreditCard(actor.getCreditCard());
+			sponsor.setEmail(actor.getEmail());
+			sponsor.setName(actor.getName());
+			sponsor.setMiddleName(actor.getMiddleName());
+			sponsor.setSurname(actor.getSurname());
+			sponsor.setPhoneNumber(actor.getPhoneNumber());
+			sponsor.setPhoto(actor.getPhoto());
+			sponsor.getUserAccount().setPassword((actor.getUserAccount().getPassword()));
+			sponsor.getUserAccount().setUsername(actor.getUserAccount().getUsername());
+
+			sponsor.setNif(actor.getNif());
+
+			this.validator.validate(sponsor, binding);
+
+			if (!actor.getPassConfirmation().equals(actor.getUserAccount().getPassword())) {
+				binding.rejectValue("passConfirmation", "act.pass.error");
+			}
+			if (!actor.isTermsAccepted()) {
+				binding.rejectValue("termsAccepted", "act.terms.error");
+			}
+
+			if (!binding.hasErrors()) {
+				this.sponsorService.save(sponsor);
+			}
+
+		}
+
+	}
+
+	public EditActorForm getEditActorForm() {
+		final UserAccount principal = LoginService.getPrincipal();
+		final Actor a = this.findByUserAccountId(principal.getId());
+		final String actorType = this.findActorType();
+
+		final EditActorForm eaf = new EditActorForm();
+
+		eaf.setName(a.getName());
+		eaf.setMiddleName(a.getMiddleName());
+		eaf.setSurname(a.getSurname());
+		eaf.setCreditCard(a.getCreditCard());
+		eaf.setPhoto(a.getPhoto());
+		eaf.setEmail(a.getEmail());
+		eaf.setPhoneNumber(a.getPhoneNumber());
+		eaf.setAddress(a.getAddress());
+
+		if (actorType.equals("Carrier")) {
+			final Carrier c = (Carrier) this.findByUserAccountId(principal.getId());
+			eaf.setVat(c.getVat());
+
+		}
+
+		if (actorType.equals("Sponsor")) {
+			final Sponsor p = (Sponsor) this.findByUserAccountId(principal.getId());
+			eaf.setNif(p.getNif());
+
+		}
+
+		return eaf;
+
+	}
+
+	public void save(final EditActorForm actor, final BindingResult binding) {
+		Assert.notNull(actor);
+
+		final String actorType = this.findActorType();
+		final UserAccount principal = LoginService.getPrincipal();
+
+		if (actorType.equals("Administrator")) {
+
+			final Administrator administrator = (Administrator) this.findByUserAccountId(principal.getId());
+
+			final Administrator clon = (Administrator) administrator.clone();
+
+			clon.setName(actor.getName());
+			clon.setSurname(actor.getSurname());
+			clon.setMiddleName(actor.getMiddleName());
+			clon.setCreditCard(actor.getCreditCard());
+			clon.setPhoto(actor.getPhoto());
+			clon.setEmail(actor.getEmail());
+			clon.setPhoneNumber(actor.getPhoneNumber());
+			clon.setAddress(actor.getAddress());
+
+			this.validator.validate(clon, binding);
+			if (!binding.hasErrors()) {
+				this.administratorService.save(clon);
+			}
+
+		} else if (actorType.equals("Carrier")) {
+			final Carrier c = (Carrier) this.findByUserAccountId(principal.getId());
+
+			final Carrier clon = (Carrier) c.clone();
+
+			clon.setName(actor.getName());
+			clon.setSurname(actor.getSurname());
+			clon.setMiddleName(actor.getMiddleName());
+			clon.setCreditCard(actor.getCreditCard());
+			clon.setPhoto(actor.getPhoto());
+			clon.setEmail(actor.getEmail());
+			clon.setPhoneNumber(actor.getPhoneNumber());
+			clon.setAddress(actor.getAddress());
+			clon.setVat(actor.getVat());
+
+			this.validator.validate(clon, binding);
+			if (!binding.hasErrors()) {
+				this.carrierService.save(clon);
+			}
+
+		} else if (actorType.equals("Customer")) {
+
+			final Customer c = (Customer) this.findByUserAccountId(principal.getId());
+
+			final Customer clon = (Customer) c.clone();
+
+			clon.setName(actor.getName());
+			clon.setSurname(actor.getSurname());
+			clon.setMiddleName(actor.getMiddleName());
+			clon.setCreditCard(actor.getCreditCard());
+			clon.setPhoto(actor.getPhoto());
+			clon.setEmail(actor.getEmail());
+			clon.setPhoneNumber(actor.getPhoneNumber());
+			clon.setAddress(actor.getAddress());
+
+			this.validator.validate(clon, binding);
+			if (!binding.hasErrors()) {
+				this.customerService.save(clon);
+			}
+
+		} else if (actorType.equals("Auditor")) {
+
+			final Auditor aud = (Auditor) this.findByUserAccountId(principal.getId());
+
+			final Auditor clon = (Auditor) aud.clone();
+
+			clon.setName(actor.getName());
+			clon.setSurname(actor.getSurname());
+			clon.setMiddleName(actor.getMiddleName());
+			clon.setCreditCard(actor.getCreditCard());
+			clon.setPhoto(actor.getPhoto());
+			clon.setEmail(actor.getEmail());
+			clon.setPhoneNumber(actor.getPhoneNumber());
+			clon.setAddress(actor.getAddress());
+
+			this.validator.validate(clon, binding);
+			if (!binding.hasErrors()) {
+				this.auditorService.save(clon);
+			}
+
+		} else if (actorType.equals("Sponsor")) {
+
+			final Sponsor pro = (Sponsor) this.findByUserAccountId(principal.getId());
+
+			final Sponsor clon = (Sponsor) pro.clone();
+
+			clon.setName(actor.getName());
+			clon.setSurname(actor.getSurname());
+			clon.setMiddleName(actor.getMiddleName());
+			clon.setCreditCard(actor.getCreditCard());
+			clon.setPhoto(actor.getPhoto());
+			clon.setEmail(actor.getEmail());
+			clon.setPhoneNumber(actor.getPhoneNumber());
+			clon.setAddress(actor.getAddress());
+			clon.setNif(actor.getNif());
+
+			this.validator.validate(clon, binding);
+			if (!binding.hasErrors()) {
+				this.sponsorService.save(clon);
+			}
+
+		}
+
+	}
+
 }

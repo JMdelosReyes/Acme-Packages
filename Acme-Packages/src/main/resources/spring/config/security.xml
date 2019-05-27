@@ -72,6 +72,15 @@
         <security:intercept-url pattern="/configuration/administrator/edit.do" access="hasRole('ADMIN')" /> 
 		<security:intercept-url pattern="/configuration/administrator/list.do" access="hasRole('ADMIN')" />
 		
+		<security:intercept-url pattern="/actor/sign-up.do"
+			access="isAnonymous() || hasAnyRole('ADMIN')" />
+					<security:intercept-url pattern="/actor/display.do"
+			access="permitAll" />
+			<security:intercept-url pattern="/actor/edit.do"
+			access="hasAnyRole('ADMIN', 'CARRIER', 'CUSTOMER', 'SPONSOR', 'AUDITOR')" />
+			
+		
+		
 
 		<security:intercept-url pattern="/welcome/index.do" access="permitAll" /> 
 		

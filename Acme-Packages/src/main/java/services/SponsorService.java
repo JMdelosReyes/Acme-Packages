@@ -19,7 +19,6 @@ import security.UserAccount;
 import security.UserAccountService;
 import utilities.HashPasswordParameter;
 import utilities.Validators;
-import domain.MessBox;
 import domain.SocialProfile;
 import domain.Sponsor;
 import domain.Sponsorship;
@@ -89,7 +88,7 @@ public class SponsorService {
 		result.setSpammer(false);
 		result.setCreditCard(null);
 		result.setBanned(false);
-		result.setMessageBoxes(new ArrayList<MessBox>());
+		result.setMessageBoxes(this.messBoxService.createSystemMessageBoxes());
 		result.setSocialProfiles(new ArrayList<SocialProfile>());
 
 		// User Account
