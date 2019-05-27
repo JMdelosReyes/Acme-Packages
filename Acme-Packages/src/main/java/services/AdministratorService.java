@@ -17,11 +17,16 @@ import security.UserAccount;
 import security.UserAccountService;
 import utilities.HashPasswordParameter;
 import utilities.Validators;
+import domain.Actor;
 import domain.Administrator;
+import domain.Auditor;
 import domain.Carrier;
+import domain.Customer;
 import domain.MessBox;
 import domain.SocialProfile;
+import domain.Sponsor;
 import domain.Sponsorship;
+import domain.Town;
 
 @Service
 @Transactional
@@ -34,6 +39,18 @@ public class AdministratorService {
 	// Supporting services
 	@Autowired
 	private ActorService			actorService;
+
+	@Autowired
+	private SponsorService			sponsorService;
+
+	@Autowired
+	private CarrierService			carrierService;
+
+	@Autowired
+	private AuditorService			auditorService;
+
+	@Autowired
+	private CustomerService			customerService;
 
 	@Autowired
 	private UserAccountService		userAccountService;
@@ -497,32 +514,31 @@ public class AdministratorService {
 	}
 
 	//Top-5 most visited towns.
-	//	//TODO
-	//	public Collection<Town> top5MostVisitedTowns() {
-	//
-	//		final UserAccount principal = LoginService.getPrincipal();
-	//		Assert.notNull(principal);
-	//
-	//		final Authority auth = new Authority();
-	//		auth.setAuthority(Authority.ADMIN);
-	//		Assert.isTrue(principal.getAuthorities().contains(auth));
-	//		List<Town> result = new ArrayList<>(this.administratorRepository.top5MostVisitedTowns());
-	//		final Integer last = result.size();
-	//		if (last == 1) {
-	//			result = result.subList(0, 1);
-	//		} else if (last == 2) {
-	//			result = result.subList(0, 2);
-	//		} else if (last == 3) {
-	//			result = result.subList(0, 2);
-	//		} else if (last == 4) {
-	//			result = result.subList(0, 2);
-	//		} else if (last >= 5) {
-	//			result = result.subList(0, 3);
-	//		} else {
-	//			result = new ArrayList<Town>();
-	//		}
-	//		return result;
-	//	}
+	public Collection<Town> top5MostVisitedTowns() {
+
+		final UserAccount principal = LoginService.getPrincipal();
+		Assert.notNull(principal);
+
+		final Authority auth = new Authority();
+		auth.setAuthority(Authority.ADMIN);
+		Assert.isTrue(principal.getAuthorities().contains(auth));
+		List<Town> result = new ArrayList<>(this.administratorRepository.top5MostVisitedTowns());
+		final Integer last = result.size();
+		if (last == 1) {
+			result = result.subList(0, 1);
+		} else if (last == 2) {
+			result = result.subList(0, 2);
+		} else if (last == 3) {
+			result = result.subList(0, 3);
+		} else if (last == 4) {
+			result = result.subList(0, 4);
+		} else if (last >= 5) {
+			result = result.subList(0, 5);
+		} else {
+			result = new ArrayList<Town>();
+		}
+		return result;
+	}
 
 	//The ratio of empty versus non-empty finders.
 	public Double RatioNonEmptyFinders() {
@@ -591,23 +607,90 @@ public class AdministratorService {
 
 	}
 
-	//TODO
 	//The listing of auditors who have got at least 10% of issues closed above the average. 
-	//	public Collection<Auditor> AudiorsWith10percentmoreIsuseClosedThanAVG() {
-	//
-	//		final UserAccount principal = LoginService.getPrincipal();
-	//		Assert.notNull(principal);
-	//
-	//		final Authority auth = new Authority();
-	//		auth.setAuthority(Authority.ADMIN);
-	//		Assert.isTrue(principal.getAuthorities().contains(auth));
-	//		List<Auditor> result = new ArrayList<>(this.administratorRepository.AudiorsWith10percentmoreIsuseClosedThanAVG());
-	//		final int size = result.size();
-	//
-	//		if (size == 0) {
-	//			result = new ArrayList<>();
-	//		}
-	//		return result;
-	//
-	//	}
+	public Collection<Auditor> AuditorsIwth10ClosesIssuesAboveAVG() {
+
+		final UserAccount principal = LoginService.getPrincipal();
+		Assert.notNull(principal);
+
+		final Authority auth = new Authority();
+		auth.setAuthority(Authority.ADMIN);
+		Assert.isTrue(principal.getAuthorities().contains(auth));
+		List<Auditor> result = new ArrayList<>(this.administratorRepository.AuditorsIwth10ClosesIssuesAboveAVG());
+		final int size = result.size();
+
+		if (size == 0) {
+			result = new ArrayList<Auditor>();
+		}
+		return result;
+
+	}
+
+	//Spammers for ban
+	public Collection<Actor> findSpammers() {
+		final UserAccount principal = LoginService.getPrincipal();
+		Assert.notNull(principal);
+
+		final Authority auth = new Authority();
+		auth.setAuthority(Authority.ADMIN);
+		Assert.isTrue(principal.getAuthorities().contains(auth));
+		Collection<Actor> result = new ArrayList<Actor>();
+		result = this.administratorRepository.findPossibleBans();
+		if (result == null) {
+			result = new ArrayList<>();
+		}
+		return result;
+	}
+
+	public void changeStatus(final int actorId) {
+		Assert.notNull(actorId);
+		Assert.isTrue(actorId != 0);
+
+		final UserAccount principal = LoginService.getPrincipal();
+		final Actor m = this.actorService.findOne(actorId);
+		final Authority authAd = new Authority();
+		authAd.setAuthority(Authority.ADMIN);
+		Assert.isTrue(principal.getAuthorities().contains(authAd));
+
+		final String type = this.actorService.findActorType(m.getUserAccount());
+
+		if (type == "Administrator") {
+			final Administrator a = this.administratorRepository.findOne(actorId);
+			Assert.isTrue(a.getBanned() == a.getUserAccount().isBan());
+			final boolean status = a.getBanned();
+			a.setBanned(!(status));
+			a.getUserAccount().setBan(!(status));
+			this.administratorRepository.save(a);
+		} else if (type == "Sponsor") {
+			final Sponsor a = this.sponsorService.findOne(actorId);
+			Assert.isTrue(a.getBanned() == a.getUserAccount().isBan());
+			final boolean status = a.getBanned();
+			a.setBanned(!(status));
+			a.getUserAccount().setBan(!(status));
+			this.sponsorService.adminUpdate(a);
+		} else if (type == "Customer") {
+			final Customer a = this.customerService.findOne(actorId);
+			Assert.isTrue(a.getBanned() == a.getUserAccount().isBan());
+			final boolean status = a.getBanned();
+			a.setBanned(!(status));
+			a.getUserAccount().setBan(!(status));
+			this.customerService.save(a);
+		} else if (type == "Auditor") {
+			final Auditor a = this.auditorService.findOne(actorId);
+			Assert.isTrue(a.getBanned() == a.getUserAccount().isBan());
+			final boolean status = a.getBanned();
+			a.setBanned(!(status));
+			a.getUserAccount().setBan(!(status));
+			this.auditorService.save(a);
+		} else {
+			final Carrier a = this.carrierService.findOne(actorId);
+			Assert.isTrue(a.getBanned() == a.getUserAccount().isBan());
+			final boolean status = a.getBanned();
+			a.setBanned(!(status));
+			a.getUserAccount().setBan(!(status));
+			this.carrierService.adminUpdate(a);
+
+		}
+
+	}
 }

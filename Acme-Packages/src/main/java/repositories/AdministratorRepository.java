@@ -7,12 +7,19 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import domain.Actor;
 import domain.Administrator;
+import domain.Auditor;
 import domain.Carrier;
 import domain.Sponsorship;
+import domain.Town;
 
 @Repository
 public interface AdministratorRepository extends JpaRepository<Administrator, Integer> {
+
+	//Find spammers
+	@Query("select a from Actor a where a.spammer=true")
+	Collection<Actor> findPossibleBans();
 
 	//The average, the minimum, the maximum, and the standard deviation of times that a sponsorship has been shown.
 	@Query("select avg(sp.totalCount) from Sponsorship sp")
@@ -76,8 +83,8 @@ public interface AdministratorRepository extends JpaRepository<Administrator, In
 	Collection<Carrier> top3CarriersWithHigherScore();
 
 	//Top-5 most visited towns.
-	//TODO 
-	//select t.name, count(tt) from TraverseTown tt join tt.town t group by tt.town order by count(tt) desc;
+	@Query("select t from TraverseTown tt join tt.town t group by tt.town order by count(tt) desc")
+	Collection<Town> top5MostVisitedTowns();
 
 	//The ratio of empty versus non-empty finders.
 	@Query("select (count(f2)/(select count(f1) from Finder f1)+0.0) from Finder f2 where f2.offers.size=0")
@@ -86,9 +93,10 @@ public interface AdministratorRepository extends JpaRepository<Administrator, In
 	@Query("select (count(f2)/(select count(f1) from Finder f1)+0.0) from Finder f2 where f2.offers.size>0")
 	Double RatioNonEmptyFinders();
 
-	//The listing of auditors who have got at least 10% of issues closed above the average. 
 	//TODO No la he podido probar
-	//select a from Auditor a join a.issues i where ((select count(i2) from Auditor a2 join a2.issues i2 where a2.id=a.id and i2.closed=1)/(a.issues.size)+0.0)>(select avg(1.0*(select count(i3) from Auditor a4 join a4.issues i3 where i3.closed=1)) from Auditor a3)*1.1;
+	//The listing of auditors who have got at least 10% of issues closed above the average. 
+	@Query("select a from Auditor a join a.issues i where ((select count(i2) from Auditor a2 join a2.issues i2 where a2.id=a.id and i2.closed=1)/(a.issues.size)+0.0)>(select avg(1.0*(select count(i3) from Auditor a4 join a4.issues i3 where i3.closed=1)) from Auditor a3)*1.1")
+	Collection<Auditor> AuditorsIwth10ClosesIssuesAboveAVG();
 
 	//The ratio of closed versus non-closed issues.
 	@Query("select count(i)/(select count(i2) from Issue i2)+0.0 from Issue i where i.closed=0")
