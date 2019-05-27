@@ -16,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import security.LoginService;
 import services.ActorService;
-import services.AuditorService;
 import services.CarrierService;
 import services.VehicleService;
 import domain.Carrier;
@@ -35,9 +34,6 @@ public class VehicleController extends AbstractController {
 	@Autowired
 	private CarrierService	carrierService;
 
-	@Autowired
-	private AuditorService	auditorService;
-
 
 	public VehicleController() {
 		super();
@@ -54,7 +50,7 @@ public class VehicleController extends AbstractController {
 
 			result = new ModelAndView("vehicle/list");
 			result.addObject("vehicles", vehicles);
-			result.addObject("requestURI", "vehicle/list.do");
+			result.addObject("requestURI", "vehicle/carrier/list.do");
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:/");
 		}
@@ -103,12 +99,18 @@ public class VehicleController extends AbstractController {
 				es = false;
 			}
 
+			boolean moreSol = false;
+			if (this.vehicleService.findApplicableCategories(intId).size() > 0) {
+				moreSol = true;
+			}
+
 			result.addObject("vehicle", vehicle);
 			result.addObject("solicitations", vehicle.getSolicitations());
 			result.addObject("es", es);
-			result.addObject("requestURI", "vehicle/display.do");
+			result.addObject("requestURI", "vehicle/carrier,auditor/display.do");
 			result.addObject("carrierView", carrierView);
 			result.addObject("canBeEditedOrDeleted", canBeEditedOrDeleted);
+			result.addObject("moreSol", moreSol);
 		} catch (final Throwable oops) {
 			return new ModelAndView("redirect:/");
 		}

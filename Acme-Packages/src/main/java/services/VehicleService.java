@@ -15,6 +15,7 @@ import repositories.VehicleRepository;
 import security.LoginService;
 import utilities.Validators;
 import domain.Carrier;
+import domain.Category;
 import domain.Solicitation;
 import domain.Vehicle;
 
@@ -197,5 +198,12 @@ public class VehicleService {
 		Vehicle vehicle = this.vehicleRepository.findBySolicitation(id);
 		Assert.notNull(vehicle);
 		return vehicle;
+	}
+
+	public Collection<Category> findApplicableCategories(int id) {
+		Assert.isTrue(id > 0);
+		Collection<Category> result = this.vehicleRepository.findApplicableCategories(id);
+		Assert.notNull(result);
+		return result;
 	}
 }

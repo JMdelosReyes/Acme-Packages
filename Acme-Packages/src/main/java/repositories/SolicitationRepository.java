@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import domain.Auditor;
 import domain.Solicitation;
 import domain.Vehicle;
 
@@ -21,4 +22,7 @@ public interface SolicitationRepository extends JpaRepository<Solicitation, Inte
 
 	@Query("select s from Solicitation s where (select count(a) from Auditor a join a.solicitations s2 where s2.id=s.id)=0")
 	Collection<Solicitation> findUnassigned();
+
+	@Query("select a from Auditor a join a.solicitations s where s.id=?1")
+	Auditor findAuditorBySolicitation(int id);
 }

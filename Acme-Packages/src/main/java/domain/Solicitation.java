@@ -88,6 +88,7 @@ public class Solicitation extends DomainEntity implements Cloneable {
 		this.comments = comments;
 	}
 
+	@NotNull
 	@Valid
 	@ManyToOne(optional = false)
 	public Category getCategory() {

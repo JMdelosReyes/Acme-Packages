@@ -38,9 +38,11 @@
 	
 	<jstl:if test="${assignedView eq false}">
 		<display:column titleKey="sol.assign">
-			<a href="solicitation/auditor/assign.do?id=${row.id}">
-				<spring:message code="sol.assign"></spring:message>
-			</a>
+			<jstl:if test="${row.status eq 'PENDING'}">
+				<a href="solicitation/auditor/assign.do?id=${row.id}">
+					<spring:message code="sol.assign"></spring:message>
+				</a>
+			</jstl:if>
 		</display:column>
 	</jstl:if>
 	
@@ -53,13 +55,13 @@
 	</jstl:if>
 	
 	<jstl:if test="${assignedView eq true}">
-		<jstl:if test="${row.status eq 'PENDING'}">
-			<display:column titleKey="sol.edit">
+		<display:column titleKey="sol.edit">
+			<jstl:if test="${row.status eq 'PENDING'}">
 				<a href="solicitation/auditor/edit.do?id=${row.id}">
 					<spring:message code="sol.edit"></spring:message>
 				</a>
-			</display:column>
-		</jstl:if>
+			</jstl:if>
+		</display:column>
 	</jstl:if>
 
 </display:table>

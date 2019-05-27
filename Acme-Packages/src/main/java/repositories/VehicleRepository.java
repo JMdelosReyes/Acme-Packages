@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import domain.Category;
 import domain.Vehicle;
 
 @Repository
@@ -23,5 +24,8 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Integer> {
 
 	@Query("select v from Vehicle v join v.solicitations s where s.id=?1")
 	Vehicle findBySolicitation(int id);
+
+	@Query("select c from Category c where c not in (select c2 from Vehicle v join v.solicitations s join s.category c2 where v.id=?1 and (s.endDate>=current_date or s.status!='REJECTED'))")
+	Collection<Category> findApplicableCategories(int id);
 
 }

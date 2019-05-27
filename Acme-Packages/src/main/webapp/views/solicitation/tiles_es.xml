@@ -26,4 +26,14 @@
 		<put-attribute name="body" value="/views/solicitation/list.jsp" />
 	</definition>
 	
+	<definition name="solicitation/create" extends="master.page">	
+		<put-attribute name="title" value="Crear solicitud" />
+		<put-attribute name="body" value="/views/solicitation/edit.jsp" />
+	</definition>
+	
+	<definition name="solicitation/edit" extends="master.page">	
+		<put-attribute name="title" value="Editar solicitud" />
+		<put-attribute name="body" value="/views/solicitation/edit.jsp" />
+	</definition>
+	
 </tiles-definitions>

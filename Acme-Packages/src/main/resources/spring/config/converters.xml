@@ -24,6 +24,8 @@
 		<bean class="converters.StringToMessConverter" />
 		<bean class="converters.ActorToStringConverter" />
 		<bean class="converters.StringToActorConverter" />
+		<bean class="converters.CategoryToStringConverter" />
+		<bean class="converters.StringToCategoryConverter" />
 	</util:list>
 	
 </beans>

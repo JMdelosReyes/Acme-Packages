@@ -82,7 +82,16 @@
 						<jstl:out value="${row.category.englishName}"></jstl:out>
 					</jstl:otherwise>
 				</jstl:choose>
-	
+			</display:column>
+			
+			<display:column>
+				<jstl:if test="${row.status eq 'PENDING'}">				
+					<form action="solicitation/carrier/delete.do" method="POST">
+						<input type="hidden" value="${row.id}" name="id">
+
+						<acme:delete/>
+					</form>
+				</jstl:if>
 			</display:column>
 	
 		</display:table>
@@ -91,8 +100,16 @@
 
 	<br>
 
-	<a href="solicitation/carrier/create.do"><spring:message code="veh.newSol"/></a>
+	<jstl:choose>
+		<jstl:when test="${moreSol eq true}">
+			<a href="solicitation/carrier/create.do?vehId=${vehicle.id}"><spring:message code="veh.newSol"/></a>
+		</jstl:when>
 
+		<jstl:otherwise>
+			<spring:message code="veh.noMoreSol"></spring:message>
+		</jstl:otherwise>
+	</jstl:choose>
+	
 </security:authorize>
 
 

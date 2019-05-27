@@ -52,6 +52,7 @@
 		<security:intercept-url pattern="/solicitation/auditor/edit.do" access="hasRole('AUDITOR')" />
 		<security:intercept-url pattern="/solicitation/carrier/create.do" access="hasRole('CARRIER')" />
 		<security:intercept-url pattern="/solicitation/carrier/edit.do" access="hasRole('CARRIER')" />
+		<security:intercept-url pattern="/solicitation/carrier/delete.do" access="hasRole('CARRIER')" />
 		
 		<security:intercept-url pattern="/curriculum/display.do" access="permitAll" />
 		<security:intercept-url pattern="/curriculum/list.do" access="permitAll" />
