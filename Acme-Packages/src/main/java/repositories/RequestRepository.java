@@ -58,5 +58,10 @@ public interface RequestRepository extends JpaRepository<Request, Integer> {
 	//Customer by request
 	@Query("select cus from Customer cus join cus.requests req where req.id=?1")
 	Customer findCustomerByRequestId(int id);
+	//Busca request by issue id
+	@Query("select r from Request r join r.issue i where i.id=?1")
+	Request findRequestByIssueId(int id);
 
+	@Query("select o.requests from Carrier car join car.offers o where car.id=?1")
+	Collection<Request> findRequestsByCarrierId(int id);
 }

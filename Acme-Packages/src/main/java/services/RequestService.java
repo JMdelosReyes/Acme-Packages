@@ -180,6 +180,12 @@ public class RequestService {
 		Assert.notEmpty(res);
 		return res;
 	}
+	public Collection<Request> findRequestsByCarrierId(int actorId) {
+		Collection<Request> res = new ArrayList<Request>();
+		res = this.reqRepository.findRequestsByCarrierId(actorId);
+		Assert.notEmpty(res);
+		return res;
+	}
 
 	//Anyadir paquetes
 	public void anyadePackage(Package pack, Request req) {
@@ -242,6 +248,16 @@ public class RequestService {
 		req = clon;
 		this.reqRepository.save(req);
 	}
+	//Buscar por issue
+	public Request findRequestByIssueId(int id) {
+		Assert.isTrue(id != 0);
+		Assert.notNull(id);
+		Request res;
+		res = this.reqRepository.findRequestByIssueId(id);
+		Assert.notNull(res);
+		return res;
+	}
+
 	//Rechazar la request
 	public void changeStatus(Request req) {
 		Assert.isTrue(req.isFinalMode());

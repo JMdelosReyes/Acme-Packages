@@ -42,8 +42,7 @@
 			<li><a href="sponsorship/sponsor/list.do"><spring:message
 						code="master.page.sponsorships" /></a></li>
 
-		</security:authorize>
-		
+		</security:authorize>		
 		<security:authorize access="hasRole('CARRIER')">
 			<li><a href="vehicle/carrier/list.do"><spring:message
 						code="master.page.vehicles" /></a></li>
@@ -58,7 +57,10 @@
 						code="master.page.finder" /></a></li>
 					<li><a href="issue/customer/list.do"><spring:message
 						code="master.page.issues" /></a></li>
+					<li><a href="request/carrier,customer/list.do"><spring:message
+						code="master.page.requests" /></a></li>
 		</security:authorize>
+		
 		<security:authorize access="hasRole('AUDITOR')">
 			<li><a href="solicitation/auditor/list.do"><spring:message
 						code="master.page.solicitations" /></a>					

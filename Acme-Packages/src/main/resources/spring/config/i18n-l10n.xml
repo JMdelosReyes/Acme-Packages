@@ -30,6 +30,7 @@
 		<!-- Luis -->
 		<value>/views/mess/messages</value>
 		<value>/views/messBox/messages</value>
+		<value>/views/request/messages</value>
 		<!-- Luis -->
 		<value>/views/vehicle/messages</value>
 		<value>/views/solicitation/messages</value>
@@ -45,8 +46,6 @@
 		<value>/views/administrator/messages</value>
 		<value>/views/finder/messages</value>
 		<value>/views/sponsorship/messages</value>
-	
-		
 		
 	</util:list>
 

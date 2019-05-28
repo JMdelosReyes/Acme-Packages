@@ -2,27 +2,35 @@
 package controllers;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import security.LoginService;
-import security.UserAccount;
 import services.ActorService;
+import services.AuditorService;
+import services.CarrierService;
 import services.CategoryService;
 import services.CustomerService;
+import services.IssueService;
+import services.OfferService;
 import services.PackageService;
 import services.RequestService;
 import services.TownService;
+import domain.Carrier;
 import domain.Category;
 import domain.Customer;
+import domain.Issue;
+import domain.Offer;
 import domain.Package;
 import domain.Request;
 import domain.Town;
@@ -39,28 +47,105 @@ public class RequestController extends AbstractController {
 	@Autowired
 	private CustomerService	cusService;
 	@Autowired
+	private CarrierService	carService;
+	@Autowired
+	private AuditorService	audService;
+	@Autowired
 	private CategoryService	catService;
 	@Autowired
 	private PackageService	pacService;
 	@Autowired
 	private TownService		townService;
+	@Autowired
+	private IssueService	issService;
+	@Autowired
+	private OfferService	offService;
 
 
-	// My requests list
-	@RequestMapping(value = "/customer/list", method = RequestMethod.GET)
-	public ModelAndView list() {
+	//Requests list
+	@RequestMapping(value = "/carrier,customer/list", method = RequestMethod.GET)
+	public ModelAndView list(@RequestParam(required = false, defaultValue = "0") final String id) {
 		ModelAndView result;
-		try {
-			UserAccount principal = LoginService.getPrincipal();
-			Customer cus = this.cusService.findOne(this.actorService.findByUserAccountId(principal.getId()).getId());
-			Collection<Request> requests = cus.getRequests();
-
-			result = new ModelAndView("request/list");
-			result.addObject("requests", requests);
-			result.addObject("requestURI", "request/customer/list.do");
-		} catch (Throwable oops) {
-			result = new ModelAndView("redirect:/");
+		int intId;
+		List<Request> requests;
+		boolean carrierView = false;
+		boolean customerView = false;
+		final int actorId = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
+		if (this.actorService.findActorType().equals("Carrier")) {
+			Offer offer;
+			try {
+				intId = Integer.valueOf(id);
+				offer = this.offService.findOne(intId);
+				Assert.isTrue(this.carService.findOne(actorId).getOffers().contains(offer));
+			} catch (final Throwable oops) {
+				return new ModelAndView("redirect:/");
+			}
+			requests = new ArrayList<>(offer.getRequests());
+			carrierView = true;
+		} else {
+			Customer cus = this.cusService.findOne(actorId);
+			requests = new ArrayList<>(cus.getRequests());
+			customerView = true;
 		}
+		result = new ModelAndView("request/list");
+		result.addObject("requests", requests);
+		result.addObject("customerView", customerView);
+		result.addObject("carrierView", carrierView);
+		result.addObject("requestURI", "request/carrier,customer/list.do");
+		return result;
+	}
+	//Display de request
+	@RequestMapping(value = "/carrier,customer,auditor/display", method = RequestMethod.GET)
+	public ModelAndView display(@RequestParam(required = false, defaultValue = "0") final String id) {
+		ModelAndView result;
+		int intId;
+		Request request;
+		boolean owner = false;
+		int actorId;
+		boolean issueId;
+		try {
+			actorId = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
+			intId = Integer.valueOf(id);
+		} catch (final Throwable oops) {
+			return new ModelAndView("redirect:/");
+		}
+		try {
+			Issue issue = this.issService.findOne(intId);
+			issueId = true;
+		} catch (Throwable oops) {
+			issueId = false;
+		}
+		if (issueId) {
+			if (this.actorService.findActorType().equals("Auditor")) {
+				request = this.reqService.findRequestByIssueId(intId);
+			} else {
+				return new ModelAndView("redirect:/");
+			}
+		} else {
+			if (this.actorService.findActorType().equals("Customer")) {
+				request = this.reqService.findOne(intId);
+				Customer cus = this.cusService.findOne(actorId);
+				Assert.isTrue(cus.getRequests().contains(request));
+				owner = true;
+			} else {
+				request = this.reqService.findOne(intId);
+				Assert.isTrue(request.isFinalMode());
+				Carrier car = this.carService.findOne(actorId);
+				Assert.isTrue(this.reqService.findRequestsByCarrierId(car.getId()).contains(request));
+			}
+			//De momento, los auditor solo entran a partir de ids de issues
+		}
+		final Locale locale = LocaleContextHolder.getLocale();
+		boolean es = true;
+		if (locale.getLanguage().equals(new Locale("en").getLanguage())) {
+			es = false;
+		}
+		result = new ModelAndView("request/display");
+		result.addObject("request", request);
+		result.addObject("packages", new ArrayList<>(request.getPackages()));
+		result.addObject("owner", owner);
+		result.addObject("es", es);
+
 		return result;
 	}
 	//Create a request
@@ -77,6 +162,49 @@ public class RequestController extends AbstractController {
 		return result;
 	}
 
+	//TODO: Save a new Request
+	@RequestMapping(value = "/customer/edit", method = RequestMethod.POST, params = "save")
+	public ModelAndView saveNewRequest(CreateRequestForm crf, BindingResult binding) {
+		ModelAndView result;
+		Package pac;
+		Request req;
+		try {
+			//req = this.reqService.reconstruct(crf.getRequest());
+			//	pac = this.pacService.reconstruct(crf.getPac());
+		} catch (Throwable oops) {
+			return new ModelAndView("redirect:/");
+		}
+
+		if (binding.hasErrors()) {
+			this.createEditModelAndView(crf);
+		} else {
+			//this.reqService.anyadePackage(pac, req);
+		}
+		return new ModelAndView("redirect:/");
+	}
+
+	//Edit a request
+	@RequestMapping(value = "/customer/edit", method = RequestMethod.GET)
+	public ModelAndView edit(@RequestParam(required = false, defaultValue = "0") String id) {
+		ModelAndView result;
+		int intId;
+		int actorId;
+		Request request;
+		try {
+			actorId = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
+			intId = Integer.valueOf(id);
+			request = this.reqService.findOne(intId);
+			Customer cus = this.cusService.findOne(actorId);
+			Assert.isTrue(cus.getRequests().contains(request));
+		} catch (final Throwable oops) {
+			return new ModelAndView("redirect:/");
+		}
+		result = this.createEditModelAndView(request);
+
+		return result;
+	}
+	//APPLY FOR AN OFFER
+
 	//CREATE A NEW REQUEST
 	protected ModelAndView createEditModelAndView(CreateRequestForm crq) {
 		ModelAndView result;
@@ -85,7 +213,7 @@ public class RequestController extends AbstractController {
 
 		return result;
 	}
-	protected ModelAndView createEditModelAndView(CreateRequestForm crq, String message) {
+	protected ModelAndView createEditModelAndView(CreateRequestForm crf, String message) {
 		ModelAndView result;
 
 		result = new ModelAndView("request/create");
@@ -98,7 +226,7 @@ public class RequestController extends AbstractController {
 		if (locale.getLanguage().equals(new Locale("en").getLanguage())) {
 			es = false;
 		}
-		result.addObject("createRequestForm", crq);
+		result.addObject("createRequestForm", crf);
 		result.addObject("towns", towns);
 		result.addObject("categories", categories);
 		result.addObject("es", es);
@@ -152,7 +280,19 @@ public class RequestController extends AbstractController {
 
 		result = new ModelAndView("request/edit");
 		List<Town> towns = new ArrayList<>(this.townService.findAll());
+		List<Category> categories = new ArrayList<>(this.catService.findAll());
+
+		final Locale locale = LocaleContextHolder.getLocale();
+		boolean es = true;
+		if (locale.getLanguage().equals(new Locale("en").getLanguage())) {
+			es = false;
+		}
+		if (!req.isFinalMode()) {
+			//List<Offer> offers = this.findOffersByRequestId();
+		}
 		result.addObject("towns", towns);
+		result.addObject("es", es);
+		result.addObject("categories", categories);
 		result.addObject("request", req);
 		result.addObject("message", message);
 		return result;

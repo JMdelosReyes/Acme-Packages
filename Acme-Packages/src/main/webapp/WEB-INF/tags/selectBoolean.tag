@@ -44,8 +44,8 @@
 	
 	</form:label>	
 	<form:select id="${id}" path="${path}" onchange="${onchange}">
-		<form:option value="false"> <spring:message code="pro.select.notFinal" /> </form:option>
-		<form:option value="true"> <spring:message code="pro.select.final" /> </form:option>
+		<form:option value="false"> <spring:message code="req.select.notFinal" /> </form:option>
+		<form:option value="true"> <spring:message code="req.select.final" /> </form:option>
 	</form:select>
 	<form:errors path="${path}" cssClass="error" />
 </div>
