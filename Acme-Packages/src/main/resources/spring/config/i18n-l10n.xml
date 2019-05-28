@@ -33,6 +33,7 @@
 		<!-- Luis -->
 		<value>/views/vehicle/messages</value>
 		<value>/views/solicitation/messages</value>
+		<value>/views/issue/messages</value>
 		<value>/views/configuration/messages</value>
 		<value>/views/curriculum/messages</value>
 		<value>/views/professionalRecord/messages</value>

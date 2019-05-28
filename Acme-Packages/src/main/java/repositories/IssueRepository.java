@@ -21,4 +21,10 @@ public interface IssueRepository extends JpaRepository<Issue, Integer> {
 
 	@Query("select a from Auditor a join a.issues i where i.id=?1")
 	Auditor findAuditorOfIssue(int id);
+
+	@Query("select i from Issue i join i.offer o where (select count(o2) from Carrier c join c.offers o2 where c.id=?1 and o.id=o2.id)>0")
+	Collection<Issue> findIssuesOfCarrier(int id);
+
+	@Query("select i from Issue i where i not in (select i2 from Auditor a join a.issues i2)")
+	Collection<Issue> findUnassigned();
 }

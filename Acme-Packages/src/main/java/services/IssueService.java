@@ -199,7 +199,25 @@ public class IssueService {
 			auditor.getIssues().remove(i);
 			this.issueRepository.delete(i.getId());
 		}
+	}
 
+	public Collection<Issue> findIssuesOfCarrier(int id) {
+		Assert.isTrue(id > 0);
+		Collection<Issue> issues = this.issueRepository.findIssuesOfCarrier(id);
+		Assert.notNull(issues);
+		return issues;
+	}
+
+	public Collection<Issue> findUnassigned() {
+		Collection<Issue> issues = this.issueRepository.findUnassigned();
+		Assert.notNull(issues);
+		return issues;
+	}
+
+	public void assign(Issue issue, int auditorId) {
+		Assert.isTrue(this.issueRepository.findUnassigned().contains(issue));
+		Auditor auditor = this.auditorService.findOne(auditorId);
+		auditor.getIssues().add(issue);
 	}
 
 }

@@ -107,7 +107,7 @@ public class SolicitationController extends AbstractController {
 
 	// Assign
 	@RequestMapping(value = "/auditor/assign", method = RequestMethod.GET)
-	public ModelAndView display(@RequestParam(required = false, defaultValue = "0") final String id) {
+	public ModelAndView assign(@RequestParam(required = false, defaultValue = "0") final String id) {
 		int intId;
 
 		try {

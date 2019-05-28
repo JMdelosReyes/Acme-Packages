@@ -39,12 +39,17 @@
 		<security:authorize access="hasRole('CARRIER')">
 			<li><a href="vehicle/carrier/list.do"><spring:message
 						code="master.page.vehicles" /></a></li>
+			<li><a href="issue/carrier/list.do"><spring:message
+						code="master.page.issues" /></a></li>
 			<li><a href="curriculum/carrier/list.do"><spring:message
 						code="master.page.curriculum" /></a></li>
 		</security:authorize>
+		
 		<security:authorize access="hasRole('CUSTOMER')">
 					<li><a class="fNiv" href="finder/customer/search.do"><spring:message
 						code="master.page.finder" /></a></li>
+					<li><a href="issue/customer/list.do"><spring:message
+						code="master.page.issues" /></a></li>
 		</security:authorize>
 		<security:authorize access="hasRole('AUDITOR')">
 			<li><a href="solicitation/auditor/list.do"><spring:message
@@ -55,6 +60,15 @@
 						<a href="solicitation/auditor/list-assigned.do"><spring:message code="master.page.mySolicitations" /></a>
 					</li>
 				</ul>
+			</li>
+			<li><a href="issue/auditor/list.do"><spring:message
+						code="master.page.issues" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li>
+						<a href="issue/auditor/list-assigned.do"><spring:message code="master.page.myIssues" /></a>
+					</li>
+				</ul>	
 			</li>
 		</security:authorize>
 		
