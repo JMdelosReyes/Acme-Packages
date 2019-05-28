@@ -10,6 +10,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.SponsorshipRepository;
@@ -84,17 +85,7 @@ public class SponsorshipService {
 			if (this.actorService.findActorType().equals("Administrator")) {
 				//TODO: QUITAR EL COMPROBAR EL EXPIRATION DATE
 				if (old.getExpirationDate() == null) {
-					final Date date = new Date(System.currentTimeMillis() - 1000);
-					final Calendar cal = Calendar.getInstance();
-					cal.setTime(date);
-					final int anyoActual = cal.get(Calendar.YEAR);
-
-					final Calendar cal2 = Calendar.getInstance();
-					cal2.setTime(spon.getExpirationDate());
-					final int anyoSpon = cal2.get(Calendar.YEAR);
-
 					Assert.isTrue(spon.isValid());
-					Assert.isTrue(anyoSpon == (anyoActual + 1));
 				} else {
 					Assert.isTrue(old.getBanner().equals(spon.getBanner()));
 					Assert.isTrue(old.getTarget().equals(spon.getTarget()));
@@ -145,67 +136,39 @@ public class SponsorshipService {
 		this.sponsorshipRepository.save(sponsorship);
 	}
 
-	//	public Sponsorship reconstruct(final Sponsorship sponsorship, final BindingResult binding) {
-	//		Sponsorship result;
-	//
-	//		final UserAccount principal = LoginService.getPrincipal();
-	//		Assert.notNull(principal);
-	//		final Authority auth = new Authority();
-	//		auth.setAuthority(Authority.PROVIDER);
-	//		Assert.isTrue(principal.getAuthorities().contains(auth));
-	//
-	//		if (sponsorship.getId() == 0) {
-	//			Assert.isTrue(this.positionService.findAllFinalNotCancelled().contains(sponsorship.getPosition()));
-	//			result = sponsorship;
-	//		} else {
-	//			final Provider prov = this.provService.findOne(this.actorService.findByUserAccountId(principal.getId()).getId());
-	//			result = this.sponsorshipRepository.findOne(sponsorship.getId());
-	//			Assert.notNull(result);
-	//			Assert.isTrue(prov.getSponsorships().contains(sponsorship));
-	//			Assert.isTrue(this.positionService.findAllFinalNotCancelled().contains(result.getPosition()));
-	//			final Sponsorship clon = (Sponsorship) result.clone();
-	//			clon.setBanner(sponsorship.getBanner());
-	//			clon.setCreditCard(sponsorship.getCreditCard());
-	//			clon.setTargetUrl(sponsorship.getTargetUrl());
-	//			result = clon;
-	//		}
-	//
-	//		this.validator.validate(result, binding);
-	//
-	//		//Check if the credit card has expired
-	//		final Date date = new Date();
-	//		final Calendar cal = Calendar.getInstance();
-	//		cal.setTime(date);
-	//		final int mesActual = cal.get(Calendar.MONTH) + 1;
-	//		final int anyoActual = cal.get(Calendar.YEAR) % 100;
-	//
-	//		if ((binding.getFieldError("creditCard.expirationMonth") == null) && (binding.getFieldError("creditCard.expirationYear") == null)) {
-	//			if (((result.getCreditCard().getExpirationYear() < anyoActual) || ((result.getCreditCard().getExpirationYear() == anyoActual) && (result.getCreditCard().getExpirationMonth() < mesActual)))) {
-	//				binding.rejectValue("creditCard.expirationMonth", "spon.commit.error.caduca");
-	//				binding.rejectValue("creditCard.expirationYear", "spon.commit.error.caduca");
-	//			}
-	//		}
-	//
-	//		return result;
-	//	}
-	//	public Collection<Sponsorship> findActiveSponsorshipsByPositionId(final int id) {
-	//		Assert.notNull(id);
-	//		Collection<Sponsorship> result;
-	//		result = this.sponsorshipRepository.findActiveSponsorshipsByParadeId(id);
-	//		Assert.notNull(result);
-	//		return result;
-	//
-	//	}
-	//
-	//	public void deleteSponsorshipsOfPosition(final Collection<Sponsorship> spons) {
-	//		for (final Sponsorship s : spons) {
-	//			final Provider provider = this.providerService.findProviderOfSponsorship(s.getId());
-	//			provider.getSponsorships().remove(s);
-	//			this.providerService.updateSponsorships(provider);
-	//		}
-	//		this.sponsorshipRepository.delete(spons);
-	//	}
+	//Admin validates the sponsorship
+	public Sponsorship validate(int id) {
+		Sponsorship result;
+		Assert.isTrue(this.actorService.findActorType().equals("Administrator"));
+		Sponsorship sponsorship = this.findOne(id);
+		Assert.notNull(sponsorship);
+		Sponsorship clon = (Sponsorship) sponsorship.clone();
+		clon.setValid(true);
+		final Date date = new Date(System.currentTimeMillis() - 1000);
+		final Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.add(Calendar.YEAR, 1);
+		clon.setExpirationDate(cal.getTime());
+		sponsorship = clon;
+		result = this.sponsorshipRepository.save(sponsorship);
+		return result;
 
+	}
+
+	public Sponsorship reconstruct(final Sponsorship sponsorship, final BindingResult binding) {
+		Sponsorship result;
+
+		Assert.isTrue(this.actorService.findActorType().equals("Sponsor"));
+		Assert.isTrue(sponsorship.getId() == 0);
+		Assert.isTrue(sponsorship.isValid() == false);
+		sponsorship.setCount(0);
+		sponsorship.setTotalCount(0);
+		result = sponsorship;
+
+		this.validator.validate(result, binding);
+
+		return result;
+	}
 	public void flush() {
 		this.sponsorshipRepository.flush();
 	}
@@ -213,6 +176,34 @@ public class SponsorshipService {
 	public Collection<Sponsorship> findSponsorshipNotValid() {
 		Collection<Sponsorship> result;
 		result = this.sponsorshipRepository.findSponsorshipsNotValid();
+		Assert.notNull(result);
 		return result;
 	}
+
+	public Collection<Sponsorship> findValidSponsorships() {
+		Collection<Sponsorship> result;
+		result = this.sponsorshipRepository.findValidSponsorships();
+		Assert.notNull(result);
+		return result;
+	}
+
+	public Collection<Sponsorship> findExpiredSponsorships() {
+		Collection<Sponsorship> result;
+		result = this.sponsorshipRepository.findExpiredSponsorships();
+		Assert.notNull(result);
+		return result;
+	}
+
+	public Sponsorship randomSponsorship() {
+		Sponsorship result = null;
+		Collection<Sponsorship> spons = this.findValidSponsorships();
+		Assert.notNull(spons);
+		final int size = spons.size();
+		if (size >= 1) {
+			final int random = (int) Math.round(Math.random() * (size - 1));
+			result = (Sponsorship) spons.toArray()[random];
+		}
+		return result;
+	}
+
 }

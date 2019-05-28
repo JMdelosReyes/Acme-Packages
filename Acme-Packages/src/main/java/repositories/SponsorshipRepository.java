@@ -12,7 +12,15 @@ import domain.Sponsorship;
 @Repository
 public interface SponsorshipRepository extends JpaRepository<Sponsorship, Integer> {
 
-	//Sponsorship que no han sido validados por el administrador
+	//Sponsorship thar aren´t validated by the admin
 	@Query("select s from Sponsorship s where s.expirationDate=null")
 	Collection<Sponsorship> findSponsorshipsNotValid();
+
+	//Sponsorships that are valid
+	@Query("select s from Sponsorship s where s.valid=1")
+	Collection<Sponsorship> findValidSponsorships();
+
+	//Sponsorships that are expired
+	@Query("select s from Sponsorship s where s.expirationDate < CURRENT_DATE")
+	Collection<Sponsorship> findExpiredSponsorships();
 }

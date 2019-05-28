@@ -18,13 +18,21 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ActorService;
 import services.ConfigurationService;
+import services.SponsorshipService;
 
 @Controller
 public class AbstractController {
 
 	@Autowired
 	private ConfigurationService	configurationService;
+
+	@Autowired
+	private SponsorshipService		sponsorshipService;
+
+	@Autowired
+	private ActorService			actorService;
 
 
 	// Panic handler ----------------------------------------------------------
@@ -36,6 +44,15 @@ public class AbstractController {
 	@ModelAttribute("systemName")
 	public String SystemName() {
 		return this.configurationService.findOne().getSystemName();
+	}
+
+	@ModelAttribute("spon")
+	public domain.Sponsorship Sponsorship() {
+		domain.Sponsorship spon = this.sponsorshipService.randomSponsorship();
+		if (spon != null) {
+			this.sponsorshipService.updateCount(spon);
+		}
+		return spon;
 	}
 
 	@ExceptionHandler(Throwable.class)

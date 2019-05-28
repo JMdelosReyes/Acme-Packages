@@ -44,6 +44,8 @@
 		<value>/views/socialProfile/messages</value>
 		<value>/views/administrator/messages</value>
 		<value>/views/finder/messages</value>
+		<value>/views/sponsorship/messages</value>
+	
 		
 		
 	</util:list>

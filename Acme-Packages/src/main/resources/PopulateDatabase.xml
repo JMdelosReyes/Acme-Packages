@@ -2803,8 +2803,8 @@
 	</bean>
 	
 	<bean id="sponsorship2" class="domain.Sponsorship">
-		<property name="banner" value="https://production-static.hboespana.com/v3.8.3/images/tenant/hboe-main.svg" />
-		<property name="target" value="https://es.hboespana.com/"/>
+		<property name="banner" value="https://st.forocoches.com/image/top_c1_hd.png" />
+		<property name="target" value="https://www.forocoches.com/"/>
 		<property name="valid" value="false" />
 		<property name="count" value="0" />
 		<property name="totalCount" value="0" />
