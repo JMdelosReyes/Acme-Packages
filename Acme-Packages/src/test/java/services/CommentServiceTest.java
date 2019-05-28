@@ -91,7 +91,7 @@ public class CommentServiceTest extends AbstractTest {
 
 			Comment comment = this.commentService.create();
 
-			comment.setComment(com);
+			comment.setUserComment(com);
 
 			this.commentService.save(comment, super.getEntityId(issue));
 			this.commentService.flush();

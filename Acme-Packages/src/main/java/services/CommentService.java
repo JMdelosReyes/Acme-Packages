@@ -1,9 +1,7 @@
 
 package services;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +56,7 @@ public class CommentService {
 
 		final Comment result = new Comment();
 		result.setUsername("");
-		result.setComment("");
+		result.setUserComment("");
 		result.setMoment(null);
 
 		return result;
@@ -84,11 +82,13 @@ public class CommentService {
 
 		Issue issue = this.issueService.findOne(issueId);
 
-		Issue clon = (Issue) issue.clone();
-		List<Comment> comments = new ArrayList<>(clon.getComments());
-		clon.setComments(comments);
+		issue.getComments().add(result);
 
-		this.issueService.save(clon, null);
+		//		Issue clon = (Issue) issue.clone();
+		//		List<Comment> comments = new ArrayList<>(clon.getComments());
+		//		clon.setComments(comments);
+		//
+		//		this.issueService.save(clon, null);
 
 		return result;
 	}

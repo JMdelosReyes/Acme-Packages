@@ -47,9 +47,11 @@
 	
 	<security:authorize access="hasRole('AUDITOR')">
 		<jstl:if test="${assignable eq true}">
-			<a href="issue/auditor/assign.do?id=${row.id}">
-				<spring:message code="iss.assign"></spring:message>
-			</a>
+			<display:column titleKey="iss.assign">
+				<a href="issue/auditor/assign.do?id=${row.id}">
+					<spring:message code="iss.assign"></spring:message>
+				</a>
+			</display:column>
 		</jstl:if>
 	</security:authorize>
 

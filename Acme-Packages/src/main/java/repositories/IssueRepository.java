@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import domain.Auditor;
 import domain.Issue;
+import domain.Request;
 
 @Repository
 public interface IssueRepository extends JpaRepository<Issue, Integer> {
@@ -27,4 +28,7 @@ public interface IssueRepository extends JpaRepository<Issue, Integer> {
 
 	@Query("select i from Issue i where i not in (select i2 from Auditor a join a.issues i2)")
 	Collection<Issue> findUnassigned();
+
+	@Query("select r from Request r join r.issue i where i.id=?1")
+	Request findByIssue(int id);
 }

@@ -56,4 +56,8 @@ public class Tickers {
 		return result;
 	}
 
+	public static String generateTickerIssue(String offerTicker) {
+		return offerTicker + "-" + UUID.randomUUID().toString().substring(0, 2).toUpperCase();
+	}
+
 }

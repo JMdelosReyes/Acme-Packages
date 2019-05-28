@@ -10,9 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.IssueRepository;
 import security.LoginService;
+import utilities.Tickers;
 import domain.Auditor;
 import domain.Carrier;
 import domain.Comment;
@@ -42,6 +45,9 @@ public class IssueService {
 
 	@Autowired
 	private RequestService	requestService;
+
+	@Autowired
+	private Validator		validator;
 
 
 	public IssueService() {
@@ -178,8 +184,10 @@ public class IssueService {
 
 		Assert.isTrue(this.findIssuesOfCustomer(id).contains(old));
 
-		Assert.isTrue(old.isClosed());
+		Assert.isTrue(this.issueRepository.findUnassigned().contains(old));
 
+		Request request = this.issueRepository.findByIssue(old.getId());
+		request.setIssue(null);
 		this.issueRepository.delete(old.getId());
 	}
 
@@ -220,4 +228,38 @@ public class IssueService {
 		auditor.getIssues().add(issue);
 	}
 
+	public void close(Issue issue) {
+		Assert.isTrue(!this.issueRepository.findUnassigned().contains(issue));
+		int actorId = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
+		Auditor auditor = this.auditorService.findOne(actorId);
+		Assert.isTrue(auditor.getIssues().contains(issue));
+		Assert.isTrue(!issue.isClosed());
+
+		Issue clon = (Issue) issue.clone();
+		clon.setClosed(true);
+
+		issue = clon;
+		this.issueRepository.save(issue);
+	}
+
+	public Issue reconstruct(final Issue issue, Request request, final BindingResult binding) {
+		Issue result;
+
+		Assert.isTrue(this.actorService.findActorType().equals("Customer"));
+
+		int actorId = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
+		Customer customer = this.customerService.findOne(actorId);
+		Assert.isTrue(customer.getRequests().contains(request));
+		Assert.isTrue(request.getOffer() != null);
+		Assert.isTrue(request.getIssue() == null);
+
+		result = issue;
+		result.setMoment(DateTime.now().minusMillis(1000).toDate());
+		result.setClosed(false);
+		result.setTicker(Tickers.generateTickerIssue(request.getOffer().getTicker()));
+		result.setComments(new ArrayList<Comment>());
+		result.setOffer(request.getOffer());
+
+		return result;
+	}
 }

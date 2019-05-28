@@ -270,6 +270,7 @@ public class SolicitationService {
 
 		return result;
 	}
+
 	public Collection<String> findStatus() {
 		Collection<String> status = new ArrayList<String>();
 		status.add("ACCEPTED");

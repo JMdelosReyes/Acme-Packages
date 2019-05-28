@@ -63,6 +63,8 @@
 		<security:intercept-url pattern="/issue/customer/create.do" access="hasRole('CUSTOMER')" />
 		<security:intercept-url pattern="/issue/customer/edit.do" access="hasRole('CUSTOMER')" />
 		<security:intercept-url pattern="/issue/auditor/close.do" access="hasRole('AUDITOR')" />
+		<security:intercept-url pattern="/issue/customer/delete.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/issue/carrier,customer,auditor/add-comment.do" access="hasAnyRole('CARRIER','AUDITOR','CUSTOMER')" />
 		
 		<security:intercept-url pattern="/curriculum/display.do" access="permitAll" />
 		<security:intercept-url pattern="/curriculum/list.do" access="permitAll" />

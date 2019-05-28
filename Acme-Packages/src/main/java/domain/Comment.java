@@ -20,7 +20,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Comment extends DomainEntity {
 
 	private Date	moment;
-	private String	comment;
+	private String	userComment;
 	private String	username;
 
 
@@ -38,12 +38,12 @@ public class Comment extends DomainEntity {
 
 	@SafeHtml
 	@NotBlank
-	public String getComment() {
-		return this.comment;
+	public String getUserComment() {
+		return this.userComment;
 	}
 
-	public void setComment(final String comment) {
-		this.comment = comment;
+	public void setUserComment(final String userComment) {
+		this.userComment = userComment;
 	}
 
 	@NotBlank
