@@ -312,6 +312,8 @@
 		<property name="userAccount" ref="userAccount7" />
 		<property name="issues">
 			<list>
+				<ref bean="issue2" />
+				<ref bean="issue4" />
 			</list>
 		</property>
 		<property name="solicitations">
@@ -1089,6 +1091,71 @@
 		<property name="offer" ref="offer1" />
 		
 	</bean>
+	
+	<bean id="issue2" class="domain.Issue">
+		<property name="ticker" value="190523-ASD123-AB" />
+		<property name="moment" value="05/24/2019" />
+		<property name="closed" value="true" />
+		<property name="description" value="Ha llegado doblado al destinatario"/>
+		<property name="comments">
+			<list>
+			</list>
+		</property>
+		<property name="offer" ref="offer1" />
+		
+	</bean>
+	<!-- <bean id="issue3" class="domain.Issue">
+		<property name="ticker" value="190523-ASD123-AC" />
+		<property name="moment" value="05/24/2019" />
+		<property name="closed" value="false" />
+		<property name="description" value="No ha llegado"/>
+		<property name="comments">
+			<list>
+			</list>
+		</property>
+		<property name="offer" ref="offer1" />
+		
+	</bean> -->
+	
+	
+	<bean id="issue4" class="domain.Issue">
+		<property name="ticker" value="1190523-ASD125-AA" />
+		<property name="moment" value="05/24/2019" />
+		<property name="closed" value="true" />
+		<property name="description" value="Ha llegado roto al destinatario"/>
+		<property name="comments">
+			<list>
+			</list>
+		</property>
+		<property name="offer" ref="offer2" />
+		
+	</bean>
+	
+	<bean id="issue5" class="domain.Issue">
+		<property name="ticker" value="190523-ASD125-AB" />
+		<property name="moment" value="05/24/2019" />
+		<property name="closed" value="false" />
+		<property name="description" value="Ha llegado con caldo en la caja al destinatario"/>
+		<property name="comments">
+			<list>
+			</list>
+		</property>
+		<property name="offer" ref="offer2" />
+		
+	</bean>
+	<!-- <bean id="issue6" class="domain.Issue">
+		<property name="ticker" value="190523-ASD125-AC" />
+		<property name="moment" value="05/24/2019" />
+		<property name="closed" value="false" />
+		<property name="description" value="El camión no estaba en las condiciones necesarias para llevar mi paquete"/>
+		<property name="comments">
+			<list>
+			</list>
+		</property>
+		<property name="offer" ref="offer2" />
+		
+	</bean> -->
+	
 	
 	<!-- MESS -->
 	<bean id="messageAd1Out" class="domain.Mess">
@@ -2346,7 +2413,7 @@
 			<ref bean="package1"/>
 			</list>
 		</property>
-		<!--  <property name="issue" value="false" /> -->		 			
+		<property name="issue" ref="issue2" />			
 	</bean>
 	<bean id="request2" class="domain.Request">
 		<property name="ticker" value="020219-CMCPL" />
@@ -2360,7 +2427,7 @@
 		<property name="streetAddress" value="Calle la niña de las flores" />
 		<property name="comment" value="Cuidadito con el envio, rufianes" />
 		<property name="town" ref="town2" />
-		<property name="status" value="SUBMITTED"></property>
+		<property name="status" value="ACCEPTED"></property>
 		<property name="offer" ref="offer1" /> 
 		<property name="packages">
 			<list>
@@ -2429,7 +2496,7 @@
 			<ref bean="package5"/>
 			</list>
 		</property>
-		<!--  <property name="issue" value="false" /> -->		 			
+		<property name="issue" ref="issue4" />	 			
 	</bean>
 	<bean id="request6" class="domain.Request">
 		<property name="ticker" value="020219-AMPPL" />
@@ -2511,7 +2578,7 @@
 			<ref bean="package9"/>
 			</list>
 		</property>
-		<!--  <property name="issue" value="false" /> -->		 			
+		<property name="issue" ref="issue5" />	 			
 	</bean>
 	<!-- SOCIAL PROFILE -->
 	<bean id="socialProfile1" class="domain.SocialProfile">
