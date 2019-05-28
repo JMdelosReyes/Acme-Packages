@@ -7,6 +7,7 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -36,7 +37,7 @@ public class Package extends DomainEntity implements Cloneable {
 		return o;
 	}
 
-	@Min(100)
+	@DecimalMin("0.1")
 	public double getWeight() {
 		return this.weight;
 	}
