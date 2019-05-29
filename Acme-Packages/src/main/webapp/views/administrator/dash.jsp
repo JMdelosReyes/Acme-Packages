@@ -13,6 +13,19 @@
 	<acme:submit name="spammers" code="admin.dashboard.calculaSpammers"/>
 </form:form>
 
+<form:form action="dashboard/administrator/list.do" modelAttribute="actor">
+	<acme:submit name="computeScore" code="admin.dashboard.computeScore"/>
+</form:form>
+
+<form:form action="dashboard/administrator/list.do" modelAttribute="actor">
+	<acme:submit name="notisponsorship" code="admin.dashboard.sendSponsorshipNotication"/>
+</form:form>
+
+<form:form action="dashboard/administrator/list.do" modelAttribute="actor">
+	<acme:submit name="invalidsponsorship" code="admin.dashboard.invalidSponsorship"/>
+</form:form>
+
+
 
 
 <!--  -->

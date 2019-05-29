@@ -4,6 +4,7 @@ package repositories;
 import java.util.Collection;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -11,11 +12,68 @@ import domain.Actor;
 import domain.Administrator;
 import domain.Auditor;
 import domain.Carrier;
+import domain.Sponsor;
 import domain.Sponsorship;
 import domain.Town;
 
 @Repository
 public interface AdministratorRepository extends JpaRepository<Administrator, Integer> {
+
+	@Query("select s from Sponsor s join s.sponsorships ss where ss.valid=1")
+	Collection<Sponsor> validSponsorshipsSponsor();
+
+	@Query("select sum(ss.count) from Sponsor s join s.sponsorships ss where ss.valid=1 and s.id=?1")
+	Integer numValidSponsorshipShowBySponsor(int id);
+
+	@Query("select ss from Sponsor s join s.sponsorships ss where ss.valid=1 and s.id=?1")
+	Collection<Sponsorship> sponsorSetCount0(int id);
+
+	@Query("select c from Carrier c where c.offers.size>0")
+	Collection<Carrier> findCarriersWithOffer();
+
+	@Query("select s from Sponsorship s where s.expirationDate < CURRENT_DATE")
+	Collection<Sponsorship> findInvalidSp();
+
+	@Query("select avg(o.score) from Carrier c join c.offers o where c.id=?1")
+	Double AvgScoreOffersFromCarrier(int id);
+
+	//	@Modifying
+	//	@Query("update Carrier a set a.score=(select avg(o.score) from Carrier ca join ca.offers o where ca.id=a.id)")
+	//	void computeScoreCarrier();
+
+	//SET SPAMMERS
+
+	@Modifying
+	@Query("update Carrier a set a.spammer=1 where ((select count(m) from MessBox mb join mb.messages m where m.sender.id=a.id and " + "mb.name='Spam Box')/(select count(m2) from Mess m2 where m2.sender.id=a.id)+0.0)>=0.10")
+	void setCarrierSpammer();
+
+	@Modifying
+	@Query("update Auditor a set a.spammer=1 where ((select count(m) from MessBox mb join mb.messages m where m.sender.id=a.id and " + "mb.name='Spam Box')/(select count(m2) from Mess m2 where m2.sender.id=a.id)+0.0)>=0.10")
+	void setAuditorSpammer();
+
+	@Modifying
+	@Query("update Sponsor a set a.spammer=1 where ((select count(m) from MessBox mb join mb.messages m where m.sender.id=a.id and " + "mb.name='Spam Box')/(select count(m2) from Mess m2 where m2.sender.id=a.id)+0.0)>=0.10")
+	void setSponsorSpammer();
+
+	@Modifying
+	@Query("update Customer a set a.spammer=1 where ((select count(m) from MessBox mb join mb.messages m where m.sender.id=a.id and " + "mb.name='Spam Box')/(select count(m2) from Mess m2 where m2.sender.id=a.id)+0.0)>=0.10")
+	void setCustomerSpammer();
+
+	@Modifying
+	@Query("update Carrier a set a.spammer=0")
+	void setCarrierNotSpammer();
+
+	@Modifying
+	@Query("update Auditor a set a.spammer=0")
+	void setAuditorNotSpammer();
+
+	@Modifying
+	@Query("update Sponsor a set a.spammer=0")
+	void setSponsorNotSpammer();
+
+	@Modifying
+	@Query("update Customer a set a.spammer=0")
+	void setCustomerNotSpammer();
 
 	//Find spammers
 	@Query("select a from Actor a where a.spammer=true")
@@ -47,18 +105,17 @@ public interface AdministratorRepository extends JpaRepository<Administrator, In
 	@Query("select stddev(c.score) from Carrier c")
 	Double stddevScoreCarriers();
 
-	// TODO ESTO ENTIENDO QUE SE REFIERE A LA NOTA DE LAS EVALUACIONES, NO AL NÚMERO DE LAS MISMAS
 	//The average, the minimum, the maximum, and the standard deviation of evaluations made by customers.
-	@Query("select avg(c.evaluations.size) from Customer c")
+	@Query("select avg(e.mark) from Customer c join c.evaluations e")
 	Double avgEvaluationByCustomer();
 
-	@Query("select min(c.evaluations.size) from Customer c")
+	@Query("select min(e.mark) from Customer c join c.evaluations e")
 	Double minEvaluationByCustomer();
 
-	@Query("select max(c.evaluations.size) from Customer c")
+	@Query("select max(e.mark) from Customer c join c.evaluations e")
 	Double maxEvaluationByCustomer();
 
-	@Query("select stddev(c.evaluations.size) from Customer c")
+	@Query("select stddev(e.mark) from Customer c join c.evaluations e")
 	Double stddevEvaluationByCustomer();
 
 	//The average, the minimum, the maximum, and the standard deviation of comments per issues.

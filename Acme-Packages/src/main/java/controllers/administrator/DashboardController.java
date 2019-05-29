@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import security.LoginService;
+import security.UserAccount;
 import services.ActorService;
 import services.AdministratorService;
 import services.ConfigurationService;
@@ -97,7 +99,7 @@ public class DashboardController extends AbstractController {
 
 			result.addObject("top3CarriersWithHigherScore", top3CarriersWithHigherScore);
 
-			//TODO Top-5 most visited towns.
+			// Top-5 most visited towns.
 			final Collection<Town> top5MostVisitedTowns = this.adminService.top5MostVisitedTowns();
 
 			result.addObject("top5MostVisitedTowns", top5MostVisitedTowns);
@@ -122,50 +124,95 @@ public class DashboardController extends AbstractController {
 		return result;
 
 	}
-	//	@RequestMapping(value = "/list", method = RequestMethod.POST, params = "spammers")
-	//	public ModelAndView setSpammers() {
-	//		ModelAndView result;
-	//		UserAccount principal;
-	//		try {
-	//			principal = LoginService.getPrincipal();
-	//		} catch (final Exception e) {
-	//			return new ModelAndView("redirect:/");
-	//		}
-	//		if (this.actorService.findActorType() != "Administrator") {
-	//			result = new ModelAndView("redirect:/");
-	//		} else {
-	//			try {
-	//				this.adminService.setSpammers();
-	//				result = new ModelAndView("redirect:list.do");
-	//			} catch (final Exception e) {
-	//				result = new ModelAndView("redirect:/");
-	//			}
-	//		}
-	//		return result;
-	//
-	//	}
+	@RequestMapping(value = "/list", method = RequestMethod.POST, params = "spammers")
+	public ModelAndView setSpammers() {
+		ModelAndView result;
+		UserAccount principal;
+		try {
+			principal = LoginService.getPrincipal();
+		} catch (final Exception e) {
+			return new ModelAndView("redirect:/");
+		}
+		if (this.actorService.findActorType() != "Administrator") {
+			result = new ModelAndView("redirect:/");
+		} else {
+			try {
+				this.adminService.setSpammers();
+				result = new ModelAndView("redirect:list.do");
+			} catch (final Exception e) {
+				result = new ModelAndView("redirect:/");
+			}
+		}
+		return result;
 
-	//	@RequestMapping(value = "/list", method = RequestMethod.POST, params = "mensajee")
-	//	public ModelAndView messRebranding() {
-	//		ModelAndView result;
-	//		UserAccount principal;
-	//		try {
-	//			principal = LoginService.getPrincipal();
-	//		} catch (final Exception e) {
-	//			return new ModelAndView("redirect:/");
-	//		}
-	//		if (this.actorService.findActorType() != "Administrator") {
-	//			result = new ModelAndView("redirect:/");
-	//		} else {
-	//			try {
-	//				this.adminService.messRebranding();
-	//				result = new ModelAndView("redirect:list.do");
-	//			} catch (final Exception e) {
-	//				result = new ModelAndView("redirect:/");
-	//			}
-	//		}
-	//		return result;
-	//
-	//	}
+	}
+
+	@RequestMapping(value = "/list", method = RequestMethod.POST, params = "computeScore")
+	public ModelAndView computeScore() {
+		ModelAndView result;
+		UserAccount principal;
+		try {
+			principal = LoginService.getPrincipal();
+		} catch (final Exception e) {
+			return new ModelAndView("redirect:/");
+		}
+		if (this.actorService.findActorType() != "Administrator") {
+			result = new ModelAndView("redirect:/");
+		} else {
+			try {
+				this.adminService.computeScore();
+				result = new ModelAndView("redirect:list.do");
+			} catch (final Exception e) {
+				result = new ModelAndView("redirect:/");
+			}
+		}
+		return result;
+
+	}
+	@RequestMapping(value = "/list", method = RequestMethod.POST, params = "notisponsorship")
+	public ModelAndView messSponsor() {
+		ModelAndView result;
+		UserAccount principal;
+		try {
+			principal = LoginService.getPrincipal();
+		} catch (final Exception e) {
+			return new ModelAndView("redirect:/");
+		}
+		if (this.actorService.findActorType() != "Administrator") {
+			result = new ModelAndView("redirect:/");
+		} else {
+			try {
+				this.adminService.messSponsor();
+				result = new ModelAndView("redirect:list.do");
+			} catch (final Exception e) {
+				result = new ModelAndView("redirect:/");
+			}
+		}
+		return result;
+
+	}
+
+	@RequestMapping(value = "/list", method = RequestMethod.POST, params = "invalidsponsorship")
+	public ModelAndView invalidSponsorShip() {
+		ModelAndView result;
+		UserAccount principal;
+		try {
+			principal = LoginService.getPrincipal();
+		} catch (final Exception e) {
+			return new ModelAndView("redirect:/");
+		}
+		if (this.actorService.findActorType() != "Administrator") {
+			result = new ModelAndView("redirect:/");
+		} else {
+			try {
+				this.adminService.invalidSponsorShip();
+				result = new ModelAndView("redirect:list.do");
+			} catch (final Exception e) {
+				result = new ModelAndView("redirect:/");
+			}
+		}
+		return result;
+
+	}
 
 }

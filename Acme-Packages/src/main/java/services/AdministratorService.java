@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +23,7 @@ import domain.Administrator;
 import domain.Auditor;
 import domain.Carrier;
 import domain.Customer;
+import domain.Mess;
 import domain.MessBox;
 import domain.SocialProfile;
 import domain.Sponsor;
@@ -37,6 +39,9 @@ public class AdministratorService {
 	private AdministratorRepository	administratorRepository;
 
 	// Supporting services
+
+	@Autowired
+	private MessService				messService;
 	@Autowired
 	private ActorService			actorService;
 
@@ -690,6 +695,93 @@ public class AdministratorService {
 			a.getUserAccount().setBan(!(status));
 			this.carrierService.adminUpdate(a);
 
+		}
+
+	}
+	public void setSpammers() {
+		final UserAccount principal = LoginService.getPrincipal();
+		Assert.notNull(principal);
+
+		final Authority auth = new Authority();
+		auth.setAuthority(Authority.ADMIN);
+		Assert.isTrue(principal.getAuthorities().contains(auth));
+
+		this.administratorRepository.setAuditorNotSpammer();
+		this.administratorRepository.setCarrierNotSpammer();
+		this.administratorRepository.setCustomerNotSpammer();
+		this.administratorRepository.setSponsorNotSpammer();
+
+		this.administratorRepository.setAuditorSpammer();
+		this.administratorRepository.setCarrierSpammer();
+		this.administratorRepository.setCustomerSpammer();
+		this.administratorRepository.setSponsorSpammer();
+	}
+
+	public void computeScore() {
+		final UserAccount principal = LoginService.getPrincipal();
+		Assert.notNull(principal);
+
+		final Authority auth = new Authority();
+		auth.setAuthority(Authority.ADMIN);
+		Assert.isTrue(principal.getAuthorities().contains(auth));
+
+		List<Carrier> carriers = new ArrayList<>(this.administratorRepository.findCarriersWithOffer());
+		for (int i = 0; i < carriers.size(); i++) {
+			Carrier ca = carriers.get(i);
+			ca.setScore(this.administratorRepository.AvgScoreOffersFromCarrier(ca.getId()));
+
+		}
+
+	}
+	public void messSponsor() {
+		final UserAccount principal = LoginService.getPrincipal();
+		Assert.notNull(principal);
+
+		final Authority auth = new Authority();
+		auth.setAuthority(Authority.ADMIN);
+		Assert.isTrue(principal.getAuthorities().contains(auth));
+
+		List<Sponsor> sp = new ArrayList<Sponsor>(this.administratorRepository.validSponsorshipsSponsor());
+		final Actor a = this.actorService.findByUserAccountId(principal.getId());
+
+		for (int i = 0; i < sp.size(); i++) {
+			Sponsor sponsor = sp.get(i);
+			Integer numShown = this.administratorRepository.numValidSponsorshipShowBySponsor(sponsor.getId());
+			Collection<Actor> coc = new ArrayList<>();
+			coc.add(sponsor);
+			final Mess mess = this.messService.create();
+			mess.setRecipients(coc);
+			//TODO Cuanto dinero se le paga?¿?¿
+			mess.setBody("Your sponsorships has been shown " + numShown.toString() + " times");
+
+			mess.setSubject("Sponsorships notification");
+			mess.setSendDate(DateTime.now().minusMillis(1000).toDate());
+			mess.setSender(a);
+			mess.setPriority("HIGH");
+			this.messService.send(mess, true);
+
+			//Reseteo en el count puesto que ya se ha mandado el mesaje de cobro
+			List<Sponsorship> lista = new ArrayList<>(this.administratorRepository.sponsorSetCount0(sponsor.getId()));
+			for (int j = 0; j < lista.size(); j++) {
+				lista.get(j).setCount(0);
+
+			}
+
+		}
+
+	}
+
+	public void invalidSponsorShip() {
+		final UserAccount principal = LoginService.getPrincipal();
+		Assert.notNull(principal);
+
+		final Authority auth = new Authority();
+		auth.setAuthority(Authority.ADMIN);
+		Assert.isTrue(principal.getAuthorities().contains(auth));
+
+		List<Sponsorship> sp = new ArrayList<>(this.administratorRepository.findInvalidSp());
+		for (int i = 0; i < sp.size(); i++) {
+			sp.get(i).setValid(false);
 		}
 
 	}
