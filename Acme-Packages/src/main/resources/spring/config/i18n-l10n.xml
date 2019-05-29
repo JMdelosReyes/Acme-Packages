@@ -47,6 +47,10 @@
 		<value>/views/administrator/messages</value>
 		<value>/views/finder/messages</value>
 		<value>/views/sponsorship/messages</value>
+		<value>/views/offer/messages</value>
+		<value>/views/fare/messages</value>
+		<value>/views/traverseTown/messages</value>
+		
 		
 	</util:list>
 

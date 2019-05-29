@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.TraverseTownRepository;
 import security.LoginService;
@@ -29,6 +31,9 @@ public class TraverseTownService {
 
 	@Autowired
 	private OfferService			offerService;
+
+	@Autowired
+	private Validator				validator;
 
 
 	public TraverseTownService() {
@@ -121,4 +126,47 @@ public class TraverseTownService {
 	public void reOrder(Offer offer) {
 
 	}
+
+	public Collection<TraverseTown> findCarrierTraverseTowns(int id) {
+		final Collection<TraverseTown> result = this.traverseTownRepository.findCarrierTraverseTowns(id);
+		Assert.notNull(result);
+		return result;
+	}
+
+	public TraverseTown reconstruct(TraverseTown tt, Integer offerId, BindingResult binding) {
+		TraverseTown result;
+
+		if (tt.getId() == 0) {
+			result = this.create();
+			result.setCurrentTown(tt.isCurrentTown());
+			result.setEstimatedDate(tt.getEstimatedDate());
+			//TODO lo debería hacer el save pero no lo hace
+			result.setNumber(2);
+			result.setTown(tt.getTown());
+
+		} else {
+			result = this.traverseTownRepository.findOne(tt.getId());
+			Assert.notNull(result);
+			final TraverseTown clon = (TraverseTown) result.clone();
+
+			clon.setCurrentTown(tt.isCurrentTown());
+			clon.setEstimatedDate(tt.getEstimatedDate());
+			clon.setTown(tt.getTown());
+
+			result = clon;
+		}
+
+		this.validator.validate(result, binding);
+
+		if (!binding.hasErrors()) {
+			result = this.save(result);
+			Assert.notNull(result);
+			if (tt.getId() == 0) {
+				this.offerService.addTraverseTown(result, offerId);
+			}
+		}
+
+		return result;
+	}
+
 }

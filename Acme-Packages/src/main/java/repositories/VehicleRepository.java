@@ -28,4 +28,7 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Integer> {
 	@Query("select c from Category c where c not in (select c2 from Vehicle v join v.solicitations s join s.category c2 where v.id=?1 and (s.endDate>=current_date or s.status!='REJECTED'))")
 	Collection<Category> findApplicableCategories(int id);
 
+	@Query("select v from Carrier c join c.vehicles v where c.id=?1")
+	Collection<Vehicle> findCarrierVehicles(int id);
+
 }

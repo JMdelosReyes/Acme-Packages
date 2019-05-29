@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.UUID;
 
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,7 +100,7 @@ public class IssueService {
 			Assert.isTrue(customer.getRequests().contains(request));
 			Assert.isTrue(request.getIssue() == null);
 			issue.setOffer(request.getOffer());
-			issue.setTicker(Tickers.generateTickerIssue(request.getOffer().getTicker()));
+			issue.setTicker(request.getOffer().getTicker() == null ? "" : request.getOffer().getTicker() + UUID.randomUUID().toString().substring(0, 2).toUpperCase());
 			issue.setMoment(DateTime.now().minusMillis(1000).toDate());
 			issue.setClosed(false);
 

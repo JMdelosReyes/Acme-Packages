@@ -26,6 +26,13 @@
 		<bean class="converters.StringToActorConverter" />
 		<bean class="converters.CategoryToStringConverter" />
 		<bean class="converters.StringToCategoryConverter" />
+		<bean class="converters.TownToStringConverter" />
+		<bean class="converters.StringToTownConverter" />
+		<bean class="converters.FareToStringConverter" />
+		<bean class="converters.StringToFareConverter" />
+		<bean class="converters.VehicleToStringConverter" />
+		<bean class="converters.StringToVehicleConverter" />
+		
 	</util:list>
 	
 </beans>

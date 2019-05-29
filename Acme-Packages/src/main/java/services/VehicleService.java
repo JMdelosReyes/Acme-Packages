@@ -206,4 +206,11 @@ public class VehicleService {
 		Assert.notNull(result);
 		return result;
 	}
+
+	public Collection<Vehicle> findCarrierVehicles(int id) {
+		final Collection<Vehicle> result = this.vehicleRepository.findCarrierVehicles(id);
+		Assert.notNull(result);
+		return result;
+	}
+
 }

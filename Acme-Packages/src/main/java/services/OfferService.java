@@ -5,11 +5,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.OfferRepository;
 import security.LoginService;
@@ -20,6 +21,7 @@ import domain.Fare;
 import domain.Offer;
 import domain.Request;
 import domain.TraverseTown;
+import forms.OfferForm;
 
 @Service
 @Transactional
@@ -36,6 +38,9 @@ public class OfferService {
 
 	@Autowired
 	private VehicleService	vehicleService;
+
+	@Autowired
+	private Validator		validator;
 
 
 	public OfferService() {
@@ -64,14 +69,13 @@ public class OfferService {
 		Assert.notNull(carrier);
 
 		final Offer result = new Offer();
-		result.setTicker("");
-		result.setFinalMode(false);
-		result.setMaxDateToRequest(DateTime.now().minusMillis(1000).toDate());
 		result.setCanceled(false);
+		result.setFinalMode(false);
 		result.setScore(0);
-		result.setFares(new ArrayList<Fare>());
-		result.setVehicle(null);
+		result.setTicker(Tickers.generateTicker());
+		result.setTotalPrice(0);
 		result.setEvaluations(new ArrayList<Evaluation>());
+		result.setFares(new ArrayList<Fare>());
 		result.setRequests(new ArrayList<Request>());
 		result.setTraverseTowns(new ArrayList<TraverseTown>());
 
@@ -101,7 +105,6 @@ public class OfferService {
 			offer.setTicker(Tickers.generateTicker());
 			offer.setTotalPrice(0);
 			offer.setEvaluations(new ArrayList<Evaluation>());
-			offer.setFares(new ArrayList<Fare>());
 			offer.setRequests(new ArrayList<Request>());
 			offer.setTraverseTowns(new ArrayList<TraverseTown>());
 
@@ -213,6 +216,74 @@ public class OfferService {
 
 	public void removeEvaluation(Evaluation evaluation) {
 
+	}
+
+	public OfferForm getOfferForm(Integer offerId) {
+		OfferForm result = new OfferForm();
+		Offer f = this.findOne(offerId);
+
+		final int carrierId = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
+		final Carrier carrier = this.carrierService.findOne(carrierId);
+		Assert.isTrue(carrier.getOffers().contains(f));
+
+		Assert.notNull(result);
+		result.setId(offerId);
+		result.setCanceled(f.isCanceled());
+		result.setFares(f.getFares());
+		result.setFinalMode(f.isFinalMode());
+		result.setMaxDateToRequest(f.getMaxDateToRequest());
+		result.setVehicle(f.getVehicle());
+
+		return result;
+	}
+
+	public Offer reconstruct(final OfferForm of, final BindingResult binding) {
+		Offer result;
+
+		if (of.getId() == 0) {
+			result = this.create();
+			result.setCanceled(of.isCanceled());
+			result.setFares(of.getFares());
+			result.setFinalMode(of.isFinalMode());
+			result.setMaxDateToRequest(of.getMaxDateToRequest());
+			result.setVehicle(of.getVehicle());
+
+		} else {
+			result = this.offerRepository.findOne(of.getId());
+			Assert.notNull(result);
+			final int carrierId = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
+			final Carrier carrier = this.carrierService.findOne(carrierId);
+			Assert.isTrue(carrier.getOffers().contains(result));
+
+			final Offer clon = (Offer) result.clone();
+			clon.setCanceled(of.isCanceled());
+			clon.setFares(of.getFares());
+			clon.setFinalMode(of.isFinalMode());
+			clon.setMaxDateToRequest(of.getMaxDateToRequest());
+			clon.setVehicle(of.getVehicle());
+
+			result = clon;
+		}
+
+		this.validator.validate(result, binding);
+
+		return result;
+	}
+
+	public Collection<Offer> findOpenOffers() {
+		final Collection<Offer> offers = this.offerRepository.findOpenOffers();
+		Assert.notNull(offers);
+		return offers;
+	}
+	public Collection<Offer> findCarrierOpenOffers(int carrierId) {
+		final Collection<Offer> offers = this.offerRepository.findCarrierOpenOffers(carrierId);
+		Assert.notNull(offers);
+		return offers;
+	}
+	public Collection<Offer> findCarrierOffers(int carrierId) {
+		final Collection<Offer> offers = this.offerRepository.findCarrierOffers(carrierId);
+		Assert.notNull(offers);
+		return offers;
 	}
 
 }

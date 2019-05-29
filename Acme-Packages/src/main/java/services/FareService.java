@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.FareRepository;
 import security.LoginService;
@@ -28,6 +30,9 @@ public class FareService {
 
 	@Autowired
 	private OfferService	offerService;
+
+	@Autowired
+	private Validator		validator;
 
 
 	public FareService() {
@@ -65,9 +70,9 @@ public class FareService {
 	public Fare create() {
 		Assert.isTrue(this.actorService.findActorType().equals("Carrier"));
 		final Fare result = new Fare();
-		result.setMaxWeight(0);
-		result.setMaxVolume(0);
-		result.setPrice(0);
+		result.setMaxWeight(0.);
+		result.setMaxVolume(0.);
+		result.setPrice(0.);
 		return result;
 	}
 
@@ -91,7 +96,7 @@ public class FareService {
 			//Assert.isTrue(this.offerService.findByFare(fare.getId()).size() == 0);
 
 			result = this.fareRepository.save(fare);
-			Assert.notNull(result);
+			//	Assert.notNull(result);
 		}
 
 		return result;
@@ -119,4 +124,31 @@ public class FareService {
 	public void flush() {
 		this.fareRepository.flush();
 	}
+
+	public Fare reconstruct(final Fare fare, final BindingResult binding) {
+		Fare result;
+
+		if (fare.getId() == 0) {
+			result = this.create();
+			result.setMaxVolume(fare.getMaxVolume());
+			result.setMaxWeight(fare.getMaxWeight());
+			result.setPrice(fare.getPrice());
+
+		} else {
+			result = this.fareRepository.findOne(fare.getId());
+			Assert.notNull(result);
+			final Fare clon = (Fare) result.clone();
+
+			clon.setMaxVolume(fare.getMaxVolume());
+			clon.setMaxWeight(fare.getMaxWeight());
+			clon.setPrice(fare.getPrice());
+
+			result = clon;
+		}
+
+		this.validator.validate(result, binding);
+
+		return result;
+	}
+
 }

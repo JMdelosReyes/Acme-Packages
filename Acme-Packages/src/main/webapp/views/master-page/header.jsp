@@ -33,6 +33,7 @@
 		</security:authorize>
 		
 		<security:authorize access="isAnonymous()">
+			<li><a class="fNiv" href="offer/list.do"><spring:message code="master.page.offers" /></a></li>
 			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a></li>
 			<li><a class="fNiv" href="actor/sign-up.do"><spring:message code="master.page.signup" /></a></li>
 			
@@ -44,6 +45,10 @@
 		</security:authorize>	
 			
 		<security:authorize access="hasRole('CARRIER')">
+			<li><a class="fNiv" href="offer/carrier/list.do"><spring:message
+			 code="master.page.myOffers" /></a></li>
+			 <li><a class="fNiv" href="fare/carrier/list.do"><spring:message
+			 code="master.page.myFares" /></a></li>
 			<li><a href="vehicle/carrier/list.do"><spring:message
 						code="master.page.vehicles" /></a></li>
 			<li><a href="issue/carrier/list.do"><spring:message

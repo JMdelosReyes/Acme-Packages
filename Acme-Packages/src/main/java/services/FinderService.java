@@ -241,6 +241,7 @@ public class FinderService {
 		finder.setVolume(0.);
 		finder.setTown("");
 		finder.setLastUpdate(DateTime.now().minusMillis(1000).toDate());
+		finder.setOffers(new ArrayList<Offer>());
 		this.finderRepository.save(finder);
 	}
 

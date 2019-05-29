@@ -48,6 +48,9 @@
 		<value>/views/finder/tiles.xml</value>
 		
 		<value>/views/sponsorship/tiles.xml</value>
+		<value>/views/offer/tiles.xml</value>
+		<value>/views/fare/tiles.xml</value>
+		<value>/views/traverseTown/tiles.xml</value>
 		
 		
 	</util:list>

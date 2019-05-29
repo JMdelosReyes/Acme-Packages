@@ -129,6 +129,22 @@
 			<security:intercept-url pattern="/actor/edit.do"
 			access="hasAnyRole('ADMIN', 'CARRIER', 'CUSTOMER', 'SPONSOR', 'AUDITOR')" />
 			
+		<security:intercept-url pattern="/offer/list.do" access="permitAll" />
+		<security:intercept-url pattern="/offer/display.do" access="permitAll" />
+		<security:intercept-url pattern="/offer/carrier/list.do" access="hasRole('CARRIER')" />
+		<security:intercept-url pattern="/offer/carrier/create.do" access="hasRole('CARRIER')" />
+		<security:intercept-url pattern="/offer/carrier/edit.do" access="hasRole('CARRIER')" />
+		
+			
+		<security:intercept-url pattern="/fare/carrier/list.do" access="hasRole('CARRIER')" />
+		<security:intercept-url pattern="/fare/carrier/edit.do" access="hasRole('CARRIER')" />
+		<security:intercept-url pattern="/fare/carrier/create.do" access="hasRole('CARRIER')" />
+		
+		<security:intercept-url pattern="/traverseTown/carrier/edit.do" access="hasRole('CARRIER')" />
+		<security:intercept-url pattern="/traverseTown/carrier/create.do" access="hasRole('CARRIER')" />
+		
+		
+		<security:intercept-url pattern="/fare/list.do" access="permitAll" />
 			
 		
 		
