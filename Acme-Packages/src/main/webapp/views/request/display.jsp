@@ -28,6 +28,57 @@
 </jstl:if>
 
 <fieldset>
+<legend><strong><spring:message code="req.package"/></strong>:</legend>
+<display:table name="packages" id="row" requestURI="${requestURI}"
+				pagesize="5" class="displaytag">
+	<display:column titleKey="pac.weight">
+		<jstl:out value="${row.weight}"/> kg
+	</display:column>
+	<display:column titleKey="req.height">
+		<jstl:out value="${row.height}"/> cm
+	</display:column>
+	<display:column titleKey="req.width">
+		<jstl:out value="${row.width}"/> cm
+	</display:column>
+	<display:column titleKey="req.length">
+		<jstl:out value="${row.length}"/> cm
+	</display:column>
+	<display:column titleKey="req.description">
+		<jstl:out value="${row.description}"/>
+	</display:column>
+	<display:column titleKey="req.package.price">
+		<jstl:if test="${request.offer ne null}">
+			<jstl:out value="${row.price}"/> euro
+		</jstl:if>
+	</display:column>
+	<display:column titleKey="req.category">
+	<jstl:if test="${es}">
+		<jstl:forEach  var="cat" items="${row.categories}">
+			<jstl:out value="${cat.spanishName}"/>
+		</jstl:forEach>
+	</jstl:if>
+	<jstl:if test="${!es}">
+		<jstl:forEach  var="cat" items="${row.categories}">
+				<jstl:out value="${cat.englishName}"/>
+			</jstl:forEach>
+		</jstl:if>
+	</display:column>
+	<display:column titleKey="req.edit">
+		<jstl:if test="${owner && !request.finalMode}">
+			<a href="package/customer/edit.do?id=${row.id}"><spring:message code="req.edit"/></a>
+		</jstl:if>
+	</display:column>
+</display:table>
+	<jstl:if test="${owner && !request.finalMode}">
+		<form:form action="package/customer/create.do">
+			<input type="hidden" name="reqId" value="${request.id}">
+			<acme:submit name="add" code="req.addPackage"/>
+		</form:form>
+	</jstl:if>
+</fieldset>
+<acme:cancel url="request/carrier,customer/list.do" code="req.cancel"/>
+
+<!-- 
 	<jstl:forEach var="pac" items="${packages}">
 		<fieldset>
 			<legend><strong><spring:message code="req.package"/></strong>:</legend>
@@ -61,3 +112,4 @@
 	</jstl:forEach>
 </fieldset>
 <br/>
+-->

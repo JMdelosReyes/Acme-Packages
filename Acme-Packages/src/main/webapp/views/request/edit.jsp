@@ -36,7 +36,7 @@
 			<spring:message code="req.width"/>: <jstl:out value="${pac.width}"/> cm<br/>
 			<spring:message code="req.length"/>: <jstl:out value="${pac.length}"/> cm<br/>
 			<spring:message code="req.description"/>: <jstl:out value="${pac.description}"/><br/>
-			<jstl:if test="${request.offer ne null}">
+			<jstl:if test="${pac.price ne null}">
 				<spring:message code="req.package.price"/>: <jstl:out value="${pac.price}"/><br/>
 			</jstl:if>
 			<jstl:if test="${es}">
@@ -62,22 +62,24 @@
 <legend><spring:message code="req.package"/></legend>
 <form:form action="request/customer/edit.do" modelAttribute="package">	
 	<fieldset>
-	<h3><spring:message code="req.package"/></h3>
-	<acme:textbox code="req.weight" path="pac.weight" />
-	<acme:textbox code="req.height" path="pac.height" />
-	<acme:textbox code="req.width" path="pac.width" />
-	<acme:textbox code="req.length" path="pac.length" />
-	<acme:textbox code="req.description" path="pac.description" />
+	<h3><spring:message code="req.addPackage"/></h3>
+	<form:hidden path="requestId"/>
+	<acme:textbox code="req.weight" path="weight" />
+	<acme:textbox code="req.height" path="height" />
+	<acme:textbox code="req.width" path="width" />
+	<acme:textbox code="req.length" path="length" />
+	<acme:textbox code="req.description" path="description" />
 	<jstl:choose>
 		<jstl:when test="${es eq true}">
-			<acme:select items="${categories}" itemLabel="spanishName" code="req.category" path="pac.categories"/>
+			<acme:select items="${categories}" itemLabel="spanishName" code="req.category" path="categories"/>
 		</jstl:when>
 
 		<jstl:otherwise>
-			<acme:select items="${categories}" itemLabel="englishName" code="req.category" path="pac.categories"/>
+			<acme:select items="${categories}" itemLabel="englishName" code="req.category" path="categories"/>
 		</jstl:otherwise>
 	</jstl:choose>
-	</fieldset>		
+	</fieldset>
+	<acme:submit name="addPackage" code="req.addPackage"/>
 </form:form>	
 </fieldset>
 

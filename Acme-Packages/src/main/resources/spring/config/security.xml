@@ -51,6 +51,9 @@
 		<security:intercept-url pattern="/request/customer/edit.do" access="hasRole('CUSTOMER')" />
 		<security:intercept-url pattern="/request/carrier,customer/list.do" access="hasAnyRole('CUSTOMER','CARRIER')" />
 		<security:intercept-url pattern="/request/carrier,customer,auditor/display.do" access="hasAnyRole('CUSTOMER','CARRIER','AUDITOR')" />
+		<security:intercept-url pattern="/package/customer/create.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/package/customer/edit.do" access="hasRole('CUSTOMER')" />
+		
 		<!-- Luis -->
 		<security:intercept-url pattern="/solicitation/auditor/list.do" access="hasRole('AUDITOR')" />
 		<security:intercept-url pattern="/solicitation/auditor/list-assigned.do" access="hasRole('AUDITOR')" />
@@ -128,7 +131,6 @@
 			access="permitAll" />
 			<security:intercept-url pattern="/actor/edit.do"
 			access="hasAnyRole('ADMIN', 'CARRIER', 'CUSTOMER', 'SPONSOR', 'AUDITOR')" />
-			
 		<security:intercept-url pattern="/offer/list.do" access="permitAll" />
 		<security:intercept-url pattern="/offer/display.do" access="permitAll" />
 		<security:intercept-url pattern="/offer/carrier/list.do" access="hasRole('CARRIER')" />
@@ -144,7 +146,7 @@
 		<security:intercept-url pattern="/traverseTown/carrier/create.do" access="hasRole('CARRIER')" />
 		
 		
-		<security:intercept-url pattern="/fare/list.do" access="permitAll" />
+		<security:intercept-url pattern="/fare/list.do" access="permitAll" />	
 			
 		
 		

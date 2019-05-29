@@ -28,8 +28,139 @@
 				</bean>
 			</list>
 		</property>
+		<property name="ban" value="false"></property>
+	</bean>
+	<!-- ADMINISTRATOR -->
+	
+	<bean id="administrator" class="domain.Administrator">
+		<property name="name" value="Pepe" />
+		<property name="middleName" value="PV" />
+		<property name="surname" value="Viyuela" />
+		<property name="photo"
+			value="http://i.imgur.com/uGe5LfM.png" />
+		<property name="phoneNumber" value="+034656234123" />
+		<property name="email" value="admin@email.com" />
+		<property name="address" value="Avd Cosa Nº Casa Blq Piso 22ºA" />
+		<property name="spammer" value="false" />
+		<property name="banned" value="false" />
+	    <property name="creditCard" ref="creditcard1" />
+		<property name="socialProfiles">
+			<list>
+			</list>
+		</property>
+		<property name="userAccount" ref="userAccount1" />
+		<property name="messageBoxes">
+			<list>
+				<ref bean="messageBoxAd-inbox" />
+				<ref bean="messageBoxAd-outbox" />
+				<ref bean="messageBoxAd-trashbox" />
+				<ref bean="messageBoxAd-spambox" />
+				<ref bean="messageBoxAd-notibox" />
+				
+			</list>
+		</property>
+	</bean>	
+	<bean id="messageBoxAd-inbox" class="domain.MessBox">
+		<property name="name" value="In box"/>
+		<property name="isSystem" value="true"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
 	</bean>
 	
-	<!-- Other domain beans come here -->	
+	<bean id="messageBoxAd-outbox" class="domain.MessBox">
+		<property name="name" value="Out box"/>
+		<property name="isSystem" value="true"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
 	
+	<bean id="messageBoxAd-trashbox" class="domain.MessBox">
+		<property name="name" value="Trash box"/>
+		<property name="isSystem" value="true"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	
+	<bean id="messageBoxAd-spambox" class="domain.MessBox">
+		<property name="name" value="Spam box"/>
+		<property name="isSystem" value="true"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	
+	<bean id="messageBoxAd-notibox" class="domain.MessBox">
+		<property name="name" value="Notification box"/>
+		<property name="isSystem" value="true"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	<bean id="configuration1" class="domain.Configuration">
+		<property name="systemName" value="Acme Packages" />
+		<property name="banner" value="https://i.pinimg.com/originals/f2/5f/31/f25f31af942174c11ca74cc55cfa4b1e.png" />
+		<property name="englishMessage"
+			value="Welcome to Acme Packages! We're the fastest and best value for money shipping service of the world!" />
+		<property name="spanishMessage"
+			value="¡Bienvenidos a Acme Packages! ¡Somos el servicio de envio mas rapido y con mejor relación calidad-precio del mundo!" />
+		<property name="spamWords">
+			<list>
+				<value>sex</value>
+				<value>viagra</value>
+				<value>cialis</value>
+				<value>one million</value>
+				<value>you've been selected</value>
+				<value>Nigeria</value>
+				<value>sexo</value>
+				<value>un millón</value>
+				<value>ha sido seleccionado</value>
+			</list>
+		</property>
+		<property name="finderTime" value="1" />
+		<property name="finderResults" value="10" />
+		<property name="makes">
+			<list>
+				<value>VISA</value>
+				<value>MASTER</value>
+				<value>AMEX</value>
+				<value>DINNERS</value>
+				
+			</list>
+		</property>
+		<property name="countryCode" value="+34" />
+		
+		<property name="vat" value="21" />
+		<property name="messPriorities">
+			<list>
+				<value>HIGH</value>
+				<value>NEUTRAL</value>
+				<value>LOW</value>
+
+			</list>
+		</property>
+	
+
+	</bean>
+	<!-- CREDIT CARD -->
+	<bean id="creditcard1" class="domain.CreditCard">
+		<property name="make" value="VISA"/>
+		<property name="holderName" value="José Mel Pérez"/>
+		<property name="expirationMonth" value="1"/>
+		<property name="expirationYear" value="30"/>
+		<property name="cvv" value="102"/>
+		<property name="number" value="4495840606545807"/>
+	</bean>
 </beans>

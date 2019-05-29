@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.RequestRepository;
 import security.LoginService;
@@ -26,6 +28,7 @@ import domain.Package;
 import domain.Request;
 import domain.Town;
 import domain.TraverseTown;
+import forms.CreateRequestForm;
 
 @Service
 @Transactional
@@ -47,6 +50,8 @@ public class RequestService {
 	private PackageService		pacService;
 	@Autowired
 	private TownService			townService;
+	@Autowired
+	private Validator			validator;
 
 
 	//Constructor
@@ -90,13 +95,11 @@ public class RequestService {
 		Request res;
 		if (req.getId() == 0) {
 			Assert.isTrue(this.actorService.findActorType().equals("Customer"));
-			req.setTicker(Tickers.generateTicker());
 			this.calculateWeightVolume(req);
 			res = this.reqRepository.save(req);
 			UserAccount principal = LoginService.getPrincipal();
 			Customer cus = this.cusService.findOne(this.actorService.findByUserAccountId(principal.getId()).getId());
 			cus.getRequests().add(res);
-			this.cusService.save(cus);
 		} else {
 			Assert.isTrue(req.getId() != 0);
 			this.calculateWeightVolume(req);
@@ -112,30 +115,33 @@ public class RequestService {
 		Customer cus = this.reqRepository.findCustomerByRequestId(req.getId());
 		cus.getRequests().remove(req);
 		this.cusService.save(cus);
-
 		this.reqRepository.delete(req);
 	}
 
 	private Request calculateWeightVolume(Request req) {
 		double volume = 0.0;
 		double weight = 0.0;
-		Request res = (Request) req.clone();
-
-		if (req.getId() != 0) {
-			for (Package p : res.getPackages()) {
-				volume += (p.getHeight() * p.getLength() * p.getWidth());
-				weight += p.getWeight();
-			}
-		} else {
+		Request result;
+		if (req.getId() == 0) {
+			result = req;
 			List<Package> packs = new ArrayList<>(req.getPackages());
 			Package firstPac = packs.get(0);
 			volume = (firstPac.getHeight() * firstPac.getLength() * firstPac.getWidth());
 			weight = firstPac.getWeight();
+			result.setVolume(volume);
+			result.setWeight(weight);
+
+		} else {
+			Request clon = (Request) req.clone();
+			for (Package p : req.getPackages()) {
+				volume += (p.getHeight() * p.getLength() * p.getWidth());
+				weight += p.getWeight();
+			}
+			clon.setVolume(volume);
+			clon.setWeight(weight);
+			result = clon;
 		}
-		res.setVolume(volume);
-		res.setWeight(weight);
-		req = res;
-		return res;
+		return result;
 	}
 	public void flush() {
 		this.reqRepository.flush();
@@ -197,11 +203,15 @@ public class RequestService {
 		req.getPackages().add(res);
 		this.save(req);
 	}
-	//Eliminar paquetes
-	public void eliminaPackage(Package pack) {
-		Assert.notNull(pack);
-		this.pacService.delete(pack);
+	public void removePackage(Package pac) {
+		Request req = this.pacService.findRequestByPackageId(pac.getId());
+		int actorId = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
+		Assert.isTrue(this.cusService.findOne(actorId).getRequests().contains(req));
+		req.getPackages().remove(pac);
+		this.calculateWeightVolume(req);
+		this.pacService.delete(pac);
 	}
+
 	//Aplicar a una offer
 	public void applyOffer(Request req, Offer of) {
 		Request old = this.findOne(req.getId());
@@ -271,4 +281,48 @@ public class RequestService {
 		old = clon;
 		this.reqRepository.save(old);
 	}
+	//Reconstruct TODOOOOOOOOOO
+	public Request reconstruct(Request req, BindingResult binding) {
+		Request result;
+		if (req.getId() == 0) {
+			Assert.isTrue(this.actorService.findActorType().equals("Customer"));
+			result = req;
+			req.setTicker(Tickers.generateTicker());
+			if (req.isFinalMode()) {
+				req.setStatus(Request.SUBMITTED);
+				req.setMoment(DateTime.now().minusMillis(1000).toDate());
+			}
+			req.setOffer(null);
+
+		} else {
+			Request old = this.findOne(req.getId());
+			if (old.isFinalMode()) {
+				Assert.isTrue(old.getOffer() == null);
+				//Assert.isTrue(this.compruebaOffer(req.getOffer(), req));
+
+				Request clon = (Request) old.clone();
+				clon.setOffer(req.getOffer());
+				result = clon;
+			} else {
+				result = req;
+			}
+		}
+
+		this.validator.validate(result, binding);
+
+		return result;
+
+	}
+	public Request setearCampos(CreateRequestForm crf) {
+		Request res = this.create();
+		res.setDescription(crf.getDescription());
+		res.setMaxPrice(crf.getMaxPrice());
+		res.setDeadline(crf.getDeadline());
+		res.setFinalMode(crf.isFinalMode());
+		res.setStreetAddress(crf.getStreetAddress());
+		res.setComment(crf.getComment());
+		res.setTown(crf.getTown());
+		return res;
+	}
+
 }

@@ -118,6 +118,7 @@ public class RequestController extends AbstractController {
 		if (issueId) {
 			if (this.actorService.findActorType().equals("Auditor")) {
 				request = this.reqService.findRequestByIssueId(intId);
+				Assert.isTrue(request.isFinalMode());
 			} else {
 				return new ModelAndView("redirect:/");
 			}
@@ -143,6 +144,7 @@ public class RequestController extends AbstractController {
 		result = new ModelAndView("request/display");
 		result.addObject("request", request);
 		result.addObject("packages", new ArrayList<>(request.getPackages()));
+		result.addObject("requestURI", "request/carrier,customer,auditor/display.do");
 		result.addObject("owner", owner);
 		result.addObject("es", es);
 
@@ -153,10 +155,6 @@ public class RequestController extends AbstractController {
 	public ModelAndView create() {
 		ModelAndView result;
 		CreateRequestForm crf = new CreateRequestForm();
-		Package pack = this.pacService.create();
-		Request req = this.reqService.create();
-		crf.setPac(pack);
-		crf.setRequest(req);
 		result = this.createEditModelAndView(crf);
 
 		return result;
@@ -166,23 +164,33 @@ public class RequestController extends AbstractController {
 	@RequestMapping(value = "/customer/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView saveNewRequest(CreateRequestForm crf, BindingResult binding) {
 		ModelAndView result;
-		Package pac;
-		Request req;
+		Package pac = this.pacService.setearCampos(crf);
+		Request req = this.reqService.setearCampos(crf);
 		try {
-			//req = this.reqService.reconstruct(crf.getRequest());
-			//	pac = this.pacService.reconstruct(crf.getPac());
+
+			pac = this.pacService.reconstruct(pac, binding);
+			if (binding.hasErrors()) {
+				req = this.reqService.reconstruct(req, binding);
+			} else {
+				pac = this.pacService.save(pac);
+				req.getPackages().add(pac);
+				req = this.reqService.reconstruct(req, binding);
+			}
 		} catch (Throwable oops) {
 			return new ModelAndView("redirect:/");
 		}
-
 		if (binding.hasErrors()) {
-			this.createEditModelAndView(crf);
+			result = this.createEditModelAndView(crf);
 		} else {
-			//this.reqService.anyadePackage(pac, req);
+			try {
+				req = this.reqService.save(req);
+				result = new ModelAndView("redirect:/request/carrier,customer,auditor/display.do?id=" + req.getId());
+			} catch (Throwable oops) {
+				result = this.createEditModelAndView(crf, "req.commit.error");
+			}
 		}
-		return new ModelAndView("redirect:/");
+		return result;
 	}
-
 	//Edit a request
 	@RequestMapping(value = "/customer/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam(required = false, defaultValue = "0") String id) {
@@ -206,10 +214,10 @@ public class RequestController extends AbstractController {
 	//APPLY FOR AN OFFER
 
 	//CREATE A NEW REQUEST
-	protected ModelAndView createEditModelAndView(CreateRequestForm crq) {
+	protected ModelAndView createEditModelAndView(CreateRequestForm crf) {
 		ModelAndView result;
 
-		result = this.createEditModelAndView(crq, null);
+		result = this.createEditModelAndView(crf, null);
 
 		return result;
 	}
@@ -235,38 +243,6 @@ public class RequestController extends AbstractController {
 		return result;
 	}
 
-	//Create a new package 
-	protected ModelAndView createEditModelAndView(Package pack) {
-		ModelAndView result;
-
-		result = this.createEditModelAndView(pack, null);
-
-		return result;
-	}
-	protected ModelAndView createEditModelAndView(Package pack, String message) {
-		ModelAndView result;
-
-		if (pack.getId() == 0) {
-			result = new ModelAndView("package/create");
-		} else {
-			result = new ModelAndView("package/edit");
-		}
-
-		List<Category> categories = new ArrayList<>(this.catService.findAll());
-
-		final Locale locale = LocaleContextHolder.getLocale();
-		boolean es = true;
-		if (locale.getLanguage().equals(new Locale("en").getLanguage())) {
-			es = false;
-		}
-
-		result.addObject("package", pack);
-		result.addObject("message", message);
-		result.addObject("es", es);
-		result.addObject("categories", categories);
-
-		return result;
-	}
 	//EDIT A REQUEST
 	protected ModelAndView createEditModelAndView(Request req) {
 		ModelAndView result;

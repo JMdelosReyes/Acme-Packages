@@ -31,6 +31,7 @@
 		<value>/views/mess/messages</value>
 		<value>/views/messBox/messages</value>
 		<value>/views/request/messages</value>
+		<value>/views/package/messages</value>
 		<!-- Luis -->
 		<value>/views/vehicle/messages</value>
 		<value>/views/solicitation/messages</value>
@@ -50,8 +51,6 @@
 		<value>/views/offer/messages</value>
 		<value>/views/fare/messages</value>
 		<value>/views/traverseTown/messages</value>
-		
-		
 	</util:list>
 
 </beans>

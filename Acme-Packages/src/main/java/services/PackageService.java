@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.PackageRepository;
 import security.LoginService;
@@ -17,6 +19,8 @@ import domain.Customer;
 import domain.Fare;
 import domain.Package;
 import domain.Request;
+import forms.AddPackageForm;
+import forms.CreateRequestForm;
 
 @Service
 @Transactional
@@ -32,6 +36,8 @@ public class PackageService {
 	private CustomerService		cusService;
 	@Autowired
 	private ActorService		actorService;
+	@Autowired
+	private Validator			validator;
 
 
 	//Constructor
@@ -90,7 +96,7 @@ public class PackageService {
 		//Borro el package de la request en la que estaba
 		Request req = this.findRequestByPackageId(pac.getId());
 		req.getPackages().remove(pac);
-		this.reqService.save(req);
+		this.reqService.removePackage(pac);
 
 		this.pacRepository.delete(pac);
 
@@ -119,4 +125,59 @@ public class PackageService {
 		this.pacRepository.save(pac);
 	}
 
+	//Reconstruct 
+	public Package reconstruct(Package pac, BindingResult binding) {
+		Package result;
+		if (pac.getId() == 0) {
+			Assert.notNull(pac);
+			result = pac;
+			result.setPrice(null);
+		} else {
+			Assert.notNull(pac);
+			UserAccount principal = LoginService.getPrincipal();
+			Customer cus = this.cusService.findOne(this.actorService.findByUserAccountId(principal.getId()).getId());
+
+			Request req = this.findRequestByPackageId(pac.getId());
+			Assert.isTrue(cus.getRequests().contains(req));
+			Assert.isTrue(!req.isFinalMode());
+			result = this.findOne(pac.getId());
+			Assert.isTrue(req.getPackages().contains(result));
+			Package clon = (Package) pac.clone();
+			clon.setCategories(pac.getCategories());
+			clon.setWeight(pac.getWeight());
+			clon.setHeight(pac.getHeight());
+			clon.setWidth(pac.getWidth());
+			clon.setLength(pac.getLength());
+			clon.setDescription(pac.getDescription());
+			result = clon;
+		}
+		this.validator.validate(result, binding);
+
+		return result;
+	}
+	//Reconstruct addPackage
+	public Package reconstruct(AddPackageForm apf, BindingResult binding) {
+		Package result = this.create();
+		result.setWeight(apf.getWeight());
+		result.setDescription(apf.getDescription());
+		result.setLength(apf.getLength());
+		result.setWidth(apf.getWidth());
+		result.setHeight(apf.getHeight());
+		result.setCategories(apf.getCategories());
+		result.setPrice(null);
+
+		this.validator.validate(result, binding);
+
+		return result;
+	}
+	public Package setearCampos(CreateRequestForm crf) {
+		Package pac = this.create();
+		pac.setWeight(crf.getWeight());
+		pac.setDescription(crf.getPacDescription());
+		pac.setLength(crf.getLength());
+		pac.setWidth(crf.getWidth());
+		pac.setHeight(crf.getHeight());
+		pac.setCategories(crf.getCategories());
+		return pac;
+	}
 }

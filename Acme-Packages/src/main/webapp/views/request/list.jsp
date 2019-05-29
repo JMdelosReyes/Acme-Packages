@@ -41,7 +41,9 @@
 		<security:authorize access="hasRole('CUSTOMER')">
 			<jstl:choose>
 				<jstl:when test="${row.issue.ticker eq null}">
-					<a href="issue/customer/create.do?reqId=${row.id}"><spring:message code="req.issue.create"/></a>
+					<jstl:if test="${row.offer ne null}">
+						<a href="issue/customer/create.do?reqId=${row.id}"><spring:message code="req.issue.create"/></a>
+					</jstl:if>
 				</jstl:when>
 				<jstl:otherwise>
 					<a href="issue/carrier,customer,auditor/display.do?id=${row.id}"><jstl:out value="${row.issue.ticker}"/></a>
@@ -54,6 +56,12 @@
 			</jstl:if>
 		</security:authorize>
 	</display:column>
-		
+	<security:authorize  access="hasRole('CUSTOMER')">
+		<display:column title="req.edit">
+			<jstl:if test="${!row.finalMode}">
+				<a href="request/customer/edit.do?id=${row.id}"><spring:message code="req.edit"/></a>
+			</jstl:if>
+		</display:column>
+	</security:authorize>
 </display:table>
 

@@ -33,7 +33,7 @@
 		</security:authorize>
 		
 		<security:authorize access="isAnonymous()">
-			<li><a class="fNiv" href="offer/list.do"><spring:message code="master.page.offers" /></a></li>
+		<li><a class="fNiv" href="offer/list.do"><spring:message code="master.page.offers" /></a></li>
 			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a></li>
 			<li><a class="fNiv" href="actor/sign-up.do"><spring:message code="master.page.signup" /></a></li>
 			
@@ -42,8 +42,8 @@
 		<security:authorize access="hasRole('SPONSOR')">
 			<li><a href="sponsorship/sponsor/list.do"><spring:message
 						code="master.page.sponsorships" /></a></li>
-		</security:authorize>	
-			
+
+		</security:authorize>		
 		<security:authorize access="hasRole('CARRIER')">
 			<li><a class="fNiv" href="offer/carrier/list.do"><spring:message
 			 code="master.page.myOffers" /></a></li>
@@ -54,7 +54,7 @@
 			<li><a href="issue/carrier/list.do"><spring:message
 						code="master.page.issues" /></a></li>
 			<li><a href="curriculum/carrier/list.do"><spring:message
-						code="master.page.curriculum" /></a></li>
+						code="master.page.curriculum" /></a></li>			
 			<li><a href="evaluation/carrier/list.do"><spring:message
 						code="master.page.evaluations" /></a></li>
 		</security:authorize>
