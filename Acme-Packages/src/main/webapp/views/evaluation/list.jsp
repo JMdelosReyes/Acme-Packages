@@ -27,6 +27,16 @@
 	<display:column titleKey="eva.customer">
 		<jstl:out value="${row.customer}"></jstl:out>
 	</display:column>
+	
+	<jstl:if test="${owner eq true}">
+		<display:column>
+			<form action="evaluation/customer/delete.do" method="POST">
+				<input type="hidden" value="${row.id}" name="id">
+
+				<acme:delete/>
+			</form>
+		</display:column>
+	</jstl:if>
 
 
 </display:table>

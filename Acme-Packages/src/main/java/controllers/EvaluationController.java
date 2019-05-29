@@ -49,6 +49,7 @@ public class EvaluationController extends AbstractController {
 			result = new ModelAndView("evaluation/list");
 			result.addObject("evaluations", evaluations);
 			result.addObject("requestURI", "evaluation/customer/list.do");
+			result.addObject("owner", true);
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:/");
 		}

@@ -100,6 +100,8 @@ public class EvaluationService {
 		//
 		//		this.offerService.addEvaluation(result, f.getId());
 
+		this.computeOfferScore(offer.getId());
+
 		return result;
 	}
 
@@ -118,8 +120,9 @@ public class EvaluationService {
 		offer.getEvaluations().remove(old);
 
 		this.evaluationRepository.delete(old.getId());
-	}
 
+		this.computeOfferScore(offer.getId());
+	}
 	public void flush() {
 		this.evaluationRepository.flush();
 	}
@@ -182,5 +185,21 @@ public class EvaluationService {
 		this.validator.validate(result, binding);
 
 		return result;
+	}
+
+	public void computeOfferScore(int id) {
+		Assert.isTrue(id > 0);
+
+		Offer offer = this.offerService.findOne(id);
+
+		double score = 0;
+		for (Evaluation e : offer.getEvaluations()) {
+			score += e.getMark();
+		}
+		if (offer.getEvaluations().size() > 0) {
+			score = score / offer.getEvaluations().size();
+		}
+
+		this.evaluationRepository.updateOfferScore(offer.getId(), score);
 	}
 }

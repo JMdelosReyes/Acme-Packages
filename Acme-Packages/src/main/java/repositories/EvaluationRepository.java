@@ -4,6 +4,7 @@ package repositories;
 import java.util.Collection;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -27,5 +28,9 @@ public interface EvaluationRepository extends JpaRepository<Evaluation, Integer>
 
 	@Query("select o from Offer o where (select count(o2) from Evaluation e join e.customer c join e.offer o2 where c.id=?1 and o.id=o2.id)=0")
 	Collection<Offer> findEvaluableOffersByCustomer(int id);
+
+	@Modifying
+	@Query("update Offer o set o.score=?2 where o.id=?1")
+	public void updateOfferScore(int id, double score);
 
 }
