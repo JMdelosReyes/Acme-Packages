@@ -8,10 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.CommentRepository;
 import security.LoginService;
 import domain.Actor;
+import domain.Auditor;
 import domain.Comment;
 import domain.Issue;
 
@@ -30,6 +33,12 @@ public class CommentService {
 
 	@Autowired
 	private IssueService		issueService;
+
+	@Autowired
+	private AuditorService		auditorService;
+
+	@Autowired
+	private Validator			validator;
 
 
 	public CommentService() {
@@ -74,8 +83,8 @@ public class CommentService {
 		final Actor a = this.actorService.findOne(id);
 		Assert.notNull(a);
 
-		comment.setUsername(a.getUserAccount().getUsername());
-		comment.setMoment(DateTime.now().minusMillis(1000).toDate());
+		//		comment.setUsername(a.getUserAccount().getUsername());
+		//		comment.setMoment(DateTime.now().minusMillis(1000).toDate());
 
 		result = this.commentRepository.save(comment);
 		Assert.notNull(result);
@@ -95,6 +104,37 @@ public class CommentService {
 
 	public void flush() {
 		this.commentRepository.flush();
+	}
+
+	public Comment reconstruct(Comment comment, final Issue issue, final BindingResult binding) {
+		Comment result;
+
+		Assert.isTrue(!issue.isClosed());
+		Assert.isTrue(!this.issueService.findUnassigned().contains(issue));
+
+		String actorType = this.actorService.findActorType();
+		final int actorId = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
+		final Actor a = this.actorService.findOne(actorId);
+
+		Collection<Issue> issues;
+
+		if (actorType.equals("Carrier")) {
+			issues = this.issueService.findIssuesOfCarrier(actorId);
+		} else if (actorType.equals("Customer")) {
+			issues = this.issueService.findIssuesOfCustomer(actorId);
+		} else {
+			Auditor auditor = this.auditorService.findOne(actorId);
+			issues = auditor.getIssues();
+		}
+		Assert.isTrue(issues.contains(issue));
+
+		result = comment;
+		result.setUsername(a.getUserAccount().getUsername());
+		result.setMoment(DateTime.now().minusMillis(1000).toDate());
+
+		this.validator.validate(result, binding);
+
+		return result;
 	}
 
 }

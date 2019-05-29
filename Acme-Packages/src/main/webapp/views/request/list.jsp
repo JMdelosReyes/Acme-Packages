@@ -39,15 +39,17 @@
 	</display:column>
 	<display:column titleKey="req.issue">
 		<security:authorize access="hasRole('CUSTOMER')">
-			<jstl:if test="${req.issue eq null}">
-				<a href="/issue/customer/create.do?id=${row.id}"><spring:message code="req.issue.create"/></a>
-			</jstl:if>
-			<jstl:if test="${req.issue ne null}">
-				<a href="issue/carrier,customer,auditor/display.do?id=${row.id}"><jstl:out value="${row.issue.ticker}"/></a>
-			</jstl:if>
+			<jstl:choose>
+				<jstl:when test="${row.issue.ticker eq null}">
+					<a href="issue/customer/create.do?reqId=${row.id}"><spring:message code="req.issue.create"/></a>
+				</jstl:when>
+				<jstl:otherwise>
+					<a href="issue/carrier,customer,auditor/display.do?id=${row.id}"><jstl:out value="${row.issue.ticker}"/></a>
+				</jstl:otherwise>
+			</jstl:choose>
 		</security:authorize>
 		<security:authorize access="hasRole('CARRIER')">
-			<jstl:if test="${req.issue ne null}">
+			<jstl:if test="${row.issue ne null}">
 				<a href="issue/carrier,customer,auditor/display.do?id=${row.id}"><jstl:out value="${row.issue.ticker}"/></a>
 			</jstl:if>
 		</security:authorize>

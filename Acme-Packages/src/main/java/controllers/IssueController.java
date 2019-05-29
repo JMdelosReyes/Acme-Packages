@@ -141,37 +141,7 @@ public class IssueController extends AbstractController {
 		}
 
 		try {
-			String actorType = this.actorService.findActorType();
-			final int actorId = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
-
-			Issue issue = this.issueService.findOne(intId);
-			Collection<Issue> issues;
-			boolean involved = true;
-
-			if (actorType.equals("Carrier")) {
-				issues = this.issueService.findIssuesOfCarrier(actorId);
-				Assert.isTrue(issues.contains(issue));
-			} else if (actorType.equals("Customer")) {
-				issues = this.issueService.findIssuesOfCustomer(actorId);
-				Assert.isTrue(issues.contains(issue));
-			} else {
-				Auditor auditor = this.auditorService.findOne(actorId);
-				issues = auditor.getIssues();
-				if (!issues.contains(issue)) {
-					involved = false;
-				}
-			}
-
-			boolean assigned = true;
-			if (this.issueService.findUnassigned().contains(issue)) {
-				assigned = false;
-			}
-
-			result = new ModelAndView("issue/display");
-			result.addObject("comment", this.commentService.create());
-			result.addObject("assigned", assigned);
-			result.addObject("involved", involved);
-			result.addObject("issue", issue);
+			result = this.displayModelAndView(intId, this.commentService.create());
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:/");
 		}
@@ -201,13 +171,13 @@ public class IssueController extends AbstractController {
 
 	// Create
 	@RequestMapping(value = "/customer/create", method = RequestMethod.GET)
-	public ModelAndView create(@RequestParam(required = false, defaultValue = "0") final String vehId) {
+	public ModelAndView create(@RequestParam(required = false, defaultValue = "0") final String reqId) {
 		ModelAndView result;
 		int intId;
 		Issue issue;
 
 		try {
-			intId = Integer.valueOf(vehId);
+			intId = Integer.valueOf(reqId);
 		} catch (final Throwable oops) {
 			return new ModelAndView("redirect:/");
 		}
@@ -314,36 +284,32 @@ public class IssueController extends AbstractController {
 		ModelAndView result;
 		int intId;
 
+		Comment comm;
+
 		try {
 			intId = Integer.valueOf(issId);
 		} catch (final Throwable oops) {
 			return new ModelAndView("redirect:/");
 		}
 
+		Issue issue;
+
 		try {
-			String actorType = this.actorService.findActorType();
-			final int actorId = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
-
-			Issue issue = this.issueService.findOne(intId);
-			Assert.isTrue(!issue.isClosed());
-			Assert.isTrue(!this.issueService.findUnassigned().contains(issue));
-
-			Collection<Issue> issues;
-
-			if (actorType.equals("Carrier")) {
-				issues = this.issueService.findIssuesOfCarrier(actorId);
-			} else if (actorType.equals("Customer")) {
-				issues = this.issueService.findIssuesOfCustomer(actorId);
-			} else {
-				Auditor auditor = this.auditorService.findOne(actorId);
-				issues = auditor.getIssues();
-			}
-			Assert.isTrue(issues.contains(issue));
-
-			this.commentService.save(comment, issue.getId());
-			result = new ModelAndView("redirect:/issue/carrier,customer,auditor/display.do?id=" + issue.getId());
+			issue = this.issueService.findOne(intId);
+			comm = this.commentService.reconstruct(comment, issue, binding);
 		} catch (final Throwable oops) {
-			result = new ModelAndView("redirect:/issue/carrier,customer,auditor/display.do?id=" + intId);
+			return new ModelAndView("redirect:/");
+		}
+
+		if (binding.hasErrors()) {
+			result = this.displayModelAndView(issue.getId(), comment);
+		} else {
+			try {
+				this.commentService.save(comment, issue.getId());
+				result = new ModelAndView("redirect:/issue/carrier,customer,auditor/display.do?id=" + issue.getId());
+			} catch (final Throwable oops) {
+				result = new ModelAndView("redirect:/issue/carrier,customer,auditor/display.do?id=" + intId);
+			}
 		}
 		return result;
 	}
@@ -371,6 +337,48 @@ public class IssueController extends AbstractController {
 		result.addObject("message", message);
 		result.addObject("reqId", reqId);
 
+		return result;
+	}
+
+	protected ModelAndView displayModelAndView(int intId, Comment comment) {
+		ModelAndView result;
+
+		try {
+			String actorType = this.actorService.findActorType();
+			final int actorId = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
+
+			Issue issue = this.issueService.findOne(intId);
+			Collection<Issue> issues;
+			boolean involved = true;
+
+			if (actorType.equals("Carrier")) {
+				issues = this.issueService.findIssuesOfCarrier(actorId);
+				Assert.isTrue(issues.contains(issue));
+			} else if (actorType.equals("Customer")) {
+				issues = this.issueService.findIssuesOfCustomer(actorId);
+				Assert.isTrue(issues.contains(issue));
+			} else {
+				Auditor auditor = this.auditorService.findOne(actorId);
+				issues = auditor.getIssues();
+				if (!issues.contains(issue)) {
+					involved = false;
+				}
+			}
+
+			boolean assigned = true;
+			if (this.issueService.findUnassigned().contains(issue)) {
+				assigned = false;
+			}
+
+			result = new ModelAndView("issue/display");
+			result.addObject("comment", comment);
+			result.addObject("assigned", assigned);
+			result.addObject("involved", involved);
+			result.addObject("issue", issue);
+
+		} catch (final Throwable oops) {
+			result = new ModelAndView("redirect:/");
+		}
 		return result;
 	}
 }

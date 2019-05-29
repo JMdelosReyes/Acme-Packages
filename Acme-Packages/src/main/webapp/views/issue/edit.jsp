@@ -14,7 +14,7 @@
 	<acme:textarea code="iss.description" path="description"/>
 	
 	<acme:submit name="save" code="iss.save"/>
-	<acme:cancel url="issue/customer/list.do" code="iss.back"/>
+	<acme:cancel url="request/carrier,customer/list.do" code="iss.back"/>
 	
 </form:form>
 	
