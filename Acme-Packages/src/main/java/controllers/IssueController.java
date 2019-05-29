@@ -212,10 +212,8 @@ public class IssueController extends AbstractController {
 			return new ModelAndView("redirect:/");
 		}
 
-		Request request;
-
 		try {
-			request = this.requestService.findOne(intId);
+			Request request = this.requestService.findOne(intId);
 			iss = this.issueService.reconstruct(issue, request, binding);
 		} catch (final Throwable oops) {
 			return new ModelAndView("redirect:/");

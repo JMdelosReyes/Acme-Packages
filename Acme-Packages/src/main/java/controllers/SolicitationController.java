@@ -241,10 +241,8 @@ public class SolicitationController extends AbstractController {
 			return new ModelAndView("redirect:/");
 		}
 
-		Vehicle vehicle;
-
 		try {
-			vehicle = this.vehicleService.findOne(intId);
+			Vehicle vehicle = this.vehicleService.findOne(intId);
 			sol = this.solicitationService.reconstruct(solicitation, binding);
 			Assert.isTrue(vehicle.getSolicitations().contains(sol));
 		} catch (final Throwable oops) {

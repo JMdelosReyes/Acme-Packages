@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.EvaluationRepository;
 import security.LoginService;
@@ -31,6 +33,9 @@ public class EvaluationService {
 	@Autowired
 	private OfferService			offerService;
 
+	@Autowired
+	private Validator				validator;
+
 
 	public EvaluationService() {
 
@@ -51,7 +56,6 @@ public class EvaluationService {
 	}
 
 	public Evaluation create() {
-
 		Assert.isTrue(this.actorService.findActorType().equals("Customer"));
 
 		final Evaluation result = new Evaluation();
@@ -86,13 +90,34 @@ public class EvaluationService {
 		Assert.notNull(result);
 
 		customer.getEvaluations().add(result);
-		this.customerService.save(customer);
 
-		Offer f = result.getOffer();
+		Offer offer = this.offerService.findOne(result.getOffer().getId());
+		offer.getEvaluations().add(result);
 
-		this.offerService.addEvaluation(result, f.getId());
+		//		this.customerService.save(customer);
+		//
+		//		Offer f = result.getOffer();
+		//
+		//		this.offerService.addEvaluation(result, f.getId());
 
 		return result;
+	}
+
+	public void delete(Evaluation evaluation) {
+		Assert.notNull(evaluation);
+		Assert.isTrue(evaluation.getId() > 0);
+
+		Evaluation old = this.evaluationRepository.findOne(evaluation.getId());
+
+		int actorId = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
+		Customer customer = this.customerService.findOne(actorId);
+		Assert.isTrue(customer.getId() == old.getCustomer().getId());
+
+		Offer offer = this.offerService.findOne(old.getOffer().getId());
+		customer.getEvaluations().remove(old);
+		offer.getEvaluations().remove(old);
+
+		this.evaluationRepository.delete(old.getId());
 	}
 
 	public void flush() {
@@ -117,4 +142,45 @@ public class EvaluationService {
 		}
 	}
 
+	public Collection<Evaluation> findEvaluationsByCustomer(int id) {
+		Assert.isTrue(id > 0);
+		Collection<Evaluation> evaluations = this.evaluationRepository.findEvaluationsByCustomer(id);
+		Assert.notNull(evaluations);
+		return evaluations;
+	}
+
+	public Collection<Evaluation> findEvaluationsByCarrier(int id) {
+		Assert.isTrue(id > 0);
+		Collection<Evaluation> evaluations = this.evaluationRepository.findEvaluationsByCarrier(id);
+		Assert.notNull(evaluations);
+		return evaluations;
+	}
+
+	public Collection<Offer> findEvaluableOffersByCustomer(int id) {
+		Assert.isTrue(id > 0);
+		Collection<Offer> offers = this.evaluationRepository.findEvaluableOffersByCustomer(id);
+		Assert.notNull(offers);
+		return offers;
+	}
+
+	public Evaluation reconstruct(final Evaluation evaluation, Offer offer, final BindingResult binding) {
+		Evaluation result;
+
+		Assert.isTrue(this.actorService.findActorType().equals("Customer"));
+
+		int actorId = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
+		Customer customer = this.customerService.findOne(actorId);
+
+		Collection<Offer> offers = this.evaluationRepository.findEvaluableOffersByCustomer(actorId);
+		Assert.isTrue(offers.contains(offer));
+
+		result = evaluation;
+		result.setOffer(offer);
+		result.setCustomer(customer);
+		result.setMoment(DateTime.now().minusMillis(1000).toDate());
+
+		this.validator.validate(result, binding);
+
+		return result;
+	}
 }

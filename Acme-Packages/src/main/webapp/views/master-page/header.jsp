@@ -41,8 +41,8 @@
 		<security:authorize access="hasRole('SPONSOR')">
 			<li><a href="sponsorship/sponsor/list.do"><spring:message
 						code="master.page.sponsorships" /></a></li>
-
-		</security:authorize>		
+		</security:authorize>	
+			
 		<security:authorize access="hasRole('CARRIER')">
 			<li><a href="vehicle/carrier/list.do"><spring:message
 						code="master.page.vehicles" /></a></li>
@@ -50,6 +50,8 @@
 						code="master.page.issues" /></a></li>
 			<li><a href="curriculum/carrier/list.do"><spring:message
 						code="master.page.curriculum" /></a></li>
+			<li><a href="evaluation/carrier/list.do"><spring:message
+						code="master.page.evaluations" /></a></li>
 		</security:authorize>
 		
 		<security:authorize access="hasRole('CUSTOMER')">
@@ -59,6 +61,8 @@
 						code="master.page.issues" /></a></li>
 					<li><a href="request/carrier,customer/list.do"><spring:message
 						code="master.page.requests" /></a></li>
+					<li><a href="evaluation/customer/list.do"><spring:message
+						code="master.page.evaluations" /></a></li>
 		</security:authorize>
 		
 		<security:authorize access="hasRole('AUDITOR')">

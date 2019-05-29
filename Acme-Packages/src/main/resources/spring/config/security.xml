@@ -60,6 +60,13 @@
 		<security:intercept-url pattern="/solicitation/carrier/edit.do" access="hasRole('CARRIER')" />
 		<security:intercept-url pattern="/solicitation/carrier/delete.do" access="hasRole('CARRIER')" />
 		
+		<security:intercept-url pattern="/evaluation/carrier/list.do" access="hasRole('CARRIER')" />
+		<security:intercept-url pattern="/evaluation/customer/list.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/evaluation/list.do" access="isAuthenticated()" />
+		<security:intercept-url pattern="/evaluation/customer/create.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/evaluation/customer/edit.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/evaluation/customer/delete.do" access="hasRole('CUSTOMER')" />
+		
 		<security:intercept-url pattern="/issue/auditor/list.do" access="hasRole('AUDITOR')" />
 		<security:intercept-url pattern="/issue/carrier/list.do" access="hasRole('CARRIER')" />
 		<security:intercept-url pattern="/issue/customer/list.do" access="hasRole('CUSTOMER')" />
