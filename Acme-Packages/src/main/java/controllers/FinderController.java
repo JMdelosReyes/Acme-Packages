@@ -2,8 +2,10 @@
 package controllers;
 
 import java.util.Collection;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.CategoryService;
 import services.FinderService;
 import domain.Finder;
 import domain.Offer;
@@ -21,6 +24,9 @@ public class FinderController extends AbstractController {
 
 	@Autowired
 	private FinderService	finderService;
+
+	@Autowired
+	private CategoryService	categoryService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -109,6 +115,16 @@ public class FinderController extends AbstractController {
 		result.addObject("offers", offers);
 		result.addObject("requestURI", "finder/rookie/search.do");
 		result.addObject("message", message);
+		result.addObject("enCategories", this.categoryService.englishCategories());
+		result.addObject("esCategories", this.categoryService.spanishCategories());
+
+		final Locale locale = LocaleContextHolder.getLocale();
+		boolean es = true;
+		if (locale.getLanguage().equals(new Locale("en").getLanguage())) {
+			es = false;
+		}
+
+		result.addObject("es", es);
 
 		return result;
 	}

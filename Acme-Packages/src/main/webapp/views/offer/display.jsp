@@ -14,13 +14,13 @@
 <spring:message code="of.maxDateToRequest"/>: <jstl:out value="${offer.maxDateToRequest}"/><br>
 <spring:message code="of.canceled"/>: <jstl:out value="${offer.canceled}"/><br>
 <jstl:if test="${offer.finalMode eq true}">
-	<a href="fare/list.do?id=${offer.id}"><spring:message code="of.fares"/></a><br>
-	<a href="evaluations/list.do?id=${curriculum.id}"><spring:message code="of.evaluations"/></a>
+	<a href="fare/list.do?id=<jstl:out value="${offer.id}"/>"><spring:message code="of.fares"/></a><br>
+	<a href="evaluation/list.do?id=<jstl:out value="${offer.id}"/>"><spring:message code="of.evaluations"/></a>
 	<br>
 </jstl:if>
 <jstl:if test="${owner eq true}">
-	<a href="vehicle/display.do?id=${offer.id}"><spring:message code="of.vehicle"/></a><br>
-	<a href="request/list.do?id=${offer.id}"><spring:message code="of.requests"/></a><br>
+	<a href="vehicle/carrier,auditor/display.do?id=<jstl:out value="${offer.vehicle.id}"/>"><spring:message code="of.vehicle"/></a><br>
+	<a href="request/carrier,customer/list.do?id=<jstl:out value="${offer.id}"/>"><spring:message code="of.requests"/></a><br>
 	<spring:message code="of.finalMode"/>: <jstl:out value="${offer.finalMode}"/><br>
 	<spring:message code="of.score"/>: <jstl:out value="${offer.score}"/><br>
 

@@ -136,4 +136,12 @@ public class CategoryService {
 
 		return result;
 	}
+
+	public Collection<String> spanishCategories() {
+		return this.categoryRepository.SpanishCategories();
+	}
+
+	public Collection<String> englishCategories() {
+		return this.categoryRepository.englishCategories();
+	}
 }

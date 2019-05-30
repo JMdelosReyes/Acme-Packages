@@ -20,9 +20,10 @@
 		<acme:textbox code="finder.maxDate" path="maxDate" placeholder="dd/MM/yyyy" />
 		<acme:textbox code="finder.maxPrice" type="number" path="maxPrice"/>
 		<acme:textbox code="finder.weight" type="number" path="weight"/>				
-		<acme:textbox code="finder.volume" type="number" path="volume"/>				
-		<acme:textbox code="finder.category" path="category"/>
-
+		<acme:textbox code="finder.volume" type="number" path="volume"/>	
+		
+		<jstl:if test="${es }"><acme:selectString items="${ esCategories}" code="finder.category" path="category"/>	</jstl:if>
+		<jstl:if test="${not es }"><acme:selectString items="${ enCategories}" code="finder.category" path="category"/>	</jstl:if>
 	
 		<acme:submit name="search" code="finder.search"/>
     	<acme:submit name="clear" code="finder.clear"/>

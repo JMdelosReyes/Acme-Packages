@@ -57,6 +57,7 @@ public class OfferController extends AbstractController {
 
 			result = new ModelAndView("offer/list");
 			result.addObject("offers", offers);
+			result.addObject("showFilter", false);
 			result.addObject("requestURI", "offer/carrier/list.do");
 
 		} catch (final Throwable oops) {
@@ -68,7 +69,7 @@ public class OfferController extends AbstractController {
 
 	//GENERAL LIST
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list(@RequestParam(required = false, defaultValue = "0") final String id) {
+	public ModelAndView list(@RequestParam(required = false, defaultValue = "") final String filter, @RequestParam(required = false, defaultValue = "0") final String id) {
 		ModelAndView result;
 		int intId;
 
@@ -80,13 +81,16 @@ public class OfferController extends AbstractController {
 
 		try {
 			final Collection<Offer> offers;
+			result = new ModelAndView("offer/list");
+
 			if (intId != 0) {
+				result.addObject("showFilter", false);
 				offers = this.offerService.findCarrierOpenOffers(intId);
 			} else {
-				offers = this.offerService.findOpenOffers();
+				result.addObject("showFilter", true);
+				offers = this.offerService.findOpenOffers(filter);
 			}
 
-			result = new ModelAndView("offer/list");
 			result.addObject("offers", offers);
 			result.addObject("requestURI", "offer/list.do");
 

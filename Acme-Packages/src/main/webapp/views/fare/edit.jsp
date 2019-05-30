@@ -18,7 +18,7 @@
 	
 	<acme:submit name="save" code="fa.save"/>
 	
-	<jstl:if test="${fa.id!=0}">
+	<jstl:if test="${fare.id!=0}">
 		<acme:delete/>
 	</jstl:if>
 	

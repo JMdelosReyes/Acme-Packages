@@ -69,9 +69,9 @@ public class FareController extends AbstractController {
 
 			final Collection<Fare> fares = this.fareService.findByOffer(intId);
 
-			result = new ModelAndView("fares/list");
+			result = new ModelAndView("fare/list");
 			result.addObject("fares", fares);
-			result.addObject("requestURI", "fares/list.do");
+			result.addObject("requestURI", "fare/list.do");
 
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:/");

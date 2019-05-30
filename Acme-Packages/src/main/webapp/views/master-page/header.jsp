@@ -40,6 +40,8 @@
 		</security:authorize>
 		
 		<security:authorize access="hasRole('SPONSOR')">
+				<li><a class="fNiv" href="offer/list.do"><spring:message code="master.page.offers" /></a></li>
+		
 			<li><a href="sponsorship/sponsor/list.do"><spring:message
 						code="master.page.sponsorships" /></a></li>
 
@@ -60,6 +62,8 @@
 		</security:authorize>
 		
 		<security:authorize access="hasRole('CUSTOMER')">
+				<li><a class="fNiv" href="offer/list.do"><spring:message code="master.page.offers" /></a></li>
+		
 					<li><a class="fNiv" href="finder/customer/search.do"><spring:message
 						code="master.page.finder" /></a></li>
 					<li><a href="issue/customer/list.do"><spring:message
@@ -71,6 +75,8 @@
 		</security:authorize>
 		
 		<security:authorize access="hasRole('AUDITOR')">
+				<li><a class="fNiv" href="offer/list.do"><spring:message code="master.page.offers" /></a></li>
+		
 			<li><a href="solicitation/auditor/list.do"><spring:message
 						code="master.page.solicitations" /></a>					
 				<ul>

@@ -109,7 +109,7 @@ public class TraverseTownController extends AbstractController {
 		try {
 			final TraverseTown traverseTown = this.traverseTownService.findOne(intId);
 			this.traverseTownService.delete(traverseTown);
-			result = new ModelAndView("redirect:/fare/carrier/list.do");
+			result = new ModelAndView("redirect:/offer/display.do?id=" + offerId);
 		} catch (final Throwable oops) {
 			return new ModelAndView("redirect:/");
 		}

@@ -270,8 +270,8 @@ public class OfferService {
 		return result;
 	}
 
-	public Collection<Offer> findOpenOffers() {
-		final Collection<Offer> offers = this.offerRepository.findOpenOffers();
+	public Collection<Offer> findOpenOffers(String filter) {
+		final Collection<Offer> offers = this.offerRepository.findOpenOffers(filter);
 		Assert.notNull(offers);
 		return offers;
 	}
