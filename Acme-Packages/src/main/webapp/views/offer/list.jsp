@@ -23,6 +23,13 @@
 		<a href="offer/display.do?id=<jstl:out value="${row.id}"/>"><jstl:out value="${row.ticker}"></jstl:out></a>
 	</display:column>
 	
+	<jstl:if test="${!(requestURI eq 'offer/carrier/list.do')}">
+	
+	<display:column>
+		<a href="actor/displayCarrier.do?offerId=<jstl:out value="${row.id}"/>"><spring:message code = "of.carrier"/></a>	</display:column>
+	</jstl:if>
+	
+	
 	<display:column titleKey="of.maxDateToRequest">
 		<fmt:formatDate value="${row.maxDateToRequest}" pattern="dd/MM/yy HH:mm"></fmt:formatDate>
 	</display:column>
@@ -38,11 +45,14 @@
 	<display:column titleKey="of.fares">
 		<a href="fare/list.do?id=<jstl:out value="${row.id}"/>"><spring:message code = "of.fares"/></a>
 	</display:column>
-		
-	<display:column titleKey="of.evaluations">
+	
+	<security:authorize  access="isAuthenticated()">
+		<display:column titleKey="of.evaluations">
 		<a href="evaluation/list.do?id=<jstl:out value="${row.id}"/>"><spring:message code = "of.evaluations"/></a>
 	</display:column>
 	
+	</security:authorize>
+		
 	<jstl:if test="${requestURI eq 'offer/carrier/list.do'}">
 	
 	<display:column titleKey="of.vehicle">

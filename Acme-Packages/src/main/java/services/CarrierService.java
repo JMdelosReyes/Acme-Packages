@@ -225,4 +225,8 @@ public class CarrierService {
 		this.carrierRepository.save(clon);
 	}
 
+	public Carrier findCarrierFromOffer(int offerId) {
+		return this.carrierRepository.findCarrierFromOffer(offerId);
+	}
+
 }
