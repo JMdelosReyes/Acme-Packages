@@ -39,12 +39,20 @@
 		<a href="offer/display.do?id=<jstl:out value="${row.id}"/>"><jstl:out value="${row.ticker}"></jstl:out></a>
 	</display:column>
 	
-	<display:column titleKey="of.maxDateToRequest">
-		<fmt:formatDate value="${row.maxDateToRequest}" pattern="dd/MM/yy HH:mm"></fmt:formatDate>
+	<display:column>
+		<a href="actor/displayCarrier.do?offerId=<jstl:out value="${row.id}"/>"><spring:message code = "of.carrier"/></a>	</display:column>
+	
+	<display:column titleKey="of.maxDateToRequest" sortable="true">
+		<fmt:formatDate value="${row.maxDateToRequest}" pattern="dd/MM/yy"></fmt:formatDate>
 	</display:column>
-		
+	
 	<display:column titleKey="of.fares">
-		<a href="offer/display.do?id=<jstl:out value="${row.id}"/>"><spring:message code = "of.fares"/></a>
+		<a href="fare/list.do?id=<jstl:out value="${row.id}"/>"><spring:message code = "of.fares"/></a>
 	</display:column>
+	
+		<display:column titleKey="of.evaluations">
+		<a href="evaluation/list.do?id=<jstl:out value="${row.id}"/>"><spring:message code = "of.evaluations"/></a>
+	</display:column>
+	
 	   
 </display:table>

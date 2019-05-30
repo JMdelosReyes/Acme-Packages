@@ -47,6 +47,7 @@
 
 		</security:authorize>		
 		<security:authorize access="hasRole('CARRIER')">
+				<li><a class="fNiv" href="offer/list.do"><spring:message code="master.page.offers" /></a></li>
 			<li><a class="fNiv" href="offer/carrier/list.do"><spring:message
 			 code="master.page.myOffers" /></a></li>
 			 <li><a class="fNiv" href="fare/carrier/list.do"><spring:message

@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import security.LoginService;
 import services.ActorService;
+import services.OfferService;
 import services.TownService;
 import services.TraverseTownService;
 import domain.TraverseTown;
@@ -29,6 +30,9 @@ public class TraverseTownController extends AbstractController {
 	@Autowired
 	private TownService			townService;
 
+	@Autowired
+	private OfferService		offerService;
+
 
 	// Constructor
 	public TraverseTownController() {
@@ -40,6 +44,13 @@ public class TraverseTownController extends AbstractController {
 	public ModelAndView create(@RequestParam(required = true) String offerId) {
 		ModelAndView result;
 		TraverseTown tw;
+
+		try {
+			Assert.isTrue(!this.offerService.findOne(Integer.valueOf(offerId)).isFinalMode());
+		} catch (final Throwable oops) {
+			return new ModelAndView("redirect:/");
+		}
+
 		tw = this.traverseTownService.create();
 		result = this.createEditModelAndView(tw, offerId);
 		return result;
@@ -107,6 +118,7 @@ public class TraverseTownController extends AbstractController {
 		}
 
 		try {
+			Assert.isTrue(!this.offerService.findOne(Integer.valueOf(offerId)).isFinalMode());
 			final TraverseTown traverseTown = this.traverseTownService.findOne(intId);
 			this.traverseTownService.delete(traverseTown);
 			result = new ModelAndView("redirect:/offer/display.do?id=" + offerId);
@@ -135,6 +147,7 @@ public class TraverseTownController extends AbstractController {
 			result = new ModelAndView("traverseTown/edit");
 		}
 
+		result.addObject("finalMode", this.offerService.findOne(Integer.valueOf(offerId)).isFinalMode());
 		result.addObject("traverseTown", tt);
 		result.addObject("message", message);
 		result.addObject("towns", this.townService.findAll());

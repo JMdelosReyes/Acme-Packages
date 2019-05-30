@@ -21,7 +21,7 @@
 	
 	<acme:submit name="save" code="tt.save"/>
 	
-	<jstl:if test="${traverseTown.id!=0}">
+	<jstl:if test="${traverseTown.id!=0 and !finalMode}">
 		<acme:delete/>
 	</jstl:if>
 	

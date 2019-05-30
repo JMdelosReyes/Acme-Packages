@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
+import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -261,24 +262,28 @@ public class OfferService {
 
 	public Offer reconstruct(final OfferForm of, final BindingResult binding) {
 		Offer result;
+		Offer old = null;
 
 		if (of.getId() == 0) {
 			result = this.create();
-			result.setCanceled(of.isCanceled());
 			result.setFares(of.getFares());
-			result.setFinalMode(of.isFinalMode());
 			result.setMaxDateToRequest(of.getMaxDateToRequest());
 			result.setVehicle(of.getVehicle());
 
 		} else {
+
 			result = this.offerRepository.findOne(of.getId());
+			old = result;
+
 			Assert.notNull(result);
 			final int carrierId = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
 			final Carrier carrier = this.carrierService.findOne(carrierId);
 			Assert.isTrue(carrier.getOffers().contains(result));
 
 			final Offer clon = (Offer) result.clone();
-			clon.setCanceled(of.isCanceled());
+			if (result.isFinalMode()) {
+				clon.setCanceled(of.isCanceled());
+			}
 			clon.setFares(of.getFares());
 			clon.setFinalMode(of.isFinalMode());
 			clon.setMaxDateToRequest(of.getMaxDateToRequest());
@@ -288,6 +293,17 @@ public class OfferService {
 		}
 
 		this.validator.validate(result, binding);
+
+		if ((of.getId() == 0) || !old.isFinalMode()) {
+			if ((result.getMaxDateToRequest() != null) && result.getMaxDateToRequest().before(LocalDateTime.now().toDate())) {
+				binding.rejectValue("maxDateToRequest", "of.error.date");
+			}
+		}
+
+		if ((old != null) && old.isFinalMode()
+			&& (!old.getFares().equals(result.getFares()) || (old.isFinalMode() != result.isFinalMode()) || !old.getMaxDateToRequest().equals(result.getMaxDateToRequest()) || !old.getVehicle().equals(result.getVehicle()))) {
+			binding.rejectValue("finalMode", "of.error.finalMode");
+		}
 
 		return result;
 	}
@@ -306,6 +322,10 @@ public class OfferService {
 		final Collection<Offer> offers = this.offerRepository.findCarrierOffers(carrierId);
 		Assert.notNull(offers);
 		return offers;
+	}
+
+	public Date maxEstimatedDateofAnOffer(int offerId) {
+		return this.offerRepository.findMaxDateTTByOffer(offerId);
 	}
 
 }

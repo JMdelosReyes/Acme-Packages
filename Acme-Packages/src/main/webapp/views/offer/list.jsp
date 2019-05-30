@@ -30,8 +30,8 @@
 	</jstl:if>
 	
 	
-	<display:column titleKey="of.maxDateToRequest">
-		<fmt:formatDate value="${row.maxDateToRequest}" pattern="dd/MM/yy HH:mm"></fmt:formatDate>
+	<display:column titleKey="of.maxDateToRequest" sortable="true">
+		<fmt:formatDate value="${row.maxDateToRequest}" pattern="dd/MM/yy"></fmt:formatDate>
 	</display:column>
 	
 	<jstl:if test="${requestURI eq 'offer/carrier/list.do'}">

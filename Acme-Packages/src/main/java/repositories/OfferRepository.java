@@ -2,6 +2,7 @@
 package repositories;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -29,5 +30,8 @@ public interface OfferRepository extends JpaRepository<Offer, Integer> {
 
 	@Query("select max(tt.number) from Offer o join o.traverseTowns tt where o.id=?1")
 	Integer findMaxNumberTTByOffer(int id);
+
+	@Query("select max(tt.estimatedDate) from Offer o join o.traverseTowns tt where o.id=?1")
+	Date findMaxDateTTByOffer(int id);
 
 }

@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -170,6 +171,7 @@ public class OfferController extends AbstractController {
 
 		try {
 			OfferForm of = this.offerService.getOfferForm(intId);
+			Assert.isTrue(!(of.isCanceled() && of.isFinalMode()));
 			result = this.createEditModelAndView(of);
 		} catch (final Throwable oops) {
 			return new ModelAndView("redirect:/");
@@ -215,6 +217,8 @@ public class OfferController extends AbstractController {
 
 		try {
 			final Offer offer = this.offerService.findOne(intId);
+			Assert.isTrue(!offer.isFinalMode());
+
 			this.offerService.delete(offer);
 			result = new ModelAndView("redirect:/offer/carrier/list.do");
 		} catch (final Throwable oops) {

@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -137,17 +138,17 @@ public class TraverseTownService {
 
 	public TraverseTown reconstruct(TraverseTown tt, Integer offerId, BindingResult binding) {
 		TraverseTown result;
+		TraverseTown old = null;
 
 		if (tt.getId() == 0) {
 			result = this.create();
 			result.setCurrentTown(tt.isCurrentTown());
 			result.setEstimatedDate(tt.getEstimatedDate());
-			//TODO lo debería hacer el save pero no lo hace
-			result.setNumber(2);
 			result.setTown(tt.getTown());
 
 		} else {
 			result = this.traverseTownRepository.findOne(tt.getId());
+			old = result;
 			Assert.notNull(result);
 			final TraverseTown clon = (TraverseTown) result.clone();
 
@@ -160,6 +161,22 @@ public class TraverseTownService {
 
 		this.validator.validate(result, binding);
 
+		Offer o = this.offerService.findOne(offerId);
+
+		if ((old != null) && o.isFinalMode() && (!old.getTown().equals(result.getTown()))) {
+			binding.rejectValue("town", "of.error.finalMode");
+		}
+
+		if ((result.getEstimatedDate() != null) && result.getEstimatedDate().before(o.getMaxDateToRequest())) {
+			binding.rejectValue("estimatedDate", "tt.error.estimatedDateBeforeOfferDate");
+		}
+
+		Date maxEstimated = this.offerService.maxEstimatedDateofAnOffer(offerId);
+
+		if (((result.getEstimatedDate() != null) && (maxEstimated != null)) && result.getEstimatedDate().before(maxEstimated)) {
+			binding.rejectValue("estimatedDate", "tt.error.estimatedDateBeforeMaxDate");
+		}
+
 		if (!binding.hasErrors()) {
 			result = this.save(result);
 			this.flush();
@@ -171,5 +188,4 @@ public class TraverseTownService {
 
 		return result;
 	}
-
 }

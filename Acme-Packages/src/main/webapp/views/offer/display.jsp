@@ -6,6 +6,8 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 
 <fieldset>
 	<legend><spring:message code="of.offer"/></legend>
@@ -45,7 +47,7 @@
 	</display:column>
 			
 	<display:column titleKey="of.estimatedDate" sortable="true">
-		<jstl:out value="${row.estimatedDate}"></jstl:out>
+		<fmt:formatDate value="${row.estimatedDate}" pattern="dd/MM/yy"></fmt:formatDate>
 	</display:column>
 	
 	<display:column titleKey="of.currentTown">
@@ -69,16 +71,15 @@
 </display:table>
 
 	<jstl:if test="${owner eq true}">
-		
-		<a href="traverseTown/carrier/create.do?offerId=<jstl:out value="${offer.id}"/>"><spring:message code = "of.create"/></a>
-	
+		<jstl:if test="${offer.finalMode eq false}">
+			<a href="traverseTown/carrier/create.do?offerId=<jstl:out value="${offer.id}"/>"><spring:message code = "of.create"/></a>
+		</jstl:if>
 	</jstl:if>
 
 
 </fieldset>
 	<jstl:if test="${owner eq true}">
-
-	<a href="offer/carrier/edit.do?id=${offer.id}"><spring:message code="of.edit"/></a>
+			<a href="offer/carrier/edit.do?id=${offer.id}"><spring:message code="of.edit"/></a>
 	</jstl:if>
 	
 
