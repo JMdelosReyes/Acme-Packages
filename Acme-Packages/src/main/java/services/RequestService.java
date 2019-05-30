@@ -190,6 +190,13 @@ public class RequestService {
 		Assert.notNull(res);
 		return res;
 	}
+	public Collection<Category> findCategoriesPackagesByRequestId(Request req) {
+		Collection<Category> res = new ArrayList<Category>();
+		res = this.reqRepository.findCategoriesPackagesByRequestId(req.getId());
+		Assert.notNull(res);
+		return res;
+	}
+
 	public Collection<Fare> findFaresOrderedByPriceByPackageId(Package pac) {
 		Collection<Fare> res = new ArrayList<Fare>();
 		res = this.reqRepository.findFaresOrderedByPriceByPackageId(pac.getId());
@@ -270,18 +277,58 @@ public class RequestService {
 		return res;
 	}
 
-	//Rechazar la request
-	public void changeStatus(Request req) {
-		Assert.isTrue(req.isFinalMode());
-		UserAccount principal = LoginService.getPrincipal();
-		Carrier owner = this.reqRepository.findCarrierByOfferId(req.getOffer().getId());
-		Carrier logged = this.carService.findOne(this.actorService.findByUserAccountId(principal.getId()).getId());
-		Assert.isTrue(owner.getId() == logged.getId());
-		Request old = this.findOne(req.getId());
-		Request clon = (Request) old.clone();
-		clon.setStatus(req.getStatus());
-		old = clon;
-		this.reqRepository.save(old);
+	//Aceptar o Rechazar la request
+	public void changeStatus(int id, String status) {
+		Request result;
+		if (status.equals(Request.ACCEPTED)) {
+			UserAccount principal = LoginService.getPrincipal();
+			Carrier owner = this.reqRepository.findCarrierByOfferId(this.findOne(id).getOffer().getId());
+			Carrier logged = this.carService.findOne(this.actorService.findByUserAccountId(principal.getId()).getId());
+			Assert.isTrue(owner.getId() == logged.getId());
+			result = this.findOne(id);
+			Assert.isTrue(result.isFinalMode());
+			Request clon = (Request) result.clone();
+			clon.setStatus(Request.ACCEPTED);
+			result = clon;
+			result = this.reqRepository.save(result);
+			//Contiene en la ruta la ciudad destino
+			Assert.isTrue(this.findTownsByOfferId(result.getOffer()).contains(result.getTown()));
+			//Fecha de reparto estimada anterior o igual a la fecha de maxima de entrega
+			Assert.isTrue(this.findTraverseTownOfDestinationTownByRequestId(result).getEstimatedDate().before(result.getDeadline()) || this.findTraverseTownOfDestinationTownByRequestId(result).getEstimatedDate().equals(result.getDeadline()));
+			//Contiene todas las categorias para transportar todos los paquetes
+			Assert.isTrue(this.findOfferCategoriesByOfferId(result.getOffer()).containsAll(this.findCategoriesPackagesByRequestId(result)));
+			//Tiene volumen y peso disponible para llevar la request
+			Assert.isTrue(this.volumeCanBeAddedToOfferByVolumeOfRequestAndOfferId(result, result.getOffer()));
+			Assert.isTrue(this.weightCanBeAddedToOfferByWeightOfRequestAndOfferId(result, result.getOffer()));
+			//No se si se me pasa algun caso por comprobar más 
+
+			//Actualizar prices de packages
+			//Comprobar que no se pasa de maxPrice
+			double price = 0.0;
+			for (Package p : result.getPackages()) {
+				List<Fare> fares = new ArrayList<>(this.findFaresOrderedByPriceByPackageId(p));
+				Assert.notEmpty(fares);
+				Package pclon = (Package) p.clone();
+				pclon.setPrice(fares.get(0).getPrice());
+				p = pclon;
+				this.pacService.save(p);
+				price += p.getPrice();
+				Assert.isTrue(result.getMaxPrice() >= price);
+			}
+
+		} else {
+			UserAccount principal = LoginService.getPrincipal();
+			Carrier owner = this.reqRepository.findCarrierByOfferId(this.findOne(id).getOffer().getId());
+			Carrier logged = this.carService.findOne(this.actorService.findByUserAccountId(principal.getId()).getId());
+			Assert.isTrue(owner.getId() == logged.getId());
+			result = this.findOne(id);
+			Assert.isTrue(result.isFinalMode());
+			Request clon = (Request) result.clone();
+			clon.setStatus(Request.REJECTED);
+			result = clon;
+			result = this.reqRepository.save(result);
+		}
+
 	}
 	//Reconstruct TODOOOOOOOOOO
 	public Request reconstruct(Request req, BindingResult binding) {

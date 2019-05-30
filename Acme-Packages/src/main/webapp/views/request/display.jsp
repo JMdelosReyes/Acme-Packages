@@ -21,12 +21,23 @@
 <spring:message code="req.town"/>: <jstl:out value="${request.town.name} (${request.town.county}) ${request.town.zipCode}"/><br/>
 <spring:message code="req.streetAddress"/>: <jstl:out value="${request.streetAddress}"/><br/>
 <jstl:if test="${request.offer ne null}">
-	<spring:message code="req.offer"/>: <a href="offer/display.do?=${request.offer.id}"><spring:message code="req.offer"/></a><br/>
+	<spring:message code="req.offer"/>: <a href="offer/display.do?id=${request.offer.id}"><spring:message code="req.offer"/></a><br/>
 </jstl:if>
 <jstl:if test="${request.issue ne null}">
-	<spring:message code="req.issue"/>: <a href="/issue/carrier,customer,auditor/display.do?id=${request.issue.id}"><spring:message code="req.offer"/></a><br/>
+	<spring:message code="req.issue"/>: <a href="/issue/carrier,customer,auditor/display.do?id=${request.issue.id}"><spring:message code="req.issue"/></a><br/>
 </jstl:if>
-
+	<security:authorize access="hasRole('CUSTOMER')">
+	<jstl:if test="${row.finalMode && row.status eq null && owner}">
+		<fieldset>
+		<form:form action="request/carrier,customer,auditor/display.do" modelAttribute="chooseOfferForm">
+		<form:hidden path="id"/>
+		<acme:select items="offers" itemLabel="offer.ticker" code="req.offersAvailables" path="offer"/>
+		<acme:submit name="save" code="req.save"/>
+		</form:form>
+		</fieldset>
+	</jstl:if>
+	
+</security:authorize>
 <fieldset>
 <legend><strong><spring:message code="req.package"/></strong>:</legend>
 <display:table name="packages" id="row" requestURI="${requestURI}"
@@ -76,5 +87,7 @@
 		</form:form>
 	</jstl:if>
 </fieldset>
+
+
 <acme:cancel url="request/carrier,customer/list.do" code="req.cancel"/>
 

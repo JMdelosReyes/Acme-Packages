@@ -56,6 +56,20 @@
 			</jstl:if>
 		</security:authorize>
 	</display:column>
+	<display:column titleKey="req.request">
+		<security:authorize access="hasRole('CARRIER')">
+	<jstl:if test="${row.status == 'SUBMITTED'}">
+		<form:form action="request/carrier,customer,auditor/display.do">
+		<input type="hidden" value="${row.id}" name="id"/>
+		<select name="status">
+			<option value='ACCEPTED'><spring:message code="req.accepted"/></option>
+			<option value='REJECTED'><spring:message code="req.rejected"/></option>
+		</select>
+		<acme:submit name="save" code="req.save"/>
+		</form:form>
+	</jstl:if>
+</security:authorize>
+	</display:column>
 	<security:authorize  access="hasRole('CUSTOMER')">
 		<display:column title="req.edit">
 			<jstl:if test="${!row.finalMode}">

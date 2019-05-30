@@ -96,6 +96,7 @@ public class RequestController extends AbstractController {
 		result.addObject("requestURI", "request/carrier,customer/list.do");
 		return result;
 	}
+
 	//Display de request
 	@RequestMapping(value = "/carrier,customer,auditor/display", method = RequestMethod.GET)
 	public ModelAndView display(@RequestParam(required = false, defaultValue = "0") final String id) {
@@ -143,13 +144,46 @@ public class RequestController extends AbstractController {
 		if (locale.getLanguage().equals(new Locale("en").getLanguage())) {
 			es = false;
 		}
+		List<Offer> offersAvailables = new ArrayList<>(this.reqService.findOffersByRequest(request));
+
 		result = new ModelAndView("request/display");
 		result.addObject("request", request);
+		result.addObject("offers", offersAvailables);
 		result.addObject("packages", new ArrayList<>(request.getPackages()));
 		result.addObject("requestURI", "request/carrier,customer,auditor/display.do");
 		result.addObject("owner", owner);
 		result.addObject("es", es);
 
+		return result;
+	}
+	//ACCEPT OR REJECT REQUEST
+	@RequestMapping(value = "/carrier,customer,auditor/display", method = RequestMethod.POST, params = "save")
+	public ModelAndView acceptRejectSave(String id, String status) {
+		ModelAndView result;
+		int intId;
+		int actorId;
+		Offer off;
+		Request req;
+
+		try {
+			Assert.notNull(status);
+			Assert.isTrue(status.equals(Request.ACCEPTED) || status.equals(Request.REJECTED));
+			Assert.isTrue(this.actorService.findActorType().equals("Carrier"));
+			intId = Integer.valueOf(id);
+			req = this.reqService.findOne(intId);
+			Assert.isTrue(req.getStatus().equals(Request.SUBMITTED));
+			actorId = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
+			Carrier car = this.carService.findOne(actorId);
+			Assert.isTrue(car.getOffers().contains(req.getOffer()));
+		} catch (Throwable oops) {
+			return new ModelAndView("redirect:/");
+		}
+		try {
+			this.reqService.changeStatus(intId, status);
+			result = new ModelAndView("redirect:/request/carrier,customer/list.do?id=" + req.getOffer().getId());
+		} catch (Throwable oops) {
+			result = new ModelAndView("redirect:/");
+		}
 		return result;
 	}
 	//Create a request

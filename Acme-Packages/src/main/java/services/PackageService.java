@@ -14,6 +14,7 @@ import org.springframework.validation.Validator;
 import repositories.PackageRepository;
 import security.LoginService;
 import security.UserAccount;
+import domain.Carrier;
 import domain.Category;
 import domain.Customer;
 import domain.Fare;
@@ -34,6 +35,8 @@ public class PackageService {
 	private RequestService		reqService;
 	@Autowired
 	private CustomerService		cusService;
+	@Autowired
+	private CarrierService		carService;
 	@Autowired
 	private ActorService		actorService;
 	@Autowired
@@ -70,21 +73,38 @@ public class PackageService {
 	public Package save(Package pac) {
 		Assert.notNull(pac);
 		Package res;
-		Assert.isTrue(this.actorService.findActorType().equals("Customer"));
+		Assert.isTrue(this.actorService.findActorType().equals("Customer") || this.actorService.findActorType().equals("Carrier"));
 		if (pac.getId() == 0) {
 			//Reconstruct
 			//Guardo el package
 			res = this.pacRepository.save(pac);
 		} else {
-			Package old = this.pacRepository.findOne(pac.getId());
 
-			UserAccount principal = LoginService.getPrincipal();
-			Customer logged = this.cusService.findOne(this.actorService.findByUserAccountId(principal.getId()).getId());
-			Customer owner = this.findCustomerByPackageId(pac.getId());
-			Assert.isTrue(logged.getId() == owner.getId());
-			Assert.isTrue(owner.getRequests().contains(this.findRequestByPackageId(old.getId())) || !this.findRequestByPackageId(old.getId()).isFinalMode());
+			if (this.actorService.findActorType().equals("Customer")) {
+				Package old = this.pacRepository.findOne(pac.getId());
 
-			res = this.pacRepository.save(pac);
+				UserAccount principal = LoginService.getPrincipal();
+				Customer logged = this.cusService.findOne(this.actorService.findByUserAccountId(principal.getId()).getId());
+				Customer owner = this.findCustomerByPackageId(pac.getId());
+				Assert.isTrue(logged.getId() == owner.getId());
+				Assert.isTrue(owner.getRequests().contains(this.findRequestByPackageId(old.getId())) || !this.findRequestByPackageId(old.getId()).isFinalMode());
+
+				if (pac.getPrice() != null) {
+					Assert.notNull(this.findRequestByPackageId(old.getId()).getOffer());
+				}
+				res = this.pacRepository.save(pac);
+			} else {
+				res = this.pacRepository.findOne(pac.getId());
+				UserAccount principal = LoginService.getPrincipal();
+				Carrier logged = this.carService.findOne(this.actorService.findByUserAccountId(principal.getId()).getId());
+				Carrier owner = this.findCarrierByPackageId(pac.getId());
+				Assert.isTrue(logged.getId() == owner.getId());
+				Assert.isTrue(this.findRequestByPackageId(res.getId()).isFinalMode());
+				Package clon = (Package) res.clone();
+				clon.setPrice(pac.getPrice());
+				res = clon;
+				this.pacRepository.save(res);
+			}
 		}
 		Assert.notNull(res);
 
@@ -121,6 +141,12 @@ public class PackageService {
 		clon.setPrice(fare.getPrice());
 		pac = clon;
 		this.pacRepository.save(pac);
+	}
+	public Carrier findCarrierByPackageId(int id) {
+		Carrier res;
+		res = this.pacRepository.findCarrierByPackageId(id);
+		Assert.notNull(res);
+		return res;
 	}
 
 	//Reconstruct 

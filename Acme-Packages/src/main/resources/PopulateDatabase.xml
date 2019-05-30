@@ -2444,7 +2444,7 @@
 		<property name="moment" value="02/02/2019 10:00" />
 		<property name="description" value="Tened aun mas cuidadito" />
 		<property name="maxPrice" value="50"/>
-		<property name="deadline" value="10/07/2019" />
+		<property name="deadline" value="10/07/2022" />
 		<property name="finalMode" value="true" /> 
 		<property name="volume" value="700000"/>
 		<property name="weight" value="5" />
@@ -2815,7 +2815,6 @@
 	</bean>	
 	
 	
-
 	<bean id="sponsorship7" class="domain.Sponsorship">
 		<property name="banner" value="https://www.comuniate.com//images/logo_nuevo.png" />
 		<property name="target" value="https://www.comuniate.com/"/>
@@ -2836,7 +2835,6 @@
 		<property name="totalCount" value="0" />
 
 	</bean>	
-	
 	<!-- TOWN -->
 	
 	<bean id="town1" class="domain.Town">
@@ -3059,73 +3057,6 @@
 	<bean id="traverseTown24" class="domain.TraverseTown">
 		<property name="number" value="3" />
 		<property name="estimatedDate" value="05/11/2020"/>
-		<property name="currentTown" value="false" />
-		<property name="town" ref="town8" />
-	</bean>
-	
-	<bean id="traverseTown100" class="domain.TraverseTown">
-		<property name="number" value="1" />
-		<property name="estimatedDate" value="28/01/2020"/>
-		<property name="currentTown" value="false" />
-		<property name="town" ref="town1" />
-	</bean>
-	<bean id="traverseTown101" class="domain.TraverseTown">
-		<property name="number" value="2" />
-		<property name="estimatedDate" value="30/01/2020"/>
-		<property name="currentTown" value="false" />
-		<property name="town" ref="town2" />
-	</bean>
-	<bean id="traverseTown102" class="domain.TraverseTown">
-		<property name="number" value="3" />
-		<property name="estimatedDate" value="03/02/2020"/>
-		<property name="currentTown" value="false" />
-		<property name="town" ref="town3" />
-	</bean>
-	<bean id="traverseTown103" class="domain.TraverseTown">
-		<property name="number" value="4" />
-		<property name="estimatedDate" value="05/02/2020"/>
-		<property name="currentTown" value="false" />
-		<property name="town" ref="town4" />
-	</bean>
-	<bean id="traverseTown104" class="domain.TraverseTown">
-		<property name="number" value="5" />
-		<property name="estimatedDate" value="10/02/2020"/>
-		<property name="currentTown" value="false" />
-		<property name="town" ref="town5" />
-	</bean>
-	<bean id="traverseTown106" class="domain.TraverseTown">
-		<property name="number" value="1" />
-		<property name="estimatedDate" value="21/01/2020"/>
-		<property name="currentTown" value="false" />
-		<property name="town" ref="town2" />
-	</bean>
-	<bean id="traverseTown107" class="domain.TraverseTown">
-		<property name="number" value="2" />
-		<property name="estimatedDate" value="26/01/2020"/>
-		<property name="currentTown" value="false" />
-		<property name="town" ref="town4" />
-	</bean>
-	<bean id="traverseTown108" class="domain.TraverseTown">
-		<property name="number" value="3" />
-		<property name="estimatedDate" value="01/02/2020"/>
-		<property name="currentTown" value="false" />
-		<property name="town" ref="town1" />
-	</bean>
-	<bean id="traverseTown109" class="domain.TraverseTown">
-		<property name="number" value="4" />
-		<property name="estimatedDate" value="02/02/2020"/>
-		<property name="currentTown" value="false" />
-		<property name="town" ref="town3" />
-	</bean>
-	<bean id="traverseTown110" class="domain.TraverseTown">
-		<property name="number" value="5" />
-		<property name="estimatedDate" value="05/02/2020"/>
-		<property name="currentTown" value="false" />
-		<property name="town" ref="town5" />
-	</bean>
-	<bean id="traverseTown111" class="domain.TraverseTown">
-		<property name="number" value="6" />
-		<property name="estimatedDate" value="10/02/2020"/>
 		<property name="currentTown" value="false" />
 		<property name="town" ref="town8" />
 	</bean>

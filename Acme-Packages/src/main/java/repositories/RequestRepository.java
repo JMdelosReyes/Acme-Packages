@@ -11,6 +11,7 @@ import domain.Carrier;
 import domain.Category;
 import domain.Customer;
 import domain.Fare;
+import domain.Offer;
 import domain.Request;
 import domain.Town;
 import domain.TraverseTown;
@@ -34,7 +35,7 @@ public interface RequestRepository extends JpaRepository<Request, Integer> {
 
 	//Categories de la request
 	@Query("select distinct p.categories from Request r join r.packages p where r.id=?1")
-	Collection<Category> findRequestCategoriesByRequestId(int id);
+	Collection<Category> findCategoriesPackagesByRequestId(int id);
 
 	//Categories disponibles del vehiculo de esa offer
 	@Query("select cat from Offer o join o.vehicle veh join veh.solicitations sols join sols.category cat where o.id=?1 and sols.status='ACCEPTED'")
@@ -70,5 +71,10 @@ public interface RequestRepository extends JpaRepository<Request, Integer> {
 
 	@Query("select sum(p.length * p.width * p.height) from Request r join r.packages p where r.id=?1")
 	Double calculaTotalVolumeByRequestId(int id);
+
+	//*******************FILTER OFFER
+	//TODO y hacer el calculo con la resta de los volumenes y pesos de los paquetes
+	@Query("select o from Offer o join o.vehicle veh where o.finalMode = 1 and veh.maxVolume => ?1 and veh.maxWeight >= ?2")
+	Collection<Offer> findOffersByWeightAndVolumeMax(double maxVolume, double maxWeight);
 
 }
