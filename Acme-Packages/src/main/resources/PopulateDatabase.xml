@@ -2672,6 +2672,8 @@
 				<ref bean="sponsorship2"/>
 				<ref bean="sponsorship4"/>
 				<ref bean="sponsorship5"/>
+				<ref bean="sponsorship7"/>
+				<ref bean="sponsorship8"/>
 			</list>
 		</property>
 		
@@ -2805,6 +2807,29 @@
 	<bean id="sponsorship6" class="domain.Sponsorship">
 		<property name="banner" value="https://clockify.me/assets/logo.svg" />
 		<property name="target" value="https://clockify.me/tracker"/>
+		<property name="valid" value="true" />
+		<property name="count" value="0" />
+		<property name="expirationDate" value="05/05/2020" />
+		<property name="totalCount" value="0" />
+
+	</bean>	
+	
+	
+
+	<bean id="sponsorship7" class="domain.Sponsorship">
+		<property name="banner" value="https://www.comuniate.com//images/logo_nuevo.png" />
+		<property name="target" value="https://www.comuniate.com/"/>
+		<property name="valid" value="true" />
+		<property name="count" value="0" />
+		<property name="expirationDate" value="05/05/2020" />
+		<property name="totalCount" value="0" />
+
+	</bean>	
+	
+
+	<bean id="sponsorship8" class="domain.Sponsorship">
+		<property name="banner" value="https://cdn0.tnwcdn.com/wp-content/blogs.dir/1/files/2016/11/github-image-796x418.png" />
+		<property name="target" value="https://github.com/"/>
 		<property name="valid" value="true" />
 		<property name="count" value="0" />
 		<property name="expirationDate" value="05/05/2020" />

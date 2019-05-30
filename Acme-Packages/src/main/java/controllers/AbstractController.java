@@ -10,6 +10,8 @@
 
 package controllers;
 
+import java.util.Collection;
+
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import services.ActorService;
 import services.ConfigurationService;
 import services.SponsorshipService;
+import domain.Sponsorship;
 
 @Controller
 public class AbstractController {
@@ -48,11 +51,19 @@ public class AbstractController {
 
 	@ModelAttribute("spon")
 	public domain.Sponsorship Sponsorship() {
-		domain.Sponsorship spon = this.sponsorshipService.randomSponsorship();
-		if (spon != null) {
-			this.sponsorshipService.updateCount(spon);
+		domain.Sponsorship spon = null;
+		try {
+			spon = this.sponsorshipService.randomSponsorship();
+		} catch (Throwable oops) {
+			Collection<Sponsorship> spons = this.sponsorshipService.findValidSponsorships();
+			final int size = spons.size();
+			if (size >= 1) {
+				final int random = (int) Math.round(Math.random() * (size - 1));
+				spon = (Sponsorship) spons.toArray()[random];
+			}
 		}
 		return spon;
+
 	}
 
 	@ExceptionHandler(Throwable.class)

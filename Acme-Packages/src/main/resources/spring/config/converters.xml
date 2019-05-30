@@ -32,7 +32,9 @@
 		<bean class="converters.StringToFareConverter" />
 		<bean class="converters.VehicleToStringConverter" />
 		<bean class="converters.StringToVehicleConverter" />
-		
+		<bean class="converters.SponsorshipToStringConverter" />
+		<bean class="converters.StringToSponsorshipConverter" />
+				
 	</util:list>
 	
 </beans>
