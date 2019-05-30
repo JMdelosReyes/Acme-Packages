@@ -47,6 +47,9 @@ public class CustomerService {
 	@Autowired
 	private FinderService			finderService;
 
+	@Autowired
+	private IssueService			issueService;
+
 
 	//Constructor
 	public CustomerService() {
@@ -221,6 +224,12 @@ public class CustomerService {
 		final Actor aLogged = this.actorService.findByUserAccountId(principal.getId());
 		final Customer oldCus = this.custRepository.findOne(cus.getId());
 		Assert.isTrue(oldCus.getId() == aLogged.getId());
+
+		for (Request r : oldCus.getRequests()) {
+			if (r.getOffer() != null) {
+				this.issueService.deleteIssuesOfOffer(r.getOffer());
+			}
+		}
 
 		this.custRepository.delete(cus.getId());
 	}
