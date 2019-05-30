@@ -114,7 +114,8 @@ public class EvaluationController extends AbstractController {
 
 		try {
 			Offer offer = this.offerService.findOne(intId);
-			Collection<Offer> offers = this.evaluationService.findEvaluableOffersByCustomer(intId);
+			final int actorId = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
+			Collection<Offer> offers = this.evaluationService.findEvaluableOffersByCustomer(actorId);
 			Assert.isTrue(offers.contains(offer));
 
 			evaluation = this.evaluationService.create();

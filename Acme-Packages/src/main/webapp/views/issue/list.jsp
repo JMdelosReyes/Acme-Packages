@@ -34,7 +34,7 @@
 	</display:column>
 
 	<display:column titleKey="iss.offer">
-		<a href="offer/display.do?id=${row.id}">
+		<a href="offer/display.do?id=${row.offer.id}">
 			<spring:message code="iss.offer"></spring:message>
 		</a>
 	</display:column>

@@ -21,11 +21,11 @@
 	</display:column>
 	
 	<display:column titleKey="eva.offer">
-		<jstl:out value="${row.offer}"></jstl:out>
+		<a href="offer/display.do?id=<jstl:out value="${row.offer.id}"/>"><spring:message code="eva.offer"/></a>
 	</display:column>
 	
 	<display:column titleKey="eva.customer">
-		<jstl:out value="${row.customer}"></jstl:out>
+		<a href="actor/display.do?id=<jstl:out value="${row.customer.id}"/>"><spring:message code="eva.customer"/></a>
 	</display:column>
 	
 	<jstl:if test="${owner eq true}">

@@ -13,7 +13,7 @@
 	
 	<acme:textarea code="eva.comment" path="comment"/>
 	
-	<acme:textarea code="eva.mark" path="mark" />
+	<acme:textbox code="eva.mark" path="mark" type="number"/>
 	
 	<acme:submit name="save" code="eva.save"/>
 	<acme:cancel url="evaluation/customer/list.do" code="eva.back"/>

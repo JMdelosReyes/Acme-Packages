@@ -23,10 +23,11 @@
 	<a href="request/carrier,customer/list.do?id=<jstl:out value="${offer.id}"/>"><spring:message code="of.requests"/></a><br>
 	<spring:message code="of.finalMode"/>: <jstl:out value="${offer.finalMode}"/><br>
 	<spring:message code="of.score"/>: <jstl:out value="${offer.score}"/><br>
-
 </jstl:if>
 
-
+<jstl:if test="${canEvaluate eq true}">
+	<a href="evaluation/customer/create.do?offId=<jstl:out value="${offer.id}"/>"><spring:message code="of.newEva"/></a><br>
+</jstl:if>
 
 </fieldset>
 

@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import security.LoginService;
 import services.ActorService;
 import services.CarrierService;
+import services.EvaluationService;
 import services.FareService;
 import services.OfferService;
 import services.VehicleService;
@@ -26,19 +27,22 @@ import forms.OfferForm;
 public class OfferController extends AbstractController {
 
 	@Autowired
-	private OfferService	offerService;
+	private OfferService		offerService;
 
 	@Autowired
-	private ActorService	actorService;
+	private ActorService		actorService;
 
 	@Autowired
-	private CarrierService	carrierService;
+	private CarrierService		carrierService;
 
 	@Autowired
-	private FareService		fareService;
+	private FareService			fareService;
 
 	@Autowired
-	private VehicleService	vehicleService;
+	private VehicleService		vehicleService;
+
+	@Autowired
+	private EvaluationService	evaluationService;
 
 
 	// Constructor
@@ -116,17 +120,25 @@ public class OfferController extends AbstractController {
 		try {
 			final Offer offer = this.offerService.findOne(intId);
 			boolean owner = false;
+			boolean canEvaluate = false;
 
-			if (this.actorService.findActorType().equals("Carrier")) {
-				final int carrierId = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
-				final Carrier carrier = this.carrierService.findOne(carrierId);
+			String type = this.actorService.findActorType();
+			final int actorId = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
+
+			if (type.equals("Carrier")) {
+				final Carrier carrier = this.carrierService.findOne(actorId);
 				owner = carrier.getOffers().contains(offer);
+			} else if (type.equals("Customer")) {
+				if (this.evaluationService.findEvaluableOffersByCustomer(actorId).contains(offer)) {
+					canEvaluate = true;
+				}
 			}
 
 			result = new ModelAndView("offer/display");
 			result.addObject("offer", offer);
 			result.addObject("traverseTowns", offer.getTraverseTowns());
 			result.addObject("owner", owner);
+			result.addObject("canEvaluate", canEvaluate);
 			result.addObject("requestURI", "offer/display.do");
 
 		} catch (final Throwable oops) {
@@ -135,7 +147,6 @@ public class OfferController extends AbstractController {
 
 		return result;
 	}
-
 	// CREATE
 	@RequestMapping(value = "/carrier/create", method = RequestMethod.GET)
 	public ModelAndView create() {
