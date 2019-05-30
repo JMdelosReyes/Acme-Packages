@@ -16,4 +16,7 @@ public interface TownRepository extends JpaRepository<Town, Integer> {
 	@Query("select count(tt) from TraverseTown tt join tt.town t where t.id=?1")
 	Integer findNumberOfTraverseTowns(int id);
 
+	@Query("select case when (count(t)>0) then true else false end from Town t where t.zipCode=?1")
+	Boolean townWithSameZip(String zip);
+
 }

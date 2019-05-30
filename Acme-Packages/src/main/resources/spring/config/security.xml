@@ -70,6 +70,10 @@
 		<security:intercept-url pattern="/evaluation/customer/edit.do" access="hasRole('CUSTOMER')" />
 		<security:intercept-url pattern="/evaluation/customer/delete.do" access="hasRole('CUSTOMER')" />
 		
+		<security:intercept-url pattern="/town/administrator/list.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/town/administrator/create.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/town/administrator/edit.do" access="hasRole('ADMIN')" />
+		
 		<security:intercept-url pattern="/issue/auditor/list.do" access="hasRole('AUDITOR')" />
 		<security:intercept-url pattern="/issue/carrier/list.do" access="hasRole('CARRIER')" />
 		<security:intercept-url pattern="/issue/customer/list.do" access="hasRole('CUSTOMER')" />

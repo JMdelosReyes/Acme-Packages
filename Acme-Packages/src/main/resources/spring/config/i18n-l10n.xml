@@ -51,6 +51,7 @@
 		<value>/views/offer/messages</value>
 		<value>/views/fare/messages</value>
 		<value>/views/traverseTown/messages</value>
+		<value>/views/town/messages</value>
 	</util:list>
 
 </beans>

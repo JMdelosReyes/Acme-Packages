@@ -97,6 +97,11 @@
 			</li>
 		</security:authorize>
 		
+		<security:authorize access="hasRole('ADMIN')">
+			<li><a class="fNiv" href="town/administrator/list.do"><spring:message
+			 code="master.page.towns" /></a></li>
+		</security:authorize>
+		
 		<security:authorize access="isAuthenticated()">
 			<li><a class="fNiv" href="messageBox/list.do"><spring:message
 				code="master.page.mess" /></a></li>

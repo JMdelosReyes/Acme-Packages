@@ -89,4 +89,18 @@ public class TownService {
 		this.townRepository.flush();
 	}
 
+	public int findNumberOfRequests(int id) {
+		Assert.isTrue(id > 0);
+		return this.townRepository.findNumberOfRequests(id);
+	}
+
+	public int findNumberOfTraverseTowns(int id) {
+		Assert.isTrue(id > 0);
+		return this.townRepository.findNumberOfTraverseTowns(id);
+	}
+
+	public boolean townWithSameZip(String zip) {
+		return this.townRepository.townWithSameZip(zip);
+	}
+
 }
