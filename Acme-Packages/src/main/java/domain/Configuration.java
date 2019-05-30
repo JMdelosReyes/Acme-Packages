@@ -7,6 +7,7 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -29,6 +30,7 @@ public class Configuration extends DomainEntity implements Cloneable {
 	private String				countryCode;
 	private Collection<String>	makes;
 	private double				vat;
+	private double				fare;
 	private Collection<String>	messPriorities;
 
 
@@ -137,6 +139,15 @@ public class Configuration extends DomainEntity implements Cloneable {
 
 	public void setVat(final double vat) {
 		this.vat = vat;
+	}
+
+	@Min(value = (long) 0.0)
+	public double getFare() {
+		return this.fare;
+	}
+
+	public void setFare(final double fare) {
+		this.fare = fare;
 	}
 
 	@NotEmpty

@@ -46,6 +46,11 @@
 		<th><spring:message code="conf.vat"/></th>
 		<th><jstl:out value="${configuration.vat}"/></th>
 	</tr>
+	
+	<tr>
+		<th><spring:message code="conf.fare"/></th>
+		<th><jstl:out value="${configuration.fare}"/></th>
+	</tr>
 
 	<tr>
 		<th><spring:message code="conf.spamWords"/>

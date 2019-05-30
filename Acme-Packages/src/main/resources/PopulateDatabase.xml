@@ -703,6 +703,7 @@
 		<property name="countryCode" value="+34" />
 		
 		<property name="vat" value="21" />
+		<property name="fare" value="5" />
 		<property name="messPriorities">
 			<list>
 				<value>HIGH</value>

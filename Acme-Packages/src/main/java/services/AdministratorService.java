@@ -743,7 +743,7 @@ public class AdministratorService {
 
 		List<Sponsor> sp = new ArrayList<Sponsor>(this.administratorRepository.validSponsorshipsSponsor());
 		final Actor a = this.actorService.findByUserAccountId(principal.getId());
-
+		Double tarifa = this.configurationService.findOne().getFare();
 		for (int i = 0; i < sp.size(); i++) {
 			Sponsor sponsor = sp.get(i);
 			Integer numShown = this.administratorRepository.numValidSponsorshipShowBySponsor(sponsor.getId());
@@ -751,8 +751,9 @@ public class AdministratorService {
 			coc.add(sponsor);
 			final Mess mess = this.messService.create();
 			mess.setRecipients(coc);
-			//TODO Cuanto dinero se le paga?¿?¿
-			mess.setBody("Your sponsorships has been shown " + numShown.toString() + " times");
+			Double dinero = tarifa * numShown;
+
+			mess.setBody("Your sponsorships has been shown " + numShown.toString() + " times. You will be charged " + dinero.toString() + " euros.");
 
 			mess.setSubject("Sponsorships notification");
 			mess.setSendDate(DateTime.now().minusMillis(1000).toDate());
@@ -770,7 +771,6 @@ public class AdministratorService {
 		}
 
 	}
-
 	public void invalidSponsorShip() {
 		final UserAccount principal = LoginService.getPrincipal();
 		Assert.notNull(principal);

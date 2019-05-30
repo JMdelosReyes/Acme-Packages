@@ -23,6 +23,7 @@
 	<acme:textarea code="conf.enWelcomeMessage" path="englishMessage"/>
 	<acme:textarea code="conf.esWelcomeMessage" path="spanishMessage"/>
 	<acme:textbox code="conf.vat" path="vat"/>
+	<acme:textbox code="conf.fare" path="fare"/>
 	
 	
 	
