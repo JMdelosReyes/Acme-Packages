@@ -1141,7 +1141,7 @@
 			<list>
 			</list>
 		</property>
-		<property name="offer" ref="offer2" />
+		<property name="offer" ref="offer5" />
 		
 	</bean>
 	<!-- <bean id="issue6" class="domain.Issue">
@@ -2133,6 +2133,7 @@
 		</property>
 		<property name="requests">
 			<list>
+				<ref bean="request9"/>
 			</list>
 		</property>
 		<property name="traverseTowns">

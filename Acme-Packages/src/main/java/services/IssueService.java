@@ -202,11 +202,21 @@ public class IssueService {
 	}
 
 	public void deleteIssuesOfOffer(Offer o) {
-		for (Issue i : this.issueRepository.findIssuesOfOffer(o.getId())) {
-			Auditor auditor = this.issueRepository.findAuditorOfIssue(i.getId());
-			auditor.getIssues().remove(i);
-			this.issueRepository.delete(i.getId());
+		for (Request r : o.getRequests()) {
+			if (r.getIssue() != null) {
+				Issue i = r.getIssue();
+				Auditor auditor = this.issueRepository.findAuditorOfIssue(i.getId());
+				auditor.getIssues().remove(i);
+				r.setIssue(null);
+				this.issueRepository.delete(i.getId());
+			}
 		}
+
+		//		for (Issue i : this.issueRepository.findIssuesOfOffer(o.getId())) {
+		//			Auditor auditor = this.issueRepository.findAuditorOfIssue(i.getId());
+		//			auditor.getIssues().remove(i);
+		//			this.issueRepository.delete(i.getId());
+		//		}
 	}
 
 	public Collection<Issue> findIssuesOfCarrier(int id) {
