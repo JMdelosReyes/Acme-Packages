@@ -64,4 +64,11 @@ public interface RequestRepository extends JpaRepository<Request, Integer> {
 
 	@Query("select o.requests from Carrier car join car.offers o where car.id=?1")
 	Collection<Request> findRequestsByCarrierId(int id);
+
+	@Query("select sum(p.weight) from Request r join r.packages p where r.id=?1")
+	Double calculaTotalWeightByRequestId(int id);
+
+	@Query("select sum(p.length * p.width * p.height) from Request r join r.packages p where r.id=?1")
+	Double calculaTotalVolumeByRequestId(int id);
+
 }

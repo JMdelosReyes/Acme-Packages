@@ -134,7 +134,7 @@ public class PackageServiceTest extends AbstractTest {
 			if (price > 0.0) {
 				res.setPrice(price);
 			}
-			res.setDescription(desc);
+			res.setDetails(desc);
 			List<Category> acs = new ArrayList<>();
 			String[] cats = categories.split(",");
 			for (int i = 0; i < cats.length; i++) {
@@ -201,7 +201,7 @@ public class PackageServiceTest extends AbstractTest {
 			if (price > 0.0) {
 				clon.setPrice(price);
 			}
-			clon.setDescription(desc);
+			clon.setDetails(desc);
 			List<Category> acs = new ArrayList<>();
 			String[] cats = categories.split(",");
 			for (int i = 0; i < cats.length; i++) {

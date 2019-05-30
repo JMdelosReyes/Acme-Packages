@@ -102,7 +102,13 @@ public class RequestService {
 			cus.getRequests().add(res);
 		} else {
 			Assert.isTrue(req.getId() != 0);
-			this.calculateWeightVolume(req);
+			Assert.isTrue(this.actorService.findActorType().equals("Customer"));
+			UserAccount principal = LoginService.getPrincipal();
+			Customer cus = this.cusService.findOne(this.actorService.findByUserAccountId(principal.getId()).getId());
+			res = this.findOne(req.getId());
+			Assert.isTrue(cus.getRequests().contains(res));
+			Request clon = (Request) req.clone();
+			this.calculateWeightVolume(clon);
 			res = this.reqRepository.save(req);
 		}
 		return res;
@@ -115,7 +121,8 @@ public class RequestService {
 		Customer cus = this.reqRepository.findCustomerByRequestId(req.getId());
 		cus.getRequests().remove(req);
 		this.cusService.save(cus);
-		this.reqRepository.delete(req);
+
+		this.reqRepository.delete(req.getId());
 	}
 
 	private Request calculateWeightVolume(Request req) {
@@ -132,16 +139,19 @@ public class RequestService {
 			result.setWeight(weight);
 
 		} else {
-			Request clon = (Request) req.clone();
 			for (Package p : req.getPackages()) {
 				volume += (p.getHeight() * p.getLength() * p.getWidth());
 				weight += p.getWeight();
 			}
-			clon.setVolume(volume);
-			clon.setWeight(weight);
-			result = clon;
+			req.setVolume(volume);
+			req.setWeight(weight);
+			result = req;
 		}
 		return result;
+	}
+	public void actualizaValores(Request req) {
+		req.setVolume(this.reqRepository.calculateVolume(req.getId()));
+		req.setWeight(this.reqRepository.calculateWeight(req.getId()));
 	}
 	public void flush() {
 		this.reqRepository.flush();
@@ -195,21 +205,13 @@ public class RequestService {
 
 	//Anyadir paquetes
 	public void anyadePackage(Package pack, Request req) {
-		if (req.getId() != 0) {
-			Request old = this.reqRepository.findOne(req.getId());
-			Assert.isTrue(!old.isFinalMode());
-		}
+		Assert.isTrue(!req.isFinalMode());
+		Request clon = (Request) req.clone();
 		Package res = this.pacService.save(pack);
-		req.getPackages().add(res);
-		this.save(req);
-	}
-	public void removePackage(Package pac) {
-		Request req = this.pacService.findRequestByPackageId(pac.getId());
-		int actorId = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
-		Assert.isTrue(this.cusService.findOne(actorId).getRequests().contains(req));
-		req.getPackages().remove(pac);
-		this.calculateWeightVolume(req);
-		this.pacService.delete(pac);
+		List<Package> newPackages = new ArrayList<>(req.getPackages());
+		newPackages.add(res);
+		clon.setPackages(newPackages);
+		this.save(clon);
 	}
 
 	//Aplicar a una offer
@@ -295,17 +297,18 @@ public class RequestService {
 			req.setOffer(null);
 
 		} else {
-			Request old = this.findOne(req.getId());
-			if (old.isFinalMode()) {
-				Assert.isTrue(old.getOffer() == null);
-				//Assert.isTrue(this.compruebaOffer(req.getOffer(), req));
+			result = this.findOne(req.getId());
+			Assert.isTrue(!result.isFinalMode());
 
-				Request clon = (Request) old.clone();
-				clon.setOffer(req.getOffer());
-				result = clon;
-			} else {
-				result = req;
-			}
+			Request clon = (Request) result.clone();
+			clon.setDescription(req.getDescription());
+			clon.setMaxPrice(req.getMaxPrice());
+			clon.setFinalMode(req.isFinalMode());
+			clon.setStreetAddress(req.getStreetAddress());
+			clon.setComment(req.getComment());
+			clon.setTown(req.getTown());
+
+			result = clon;
 		}
 
 		this.validator.validate(result, binding);

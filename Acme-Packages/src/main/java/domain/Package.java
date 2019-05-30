@@ -23,7 +23,7 @@ public class Package extends DomainEntity implements Cloneable {
 	private double					width;
 	private double					length;
 	private Double					price;
-	private String					description;
+	private String					details;
 	private Collection<Category>	categories;
 
 
@@ -84,12 +84,12 @@ public class Package extends DomainEntity implements Cloneable {
 
 	@NotBlank
 	@SafeHtml
-	public String getDescription() {
-		return this.description;
+	public String getDetails() {
+		return this.details;
 	}
 
-	public void setDescription(final String description) {
-		this.description = description;
+	public void setDetails(String details) {
+		this.details = details;
 	}
 
 	@NotEmpty

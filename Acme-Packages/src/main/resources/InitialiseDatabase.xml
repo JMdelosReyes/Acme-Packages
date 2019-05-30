@@ -141,7 +141,7 @@
 			</list>
 		</property>
 		<property name="countryCode" value="+34" />
-		
+		<property name="fare" value="5" />
 		<property name="vat" value="21" />
 		<property name="messPriorities">
 			<list>

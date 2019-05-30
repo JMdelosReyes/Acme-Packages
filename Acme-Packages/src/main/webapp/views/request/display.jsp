@@ -43,8 +43,8 @@
 	<display:column titleKey="req.length">
 		<jstl:out value="${row.length}"/> cm
 	</display:column>
-	<display:column titleKey="req.description">
-		<jstl:out value="${row.description}"/>
+	<display:column titleKey="req.details">
+		<jstl:out value="${row.details}"/>
 	</display:column>
 	<display:column titleKey="req.package.price">
 		<jstl:if test="${request.offer ne null}">
@@ -78,38 +78,3 @@
 </fieldset>
 <acme:cancel url="request/carrier,customer/list.do" code="req.cancel"/>
 
-<!-- 
-	<jstl:forEach var="pac" items="${packages}">
-		<fieldset>
-			<legend><strong><spring:message code="req.package"/></strong>:</legend>
-			<spring:message code="req.weight"/>: <jstl:out value="${pac.weight}"/> kg<br/>
-			<spring:message code="req.height"/>: <jstl:out value="${pac.height}"/> cm<br/>
-			<spring:message code="req.width"/>: <jstl:out value="${pac.width}"/> cm<br/>
-			<spring:message code="req.length"/>: <jstl:out value="${pac.length}"/> cm<br/>
-			<spring:message code="req.description"/>: <jstl:out value="${pac.description}"/><br/>
-			<jstl:if test="${request.offer ne null}">
-				<spring:message code="req.package.price"/>: <jstl:out value="${pac.price}"/><br/>
-			</jstl:if>
-			<jstl:if test="${es}">
-				<jstl:forEach  var="cat" items="${pac.categories}">
-					<fieldset>
-					<legend><strong><spring:message code="req.category"/></strong></legend>
-					<strong><spring:message code="req.category.spanishName"/>: <jstl:out value="${cat.spanishName}"/></strong><br/>
-					<spring:message code="req.category.spanishDescription"/>: <jstl:out value="${cat.spanishDescription}"/><br/>
-					</fieldset>
-				</jstl:forEach>
-			</jstl:if>
-			<jstl:if test="${!es}">
-				<jstl:forEach  var="cat" items="${pac.categories}">
-					<fieldset>
-							<legend><strong><spring:message code="req.category"/></strong></legend>
-							<strong><spring:message code="req.category.englishName"/>: <jstl:out value="${cat.englishName}"/></strong><br/>
-							<spring:message code="req.category.englishDescription"/>: <jstl:out value="${cat.englishDescription}"/><br/>
-					</fieldset>
-				</jstl:forEach>
-			</jstl:if>
-		</fieldset>
-	</jstl:forEach>
-</fieldset>
-<br/>
--->

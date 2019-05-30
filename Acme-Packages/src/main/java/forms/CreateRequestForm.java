@@ -4,6 +4,8 @@ package forms;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+
 import domain.Category;
 import domain.Town;
 
@@ -21,7 +23,7 @@ public class CreateRequestForm {
 	private double					height;
 	private double					width;
 	private double					length;
-	private String					pacDescription;
+	private String					details;
 	private Collection<Category>	categories;
 
 
@@ -72,7 +74,7 @@ public class CreateRequestForm {
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
-
+	@NotNull
 	public Town getTown() {
 		return this.town;
 	}
@@ -113,12 +115,12 @@ public class CreateRequestForm {
 		this.length = length;
 	}
 
-	public String getPacDescription() {
-		return this.pacDescription;
+	public String getDetails() {
+		return this.details;
 	}
 
-	public void setPacDescription(String pacDescription) {
-		this.pacDescription = pacDescription;
+	public void setDetails(String details) {
+		this.details = details;
 	}
 
 	public Collection<Category> getCategories() {

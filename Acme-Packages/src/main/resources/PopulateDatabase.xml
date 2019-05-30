@@ -2133,7 +2133,7 @@
 		</property>
 		<property name="requests">
 			<list>
-				<ref bean="request9"/>
+			<ref bean="request9"/>
 			</list>
 		</property>
 		<property name="traverseTowns">
@@ -2249,7 +2249,7 @@
 		<property name="width" value="100" />
 		<property name="length" value="100" /> 		
 		<property name="price" value="5.95" />
-		<property name="description" value="Mi play 1" />
+		<property name="details" value="Mi play 1" />
 		<property name="categories">
 			<list>
 			<ref bean="category2"/>
@@ -2262,7 +2262,7 @@
 		<property name="width" value="100" />
 		<property name="length" value="100" /> 		
 		<property name="price" value="7.95" />
-		<property name="description" value="Mi play 2" />
+		<property name="details" value="Mi play 2" />
 		<property name="categories">
 			<list>
 			<ref bean="category2"/>
@@ -2275,7 +2275,7 @@
 		<property name="width" value="100" />
 		<property name="length" value="100" /> 		
 		<property name="price" value="8.95" />
-		<property name="description" value="Mi play 3" />
+		<property name="details" value="Mi play 3" />
 		<property name="categories">
 			<list>
 			<ref bean="category2"/>
@@ -2288,7 +2288,7 @@
 		<property name="width" value="100" />
 		<property name="length" value="100" /> 		
 		<property name="price" value="" />
-		<property name="description" value="Mi play 4" />
+		<property name="details" value="Mi play 4" />
 		<property name="categories">
 			<list>
 			<ref bean="category2"/>
@@ -2301,7 +2301,7 @@
 		<property name="width" value="100" />
 		<property name="length" value="100" /> 		
 		<property name="price" value="8.95" />
-		<property name="description" value="Mi play 5" />
+		<property name="details" value="Mi play 5" />
 		<property name="categories">
 			<list>
 			<ref bean="category2"/>
@@ -2314,7 +2314,7 @@
 		<property name="width" value="100" />
 		<property name="length" value="100" /> 		
 		<property name="price" value="7.95" />
-		<property name="description" value="Mi play 6" />
+		<property name="details" value="Mi play 6" />
 		<property name="categories">
 			<list>
 			<ref bean="category2"/>
@@ -2327,7 +2327,7 @@
 		<property name="width" value="100" />
 		<property name="length" value="100" /> 		
 		<property name="price" value="8.95" />
-		<property name="description" value="Mi play 7" />
+		<property name="details" value="Mi play 7" />
 		<property name="categories">
 			<list>
 			<ref bean="category2"/>
@@ -2340,7 +2340,7 @@
 		<property name="width" value="100" />
 		<property name="length" value="100" /> 		
 		<property name="price" value="8.95" />
-		<property name="description" value="Mi play 8" />
+		<property name="details" value="Mi play 8" />
 		<property name="categories">
 			<list>
 			<ref bean="category2"/>
@@ -2353,7 +2353,7 @@
 		<property name="width" value="100" />
 		<property name="length" value="100" /> 		
 		<property name="price" value="8.95" />
-		<property name="description" value="Mi play 9" />
+		<property name="details" value="Mi play 9" />
 		<property name="categories">
 			<list>
 			<ref bean="category3"/>
@@ -2567,7 +2567,7 @@
 		<property name="description" value="Tened aun mas cuidadito" />
 		<property name="maxPrice" value="50"/>
 		<property name="deadline" value="10/07/2019" />
-		<property name="finalMode" value="false" /> 
+		<property name="finalMode" value="true" /> 
 		<property name="volume" value="700000"/>
 		<property name="weight" value="5" />
 		<property name="streetAddress" value="Calle la niña de las flores" />
@@ -2778,8 +2778,8 @@
 		<property name="totalCount" value="0" />
 
 	</bean>	
-	
-	
+
+
 	<bean id="sponsorship4" class="domain.Sponsorship">
 		<property name="banner" value="https://www.24-kts.com/themes/default-bootstrap/img/brand/brand.svg" />
 		<property name="target" value="https://www.24-kts.com/"/>
@@ -2810,7 +2810,7 @@
 		<property name="expirationDate" value="05/05/2020" />
 		<property name="totalCount" value="0" />
 
-	</bean>
+	</bean>	
 	
 	<!-- TOWN -->
 	

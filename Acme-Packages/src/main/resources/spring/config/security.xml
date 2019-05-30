@@ -129,9 +129,8 @@
 			access="isAnonymous() || hasAnyRole('ADMIN')" />
 					<security:intercept-url pattern="/actor/display.do"
 			access="permitAll" />
-								<security:intercept-url pattern="/actor/displayCarrier.do"
+		<security:intercept-url pattern="/actor/displayCarrier.do"
 			access="permitAll" />
-			
 			<security:intercept-url pattern="/actor/edit.do"
 			access="hasAnyRole('ADMIN', 'CARRIER', 'CUSTOMER', 'SPONSOR', 'AUDITOR')" />
 		<security:intercept-url pattern="/offer/list.do" access="permitAll" />

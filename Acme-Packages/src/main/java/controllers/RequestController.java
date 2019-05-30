@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
@@ -161,8 +163,8 @@ public class RequestController extends AbstractController {
 	}
 
 	//TODO: Save a new Request
-	@RequestMapping(value = "/customer/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView saveNewRequest(CreateRequestForm crf, BindingResult binding) {
+	@RequestMapping(value = "/customer/create", method = RequestMethod.POST, params = "save")
+	public ModelAndView saveNewRequest(@Valid CreateRequestForm crf, BindingResult binding) {
 		ModelAndView result;
 		Package pac = this.pacService.setearCampos(crf);
 		Request req = this.reqService.setearCampos(crf);
@@ -211,6 +213,61 @@ public class RequestController extends AbstractController {
 
 		return result;
 	}
+	//Edit a request
+	@RequestMapping(value = "/customer/edit", method = RequestMethod.POST, params = "save")
+	public ModelAndView editSave(Request req, BindingResult binding) {
+		ModelAndView result;
+		int intId;
+		int actorId;
+		Request request;
+		try {
+			actorId = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
+			intId = Integer.valueOf(req.getId());
+			request = this.reqService.findOne(intId);
+			Customer cus = this.cusService.findOne(actorId);
+			Assert.isTrue(cus.getRequests().contains(request));
+			request = this.reqService.reconstruct(req, binding);
+		} catch (final Throwable oops) {
+			return new ModelAndView("redirect:/");
+		}
+		if (binding.hasErrors()) {
+			result = this.createEditModelAndView(req);
+		} else {
+			try {
+				request = this.reqService.save(request);
+				result = new ModelAndView("redirect:/request/carrier,customer,auditor/display.do?id=" + request.getId());
+			} catch (Throwable oops) {
+				result = this.createEditModelAndView(req, "req.commit.error");
+			}
+		}
+
+		return result;
+	}
+	//Delete a request
+	@RequestMapping(value = "/customer/edit", method = RequestMethod.POST, params = "delete")
+	public ModelAndView delete(Request req, BindingResult binding) {
+		ModelAndView result;
+		int intId;
+		int actorId;
+		Request request;
+		try {
+			actorId = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
+			intId = Integer.valueOf(req.getId());
+			request = this.reqService.findOne(intId);
+			Customer cus = this.cusService.findOne(actorId);
+			Assert.isTrue(cus.getRequests().contains(request));
+		} catch (final Throwable oops) {
+			return new ModelAndView("redirect:/");
+		}
+		try {
+			this.reqService.delete(req);
+			result = new ModelAndView("redirect:/request/carrier,customer/list.do");
+		} catch (Throwable oops) {
+			result = this.createEditModelAndView(req, "req.commit.error");
+		}
+		return result;
+	}
+
 	//APPLY FOR AN OFFER
 
 	//CREATE A NEW REQUEST

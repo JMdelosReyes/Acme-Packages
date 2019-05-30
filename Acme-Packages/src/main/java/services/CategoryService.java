@@ -18,8 +18,6 @@ import domain.Category;
 import domain.Package;
 import domain.Solicitation;
 
-;
-
 @Service
 @Transactional
 public class CategoryService {

@@ -63,7 +63,7 @@ public class PackageService {
 		res.setHeight(0.0);
 		res.setWidth(0.0);
 		res.setLength(0.0);
-		res.setDescription("");
+		res.setDetails("");
 		res.setCategories(new ArrayList<Category>());
 		return res;
 	}
@@ -77,28 +77,26 @@ public class PackageService {
 			res = this.pacRepository.save(pac);
 		} else {
 			Package old = this.pacRepository.findOne(pac.getId());
-			//Owner es el customer logged y misma request
+
 			UserAccount principal = LoginService.getPrincipal();
 			Customer logged = this.cusService.findOne(this.actorService.findByUserAccountId(principal.getId()).getId());
 			Customer owner = this.findCustomerByPackageId(pac.getId());
 			Assert.isTrue(logged.getId() == owner.getId());
-			//Guardo el package
+			Assert.isTrue(owner.getRequests().contains(this.findRequestByPackageId(old.getId())) || !this.findRequestByPackageId(old.getId()).isFinalMode());
+
 			res = this.pacRepository.save(pac);
 		}
+		Assert.notNull(res);
+
 		return res;
 	}
 
 	public void delete(Package pac) {
-		Assert.notNull(pac);
-		Request res = this.findRequestByPackageId(pac.getId());
-		Assert.isTrue(!res.isFinalMode());
-
-		//Borro el package de la request en la que estaba
 		Request req = this.findRequestByPackageId(pac.getId());
-		req.getPackages().remove(pac);
-		this.reqService.removePackage(pac);
-
-		this.pacRepository.delete(pac);
+		Assert.isTrue(!req.isFinalMode());
+		req.getPackages().remove(this.findOne(pac.getId()));
+		this.reqService.save(req);
+		this.pacRepository.delete(pac.getId());
 
 	}
 	public void flush() {
@@ -129,6 +127,7 @@ public class PackageService {
 	public Package reconstruct(Package pac, BindingResult binding) {
 		Package result;
 		if (pac.getId() == 0) {
+			Assert.isTrue(this.actorService.findActorType().equals("Customer"));
 			Assert.notNull(pac);
 			result = pac;
 			result.setPrice(null);
@@ -140,15 +139,17 @@ public class PackageService {
 			Request req = this.findRequestByPackageId(pac.getId());
 			Assert.isTrue(cus.getRequests().contains(req));
 			Assert.isTrue(!req.isFinalMode());
-			result = this.findOne(pac.getId());
+
+			result = this.pacRepository.findOne(pac.getId());
 			Assert.isTrue(req.getPackages().contains(result));
-			Package clon = (Package) pac.clone();
+
+			Package clon = (Package) result.clone();
 			clon.setCategories(pac.getCategories());
 			clon.setWeight(pac.getWeight());
 			clon.setHeight(pac.getHeight());
 			clon.setWidth(pac.getWidth());
 			clon.setLength(pac.getLength());
-			clon.setDescription(pac.getDescription());
+			clon.setDetails(pac.getDetails());
 			result = clon;
 		}
 		this.validator.validate(result, binding);
@@ -159,7 +160,7 @@ public class PackageService {
 	public Package reconstruct(AddPackageForm apf, BindingResult binding) {
 		Package result = this.create();
 		result.setWeight(apf.getWeight());
-		result.setDescription(apf.getDescription());
+		result.setDetails(apf.getDetails());
 		result.setLength(apf.getLength());
 		result.setWidth(apf.getWidth());
 		result.setHeight(apf.getHeight());
@@ -173,7 +174,7 @@ public class PackageService {
 	public Package setearCampos(CreateRequestForm crf) {
 		Package pac = this.create();
 		pac.setWeight(crf.getWeight());
-		pac.setDescription(crf.getPacDescription());
+		pac.setDetails(crf.getDetails());
 		pac.setLength(crf.getLength());
 		pac.setWidth(crf.getWidth());
 		pac.setHeight(crf.getHeight());

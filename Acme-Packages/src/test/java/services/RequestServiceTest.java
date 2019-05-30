@@ -147,7 +147,7 @@ public class RequestServiceTest extends AbstractTest {
 			Category cat = this.catService.findOne(super.getEntityId("category1"));
 			cats.add(cat);
 			pac.setCategories(cats);
-			pac.setDescription("No desc");
+			pac.setDetails("No desc");
 			this.reqService.anyadePackage(pac, res);
 			this.reqService.flush();
 		} catch (final Throwable oops) {
@@ -221,7 +221,7 @@ public class RequestServiceTest extends AbstractTest {
 			Category cat = this.catService.findOne(super.getEntityId("category1"));
 			cats.add(cat);
 			pac.setCategories(cats);
-			pac.setDescription("No desc");
+			pac.setDetails("No desc");
 			old = res;
 			this.reqService.anyadePackage(pac, old);
 			this.reqService.flush();

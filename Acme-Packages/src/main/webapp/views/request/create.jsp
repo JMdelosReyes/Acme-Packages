@@ -13,7 +13,7 @@
 <script type="text/javascript" src="scripts/signUp.js"></script>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<form:form action="request/customer/edit.do" modelAttribute="createRequestForm">
+<form:form action="request/customer/create.do" modelAttribute="createRequestForm">
 	<fieldset>
 	<h3><spring:message code="req.request"/></h3>
 	<acme:textarea code="req.description" path="description" />
@@ -36,7 +36,7 @@
 	<acme:textbox code="req.height" path="height" placeholder="In cm"/>
 	<acme:textbox code="req.width" path="width" placeholder="In cm"/>
 	<acme:textbox code="req.length" path="length" placeholder="In cm"/>
-	<acme:textarea code="req.description" path="pacDescription" />
+	<acme:textarea code="req.details" path="details" />
 	<jstl:choose>
 		<jstl:when test="${es eq true}">
 			<acme:select items="${categories}" itemLabel="spanishName" code="req.category" path="categories"/>

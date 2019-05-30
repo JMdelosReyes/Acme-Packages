@@ -12,7 +12,7 @@ public class AddPackageForm {
 	private double					height;
 	private double					width;
 	private double					length;
-	private String					description;
+	private String					details;
 	private Collection<Category>	categories;
 
 
@@ -56,12 +56,12 @@ public class AddPackageForm {
 		this.length = length;
 	}
 
-	public String getDescription() {
-		return this.description;
+	public String getDetails() {
+		return this.details;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setDetails(String details) {
+		this.details = details;
 	}
 
 	public Collection<Category> getCategories() {

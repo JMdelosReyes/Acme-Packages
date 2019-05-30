@@ -83,6 +83,7 @@ public class PackageController {
 		} else {
 			try {
 				this.reqService.anyadePackage(pac, this.reqService.findOne(intId));
+				this.reqService.actualizaValores(this.reqService.findOne(intId));
 				result = new ModelAndView("redirect:/request/carrier,customer,auditor/display.do?id=" + intId);
 			} catch (Throwable oops) {
 				result = this.createModelAndView(apf, "pac.error.commit");
@@ -126,7 +127,8 @@ public class PackageController {
 			result = this.editModelAndView(packa);
 		} else {
 			try {
-				this.reqService.anyadePackage(pac, this.reqService.findOne(intId));
+				pac = this.pacService.save(pac);
+				this.reqService.actualizaValores(this.pacService.findRequestByPackageId(pac.getId()));
 				result = new ModelAndView("redirect:/request/carrier,customer,auditor/display.do?id=" + intId);
 			} catch (Throwable oops) {
 				result = this.editModelAndView(packa, "pac.error.commit");
@@ -135,27 +137,26 @@ public class PackageController {
 		return result;
 	}
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
-	public ModelAndView delete(Package packa, BindingResult binding) {
+	public ModelAndView delete(Package packa) {
 		ModelAndView result;
-		int intId;
-		Package pac;
+		Request req;
 		try {
 			Assert.isTrue(packa.getId() != 0);
-			intId = this.pacService.findRequestByPackageId(packa.getId()).getId();
-			pac = this.pacService.reconstruct(packa, binding);
+			req = this.pacService.findRequestByPackageId(packa.getId());
+			Assert.isTrue(req.getPackages().size() > 1);
+			int actorId = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
+			Assert.isTrue(this.cusService.findOne(actorId).getRequests().contains(req));
 		} catch (Throwable oops) {
 			return new ModelAndView("redirect:/");
 		}
-		if (binding.hasErrors()) {
-			result = this.editModelAndView(packa);
-		} else {
-			try {
-				this.pacService.delete(pac);
-				result = new ModelAndView("redirect:/request/carrier,customer,auditor/display.do?id=" + intId);
-			} catch (Throwable oops) {
-				result = this.editModelAndView(packa, "pac.error.commit");
-			}
+		try {
+			this.pacService.delete(packa);
+			this.reqService.actualizaValores(req);
+			result = new ModelAndView("redirect:/request/carrier,customer,auditor/display.do?id=" + req.getId());
+		} catch (Throwable oops) {
+			result = this.editModelAndView(packa, "pac.error.commit");
 		}
+
 		return result;
 	}
 	//Create a package 
@@ -205,9 +206,16 @@ public class PackageController {
 		if (locale.getLanguage().equals(new Locale("en").getLanguage())) {
 			es = false;
 		}
+		boolean canDelete = true;
+		Request req = this.pacService.findRequestByPackageId(pac.getId());
+		if (req.getPackages().size() == 1) {
+			canDelete = false;
+		}
 
 		result.addObject("package", pac);
-		result.addObject("request", this.pacService.findRequestByPackageId(pac.getId()));
+		result.addObject("request", req);
+
+		result.addObject("canDelete", canDelete);
 		result.addObject("message", message);
 		result.addObject("es", es);
 		result.addObject("categories", categories);
