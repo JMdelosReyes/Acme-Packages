@@ -4,6 +4,7 @@ package domain;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.Transient;
 import javax.validation.constraints.Min;
 
 @Entity
@@ -50,6 +51,11 @@ public class Fare extends DomainEntity implements Cloneable {
 
 	public void setPrice(final double price) {
 		this.price = price;
+	}
+
+	@Transient
+	public String getLabel() {
+		return "Vol: " + this.getMaxVolume() + " Weight: " + this.getMaxWeight() + " Price: " + this.getPrice();
 	}
 
 }

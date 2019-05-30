@@ -14,7 +14,9 @@ import org.springframework.web.servlet.ModelAndView;
 import security.UserAccount;
 import security.UserAccountService;
 import services.ActorService;
+import services.CarrierService;
 import services.ConfigurationService;
+import domain.Carrier;
 import forms.DisplayActorForm;
 import forms.EditActorForm;
 import forms.SignUpForm;
@@ -31,6 +33,9 @@ public class ActorController extends AbstractController {
 
 	@Autowired
 	private ConfigurationService	configurationService;
+
+	@Autowired
+	private CarrierService			carrierService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -99,6 +104,32 @@ public class ActorController extends AbstractController {
 
 	}
 
+	//DISPLAY
+	@RequestMapping(value = "/displayCarrier", method = RequestMethod.GET)
+	public ModelAndView displayCarrier(@RequestParam(required = false, defaultValue = "0") final String offerId) {
+		ModelAndView result;
+		int intId;
+
+		try {
+			intId = Integer.valueOf(offerId);
+		} catch (final Throwable oops) {
+			return new ModelAndView("redirect:/");
+		}
+
+		try {
+			Carrier c = this.carrierService.findCarrierFromOffer(intId);
+			int id = c.getId();
+			result = new ModelAndView("actor/display");
+			final DisplayActorForm da = this.actorService.getDisplayActorForm(id);
+			result.addObject("da", da);
+			result.addObject("id", id);
+
+		} catch (final Throwable oops) {
+			result = new ModelAndView("redirect:/");
+		}
+		return result;
+
+	}
 	//EDIT
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView editActor() {

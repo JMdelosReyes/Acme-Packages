@@ -15,8 +15,10 @@
 <spring:message code="of.canceled"/>: <jstl:out value="${offer.canceled}"/><br>
 <jstl:if test="${offer.finalMode eq true}">
 	<a href="fare/list.do?id=<jstl:out value="${offer.id}"/>"><spring:message code="of.fares"/></a><br>
-	<a href="evaluation/list.do?id=<jstl:out value="${offer.id}"/>"><spring:message code="of.evaluations"/></a>
-	<br>
+	<security:authorize  access="isAuthenticated()">
+		<a href="evaluation/list.do?id=<jstl:out value="${offer.id}"/>"><spring:message code="of.evaluations"/></a>
+		<br>
+	</security:authorize>
 </jstl:if>
 <jstl:if test="${owner eq true}">
 	<a href="vehicle/carrier,auditor/display.do?id=<jstl:out value="${offer.vehicle.id}"/>"><spring:message code="of.vehicle"/></a><br>
