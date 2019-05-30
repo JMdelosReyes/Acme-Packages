@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.joda.time.DateTime;
@@ -13,8 +14,13 @@ import org.springframework.validation.Validator;
 
 import repositories.EvaluationRepository;
 import security.LoginService;
+import security.UserAccount;
+import security.UserAccountService;
+import domain.Actor;
+import domain.Carrier;
 import domain.Customer;
 import domain.Evaluation;
+import domain.Mess;
 import domain.Offer;
 
 @Service
@@ -32,6 +38,15 @@ public class EvaluationService {
 
 	@Autowired
 	private OfferService			offerService;
+
+	@Autowired
+	private MessService				messService;
+
+	@Autowired
+	private CarrierService			carrierService;
+
+	@Autowired
+	private UserAccountService		userAccountService;
 
 	@Autowired
 	private Validator				validator;
@@ -102,9 +117,10 @@ public class EvaluationService {
 
 		this.computeOfferScore(offer.getId());
 
+		this.evaluationNotification(result);
+
 		return result;
 	}
-
 	public void delete(Evaluation evaluation) {
 		Assert.notNull(evaluation);
 		Assert.isTrue(evaluation.getId() > 0);
@@ -201,5 +217,26 @@ public class EvaluationService {
 		}
 
 		this.evaluationRepository.updateOfferScore(offer.getId(), score);
+	}
+
+	public void evaluationNotification(Evaluation evaluation) {
+		Mess mess = this.messService.create();
+
+		Carrier carrier = this.carrierService.findCarrierFromOffer(evaluation.getOffer().getId());
+
+		Collection<Actor> rec = new ArrayList<>();
+		rec.add(carrier);
+		mess.setRecipients(rec);
+
+		mess.setBody("New evaluation added for you offer with ticker " + evaluation.getOffer().getTicker());
+		mess.setSubject("Evaluation notification");
+		mess.setSendDate(DateTime.now().minusMillis(1000).toDate());
+		mess.setPriority("HIGH");
+
+		UserAccount admin = this.userAccountService.findByUsername("admin");
+		mess.setSender(this.actorService.findByUserAccountId(admin.getId()));
+
+		this.messService.send(mess, true);
+
 	}
 }
