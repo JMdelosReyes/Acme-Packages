@@ -2670,6 +2670,8 @@
 			<list>
 				<ref bean="sponsorship1"/>
 				<ref bean="sponsorship2"/>
+				<ref bean="sponsorship4"/>
+				<ref bean="sponsorship5"/>
 			</list>
 		</property>
 		
@@ -2705,6 +2707,7 @@
 		<property name="sponsorships">
 			<list>
 				<ref bean="sponsorship3"/>
+				<ref bean="sponsorship6"/>
 			</list>
 		</property>
 		
@@ -2765,6 +2768,7 @@
 		<property name="totalCount" value="0" />
 
 	</bean>
+	
 	<bean id="sponsorship3" class="domain.Sponsorship">
 		<property name="banner" value="https://footdistrict.com/en/media/extendware/ewimageopt/media/skin/ae/9/logo-foot-district.png" />
 		<property name="target" value="https://footdistrict.com/en/"/>
@@ -2774,6 +2778,39 @@
 		<property name="totalCount" value="0" />
 
 	</bean>	
+	
+	
+	<bean id="sponsorship4" class="domain.Sponsorship">
+		<property name="banner" value="https://www.24-kts.com/themes/default-bootstrap/img/brand/brand.svg" />
+		<property name="target" value="https://www.24-kts.com/"/>
+		<property name="valid" value="true" />
+		<property name="count" value="0" />
+		<property name="expirationDate" value="05/05/2020" />
+		<property name="totalCount" value="0" />
+
+	</bean>
+	
+	
+	<bean id="sponsorship5" class="domain.Sponsorship">
+		<property name="banner" value="https://www.footlocker.es/INTERSHOP/static/WFS/Footlocker-Footlocker_ES-Site/-/-/es_ES/images/brand/logo-1440.png" />
+		<property name="target" value="https://www.footlocker.es/es/inicio"/>
+		<property name="valid" value="true" />
+		<property name="count" value="0" />
+		<property name="expirationDate" value="05/05/2020" />
+		<property name="totalCount" value="0" />
+
+	</bean>
+	
+	
+	<bean id="sponsorship6" class="domain.Sponsorship">
+		<property name="banner" value="https://clockify.me/assets/logo.svg" />
+		<property name="target" value="https://clockify.me/tracker"/>
+		<property name="valid" value="true" />
+		<property name="count" value="0" />
+		<property name="expirationDate" value="05/05/2020" />
+		<property name="totalCount" value="0" />
+
+	</bean>
 	
 	<!-- TOWN -->
 	

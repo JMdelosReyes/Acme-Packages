@@ -19,7 +19,7 @@ import domain.Town;
 @Repository
 public interface AdministratorRepository extends JpaRepository<Administrator, Integer> {
 
-	@Query("select s from Sponsor s join s.sponsorships ss where ss.valid=1")
+	@Query("select distinct s from Sponsor s join s.sponsorships ss where ss.valid=1")
 	Collection<Sponsor> validSponsorshipsSponsor();
 
 	@Query("select sum(ss.count) from Sponsor s join s.sponsorships ss where ss.valid=1 and s.id=?1")
