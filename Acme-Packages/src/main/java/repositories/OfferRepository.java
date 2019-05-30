@@ -27,4 +27,7 @@ public interface OfferRepository extends JpaRepository<Offer, Integer> {
 	@Query("select distinct o from Carrier c join c.offers o where c.id=?1")
 	Collection<Offer> findCarrierOffers(int id);
 
+	@Query("select max(tt.number) from Offer o join o.traverseTowns tt where o.id=?1")
+	Integer findMaxNumberTTByOffer(int id);
+
 }

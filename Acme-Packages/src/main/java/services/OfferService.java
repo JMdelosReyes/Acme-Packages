@@ -28,19 +28,22 @@ import forms.OfferForm;
 public class OfferService {
 
 	@Autowired
-	private OfferRepository	offerRepository;
+	private OfferRepository		offerRepository;
 
 	@Autowired
-	private ActorService	actorService;
+	private ActorService		actorService;
 
 	@Autowired
-	private CarrierService	carrierService;
+	private CarrierService		carrierService;
 
 	@Autowired
-	private VehicleService	vehicleService;
+	private VehicleService		vehicleService;
 
 	@Autowired
-	private Validator		validator;
+	private TraverseTownService	traverseTownService;
+
+	@Autowired
+	private Validator			validator;
 
 
 	public OfferService() {
@@ -199,22 +202,41 @@ public class OfferService {
 	}
 
 	public void addTraverseTown(TraverseTown traverseTown, int offerId) {
+		Assert.isTrue(offerId > 0);
+		Offer offer = this.offerRepository.findOne(offerId);
+		Assert.isTrue(!offer.isFinalMode());
+
+		int maxTt = 0;
+
+		if (offer.getTraverseTowns().size() > 0) {
+			maxTt = this.offerRepository.findMaxNumberTTByOffer(offerId);
+		}
+
+		TraverseTown clon = (TraverseTown) traverseTown.clone();
+		clon.setNumber(maxTt + 1);
+		traverseTown = clon;
+
+		offer.getTraverseTowns().add(traverseTown);
+
+		this.traverseTownService.save(traverseTown);
 
 	}
 
 	public void removeTraverseTown(TraverseTown traverseTown) {
+		Offer offer = this.offerRepository.findByTraverseTown(traverseTown.getId());
 
+		int number = traverseTown.getNumber();
+
+		for (TraverseTown tt : offer.getTraverseTowns()) {
+			if (tt.getNumber() > number) {
+				TraverseTown clon = (TraverseTown) tt.clone();
+				clon.setNumber(tt.getNumber() - 1);
+				tt = clon;
+				this.traverseTownService.save(tt);
+			}
+		}
 	}
-
 	public void addRequest(Request request, int offerId) {
-
-	}
-
-	public void addEvaluation(Evaluation evaluation, int offerId) {
-
-	}
-
-	public void removeEvaluation(Evaluation evaluation) {
 
 	}
 

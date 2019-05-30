@@ -13,7 +13,7 @@
 <spring:message code="curr.fullName"/>: <jstl:out value="${curriculum.fullName}"/><br>
 <spring:message code="curr.email"/>: <jstl:out value="${curriculum.email}"/><br>
 <spring:message code="curr.phoneNumber"/>: <jstl:out value="${curriculum.phoneNumber}"/><br>
-<spring:message code="curr.photo"/>: <img src="${curriculum.photo}"><br>
+<spring:message code="curr.photo"/>: <img src="${curriculum.photo}" height="300px"><br>
 <jstl:if test="${owner eq true}">
 	<a href="curriculum/carrier/edit.do?id=${curriculum.id}"><spring:message code="curr.edit"/></a>
 </jstl:if>

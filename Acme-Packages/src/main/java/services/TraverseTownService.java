@@ -113,6 +113,8 @@ public class TraverseTownService {
 		Assert.notNull(offer);
 		Assert.isTrue(carrier.getOffers().contains(offer));
 
+		this.offerService.removeTraverseTown(old);
+
 		offer.getTraverseTowns().remove(old);
 		this.traverseTownRepository.delete(old.getId());
 
@@ -160,6 +162,7 @@ public class TraverseTownService {
 
 		if (!binding.hasErrors()) {
 			result = this.save(result);
+			this.flush();
 			Assert.notNull(result);
 			if (tt.getId() == 0) {
 				this.offerService.addTraverseTown(result, offerId);

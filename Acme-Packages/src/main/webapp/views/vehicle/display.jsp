@@ -33,7 +33,7 @@
 :
 <br>
 <jstl:forEach items="${vehicle.pictures}" var="picture">
-	<img src="${picture}">
+	<img src="${picture}" height="300px">
 </jstl:forEach>
 <br />
 <br>
