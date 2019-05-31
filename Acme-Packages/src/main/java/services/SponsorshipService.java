@@ -129,12 +129,10 @@ public class SponsorshipService {
 	}
 
 	public void updateCount(Sponsorship sponsorship) {
-		Sponsorship last = this.findOne(sponsorship.getId());
 		Sponsorship clon = (Sponsorship) sponsorship.clone();
 		clon.setCount(sponsorship.getCount() + 1);
 		clon.setTotalCount(sponsorship.getTotalCount() + 1);
 		sponsorship = clon;
-		sponsorship.setVersion(last.getVersion());
 		this.sponsorshipRepository.save(sponsorship);
 	}
 

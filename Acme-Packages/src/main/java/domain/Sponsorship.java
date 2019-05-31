@@ -9,7 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.OptimisticLock;
 import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.OptimisticLocking;
 import org.hibernate.validator.constraints.NotBlank;
@@ -20,7 +20,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Access(AccessType.PROPERTY)
 @OptimisticLocking(type = OptimisticLockType.DIRTY)
-@DynamicUpdate
 public class Sponsorship extends DomainEntity implements Cloneable {
 
 	private String	banner;
@@ -70,6 +69,7 @@ public class Sponsorship extends DomainEntity implements Cloneable {
 		this.valid = valid;
 	}
 
+	@OptimisticLock(excluded = true)
 	public int getCount() {
 		return this.count;
 	}
@@ -77,7 +77,7 @@ public class Sponsorship extends DomainEntity implements Cloneable {
 	public void setCount(final int count) {
 		this.count = count;
 	}
-
+	@OptimisticLock(excluded = true)
 	public int getTotalCount() {
 		return this.totalCount;
 	}
