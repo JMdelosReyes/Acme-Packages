@@ -124,12 +124,13 @@ public class OfferController extends AbstractController {
 			boolean canEvaluate = false;
 
 			String type = this.actorService.findActorType();
-			final int actorId = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
 
 			if (type.equals("Carrier")) {
+				final int actorId = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
 				final Carrier carrier = this.carrierService.findOne(actorId);
 				owner = carrier.getOffers().contains(offer);
 			} else if (type.equals("Customer")) {
+				final int actorId = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
 				if (this.evaluationService.findEvaluableOffersByCustomer(actorId).contains(offer)) {
 					canEvaluate = true;
 				}

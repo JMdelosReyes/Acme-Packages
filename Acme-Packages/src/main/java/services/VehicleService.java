@@ -213,4 +213,11 @@ public class VehicleService {
 		return result;
 	}
 
+	public Collection<Category> findValidCategories(int id) {
+		Assert.isTrue(id > 0);
+		Collection<Category> categories = this.vehicleRepository.findValidCategories(id);
+		Assert.notNull(categories);
+		return categories;
+
+	}
 }

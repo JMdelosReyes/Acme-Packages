@@ -11,7 +11,7 @@
 
 <fieldset>
 	<legend><spring:message code="of.offer"/></legend>
-
+	
 <spring:message code="of.ticker"/>: <jstl:out value="${offer.ticker}"/><br>
 <spring:message code="of.maxDateToRequest"/>: <jstl:out value="${offer.maxDateToRequest}"/><br>
 <spring:message code="of.canceled"/>: <jstl:out value="${offer.canceled}"/><br>
@@ -22,6 +22,9 @@
 		<br>
 	</security:authorize>
 </jstl:if>
+
+<a href="vehicle/display.do?id=<jstl:out value="${offer.vehicle.id}"/>"><spring:message code="of.vehicle"/></a>
+
 <jstl:if test="${owner eq true}">
 	<a href="vehicle/carrier,auditor/display.do?id=<jstl:out value="${offer.vehicle.id}"/>"><spring:message code="of.vehicle"/></a><br>
 	<a href="request/carrier,customer/list.do?id=<jstl:out value="${offer.id}"/>"><spring:message code="of.requests"/></a><br>

@@ -104,6 +104,7 @@
 		
 		<security:intercept-url pattern="/miscellaneousRecord/carrier/edit.do" access="hasRole('CARRIER')" />
 		<security:intercept-url pattern="/miscellaneousRecord/carrier/create.do" access="hasRole('CARRIER')" />
+		<security:intercept-url pattern="/vehicle/display.do" access="permitAll" />
 		<security:intercept-url pattern="/vehicle/carrier/list.do" access="hasRole('CARRIER')" />
 		<security:intercept-url pattern="/vehicle/carrier,auditor/display.do" access="hasAnyRole('CARRIER','AUDITOR')" />
 		<security:intercept-url pattern="/vehicle/carrier/create.do" access="hasRole('CARRIER')" />

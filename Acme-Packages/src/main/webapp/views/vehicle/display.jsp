@@ -8,10 +8,13 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<spring:message code="veh.plate" />
-:
-<jstl:out value="${vehicle.plate}" />
-<br>
+<jstl:if test="${publicView eq false}">
+	<spring:message code="veh.plate" />
+	:
+	<jstl:out value="${vehicle.plate}" />
+	<br>
+</jstl:if>
+
 <spring:message code="veh.type" />
 :
 <jstl:out value="${vehicle.type}" />
@@ -32,11 +35,32 @@
 <spring:message code="veh.pictures" />
 :
 <br>
+
+<jstl:if test="${publicView eq true}">
+	<spring:message code="veh.availableCategories" />
+	:
+	<jstl:forEach items="${categories}" var="cate">
+		<jstl:choose>
+			<jstl:when test="${es eq true}">
+				<jstl:out value="${cate.spanishName}" />
+			</jstl:when>
+			<jstl:otherwise>
+				<jstl:out value="${cate.englishName}"></jstl:out>
+			</jstl:otherwise>
+		</jstl:choose>
+		<br>
+	</jstl:forEach>	
+	<br>
+</jstl:if>
+
 <jstl:forEach items="${vehicle.pictures}" var="picture">
 	<img src="${picture}" height="300px">
 </jstl:forEach>
 <br />
 <br>
+
+
+<jstl:if test="${publicView eq false}">
 
 <security:authorize access="hasRole('CARRIER')">
 	<jstl:choose>
@@ -111,6 +135,8 @@
 	</jstl:choose>
 	
 </security:authorize>
+
+</jstl:if>
 
 
 

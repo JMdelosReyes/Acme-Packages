@@ -31,4 +31,7 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Integer> {
 	@Query("select v from Carrier c join c.vehicles v where c.id=?1")
 	Collection<Vehicle> findCarrierVehicles(int id);
 
+	@Query("select c from Vehicle v join v.solicitations s join s.category c where v.id=?1 and s.startDate<=current_date and s.endDate>=current_date")
+	Collection<Category> findValidCategories(int id);
+
 }

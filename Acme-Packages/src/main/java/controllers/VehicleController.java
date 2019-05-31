@@ -19,6 +19,7 @@ import services.ActorService;
 import services.CarrierService;
 import services.VehicleService;
 import domain.Carrier;
+import domain.Category;
 import domain.Vehicle;
 
 @Controller
@@ -53,6 +54,43 @@ public class VehicleController extends AbstractController {
 			result.addObject("requestURI", "vehicle/carrier/list.do");
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:/");
+		}
+		return result;
+	}
+
+	// Display
+	@RequestMapping(value = "/display", method = RequestMethod.GET)
+	public ModelAndView displayPublic(@RequestParam(required = false, defaultValue = "0") final String id) {
+		final ModelAndView result;
+		int intId;
+
+		try {
+			intId = Integer.valueOf(id);
+		} catch (final Throwable oops) {
+			return new ModelAndView("redirect:/");
+		}
+
+		try {
+			result = new ModelAndView("vehicle/display");
+
+			Vehicle vehicle = this.vehicleService.findOne(intId);
+
+			Collection<Category> categories = this.vehicleService.findValidCategories(intId);
+
+			final Locale locale = LocaleContextHolder.getLocale();
+			boolean es = true;
+			if (locale.getLanguage().equals(new Locale("en").getLanguage())) {
+				es = false;
+			}
+
+			result.addObject("vehicle", vehicle);
+			result.addObject("solicitations", vehicle.getSolicitations());
+			result.addObject("es", es);
+			result.addObject("publicView", true);
+			result.addObject("categories", categories);
+			result.addObject("requestURI", "vehicle/carrier,auditor/display.do");
+		} catch (final Throwable oops) {
+			return new ModelAndView("redirect:/");
 		}
 		return result;
 	}
@@ -107,6 +145,7 @@ public class VehicleController extends AbstractController {
 			result.addObject("vehicle", vehicle);
 			result.addObject("solicitations", vehicle.getSolicitations());
 			result.addObject("es", es);
+			result.addObject("publicView", false);
 			result.addObject("requestURI", "vehicle/carrier,auditor/display.do");
 			result.addObject("carrierView", carrierView);
 			result.addObject("canBeEditedOrDeleted", canBeEditedOrDeleted);
