@@ -17,8 +17,8 @@ import org.springframework.validation.Validator;
 import pojos.ActorPojo;
 import pojos.AuditorPojo;
 import pojos.CarrierPojo;
-import pojos.CurriculumPojo;
 import pojos.CategoryPojo;
+import pojos.CurriculumPojo;
 import pojos.CustomerPojo;
 import pojos.EvaluationPojo;
 import pojos.FarePojo;
@@ -26,8 +26,8 @@ import pojos.MessBoxPojo;
 import pojos.MessPojo;
 import pojos.MiscellaneousRecordPojo;
 import pojos.OfferPojo;
-import pojos.ProfessionalRecordPojo;
 import pojos.PackagePojo;
+import pojos.ProfessionalRecordPojo;
 import pojos.RequestPojo;
 import pojos.SocialProfilePojo;
 import pojos.SolicitationPojo;
@@ -703,15 +703,12 @@ public class ActorService {
 		return res;
 	}
 
-	public AuditorPojo getAuditorPojo() {
 	public CustomerPojo getCustomerPojo() {
 		final UserAccount principal = LoginService.getPrincipal();
 		final Actor a = this.findByUserAccountId(principal.getId());
 
-		final AuditorPojo res = new AuditorPojo();
 		final CustomerPojo res = new CustomerPojo();
 
-		final Auditor ad = (Auditor) a;
 		final Customer c = (Customer) a;
 
 		res.setAddress(a.getAddress());
@@ -759,56 +756,8 @@ public class ActorService {
 		}
 		res.setMessageBoxes(messBoxPojos);
 
-		//Auditor
-
-		return res;
-	}
-
-	public CarrierPojo getCarrierPojo() {
-		final UserAccount principal = LoginService.getPrincipal();
-		final Actor a = this.findByUserAccountId(principal.getId());
-
-		final CarrierPojo res = new CarrierPojo();
-
-		final Carrier c = (Carrier) a;
-
-		res.setAddress(a.getAddress());
-		res.setCreditCard(a.getCreditCard());
-		res.setEmail(a.getEmail());
-		res.setMiddleName(a.getMiddleName());
-		res.setName(a.getName());
-		res.setPhoneNumber(a.getPhoneNumber());
-		res.setPhoto(a.getPhoto());
-		res.setSurname(a.getSurname());
-
-		//Social profiles
-		final Collection<SocialProfilePojo> socialProfiles = new ArrayList<>();
-		for (final SocialProfile sp : a.getSocialProfiles()) {
-			final SocialProfilePojo spp = new SocialProfilePojo();
-			spp.setNick(sp.getNick());
-			spp.setSocialNetwork(sp.getSocialNetwork());
-			spp.setProfileLink(sp.getProfileLink());
-			socialProfiles.add(spp);
-		}
-		res.setSocialProfiles(socialProfiles);
 		//Sponsor
 
-		//MessBoxes
-		final Collection<MessBoxPojo> messBoxPojos = new ArrayList<>();
-		for (final MessBox mb : a.getMessageBoxes()) {
-			MessBoxPojo mbp = new MessBoxPojo();
-			mbp.setName(mb.getName());
-			final Collection<MessPojo> messPojo = new ArrayList<>();
-			for (Mess m : mb.getMessages()) {
-				MessPojo mp = new MessPojo();
-				mp.setBody(m.getBody());
-				mp.setPriority(m.getPriority());
-				mp.setSendDate(m.getSendDate());
-				mp.setSender(m.getSender().getName() + " " + m.getSender().getSurname());
-				mp.setSubject(m.getSubject());
-				mp.setRecipients(new ArrayList<String>());
-				for (Actor actor : m.getRecipients()) {
-					mp.getRecipients().add(actor.getName() + " " + actor.getSurname());
 		final Collection<RequestPojo> requestPojos = new ArrayList<>();
 		for (final Request request : c.getRequests()) {
 			final RequestPojo rp = new RequestPojo();
@@ -846,6 +795,77 @@ public class ActorService {
 
 					categoryPojos.add(cp);
 				}
+				packPojo.setCategories(categoryPojos);
+
+				packagePojos.add(packPojo);
+
+			}
+			requestPojos.add(rp);
+
+		}
+		res.setRequests(requestPojos);
+
+		final Collection<EvaluationPojo> evaluationPojos = new ArrayList<EvaluationPojo>();
+		for (Evaluation ev : c.getEvaluations()) {
+			EvaluationPojo evp = new EvaluationPojo();
+			evp.setComment(ev.getComment());
+			evp.setCustomer(ev.getCustomer().getName());
+			evp.setMark(ev.getMark());
+			evp.setMoment(ev.getMoment());
+			evp.setOffer(ev.getOffer().getTicker());
+			evaluationPojos.add(evp);
+		}
+
+		res.setEvaluations(evaluationPojos);
+
+		return res;
+	}
+
+	public CarrierPojo getCarrierPojo() {
+		final UserAccount principal = LoginService.getPrincipal();
+		final Actor a = this.findByUserAccountId(principal.getId());
+
+		final CarrierPojo res = new CarrierPojo();
+
+		final Carrier c = (Carrier) a;
+
+		res.setAddress(a.getAddress());
+		res.setCreditCard(a.getCreditCard());
+		res.setEmail(a.getEmail());
+		res.setMiddleName(a.getMiddleName());
+		res.setName(a.getName());
+		res.setPhoneNumber(a.getPhoneNumber());
+		res.setPhoto(a.getPhoto());
+		res.setSurname(a.getSurname());
+
+		//Social profiles 
+		final Collection<SocialProfilePojo> socialProfiles = new ArrayList<>();
+		for (final SocialProfile sp : a.getSocialProfiles()) {
+			final SocialProfilePojo spp = new SocialProfilePojo();
+			spp.setNick(sp.getNick());
+			spp.setSocialNetwork(sp.getSocialNetwork());
+			spp.setProfileLink(sp.getProfileLink());
+			socialProfiles.add(spp);
+		}
+		res.setSocialProfiles(socialProfiles);
+
+		//MessBoxes
+		final Collection<MessBoxPojo> messBoxPojos = new ArrayList<>();
+		for (final MessBox mb : a.getMessageBoxes()) {
+			MessBoxPojo mbp = new MessBoxPojo();
+			mbp.setName(mb.getName());
+			final Collection<MessPojo> messPojo = new ArrayList<>();
+			for (Mess m : mb.getMessages()) {
+				MessPojo mp = new MessPojo();
+				mp.setBody(m.getBody());
+				mp.setPriority(m.getPriority());
+				mp.setSendDate(m.getSendDate());
+				mp.setSender(m.getSender().getName() + " " + m.getSender().getSurname());
+				mp.setSubject(m.getSubject());
+				mp.setRecipients(new ArrayList<String>());
+				for (Actor actor : m.getRecipients()) {
+					mp.getRecipients().add(actor.getName() + " " + actor.getSurname());
+				}
 				messPojo.add(mp);
 			}
 			mbp.setMessages(messPojo);
@@ -866,7 +886,6 @@ public class ActorService {
 			cp.setFullName(cur.getFullName());
 			cp.setPhoneNumber(cur.getPhoneNumber());
 			cp.setPhoto(cur.getPhoto());
-				packPojo.setCategories(categoryPojos);
 
 			Collection<MiscellaneousRecordPojo> misRecordPojos = new ArrayList<>();
 			for (MiscellaneousRecord mr : cur.getMiscellaneousRecords()) {
@@ -874,11 +893,9 @@ public class ActorService {
 				mrp.setAttachments(mr.getAttachment());
 				mrp.setComments(mr.getComments());
 				mrp.setTitle(mr.getTitle());
-				packagePojos.add(packPojo);
 
 				misRecordPojos.add(mrp);
 			}
-			requestPojos.add(rp);
 
 			cp.setMiscellaneousRecord(misRecordPojos);
 
@@ -909,17 +926,6 @@ public class ActorService {
 			fp.setPrice(f.getPrice());
 
 			farePojos.add(fp);
-		res.setRequests(requestPojos);
-
-		final Collection<EvaluationPojo> evaluationPojos = new ArrayList<EvaluationPojo>();
-		for (Evaluation ev : c.getEvaluations()) {
-			EvaluationPojo evp = new EvaluationPojo();
-			evp.setComment(ev.getComment());
-			evp.setCustomer(ev.getCustomer().getName());
-			evp.setMark(ev.getMark());
-			evp.setMoment(ev.getMoment());
-			evp.setOffer(ev.getOffer().getTicker());
-			evaluationPojos.add(evp);
 		}
 
 		res.setFares(farePojos);
@@ -989,7 +995,64 @@ public class ActorService {
 		}
 
 		res.setOffers(offerPojos);
-		res.setEvaluations(evaluationPojos);
+
+		return res;
+	}
+
+	public AuditorPojo getAuditorPojo() {
+		final UserAccount principal = LoginService.getPrincipal();
+		final Actor a = this.findByUserAccountId(principal.getId());
+
+		final AuditorPojo res = new AuditorPojo();
+
+		final Auditor ad = (Auditor) a;
+
+		res.setAddress(a.getAddress());
+		res.setCreditCard(a.getCreditCard());
+		res.setEmail(a.getEmail());
+		res.setMiddleName(a.getMiddleName());
+		res.setName(a.getName());
+		res.setPhoneNumber(a.getPhoneNumber());
+		res.setPhoto(a.getPhoto());
+		res.setSurname(a.getSurname());
+
+		//Social profiles
+		final Collection<SocialProfilePojo> socialProfiles = new ArrayList<>();
+		for (final SocialProfile sp : a.getSocialProfiles()) {
+			final SocialProfilePojo spp = new SocialProfilePojo();
+			spp.setNick(sp.getNick());
+			spp.setSocialNetwork(sp.getSocialNetwork());
+			spp.setProfileLink(sp.getProfileLink());
+			socialProfiles.add(spp);
+		}
+		res.setSocialProfiles(socialProfiles);
+
+		//MessBoxes
+		final Collection<MessBoxPojo> messBoxPojos = new ArrayList<>();
+		for (final MessBox mb : a.getMessageBoxes()) {
+			MessBoxPojo mbp = new MessBoxPojo();
+			mbp.setName(mb.getName());
+			final Collection<MessPojo> messPojo = new ArrayList<>();
+			for (Mess m : mb.getMessages()) {
+				MessPojo mp = new MessPojo();
+				mp.setBody(m.getBody());
+				mp.setPriority(m.getPriority());
+				mp.setSendDate(m.getSendDate());
+				mp.setSender(m.getSender().getName() + " " + m.getSender().getSurname());
+				mp.setSubject(m.getSubject());
+				mp.setRecipients(new ArrayList<String>());
+				for (Actor actor : m.getRecipients()) {
+					mp.getRecipients().add(actor.getName() + " " + actor.getSurname());
+				}
+				messPojo.add(mp);
+			}
+			mbp.setMessages(messPojo);
+			messBoxPojos.add(mbp);
+
+		}
+		res.setMessageBoxes(messBoxPojos);
+
+		//Auditor
 
 		return res;
 	}
@@ -1006,16 +1069,20 @@ public class ActorService {
 			if (userAccount.getAuthorities().contains(auth)) {
 				ap = this.getSponsorPojo();
 			}
-			auth.setAuthority(Authority.AUDITOR);
-			if (userAccount.getAuthorities().contains(auth)) {
-				ap = this.getAuditorPojo();
-			}
-			auth.setAuthority(Authority.CARRIER);
 
 			auth.setAuthority(Authority.CUSTOMER);
 			if (userAccount.getAuthorities().contains(auth)) {
-				ap = this.getCarrierPojo();
 				ap = this.getCustomerPojo();
+			}
+
+			auth.setAuthority(Authority.CARRIER);
+			if (userAccount.getAuthorities().contains(auth)) {
+				ap = this.getCarrierPojo();
+			}
+
+			auth.setAuthority(Authority.AUDITOR);
+			if (userAccount.getAuthorities().contains(auth)) {
+				ap = this.getAuditorPojo();
 			}
 
 		} catch (final Exception e) {
