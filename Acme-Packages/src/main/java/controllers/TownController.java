@@ -90,9 +90,19 @@ public class TownController extends AbstractController {
 			result = this.createEditModelAndView(town);
 		} else {
 			try {
-				boolean zipUsed = this.townService.townWithSameZip(town.getZipCode());
-				if ((town.getId() == 0) && zipUsed) {
-					return this.createEditModelAndView(town, "town.commit.error.zipUsed");
+				if (town.getId() == 0) {
+					boolean zipUsed = this.townService.townWithSameZip(town.getZipCode());
+					if (zipUsed) {
+						return this.createEditModelAndView(town, "town.commit.error.zipUsed");
+					}
+				} else {
+					Town old = this.townService.findOne(town.getId());
+					if (!old.getZipCode().equals(town.getZipCode())) {
+						boolean zipUsed = this.townService.townWithSameZip(town.getZipCode());
+						if (zipUsed) {
+							return this.createEditModelAndView(town, "town.commit.error.zipUsed");
+						}
+					}
 				}
 
 				this.townService.save(town);
