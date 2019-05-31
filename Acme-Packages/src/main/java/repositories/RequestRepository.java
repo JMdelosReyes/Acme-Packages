@@ -74,7 +74,7 @@ public interface RequestRepository extends JpaRepository<Request, Integer> {
 
 	//*******************FILTER OFFER
 	//TODO y hacer el calculo con la resta de los volumenes y pesos de los paquetes
-	@Query("select o from Offer o join o.vehicle veh where o.finalMode = 1 and veh.maxVolume => ?1 and veh.maxWeight >= ?2")
+	@Query("select o from Offer o")
 	Collection<Offer> findOffersByWeightAndVolumeMax(double maxVolume, double maxWeight);
 
 }
