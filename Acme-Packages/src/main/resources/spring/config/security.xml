@@ -138,7 +138,7 @@
 			<security:intercept-url pattern="/actor/edit.do"
 			access="hasAnyRole('ADMIN', 'CARRIER', 'CUSTOMER', 'SPONSOR', 'AUDITOR')" />
 			<security:intercept-url pattern="/getActor.do"
-			access="hasAnyRole('SPONSOR')" />
+			access="hasAnyRole('ADMIN', 'CARRIER', 'CUSTOMER', 'SPONSOR', 'AUDITOR')" />
 		<security:intercept-url pattern="/offer/list.do" access="permitAll" />
 		<security:intercept-url pattern="/offer/display.do" access="permitAll" />
 		<security:intercept-url pattern="/offer/carrier/list.do" access="hasRole('CARRIER')" />

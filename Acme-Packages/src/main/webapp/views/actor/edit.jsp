@@ -59,7 +59,7 @@
 	<input type="submit" name="save" onclick="if(validatePhone('phoneNumber')){return confirm('<spring:message code="act.confirmPhone" />')}" value="<spring:message code="act.save"/>"> 
     <acme:delete/>
     <acme:cancel url="/actor/display.do" code="act.cancel"/>
-    <security:authorize access="hasAnyRole('SPONSOR')">
+    <security:authorize access="hasAnyRole('ADMIN', 'CARRIER', 'CUSTOMER', 'SPONSOR', 'AUDITOR')">
     <br>
     	<acme:cancel url="/getActor.do" code="actor.export"/>
     </security:authorize>

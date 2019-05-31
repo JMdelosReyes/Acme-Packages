@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import pojos.ActorPojo;
+import pojos.AuditorPojo;
 import pojos.MessBoxPojo;
 import pojos.MessPojo;
 import pojos.SocialProfilePojo;
@@ -678,6 +679,64 @@ public class ActorService {
 		return res;
 	}
 
+	public AuditorPojo getAuditorPojo() {
+		final UserAccount principal = LoginService.getPrincipal();
+		final Actor a = this.findByUserAccountId(principal.getId());
+
+		final AuditorPojo res = new AuditorPojo();
+
+		final Auditor ad = (Auditor) a;
+
+		res.setAddress(a.getAddress());
+		res.setCreditCard(a.getCreditCard());
+		res.setEmail(a.getEmail());
+		res.setMiddleName(a.getMiddleName());
+		res.setName(a.getName());
+		res.setPhoneNumber(a.getPhoneNumber());
+		res.setPhoto(a.getPhoto());
+		res.setSurname(a.getSurname());
+
+		//Social profiles
+		final Collection<SocialProfilePojo> socialProfiles = new ArrayList<>();
+		for (final SocialProfile sp : a.getSocialProfiles()) {
+			final SocialProfilePojo spp = new SocialProfilePojo();
+			spp.setNick(sp.getNick());
+			spp.setSocialNetwork(sp.getSocialNetwork());
+			spp.setProfileLink(sp.getProfileLink());
+			socialProfiles.add(spp);
+		}
+		res.setSocialProfiles(socialProfiles);
+
+		//MessBoxes
+		final Collection<MessBoxPojo> messBoxPojos = new ArrayList<>();
+		for (final MessBox mb : a.getMessageBoxes()) {
+			MessBoxPojo mbp = new MessBoxPojo();
+			mbp.setName(mb.getName());
+			final Collection<MessPojo> messPojo = new ArrayList<>();
+			for (Mess m : mb.getMessages()) {
+				MessPojo mp = new MessPojo();
+				mp.setBody(m.getBody());
+				mp.setPriority(m.getPriority());
+				mp.setSendDate(m.getSendDate());
+				mp.setSender(m.getSender().getName() + " " + m.getSender().getSurname());
+				mp.setSubject(m.getSubject());
+				mp.setRecipients(new ArrayList<String>());
+				for (Actor actor : m.getRecipients()) {
+					mp.getRecipients().add(actor.getName() + " " + actor.getSurname());
+				}
+				messPojo.add(mp);
+			}
+			mbp.setMessages(messPojo);
+			messBoxPojos.add(mbp);
+
+		}
+		res.setMessageBoxes(messBoxPojos);
+
+		//Auditor
+
+		return res;
+	}
+
 	public ActorPojo findActorPojo() {
 		ActorPojo ap = new ActorPojo();
 		try {
@@ -689,6 +748,10 @@ public class ActorService {
 			auth.setAuthority(Authority.SPONSOR);
 			if (userAccount.getAuthorities().contains(auth)) {
 				ap = this.getSponsorPojo();
+			}
+			auth.setAuthority(Authority.AUDITOR);
+			if (userAccount.getAuthorities().contains(auth)) {
+				ap = this.getAuditorPojo();
 			}
 
 		} catch (final Exception e) {
