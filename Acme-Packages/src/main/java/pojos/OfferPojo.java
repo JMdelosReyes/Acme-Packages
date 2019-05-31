@@ -6,17 +6,16 @@ import java.util.Date;
 
 public class OfferPojo {
 
-	private String							ticker;
-	private boolean							finalMode;
-	private Date							maxDateToRequest;
-	private boolean							canceled;
-	private double							score;
-	private double							totalPrice;
-	private Collection<FarePojo>			fares;
-	private String							vehicle;
-	private Collection<EvaluationPojo>		evaluations;
-	private Collection<RequestPojo>			requests;
-	private Collection<TraverseTownPojo>	traverseTowns;
+	private String						ticker;
+	private boolean						finalMode;
+	private Date						maxDateToRequest;
+	private boolean						canceled;
+	private double						score;
+	private double						totalPrice;
+	private String						vehicle;
+	private Collection<EvaluationPojo>	evaluations;
+	private Collection<RequestPojo>		requests;
+	private Collection<String>			traverseTowns;
 
 
 	public String getTicker() {
@@ -67,14 +66,6 @@ public class OfferPojo {
 		this.totalPrice = totalPrice;
 	}
 
-	public Collection<FarePojo> getFares() {
-		return this.fares;
-	}
-
-	public void setFares(Collection<FarePojo> fares) {
-		this.fares = fares;
-	}
-
 	public String getVehicle() {
 		return this.vehicle;
 	}
@@ -99,11 +90,11 @@ public class OfferPojo {
 		this.requests = requests;
 	}
 
-	public Collection<TraverseTownPojo> getTraverseTowns() {
+	public Collection<String> getTraverseTowns() {
 		return this.traverseTowns;
 	}
 
-	public void setTraverseTowns(Collection<TraverseTownPojo> traverseTowns) {
+	public void setTraverseTowns(Collection<String> traverseTowns) {
 		this.traverseTowns = traverseTowns;
 	}
 
