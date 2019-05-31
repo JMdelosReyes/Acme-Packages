@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -136,9 +137,15 @@ public class TraverseTownService {
 		return result;
 	}
 
+	public TraverseTown findOfferTraverseTownCurrent(int id) {
+		final Collection<TraverseTown> result = this.traverseTownRepository.findOfferTraverseTownCurrent(id);
+		return result.size() == 0 ? null : new ArrayList<>(result).get(0);
+	}
+
 	public TraverseTown reconstruct(TraverseTown tt, Integer offerId, BindingResult binding) {
 		TraverseTown result;
 		TraverseTown old = null;
+		TraverseTown clon2 = (null);
 
 		if (tt.getId() == 0) {
 			result = this.create();
@@ -156,6 +163,14 @@ public class TraverseTownService {
 			clon.setEstimatedDate(tt.getEstimatedDate());
 			clon.setTown(tt.getTown());
 
+			if (!old.isCurrentTown() && clon.isCurrentTown()) {
+				TraverseTown ttToChange = this.findOfferTraverseTownCurrent(offerId);
+				if (ttToChange != null) {
+					clon2 = (TraverseTown) ttToChange.clone();
+					clon2.setCurrentTown(false);
+				}
+			}
+
 			result = clon;
 		}
 
@@ -163,22 +178,31 @@ public class TraverseTownService {
 
 		Offer o = this.offerService.findOne(offerId);
 
-		if ((old != null) && o.isFinalMode() && (!old.getTown().equals(result.getTown()))) {
+		if ((old != null)
+			&& o.isFinalMode()
+			&& (!old.getTown().equals(result.getTown()) || (old.getEstimatedDate().getDay() != (result.getEstimatedDate().getDay())) || (old.getEstimatedDate().getMonth() != (result.getEstimatedDate().getMonth())) || (old.getEstimatedDate().getYear() != (result
+				.getEstimatedDate().getYear())))) {
 			binding.rejectValue("town", "of.error.finalMode");
+			binding.rejectValue("estimatedDate", "of.error.finalMode");
 		}
+		if ((o != null) && !o.isFinalMode()) {
 
-		if ((result.getEstimatedDate() != null) && result.getEstimatedDate().before(o.getMaxDateToRequest())) {
-			binding.rejectValue("estimatedDate", "tt.error.estimatedDateBeforeOfferDate");
-		}
+			if ((result.getEstimatedDate() != null) && result.getEstimatedDate().before(o.getMaxDateToRequest())) {
+				binding.rejectValue("estimatedDate", "tt.error.estimatedDateBeforeOfferDate");
+			}
 
-		Date maxEstimated = this.offerService.maxEstimatedDateofAnOffer(offerId);
+			Date maxEstimated = this.offerService.maxEstimatedDateofAnOffer(offerId);
 
-		if (((result.getEstimatedDate() != null) && (maxEstimated != null)) && result.getEstimatedDate().before(maxEstimated)) {
-			binding.rejectValue("estimatedDate", "tt.error.estimatedDateBeforeMaxDate");
+			if (((result.getEstimatedDate() != null) && (maxEstimated != null)) && result.getEstimatedDate().before(maxEstimated)) {
+				binding.rejectValue("estimatedDate", "tt.error.estimatedDateBeforeMaxDate");
+			}
 		}
 
 		if (!binding.hasErrors()) {
 			result = this.save(result);
+			if (clon2 != null) {
+				this.save(clon2);
+			}
 			this.flush();
 			Assert.notNull(result);
 			if (tt.getId() == 0) {

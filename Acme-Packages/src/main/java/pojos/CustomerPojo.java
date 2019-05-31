@@ -3,7 +3,7 @@ package pojos;
 
 import java.util.Collection;
 
-public class CustomerPojo {
+public class CustomerPojo extends ActorPojo {
 
 	private Collection<RequestPojo>		requests;
 	private Collection<EvaluationPojo>	evaluations;

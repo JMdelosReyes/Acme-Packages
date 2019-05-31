@@ -18,6 +18,8 @@ import pojos.ActorPojo;
 import pojos.AuditorPojo;
 import pojos.CarrierPojo;
 import pojos.CurriculumPojo;
+import pojos.CategoryPojo;
+import pojos.CustomerPojo;
 import pojos.EvaluationPojo;
 import pojos.FarePojo;
 import pojos.MessBoxPojo;
@@ -25,6 +27,8 @@ import pojos.MessPojo;
 import pojos.MiscellaneousRecordPojo;
 import pojos.OfferPojo;
 import pojos.ProfessionalRecordPojo;
+import pojos.PackagePojo;
+import pojos.RequestPojo;
 import pojos.SocialProfilePojo;
 import pojos.SolicitationPojo;
 import pojos.SponsorPojo;
@@ -49,6 +53,7 @@ import domain.MessBox;
 import domain.MiscellaneousRecord;
 import domain.Offer;
 import domain.ProfessionalRecord;
+import domain.Request;
 import domain.SocialProfile;
 import domain.Solicitation;
 import domain.Sponsor;
@@ -699,12 +704,15 @@ public class ActorService {
 	}
 
 	public AuditorPojo getAuditorPojo() {
+	public CustomerPojo getCustomerPojo() {
 		final UserAccount principal = LoginService.getPrincipal();
 		final Actor a = this.findByUserAccountId(principal.getId());
 
 		final AuditorPojo res = new AuditorPojo();
+		final CustomerPojo res = new CustomerPojo();
 
 		final Auditor ad = (Auditor) a;
+		final Customer c = (Customer) a;
 
 		res.setAddress(a.getAddress());
 		res.setCreditCard(a.getCreditCard());
@@ -783,6 +791,7 @@ public class ActorService {
 			socialProfiles.add(spp);
 		}
 		res.setSocialProfiles(socialProfiles);
+		//Sponsor
 
 		//MessBoxes
 		final Collection<MessBoxPojo> messBoxPojos = new ArrayList<>();
@@ -800,6 +809,42 @@ public class ActorService {
 				mp.setRecipients(new ArrayList<String>());
 				for (Actor actor : m.getRecipients()) {
 					mp.getRecipients().add(actor.getName() + " " + actor.getSurname());
+		final Collection<RequestPojo> requestPojos = new ArrayList<>();
+		for (final Request request : c.getRequests()) {
+			final RequestPojo rp = new RequestPojo();
+			rp.setComment(request.getComment());
+			rp.setDeadline(request.getDeadline());
+			rp.setDescription(request.getDescription());
+			rp.setFinalMode(request.isFinalMode());
+			rp.setIssue(request.getIssue() == null ? null : request.getIssue().getDescription());
+			rp.setMaxPrice(request.getMaxPrice());
+			rp.setMoment(request.getMoment());
+			rp.setOffer(request.getOffer() == null ? null : request.getOffer().getTicker());
+			rp.setStatus(request.getStatus());
+			rp.setStreetAddress(request.getStreetAddress());
+			rp.setTicker(request.getTicker());
+			rp.setTown(request.getTown().getName());
+			rp.setVolume(request.getVolume());
+			rp.setWeight(request.getWeight());
+			Collection<PackagePojo> packagePojos = new ArrayList<PackagePojo>();
+			for (domain.Package pack : request.getPackages()) {
+				PackagePojo packPojo = new PackagePojo();
+				packPojo.setDetails(pack.getDetails());
+				packPojo.setHeight(pack.getHeight());
+				packPojo.setLength(pack.getLength());
+				packPojo.setPrice(pack.getPrice());
+				packPojo.setWeight(pack.getWeight());
+				packPojo.setWidth(pack.getWidth());
+
+				Collection<CategoryPojo> categoryPojos = new ArrayList<CategoryPojo>();
+				for (Category cat : pack.getCategories()) {
+					CategoryPojo cp = new CategoryPojo();
+					cp.setEnglishDescription(cat.getEnglishDescription());
+					cp.setEnglishName(cat.getEnglishName());
+					cp.setSpanishDescription(cat.getSpanishDescription());
+					cp.setSpanishName(cat.getSpanishName());
+
+					categoryPojos.add(cp);
 				}
 				messPojo.add(mp);
 			}
@@ -821,6 +866,7 @@ public class ActorService {
 			cp.setFullName(cur.getFullName());
 			cp.setPhoneNumber(cur.getPhoneNumber());
 			cp.setPhoto(cur.getPhoto());
+				packPojo.setCategories(categoryPojos);
 
 			Collection<MiscellaneousRecordPojo> misRecordPojos = new ArrayList<>();
 			for (MiscellaneousRecord mr : cur.getMiscellaneousRecords()) {
@@ -828,9 +874,11 @@ public class ActorService {
 				mrp.setAttachments(mr.getAttachment());
 				mrp.setComments(mr.getComments());
 				mrp.setTitle(mr.getTitle());
+				packagePojos.add(packPojo);
 
 				misRecordPojos.add(mrp);
 			}
+			requestPojos.add(rp);
 
 			cp.setMiscellaneousRecord(misRecordPojos);
 
@@ -861,6 +909,17 @@ public class ActorService {
 			fp.setPrice(f.getPrice());
 
 			farePojos.add(fp);
+		res.setRequests(requestPojos);
+
+		final Collection<EvaluationPojo> evaluationPojos = new ArrayList<EvaluationPojo>();
+		for (Evaluation ev : c.getEvaluations()) {
+			EvaluationPojo evp = new EvaluationPojo();
+			evp.setComment(ev.getComment());
+			evp.setCustomer(ev.getCustomer().getName());
+			evp.setMark(ev.getMark());
+			evp.setMoment(ev.getMoment());
+			evp.setOffer(ev.getOffer().getTicker());
+			evaluationPojos.add(evp);
 		}
 
 		res.setFares(farePojos);
@@ -930,6 +989,7 @@ public class ActorService {
 		}
 
 		res.setOffers(offerPojos);
+		res.setEvaluations(evaluationPojos);
 
 		return res;
 	}
@@ -951,8 +1011,11 @@ public class ActorService {
 				ap = this.getAuditorPojo();
 			}
 			auth.setAuthority(Authority.CARRIER);
+
+			auth.setAuthority(Authority.CUSTOMER);
 			if (userAccount.getAuthorities().contains(auth)) {
 				ap = this.getCarrierPojo();
+				ap = this.getCustomerPojo();
 			}
 
 		} catch (final Exception e) {
