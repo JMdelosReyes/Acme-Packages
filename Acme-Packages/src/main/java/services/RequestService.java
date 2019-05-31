@@ -157,10 +157,7 @@ public class RequestService {
 		this.reqRepository.flush();
 	}
 	//Business methods
-	//Mirar si hay alguna offer para esta request en el controller
-	public Collection<Offer> findOffersByRequest(Request req) {
-		return null;
-	}
+
 	public Boolean weightCanBeAddedToOfferByWeightOfRequestAndOfferId(Request req, Offer of) {
 		Boolean res;
 		res = this.reqRepository.weightCanBeAddedToOfferByWeightOfRequestAndOfferId(req.getWeight(), of.getId());
@@ -178,15 +175,15 @@ public class RequestService {
 		Assert.notNull(res);
 		return res;
 	}
-	public TraverseTown findTraverseTownOfDestinationTownByRequestId(Request req) {
+	public TraverseTown findTraverseTownOfDestinationTownByRequestId(Request req, Offer off) {
 		TraverseTown res;
-		res = this.reqRepository.findTraverseTownOfDestinationTownByRequestId(req.getId());
+		res = this.reqRepository.findTraverseTownOfDestinationTownByRequestId(req.getId(), off.getId());
 		Assert.notNull(res);
 		return res;
 	}
-	public Collection<Category> findOfferCategoriesByOfferId(Offer of) {
+	public Collection<Category> findCategoriesOfferByOfferId(Offer of) {
 		Collection<Category> res = new ArrayList<Category>();
-		res = this.reqRepository.findOfferCategoriesByOfferId(of.getId());
+		res = this.reqRepository.findCategoriesOfferByOfferId(of.getId());
 		Assert.notNull(res);
 		return res;
 	}
@@ -220,33 +217,98 @@ public class RequestService {
 		clon.setPackages(newPackages);
 		this.save(clon);
 	}
+	//Find offers
+	public List<Offer> findOffersByRequest(Request req) {
+		Collection<Offer> res;
+		Assert.isTrue(req.getOffer() == null);
+		res = this.findOffersNotCancelledValidMaxDateFinalMode();
+		res.retainAll(this.findOffersVolumeAvailableByVolumeRequest(req.getVolume()));
+		res.retainAll(this.findOffersWeightAvailableByWeightRequest(req.getWeight()));
+		res.retainAll(this.findOffersWithDestinationTownAndEstimatedTime(req));
+		if (res.size() > 0) {
+			for (Offer o : res) {
+				Collection<Category> categoriesOf = this.findCategoriesOfferByOfferId(o);
+				Collection<Category> categoriesReq = this.findCategoriesPackagesByRequestId(req);
+				if (categoriesOf.containsAll(categoriesReq)) {
+					double acum = 0.0;
+					for (Package p : req.getPackages()) {
+						List<Fare> fares = new ArrayList<>(this.findFareOrderedByPriceByOfferIdWeightAndVolume(o.getId(), p.getWeight(), p.getHeight() * p.getLength() * p.getWidth()));
+						if (fares.size() > 0) {
+							acum += fares.get(0).getPrice();
+						}
+					}
+					if (acum > req.getMaxPrice()) {
+						res.remove(o);
+					}
+				}
+			}
+		} else {
+			res = new ArrayList<Offer>();
+		}
+		return new ArrayList<Offer>(res);
+	}
+	//Auxiliary Filter
+	public Collection<Offer> findOffersNotCancelledValidMaxDateFinalMode() {
+		Collection<Offer> res = new ArrayList<Offer>();
+		res = this.reqRepository.offersNotCancelledValidMaxDateFinalMode();
+		Assert.notNull(res);
+		return res;
+	}
+	public Collection<Offer> findOffersWeightAvailableByWeightRequest(double maxWeight) {
+		Collection<Offer> res = new ArrayList<Offer>();
+		res = this.reqRepository.findOffersWeightAvailableByWeightRequest(maxWeight);
+		Assert.notNull(res);
+		return res;
+	}
+	public Collection<Offer> findOffersVolumeAvailableByVolumeRequest(double maxVolume) {
+		Collection<Offer> res = new ArrayList<Offer>();
+		res = this.reqRepository.findOffersVolumeAvailableByVolumeRequest(maxVolume);
+		Assert.notNull(res);
+		return res;
+	}
+	public Collection<Offer> findOffersWithDestinationTownAndEstimatedTime(Request r) {
+		Assert.notNull(r);
+		Collection<Offer> res = new ArrayList<Offer>();
+		res = this.reqRepository.findOffersWithDestinationTownAndEstimatedTime(r.getId());
+		Assert.notNull(res);
+		return res;
+	}
+	public Collection<Fare> findFareOrderedByPriceByOfferIdWeightAndVolume(int offId, double weight, double volume) {
+		Assert.notNull(offId);
+		Assert.notNull(weight);
+		Assert.notNull(volume);
+		Collection<Fare> res = new ArrayList<Fare>();
+		res = this.reqRepository.findFareOrderedByPriceByOfferIdWeightAndVolume(offId, weight, volume);
+		Assert.notNull(res);
+		return res;
+	}
 
 	//Aplicar a una offer
 	public void applyOffer(Request req, Offer of) {
 		Request old = this.findOne(req.getId());
-		Assert.isTrue(of.isFinalMode());
-
-		Assert.isTrue(this.weightCanBeAddedToOfferByWeightOfRequestAndOfferId(req, of));
-		Assert.isTrue(this.volumeCanBeAddedToOfferByVolumeOfRequestAndOfferId(req, of));
-
+		Assert.isTrue(of.isFinalMode() && !of.isCanceled());
+		if (of.getRequests().size() != 0) {
+			Assert.isTrue(this.weightCanBeAddedToOfferByWeightOfRequestAndOfferId(req, of));
+			Assert.isTrue(this.volumeCanBeAddedToOfferByVolumeOfRequestAndOfferId(req, of));
+		} else {
+			Assert.isTrue(of.getVehicle().getMaxVolume() >= req.getVolume());
+			Assert.isTrue(of.getVehicle().getMaxWeight() >= req.getWeight());
+		}
 		Assert.isTrue(this.findTownsByOfferId(of).contains(req.getTown()));
 
 		//TODO: Fijo que petardean los formatos de fecha
-		Date estimatedDate = this.findTraverseTownOfDestinationTownByRequestId(req).getEstimatedDate();
+		Date estimatedDate = this.findTraverseTownOfDestinationTownByRequestId(req, of).getEstimatedDate();
 		Assert.isTrue(estimatedDate.after(req.getDeadline()) || estimatedDate.equals(req.getDeadline()));
+		Assert.isTrue(this.findOffersNotCancelledValidMaxDateFinalMode().contains(of));
 
-		List<Category> catAvailables = new ArrayList<>(this.findOfferCategoriesByOfferId(of));
+		List<Category> catAvailables = new ArrayList<>(this.findCategoriesOfferByOfferId(of));
 		for (Package p : req.getPackages()) {
-			Assert.isTrue(catAvailables.containsAll(p.getCategories()) || catAvailables.equals(p.getCategories()));
-			List<Fare> fares = new ArrayList<>();
-			fares = new ArrayList<>(this.findFaresOrderedByPriceByPackageId(p));
-			Assert.notEmpty(fares);
-			this.pacService.changePrice(p, fares.get(0));
+			Assert.isTrue(catAvailables.containsAll(p.getCategories()));
 		}
-
-		this.offService.addRequest(this.reqRepository.save(req), of.getId());
+		Request result = (Request) req.clone();
+		result.setStatus(Request.SUBMITTED);
+		this.offService.addRequest(this.reqRepository.save(result), of.getId());
 	}
-
 	public void deleteRequestOfOffer(Offer o) {
 		for (Request r : o.getRequests()) {
 			this.reqRepository.findCustomerByRequestId(r.getId()).getRequests().remove(r);
@@ -293,14 +355,17 @@ public class RequestService {
 			result = this.reqRepository.save(result);
 			//Contiene en la ruta la ciudad destino
 			Assert.isTrue(this.findTownsByOfferId(result.getOffer()).contains(result.getTown()));
+			//MaxDateToRequest posterior a ahora
+			Assert.isTrue(result.getOffer().getMaxDateToRequest().after(DateTime.now().toDate()) || result.getOffer().getMaxDateToRequest().equals(DateTime.now().toDate()));
 			//Fecha de reparto estimada anterior o igual a la fecha de maxima de entrega
-			Assert.isTrue(this.findTraverseTownOfDestinationTownByRequestId(result).getEstimatedDate().before(result.getDeadline()) || this.findTraverseTownOfDestinationTownByRequestId(result).getEstimatedDate().equals(result.getDeadline()));
+			Assert.isTrue(this.findTraverseTownOfDestinationTownByRequestId(result, result.getOffer()).getEstimatedDate().before(result.getDeadline())
+				|| this.findTraverseTownOfDestinationTownByRequestId(result, result.getOffer()).getEstimatedDate().equals(result.getDeadline()));
+
 			//Contiene todas las categorias para transportar todos los paquetes
-			Assert.isTrue(this.findOfferCategoriesByOfferId(result.getOffer()).containsAll(this.findCategoriesPackagesByRequestId(result)));
+			Assert.isTrue(this.findCategoriesOfferByOfferId(result.getOffer()).containsAll(this.findCategoriesPackagesByRequestId(result)));
 			//Tiene volumen y peso disponible para llevar la request
 			Assert.isTrue(this.volumeCanBeAddedToOfferByVolumeOfRequestAndOfferId(result, result.getOffer()));
 			Assert.isTrue(this.weightCanBeAddedToOfferByWeightOfRequestAndOfferId(result, result.getOffer()));
-			//No se si se me pasa algun caso por comprobar más 
 
 			//Actualizar prices de packages
 			//Comprobar que no se pasa de maxPrice
@@ -338,7 +403,6 @@ public class RequestService {
 			result = req;
 			req.setTicker(Tickers.generateTicker());
 			if (req.isFinalMode()) {
-				req.setStatus(Request.SUBMITTED);
 				req.setMoment(DateTime.now().minusMillis(1000).toDate());
 			}
 			req.setOffer(null);

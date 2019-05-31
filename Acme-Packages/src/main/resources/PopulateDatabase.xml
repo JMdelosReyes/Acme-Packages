@@ -1979,7 +1979,7 @@
 	<bean id="offer1" class="domain.Offer">
 		<property name="ticker" value="190523-ASD123" />
 		<property name="finalMode" value="true" />
-		<property name="maxDateToRequest" value="05/05/2019" />
+		<property name="maxDateToRequest" value="10/07/2019" />
 		<property name="canceled" value="false" /> 		
 		<property name="score" value="5" />
 		<property name="totalPrice" value="500" />

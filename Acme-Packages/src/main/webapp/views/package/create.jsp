@@ -25,5 +25,5 @@
 		</jstl:otherwise>
 	</jstl:choose>
 	<acme:submit name="save" code="req.save"/>
-	<acme:cancel url="request/carrier,customer,auditor/display.do?id=${apf.requestId}" code="req.cancel"/>
+	<acme:cancel url="request/carrier,customer,auditor/display.do?id=${reqId}" code="req.cancel"/>
 </form:form>

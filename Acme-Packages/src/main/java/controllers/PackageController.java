@@ -180,6 +180,7 @@ public class PackageController {
 		}
 
 		result.addObject("addPackageForm", apf);
+		result.addObject("reqId", apf.getRequestId());
 		result.addObject("message", message);
 		result.addObject("es", es);
 		result.addObject("categories", categories);

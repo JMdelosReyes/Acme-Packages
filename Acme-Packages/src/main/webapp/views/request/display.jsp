@@ -27,14 +27,20 @@
 	<spring:message code="req.issue"/>: <a href="/issue/carrier,customer,auditor/display.do?id=${request.issue.id}"><spring:message code="req.issue"/></a><br/>
 </jstl:if>
 	<security:authorize access="hasRole('CUSTOMER')">
-	<jstl:if test="${row.finalMode && row.status eq null && owner}">
+	<jstl:if test="${request.finalMode && request.status eq null && owner}">
+		<jstl:if test="${!(empty offers)}">
 		<fieldset>
+		<h3><spring:message code="req.apply"/></h3>
 		<form:form action="request/carrier,customer,auditor/display.do" modelAttribute="chooseOfferForm">
 		<form:hidden path="id"/>
-		<acme:select items="offers" itemLabel="offer.ticker" code="req.offersAvailables" path="offer"/>
-		<acme:submit name="save" code="req.save"/>
+		<acme:select items="${offers}" itemLabel="ticker" code="req.offersAvailables" path="idOffer"/>
+		<acme:submit name="apply" code="req.apply"/>
 		</form:form>
 		</fieldset>
+		</jstl:if>
+		<jstl:if test="${empty offers}">
+		<h3><spring:message code="req.noOffers"/></h3>
+		</jstl:if>
 	</jstl:if>
 	
 </security:authorize>

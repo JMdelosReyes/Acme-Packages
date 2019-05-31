@@ -1,12 +1,10 @@
 
 package forms;
 
-import domain.Offer;
-
 public class ChooseOfferForm {
 
-	private int		id;
-	private Offer	offer;
+	private int	id;
+	private int	idOffer;
 
 
 	public int getId() {
@@ -17,12 +15,12 @@ public class ChooseOfferForm {
 		this.id = id;
 	}
 
-	public Offer getOffer() {
-		return this.offer;
+	public int getIdOffer() {
+		return this.idOffer;
 	}
 
-	public void setOffer(Offer offer) {
-		this.offer = offer;
+	public void setIdOffer(int idOffer) {
+		this.idOffer = idOffer;
 	}
 
 }

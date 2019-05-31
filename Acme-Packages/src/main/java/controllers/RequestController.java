@@ -36,6 +36,7 @@ import domain.Offer;
 import domain.Package;
 import domain.Request;
 import domain.Town;
+import forms.ChooseOfferForm;
 import forms.CreateRequestForm;
 
 @Controller
@@ -144,18 +145,62 @@ public class RequestController extends AbstractController {
 		if (locale.getLanguage().equals(new Locale("en").getLanguage())) {
 			es = false;
 		}
-		List<Offer> offersAvailables = new ArrayList<>(this.reqService.findOffersByRequest(request));
 
 		result = new ModelAndView("request/display");
 		result.addObject("request", request);
-		result.addObject("offers", offersAvailables);
 		result.addObject("packages", new ArrayList<>(request.getPackages()));
 		result.addObject("requestURI", "request/carrier,customer,auditor/display.do");
 		result.addObject("owner", owner);
 		result.addObject("es", es);
 
+		List<Offer> offersAvailables;
+		try {
+			Assert.isTrue(owner);
+			Assert.isTrue(request.getOffer() == null);
+			offersAvailables = new ArrayList<>(this.reqService.findOffersByRequest(request));
+			ChooseOfferForm cof = new ChooseOfferForm();
+			cof.setId(request.getId());
+			result.addObject("chooseOfferForm", cof);
+		} catch (Throwable oops) {
+			offersAvailables = new ArrayList<>();
+		}
+		result.addObject("offers", offersAvailables);
+
 		return result;
 	}
+	@RequestMapping(value = "/carrier,customer,auditor/display", method = RequestMethod.POST, params = "apply")
+	public ModelAndView apply(ChooseOfferForm cof, BindingResult binding) {
+		ModelAndView result;
+		int requestId;
+		int offerId;
+		int actorId;
+		Offer off;
+		Request req;
+
+		try {
+			Assert.notNull(cof);
+			Assert.isTrue((cof.getId() != 0) || (cof.getIdOffer() != 0));
+			Assert.isTrue(this.actorService.findActorType().equals("Customer"));
+			requestId = Integer.valueOf(cof.getId());
+			req = this.reqService.findOne(requestId);
+			actorId = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
+			Customer cus = this.cusService.findOne(actorId);
+			Assert.isTrue(cus.getRequests().contains(req));
+			offerId = Integer.valueOf(cof.getIdOffer());
+			off = this.offService.findOne(offerId);
+
+		} catch (Throwable oops) {
+			return new ModelAndView("redirect:/");
+		}
+		try {
+			this.reqService.applyOffer(req, off);
+			result = new ModelAndView("redirect:/request/carrier,customer/list.do");
+		} catch (Throwable oops) {
+			result = new ModelAndView("redirect:/");
+		}
+		return result;
+	}
+
 	//ACCEPT OR REJECT REQUEST
 	@RequestMapping(value = "/carrier,customer,auditor/display", method = RequestMethod.POST, params = "save")
 	public ModelAndView acceptRejectSave(String id, String status) {

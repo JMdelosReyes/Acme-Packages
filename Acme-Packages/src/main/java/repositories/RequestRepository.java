@@ -39,19 +39,23 @@ public interface RequestRepository extends JpaRepository<Request, Integer> {
 
 	//Categories disponibles del vehiculo de esa offer
 	@Query("select cat from Offer o join o.vehicle veh join veh.solicitations sols join sols.category cat where o.id=?1 and sols.status='ACCEPTED'")
-	Collection<Category> findOfferCategoriesByOfferId(int id);
+	Collection<Category> findCategoriesOfferByOfferId(int id);
 
 	//Todas las towns de esa offer
 	@Query("select tt.town from Offer o join o.traverseTowns tt where o.id=?1")
 	Collection<Town> findTownsByOfferId(int id);
 
 	//Traverse town del destino para la request (con esa offer)
-	@Query("select tt from Request r join r.offer o join o.traverseTowns tt where tt.town=r.town and r.id=?1")
-	TraverseTown findTraverseTownOfDestinationTownByRequestId(int id);
+	@Query("select tt from Offer o join o.traverseTowns tt where tt.town = (select t from Request r join r.town t where r.id=?1) and o.id=?2")
+	TraverseTown findTraverseTownOfDestinationTownByRequestId(int reqId, int offId);
 
 	//Fares ordenados por precio para la offer de esa request
 	@Query("select f from Request r join r.offer o join o.fares f join r.packages p where f.maxWeight>p.weight and f.maxVolume>(p.length * p.width * p.height) and p.id=?1 order by f.price asc")
 	Collection<Fare> findFaresOrderedByPriceByPackageId(int id);
+
+	//Fares ordenados por precio para la offer de esa request
+	@Query("select f from Request r join r.offer o join o.fares f join r.packages p where f.maxWeight>p.weight and f.maxVolume>(p.length * p.width * p.height) and p.id=?1 and o.id=?2 order by f.price asc")
+	Collection<Fare> findFaresOrderedByPriceByPackageIdAndOfferId(int pacId, int offId);
 
 	//Carrier by offer	
 	@Query("select car from Carrier car join car.offers ofs where ofs.id=?1")
@@ -73,8 +77,19 @@ public interface RequestRepository extends JpaRepository<Request, Integer> {
 	Double calculaTotalVolumeByRequestId(int id);
 
 	//*******************FILTER OFFER
-	//TODO y hacer el calculo con la resta de los volumenes y pesos de los paquetes
-	@Query("select o from Offer o")
-	Collection<Offer> findOffersByWeightAndVolumeMax(double maxVolume, double maxWeight);
 
+	@Query("select distinct o from Offer o join o.vehicle v where o.maxDateToRequest>=current_date and o.finalMode=1 and o.canceled=0")
+	Collection<Offer> offersNotCancelledValidMaxDateFinalMode();
+	//hacer el calculo con la resta de los volumenes y pesos de los paquetes
+	@Query("select distinct o from Offer o join o.vehicle v where v.maxWeight-(select case when sum(r2.weight)=null then 0 else sum(r2.weight) end from Request r2 join r2.offer o2 where o2.id=o.id and r2.status='ACCEPTED')-?1 >= 0")
+	Collection<Offer> findOffersWeightAvailableByWeightRequest(double maxWeight);
+
+	@Query("select distinct o from Offer o join o.vehicle v where v.maxVolume-(select case when sum(r2.volume)=null then 0 else sum(r2.volume) end from Request r2 join r2.offer o2 where o2.id=o.id and r2.status='ACCEPTED')-?1 >= 0")
+	Collection<Offer> findOffersVolumeAvailableByVolumeRequest(double maxVolume);
+
+	@Query("select distinct o from Offer o join o.traverseTowns tt join tt.town t where tt.estimatedDate >= (select r.deadline from Request r where r.id=?1) and t.id=(select t2.id from Request r2 join r2.town t2 where r2.id=?1)")
+	Collection<Offer> findOffersWithDestinationTownAndEstimatedTime(int reqId);
+
+	@Query("select f from Offer o join o.fares f where o.id=?1 and f.maxWeight>=?2 and f.maxVolume>=?3 order by f.price")
+	Collection<Fare> findFareOrderedByPriceByOfferIdWeightAndVolume(int offId, double weight, double volume);
 }
