@@ -28,8 +28,7 @@ public class SocialProfilePojo {
 		return this.profileLink;
 	}
 
-	public void setProfileLink(String profileLink) {
+	public void setProfileLink(final String profileLink) {
 		this.profileLink = profileLink;
 	}
-
 }

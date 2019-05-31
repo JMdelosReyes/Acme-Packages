@@ -3,7 +3,7 @@ package pojos;
 
 import java.util.Collection;
 
-public class SponsorPojo {
+public class SponsorPojo extends ActorPojo {
 
 	private String						nif;
 	private Collection<SponsorshipPojo>	sponsorships;
