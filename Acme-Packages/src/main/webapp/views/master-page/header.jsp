@@ -24,6 +24,8 @@
 		<security:authorize access="hasRole('ADMIN')">
 			<li><a href="sponsorship/administrator/list.do"><spring:message
 					code="master.page.sponsorships" /></a></li>
+			<li><a  href="category/administrator/list.do"><spring:message
+					code="master.page.categories" /></a></li>
 		</security:authorize>
 		
 		<security:authorize access="isAnonymous()">
@@ -114,8 +116,7 @@
 						<li><a href="actor/display.do"><spring:message code="master.page.display" /></a></li>
 						
 					<security:authorize access="hasRole('ADMIN')">
-                                                <li><a  href="category/administrator/list.do"><spring:message
-						                        code="master.page.categories" /></a></li>
+                                                
 						<li><a href="dashboard/administrator/list.do"><spring:message
 									code="master.page.dashboard" /></a></li>
 						<li><a href="configuration/administrator/list.do"><spring:message

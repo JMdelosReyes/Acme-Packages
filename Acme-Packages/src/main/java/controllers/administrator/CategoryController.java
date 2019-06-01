@@ -190,8 +190,11 @@ public class CategoryController extends AbstractController {
 
 	protected ModelAndView createEditModelAndView(final Category category, final String message, final boolean es) {
 		ModelAndView result;
-
-		result = new ModelAndView("category/edit");
+		if (category.getId() == 0) {
+			result = new ModelAndView("category/create");
+		} else {
+			result = new ModelAndView("category/edit");
+		}
 		result.addObject("category", category);
 		result.addObject("es", es);
 		result.addObject("message", message);

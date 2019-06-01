@@ -63,7 +63,7 @@
 			
     <jstl:if test="${category.id!=0}">        
     <input type="submit" name="delete"
-			value="<spring:message code="cat.delete"/>">
+			value="<spring:message code="cat.delete"/>" onclick="return confirm('<spring:message code="mess.confirm.delete" />')">
 	</jstl:if>
 
 </form:form>
