@@ -46,13 +46,13 @@
 					</jstl:if>
 				</jstl:when>
 				<jstl:otherwise>
-					<a href="issue/carrier,customer,auditor/display.do?id=${row.id}"><jstl:out value="${row.issue.ticker}"/></a>
+					<a href="issue/carrier,customer,auditor/display.do?id=${row.issue.id}"><jstl:out value="${row.issue.ticker}"/></a>
 				</jstl:otherwise>
 			</jstl:choose>
 		</security:authorize>
 		<security:authorize access="hasRole('CARRIER')">
 			<jstl:if test="${row.issue ne null}">
-				<a href="issue/carrier,customer,auditor/display.do?id=${row.id}"><jstl:out value="${row.issue.ticker}"/></a>
+				<a href="issue/carrier,customer,auditor/display.do?id=${row.issue.id}"><jstl:out value="${row.issue.ticker}"/></a>
 			</jstl:if>
 		</security:authorize>
 	</display:column>

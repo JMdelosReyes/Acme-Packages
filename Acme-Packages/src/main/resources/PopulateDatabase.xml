@@ -977,14 +977,14 @@
 	
 	<bean id="fare5" class="domain.Fare">
 		<property name="maxWeight" value="5" />
-		<property name="maxVolume" value="1" />
-		<property name="price" value="5.95" />
+		<property name="maxVolume" value="200000" />
+		<property name="price" value="3.95" />
 	</bean>
 	
 	<bean id="fare6" class="domain.Fare">
-		<property name="maxWeight" value="15" />
-		<property name="maxVolume" value="3" />
-		<property name="price" value="8.95" />
+		<property name="maxWeight" value="10" />
+		<property name="maxVolume" value="800000" />
+		<property name="price" value="6.95" />
 	</bean>
 	
 	<bean id="fare7" class="domain.Fare">
@@ -1266,7 +1266,7 @@
 	
 	<bean id="messageBoxAU1-inbox" class="domain.MessBox">
 		<property name="name" value="In box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1275,7 +1275,7 @@
 	</bean>
 	<bean id="messageBoxAU1-outbox" class="domain.MessBox">
 		<property name="name" value="Out box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1284,7 +1284,7 @@
 	</bean>
 	<bean id="messageBoxAU1-spambox" class="domain.MessBox">
 		<property name="name" value="Spam box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1293,7 +1293,7 @@
 	</bean>
 	<bean id="messageBoxAU1-trashbox" class="domain.MessBox">
 		<property name="name" value="Trash box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1302,7 +1302,7 @@
 	</bean>
 	<bean id="messageBoxAU1-notibox" class="domain.MessBox">
 		<property name="name" value="Notification box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1312,7 +1312,7 @@
 	
 	<bean id="messageBoxAU2-inbox" class="domain.MessBox">
 		<property name="name" value="In box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1321,7 +1321,7 @@
 	</bean>
 	<bean id="messageBoxAU2-outbox" class="domain.MessBox">
 		<property name="name" value="Out box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1330,7 +1330,7 @@
 	</bean>
 	<bean id="messageBoxAU2-spambox" class="domain.MessBox">
 		<property name="name" value="Spam box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1339,7 +1339,7 @@
 	</bean>
 	<bean id="messageBoxAU2-trashbox" class="domain.MessBox">
 		<property name="name" value="Trash box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1348,7 +1348,7 @@
 	</bean>
 	<bean id="messageBoxAU2-notibox" class="domain.MessBox">
 		<property name="name" value="Notification box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1358,7 +1358,7 @@
 	
 	<bean id="messageBoxAU3-inbox" class="domain.MessBox">
 		<property name="name" value="In box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1367,7 +1367,7 @@
 	</bean>
 	<bean id="messageBoxAU3-outbox" class="domain.MessBox">
 		<property name="name" value="Out box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1376,7 +1376,7 @@
 	</bean>
 	<bean id="messageBoxAU3-spambox" class="domain.MessBox">
 		<property name="name" value="Spam box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1385,7 +1385,7 @@
 	</bean>
 	<bean id="messageBoxAU3-trashbox" class="domain.MessBox">
 		<property name="name" value="Trash box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1394,7 +1394,7 @@
 	</bean>
 	<bean id="messageBoxAU3-notibox" class="domain.MessBox">
 		<property name="name" value="Notification box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1404,7 +1404,7 @@
 	
 	<bean id="messageBoxAU4-inbox" class="domain.MessBox">
 		<property name="name" value="In box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1413,7 +1413,7 @@
 	</bean>
 	<bean id="messageBoxAU4-outbox" class="domain.MessBox">
 		<property name="name" value="Out box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1422,7 +1422,7 @@
 	</bean>
 	<bean id="messageBoxAU4-spambox" class="domain.MessBox">
 		<property name="name" value="Spam box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1431,7 +1431,7 @@
 	</bean>
 	<bean id="messageBoxAU4-trashbox" class="domain.MessBox">
 		<property name="name" value="Trash box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1440,7 +1440,7 @@
 	</bean>
 	<bean id="messageBoxAU4-notibox" class="domain.MessBox">
 		<property name="name" value="Notification box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1450,7 +1450,7 @@
 	
 	<bean id="messageBoxCus1-inbox" class="domain.MessBox">
 		<property name="name" value="In box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			<ref bean="messageAd1InCus1"/>
@@ -1460,7 +1460,7 @@
 	</bean>
 	<bean id="messageBoxCus1-outbox" class="domain.MessBox">
 		<property name="name" value="Out box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1469,7 +1469,7 @@
 	</bean>
 	<bean id="messageBoxCus1-spambox" class="domain.MessBox">
 		<property name="name" value="Spam box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1478,7 +1478,7 @@
 	</bean>
 	<bean id="messageBoxCus1-trashbox" class="domain.MessBox">
 		<property name="name" value="Trash box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1487,7 +1487,7 @@
 	</bean>
 	<bean id="messageBoxCus1-notibox" class="domain.MessBox">
 		<property name="name" value="Notification box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1496,7 +1496,7 @@
 	</bean>
 	<bean id="messageBoxCus2-inbox" class="domain.MessBox">
 		<property name="name" value="In box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1505,7 +1505,7 @@
 	</bean>
 	<bean id="messageBoxCus2-outbox" class="domain.MessBox">
 		<property name="name" value="Out box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1514,7 +1514,7 @@
 	</bean>
 	<bean id="messageBoxCus2-spambox" class="domain.MessBox">
 		<property name="name" value="Spam box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1523,7 +1523,7 @@
 	</bean>
 	<bean id="messageBoxCus2-trashbox" class="domain.MessBox">
 		<property name="name" value="Trash box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1532,7 +1532,7 @@
 	</bean>
 	<bean id="messageBoxCus2-notibox" class="domain.MessBox">
 		<property name="name" value="Notification box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1541,7 +1541,7 @@
 	</bean>
 	<bean id="messageBoxCus3-inbox" class="domain.MessBox">
 		<property name="name" value="In box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1550,7 +1550,7 @@
 	</bean>
 	<bean id="messageBoxCus3-outbox" class="domain.MessBox">
 		<property name="name" value="Out box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1559,7 +1559,7 @@
 	</bean>
 	<bean id="messageBoxCus3-spambox" class="domain.MessBox">
 		<property name="name" value="Spam box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1568,7 +1568,7 @@
 	</bean>
 	<bean id="messageBoxCus3-trashbox" class="domain.MessBox">
 		<property name="name" value="Trash box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1577,7 +1577,7 @@
 	</bean>
 	<bean id="messageBoxCus3-notibox" class="domain.MessBox">
 		<property name="name" value="Notification box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1586,7 +1586,7 @@
 	</bean>
 	<bean id="messageBoxCus4-inbox" class="domain.MessBox">
 		<property name="name" value="In box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1595,7 +1595,7 @@
 	</bean>
 	<bean id="messageBoxCus4-outbox" class="domain.MessBox">
 		<property name="name" value="Out box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1604,7 +1604,7 @@
 	</bean>
 	<bean id="messageBoxCus4-spambox" class="domain.MessBox">
 		<property name="name" value="Spam box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1613,7 +1613,7 @@
 	</bean>
 	<bean id="messageBoxCus4-trashbox" class="domain.MessBox">
 		<property name="name" value="Trash box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1622,7 +1622,7 @@
 	</bean>
 	<bean id="messageBoxCus4-notibox" class="domain.MessBox">
 		<property name="name" value="Notification box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1632,7 +1632,7 @@
 	
 	<bean id="messageBoxCa1-inbox" class="domain.MessBox">
 		<property name="name" value="In box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			<ref bean="messageAd1InCar1"/>
@@ -1642,7 +1642,7 @@
 	
 	<bean id="messageBoxCa1-outbox" class="domain.MessBox">
 		<property name="name" value="Out box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1651,7 +1651,7 @@
 	
 	<bean id="messageBoxCa1-spambox" class="domain.MessBox">
 		<property name="name" value="Spam box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1660,7 +1660,7 @@
 	
 	<bean id="messageBoxCa1-trashbox" class="domain.MessBox">
 		<property name="name" value="Trash box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1669,7 +1669,7 @@
 	
 	<bean id="messageBoxCa1-notibox" class="domain.MessBox">
 		<property name="name" value="Notification box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1678,7 +1678,7 @@
 	
 	<bean id="messageBoxCa2-inbox" class="domain.MessBox">
 		<property name="name" value="In box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1687,7 +1687,7 @@
 	
 	<bean id="messageBoxCa2-outbox" class="domain.MessBox">
 		<property name="name" value="Out box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1696,7 +1696,7 @@
 	
 	<bean id="messageBoxCa2-spambox" class="domain.MessBox">
 		<property name="name" value="Spam box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1705,7 +1705,7 @@
 	
 	<bean id="messageBoxCa2-trashbox" class="domain.MessBox">
 		<property name="name" value="Trash box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1714,7 +1714,7 @@
 	
 	<bean id="messageBoxCa2-notibox" class="domain.MessBox">
 		<property name="name" value="Notification box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1723,7 +1723,7 @@
 	
 	<bean id="messageBoxCa3-inbox" class="domain.MessBox">
 		<property name="name" value="In box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1732,7 +1732,7 @@
 	
 	<bean id="messageBoxCa3-outbox" class="domain.MessBox">
 		<property name="name" value="Out box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1741,7 +1741,7 @@
 	
 	<bean id="messageBoxCa3-spambox" class="domain.MessBox">
 		<property name="name" value="Spam box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1750,7 +1750,7 @@
 	
 	<bean id="messageBoxCa3-trashbox" class="domain.MessBox">
 		<property name="name" value="Trash box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1759,7 +1759,7 @@
 	
 	<bean id="messageBoxCa3-notibox" class="domain.MessBox">
 		<property name="name" value="Notification box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1768,7 +1768,7 @@
 	
 	<bean id="messageBoxCa4-inbox" class="domain.MessBox">
 		<property name="name" value="In box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1777,7 +1777,7 @@
 	
 	<bean id="messageBoxCa4-outbox" class="domain.MessBox">
 		<property name="name" value="Out box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1786,7 +1786,7 @@
 	
 	<bean id="messageBoxCa4-spambox" class="domain.MessBox">
 		<property name="name" value="Spam box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1795,7 +1795,7 @@
 	
 	<bean id="messageBoxCa4-trashbox" class="domain.MessBox">
 		<property name="name" value="Trash box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1804,7 +1804,7 @@
 	
 	<bean id="messageBoxCa4-notibox" class="domain.MessBox">
 		<property name="name" value="Notification box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1813,7 +1813,7 @@
 	
 	<bean id="messageBoxSp1-inbox" class="domain.MessBox">
 		<property name="name" value="In box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1822,7 +1822,7 @@
 	
 	<bean id="messageBoxSp1-outbox" class="domain.MessBox">
 		<property name="name" value="Out box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1831,7 +1831,7 @@
 	
 	<bean id="messageBoxSp1-spambox" class="domain.MessBox">
 		<property name="name" value="Spam box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1840,7 +1840,7 @@
 	
 	<bean id="messageBoxSp1-trashbox" class="domain.MessBox">
 		<property name="name" value="Trash box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1849,7 +1849,7 @@
 	
 	<bean id="messageBoxSp1-notibox" class="domain.MessBox">
 		<property name="name" value="Notification box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1858,7 +1858,7 @@
 
 	<bean id="messageBoxSp2-inbox" class="domain.MessBox">
 		<property name="name" value="In box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1867,7 +1867,7 @@
 	
 	<bean id="messageBoxSp2-outbox" class="domain.MessBox">
 		<property name="name" value="Out box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1876,7 +1876,7 @@
 	
 	<bean id="messageBoxSp2-spambox" class="domain.MessBox">
 		<property name="name" value="Spam box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1885,7 +1885,7 @@
 	
 	<bean id="messageBoxSp2-trashbox" class="domain.MessBox">
 		<property name="name" value="Trash box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1894,7 +1894,7 @@
 	
 	<bean id="messageBoxSp2-notibox" class="domain.MessBox">
 		<property name="name" value="Notification box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1903,7 +1903,7 @@
 	
 	<bean id="messageBoxSp3-inbox" class="domain.MessBox">
 		<property name="name" value="In box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1912,7 +1912,7 @@
 	
 	<bean id="messageBoxSp3-outbox" class="domain.MessBox">
 		<property name="name" value="Out box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1921,7 +1921,7 @@
 	
 	<bean id="messageBoxSp3-spambox" class="domain.MessBox">
 		<property name="name" value="Spam box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1930,7 +1930,7 @@
 	
 	<bean id="messageBoxSp3-trashbox" class="domain.MessBox">
 		<property name="name" value="Trash box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1939,7 +1939,7 @@
 	
 	<bean id="messageBoxSp3-notibox" class="domain.MessBox">
 		<property name="name" value="Notification box"/>
-		<property name="isSystem" value="false"></property>
+		<property name="isSystem" value="true"></property>
 		<property name="messages">
 			<list>
 			</list>
@@ -1982,7 +1982,7 @@
 		<property name="maxDateToRequest" value="10/07/2019" />
 		<property name="canceled" value="false" /> 		
 		<property name="score" value="5" />
-		<property name="totalPrice" value="500" />
+		<property name="totalPrice" value="22.45" />
 		<property name="fares">
 			<list>
 				<ref bean="fare1"/>
@@ -2018,10 +2018,10 @@
 	<bean id="offer2" class="domain.Offer">
 		<property name="ticker" value="190523-ASD125" />
 		<property name="finalMode" value="true" />
-		<property name="maxDateToRequest" value="04/07/2020" />
+		<property name="maxDateToRequest" value="10/07/2019" />
 		<property name="canceled" value="false" /> 		
 		<property name="score" value="5" />
-		<property name="totalPrice" value="700" />
+		<property name="totalPrice" value="25.85" />
 		<property name="fares">
 			<list>
 				<ref bean="fare1"/>
@@ -2116,10 +2116,10 @@
 	<bean id="offer5" class="domain.Offer">
 		<property name="ticker" value="190523-ASD159" />
 		<property name="finalMode" value="true" />
-		<property name="maxDateToRequest" value="05/05/2020" />
+		<property name="maxDateToRequest" value="05/12/2019" />
 		<property name="canceled" value="false" /> 		
 		<property name="score" value="0" />
-		<property name="totalPrice" value="0" />
+		<property name="totalPrice" value="6.95" />
 		<property name="fares">
 			<list>
 				<ref bean="fare5"/>
@@ -2401,7 +2401,7 @@
 		<property name="moment" value="01/01/2019 10:00" />
 		<property name="description" value="Tened mucho cuidaito" />
 		<property name="maxPrice" value="100"/>
-		<property name="deadline" value="10/06/2019" />
+		<property name="deadline" value="12/10/2019" />
 		<property name="finalMode" value="true" /> 
 		<property name="volume" value="150000"/>
 		<property name="weight" value="2" />
@@ -2422,7 +2422,7 @@
 		<property name="moment" value="02/02/2019 10:00" />
 		<property name="description" value="Tened aun mas cuidadito" />
 		<property name="maxPrice" value="50"/>
-		<property name="deadline" value="10/07/2019" />
+		<property name="deadline" value="12/07/2019" />
 		<property name="finalMode" value="true" /> 
 		<property name="volume" value="400000"/>
 		<property name="weight" value="4" />
@@ -2444,7 +2444,7 @@
 		<property name="moment" value="02/02/2019 10:00" />
 		<property name="description" value="Tened aun mas cuidadito" />
 		<property name="maxPrice" value="50"/>
-		<property name="deadline" value="10/07/2022" />
+		<property name="deadline" value="12/10/2019" />
 		<property name="finalMode" value="true" /> 
 		<property name="volume" value="700000"/>
 		<property name="weight" value="5" />
@@ -2484,7 +2484,7 @@
 		<property name="moment" value="01/01/2019 10:00" />
 		<property name="description" value="Tened mucho cuidaito" />
 		<property name="maxPrice" value="100"/>
-		<property name="deadline" value="10/06/2019" />
+		<property name="deadline" value="12/12/2019" />
 		<property name="finalMode" value="true" /> 
 		<property name="volume" value="700000"/>
 		<property name="weight" value="2" />
@@ -2505,7 +2505,7 @@
 		<property name="moment" value="02/02/2019 10:00" />
 		<property name="description" value="Tened aun mas cuidadito" />
 		<property name="maxPrice" value="50"/>
-		<property name="deadline" value="10/07/2019" />
+		<property name="deadline" value="12/12/2019" />
 		<property name="finalMode" value="true" /> 
 		<property name="volume" value="400000"/>
 		<property name="weight" value="4" />
@@ -2526,7 +2526,7 @@
 		<property name="moment" value="02/02/2019 10:00" />
 		<property name="description" value="Tened aun mas cuidadito" />
 		<property name="maxPrice" value="50"/>
-		<property name="deadline" value="10/07/2019" />
+		<property name="deadline" value="12/12/2019" />
 		<property name="finalMode" value="true" /> 
 		<property name="volume" value="700000"/>
 		<property name="weight" value="2" />
@@ -2546,14 +2546,14 @@
 		<property name="moment" value="02/02/2019 10:00" />
 		<property name="description" value="Tened aun mas cuidadito" />
 		<property name="maxPrice" value="50"/>
-		<property name="deadline" value="10/07/2019" />
+		<property name="deadline" value="10/07/2021" />
 		<property name="finalMode" value="true" /> 
 		<property name="volume" value="700000"/>
 		<property name="weight" value="5" />
 		<property name="streetAddress" value="Calle la niña de las flores" />
 		<property name="comment" value="Cuidadito con el envio, rufianes" />
 		<property name="town" ref="town9" />
-		<property name="status" value="SUBMITTED"></property>
+		<property name="status" value="REJECTED"></property>
 		<property name="offer" ref="offer3" />
 		<property name="packages">
 			<list>
@@ -2566,7 +2566,7 @@
 		<property name="moment" value="02/02/2019 10:00" />
 		<property name="description" value="Tened aun mas cuidadito" />
 		<property name="maxPrice" value="50"/>
-		<property name="deadline" value="10/07/2019" />
+		<property name="deadline" value="02/02/2020" />
 		<property name="finalMode" value="true" /> 
 		<property name="volume" value="700000"/>
 		<property name="weight" value="5" />
@@ -2895,21 +2895,21 @@
 	
 	<bean id="traverseTown1" class="domain.TraverseTown">
 		<property name="number" value="1" />
-		<property name="estimatedDate" value="05/06/2020"/>
+		<property name="estimatedDate" value="11/09/2019"/>
 		<property name="currentTown" value="false" />
 		<property name="town" ref="town1" />
 	</bean>
 	
 	<bean id="traverseTown2" class="domain.TraverseTown">
 		<property name="number" value="2" />
-		<property name="estimatedDate" value="05/07/2020"/>
+		<property name="estimatedDate" value="11/10/2019"/>
 		<property name="currentTown" value="false" />
 		<property name="town" ref="town2" />
 	</bean>
 	
 	<bean id="traverseTown3" class="domain.TraverseTown">
 		<property name="number" value="3" />
-		<property name="estimatedDate" value="05/08/2020"/>
+		<property name="estimatedDate" value="11/11/2019"/>
 		<property name="currentTown" value="false" />
 		<property name="town" ref="town3" />
 	</bean>
@@ -2930,21 +2930,21 @@
 	
 	<bean id="traverseTown6" class="domain.TraverseTown">
 		<property name="number" value="1" />
-		<property name="estimatedDate" value="04/05/2020"/>
+		<property name="estimatedDate" value="10/08/2019"/>
 		<property name="currentTown" value="false" />
 		<property name="town" ref="town3" />
 	</bean>
 	
 	<bean id="traverseTown7" class="domain.TraverseTown">
 		<property name="number" value="2" />
-		<property name="estimatedDate" value="04/06/2020"/>
+		<property name="estimatedDate" value="10/09/2019"/>
 		<property name="currentTown" value="false" />
 		<property name="town" ref="town4" />
 	</bean>
 	
 	<bean id="traverseTown8" class="domain.TraverseTown">
 		<property name="number" value="3" />
-		<property name="estimatedDate" value="04/07/2020"/>
+		<property name="estimatedDate" value="10/10/2019"/>
 		<property name="currentTown" value="false" />
 		<property name="town" ref="town5" />
 	</bean>
@@ -2953,7 +2953,7 @@
 		<property name="number" value="1" />
 		<property name="estimatedDate" value="05/06/2020"/>
 		<property name="currentTown" value="false" />
-		<property name="town" ref="town1" />
+		<property name="town" ref="town9" />
 	</bean>
 	
 	<bean id="traverseTown10" class="domain.TraverseTown">
@@ -2986,7 +2986,7 @@
 	
 	<bean id="traverseTown14" class="domain.TraverseTown">
 		<property name="number" value="1" />
-		<property name="estimatedDate" value="05/09/2020"/>
+		<property name="estimatedDate" value="01/01/2020"/>
 		<property name="currentTown" value="false" />
 		<property name="town" ref="town6" />
 	</bean>

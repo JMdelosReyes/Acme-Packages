@@ -23,8 +23,7 @@
 			</jstl:if>
 			<jstl:if test="${(empty messBox.messages)}">  
 					<jstl:if test="${(empty children)}">   
-	    				<acme:submit name="delete" code="messBox.delete"/>
-	    			</jstl:if> 	
+	    				<input type="submit" name="delete" value="<spring:message code="mess.delete"/>" onclick="return confirm('<spring:message code="mess.confirm.delete" />')"/>	    			</jstl:if> 	
 	    			<jstl:if test="${!(empty children)}">
 	    				<br>
 	    				<spring:message code="messBox.hasChildren"/>:

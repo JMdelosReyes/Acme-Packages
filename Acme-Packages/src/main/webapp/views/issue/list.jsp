@@ -40,7 +40,7 @@
 	</display:column>
 	
 	<display:column titleKey="iss.request">
-		<a href="request/display.do?id=${row.id}">
+		<a href="request/carrier,customer,auditor/display.do?id=${row.id}">
 			<spring:message code="iss.request"></spring:message>
 		</a>
 	</display:column>

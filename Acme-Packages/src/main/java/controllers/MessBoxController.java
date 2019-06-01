@@ -69,6 +69,7 @@ public class MessBoxController extends AbstractController {
 
 		try {
 			final MessBox messBox = this.messageBoxService.findOne(intId);
+			Assert.isTrue(this.messageBoxService.findOwnMessageBoxes().contains(messBox));
 			principal = LoginService.getPrincipal();
 			result = new ModelAndView("messageBox/display");
 			if (this.messageBoxService.findChildrenMessBoxes(messBox) != null) {
@@ -112,15 +113,9 @@ public class MessBoxController extends AbstractController {
 		try {
 			principal = LoginService.getPrincipal();
 			messBox = this.messageBoxService.findOne(intId);
-			if (principal == null || !this.messageBoxService.findOwnMessageBoxes().contains(messBox))
-				result = new ModelAndView("redirect:/");
-			else if (messBox == null || messBox.getIsSystem())
-				result = new ModelAndView("redirect:list.do");
-			else
-				result = this.createEditModelAndView(messBox);
+			Assert.isTrue(this.messageBoxService.findOwnMessageBoxes().contains(messBox) && !messBox.getIsSystem());
+			result = this.createEditModelAndView(messBox);
 		} catch (final Exception e) {
-			principal = null;
-			messBox = null;
 			result = new ModelAndView("redirect:/");
 		}
 		return result;
@@ -140,9 +135,9 @@ public class MessBoxController extends AbstractController {
 			return result;
 		}
 
-		if (binding.hasErrors())
+		if (binding.hasErrors()) {
 			result = this.createEditModelAndView(messBox);
-		else {
+		} else {
 			UserAccount principal;
 			try {
 				principal = LoginService.getPrincipal();
@@ -150,8 +145,9 @@ public class MessBoxController extends AbstractController {
 				principal = null;
 			}
 
-			if (principal == null)
+			if (principal == null) {
 				result = new ModelAndView("redirect:/");
+			}
 			try {
 				if (messBox.getId() != 0) {
 					final Collection<MessBox> owned = this.messageBoxService.findOwnMessageBoxes();
@@ -162,9 +158,9 @@ public class MessBoxController extends AbstractController {
 						messageBox = null;
 					}
 
-					if (messageBox == null || !owned.contains(messageBox) || messageBox.getIsSystem())
+					if ((messageBox == null) || !owned.contains(messageBox) || messageBox.getIsSystem()) {
 						result = new ModelAndView("redirect:/");
-					else {
+					} else {
 						this.messageBoxService.save(messBox);
 						result = new ModelAndView("redirect:list.do");
 					}
@@ -187,13 +183,15 @@ public class MessBoxController extends AbstractController {
 		try {
 			principal = LoginService.getPrincipal();
 			messBox = this.messageBoxService.reconstruct(messBox, binding);
+			Assert.isTrue(!messBox.getIsSystem());
 		} catch (final Exception e) {
 			principal = null;
 			return new ModelAndView("redirect:/");
 		}
 
-		if (principal == null || !this.messageBoxService.findOwnMessageBoxes().contains(messBox) || !this.messageBoxService.findChildrenMessBoxes(messBox).isEmpty())
+		if ((principal == null) || !this.messageBoxService.findOwnMessageBoxes().contains(messBox) || !this.messageBoxService.findChildrenMessBoxes(messBox).isEmpty()) {
 			result = new ModelAndView("redirect:/");
+		}
 		try {
 			this.messageBoxService.delete(messBox);
 			result = new ModelAndView("redirect:list.do");
@@ -224,9 +222,9 @@ public class MessBoxController extends AbstractController {
 			return new ModelAndView("redirect:/");
 		}
 
-		if (principal == null || !this.messageBoxService.findOwnMessageBoxes().contains(messBox))
+		if ((principal == null) || !this.messageBoxService.findOwnMessageBoxes().contains(messBox)) {
 			result = new ModelAndView("redirect:/");
-		else
+		} else {
 			try {
 				this.messageBoxService.clean(messBox);
 				final MessBox clean = this.messageBoxService.findOne(intId);
@@ -234,6 +232,7 @@ public class MessBoxController extends AbstractController {
 			} catch (final Throwable oops) {
 				result = this.createEditModelAndView(messBox, "messBox.commit.error");
 			}
+		}
 		return result;
 	}
 	protected ModelAndView createEditModelAndView(final MessBox messBox) {
@@ -244,16 +243,23 @@ public class MessBoxController extends AbstractController {
 	protected ModelAndView createEditModelAndView(final MessBox messBox, final String messageCode) {
 		ModelAndView result;
 		List<MessBox> parents;
-		result = new ModelAndView("messageBox/edit");
+		if (messBox.getId() == 0) {
+			result = new ModelAndView("messageBox/create");
+		} else {
+			result = new ModelAndView("messageBox/edit");
+		}
 		parents = new ArrayList<>(this.messageBoxService.findOwnMessageBoxes());
 
 		result.addObject("messBox", messBox);
 		result.addObject("message", messageCode);
-		if (messBox.getId() == 0)
+		if (messBox.getId() == 0) {
 			result.addObject("parents", parents);
-		if (messBox.getId() != 0)
-			if (!this.messageBoxService.findChildrenMessBoxes(messBox).isEmpty())
+		}
+		if (messBox.getId() != 0) {
+			if (!this.messageBoxService.findChildrenMessBoxes(messBox).isEmpty()) {
 				result.addObject("children", this.messageBoxService.findChildrenMessBoxes(messBox));
+			}
+		}
 		return result;
 	}
 }

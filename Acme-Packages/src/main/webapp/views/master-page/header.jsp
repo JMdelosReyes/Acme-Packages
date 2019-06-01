@@ -22,12 +22,6 @@
 	<ul id="jMenu">
 		<!-- Do not forget the "fNiv" class for the first level links !! -->
 		<security:authorize access="hasRole('ADMIN')">
-			<li><a class="fNiv"><spring:message	code="master.page.administrator" /></a>
-				<ul>
-					<li class="arrow"></li>
-					<!-- COSAS DE ADMIN -->				
-				</ul>
-			</li>
 			<li><a href="sponsorship/administrator/list.do"><spring:message
 					code="master.page.sponsorships" /></a></li>
 		</security:authorize>
@@ -48,6 +42,8 @@
 		</security:authorize>		
 		<security:authorize access="hasRole('CARRIER')">
 				<li><a class="fNiv" href="offer/list.do"><spring:message code="master.page.offers" /></a></li>
+				<li><a href="request/carrier,customer/list.do"><spring:message
+						code="master.page.requests" /></a></li>
 			<li><a class="fNiv" href="offer/carrier/list.do"><spring:message
 			 code="master.page.myOffers" /></a></li>
 			 <li><a class="fNiv" href="fare/carrier/list.do"><spring:message

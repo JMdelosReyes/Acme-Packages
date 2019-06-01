@@ -237,13 +237,6 @@ public class OfferService {
 			}
 		}
 	}
-	public void addRequest(Request request, int offerId) {
-		Offer of = this.findOne(offerId);
-		Assert.isTrue(this.actorService.findActorType().equals("Customer"));
-		of.getRequests().add(request);
-		this.offerRepository.save(of);
-
-	}
 
 	public OfferForm getOfferForm(Integer offerId) {
 		OfferForm result = new OfferForm();

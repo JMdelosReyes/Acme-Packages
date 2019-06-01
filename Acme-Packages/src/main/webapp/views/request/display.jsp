@@ -24,10 +24,10 @@
 	<spring:message code="req.offer"/>: <a href="offer/display.do?id=${request.offer.id}"><spring:message code="req.offer"/></a><br/>
 </jstl:if>
 <jstl:if test="${request.issue ne null}">
-	<spring:message code="req.issue"/>: <a href="/issue/carrier,customer,auditor/display.do?id=${request.issue.id}"><spring:message code="req.issue"/></a><br/>
+	<spring:message code="req.issue"/>: <a href="issue/carrier,customer,auditor/display.do?id=${request.issue.id}"><spring:message code="req.issue"/></a><br/>
 </jstl:if>
 	<security:authorize access="hasRole('CUSTOMER')">
-	<jstl:if test="${request.finalMode && request.status eq null && owner}">
+	<jstl:if test="${request.status eq null && owner}">
 		<jstl:if test="${!(empty offers)}">
 		<fieldset>
 		<h3><spring:message code="req.apply"/></h3>

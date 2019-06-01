@@ -78,12 +78,16 @@ public class RequestController extends AbstractController {
 			Offer offer;
 			try {
 				intId = Integer.valueOf(id);
-				offer = this.offService.findOne(intId);
-				Assert.isTrue(this.carService.findOne(actorId).getOffers().contains(offer));
+				if (intId != 0) {
+					offer = this.offService.findOne(intId);
+					Assert.isTrue(this.carService.findOne(actorId).getOffers().contains(offer));
+					requests = new ArrayList<>(offer.getRequests());
+				} else {
+					requests = new ArrayList<>(this.reqService.findRequestFinalModeNoOffer());
+				}
 			} catch (final Throwable oops) {
 				return new ModelAndView("redirect:/");
 			}
-			requests = new ArrayList<>(offer.getRequests());
 			carrierView = true;
 		} else {
 			Customer cus = this.cusService.findOne(actorId);
@@ -120,12 +124,8 @@ public class RequestController extends AbstractController {
 			issueId = false;
 		}
 		if (issueId) {
-			if (this.actorService.findActorType().equals("Auditor")) {
-				request = this.reqService.findRequestByIssueId(intId);
-				Assert.isTrue(request.isFinalMode());
-			} else {
-				return new ModelAndView("redirect:/");
-			}
+			request = this.reqService.findRequestByIssueId(intId);
+			Assert.isTrue(request.isFinalMode());
 		} else {
 			if (this.actorService.findActorType().equals("Customer")) {
 				request = this.reqService.findOne(intId);
@@ -135,8 +135,6 @@ public class RequestController extends AbstractController {
 			} else {
 				request = this.reqService.findOne(intId);
 				Assert.isTrue(request.isFinalMode());
-				Carrier car = this.carService.findOne(actorId);
-				Assert.isTrue(this.reqService.findRequestsByCarrierId(car.getId()).contains(request));
 			}
 			//De momento, los auditor solo entran a partir de ids de issues
 		}
@@ -241,7 +239,7 @@ public class RequestController extends AbstractController {
 		return result;
 	}
 
-	//TODO: Save a new Request
+	// Save a new Request
 	@RequestMapping(value = "/customer/create", method = RequestMethod.POST, params = "save")
 	public ModelAndView saveNewRequest(@Valid CreateRequestForm crf, BindingResult binding) {
 		ModelAndView result;
@@ -283,6 +281,7 @@ public class RequestController extends AbstractController {
 			actorId = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
 			intId = Integer.valueOf(id);
 			request = this.reqService.findOne(intId);
+			Assert.isTrue(!request.isFinalMode());
 			Customer cus = this.cusService.findOne(actorId);
 			Assert.isTrue(cus.getRequests().contains(request));
 		} catch (final Throwable oops) {
@@ -292,7 +291,7 @@ public class RequestController extends AbstractController {
 
 		return result;
 	}
-	//Edit a request
+	//Save edit a request
 	@RequestMapping(value = "/customer/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView editSave(Request req, BindingResult binding) {
 		ModelAndView result;
@@ -339,15 +338,13 @@ public class RequestController extends AbstractController {
 			return new ModelAndView("redirect:/");
 		}
 		try {
-			this.reqService.delete(req);
+			this.reqService.delete(request);
 			result = new ModelAndView("redirect:/request/carrier,customer/list.do");
 		} catch (Throwable oops) {
 			result = this.createEditModelAndView(req, "req.commit.error");
 		}
 		return result;
 	}
-
-	//APPLY FOR AN OFFER
 
 	//CREATE A NEW REQUEST
 	protected ModelAndView createEditModelAndView(CreateRequestForm crf) {

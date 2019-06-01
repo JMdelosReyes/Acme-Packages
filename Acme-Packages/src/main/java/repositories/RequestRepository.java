@@ -76,6 +76,8 @@ public interface RequestRepository extends JpaRepository<Request, Integer> {
 	@Query("select sum(p.length * p.width * p.height) from Request r join r.packages p where r.id=?1")
 	Double calculaTotalVolumeByRequestId(int id);
 
+	@Query("select r from Request r where r.finalMode=1 and r.offer=null")
+	Collection<Request> findRequestFinalModeNoOffer();
 	//*******************FILTER OFFER
 
 	@Query("select distinct o from Offer o join o.vehicle v where o.maxDateToRequest>=current_date and o.finalMode=1 and o.canceled=0")
@@ -87,7 +89,7 @@ public interface RequestRepository extends JpaRepository<Request, Integer> {
 	@Query("select distinct o from Offer o join o.vehicle v where v.maxVolume-(select case when sum(r2.volume)=null then 0 else sum(r2.volume) end from Request r2 join r2.offer o2 where o2.id=o.id and r2.status='ACCEPTED')-?1 >= 0")
 	Collection<Offer> findOffersVolumeAvailableByVolumeRequest(double maxVolume);
 
-	@Query("select distinct o from Offer o join o.traverseTowns tt join tt.town t where tt.estimatedDate >= (select r.deadline from Request r where r.id=?1) and t.id=(select t2.id from Request r2 join r2.town t2 where r2.id=?1)")
+	@Query("select distinct o from Offer o join o.traverseTowns tt join tt.town t where tt.estimatedDate <= (select r.deadline from Request r where r.id=?1) and t.id=(select t2.id from Request r2 join r2.town t2 where r2.id=?1)")
 	Collection<Offer> findOffersWithDestinationTownAndEstimatedTime(int reqId);
 
 	@Query("select f from Offer o join o.fares f where o.id=?1 and f.maxWeight>=?2 and f.maxVolume>=?3 order by f.price")

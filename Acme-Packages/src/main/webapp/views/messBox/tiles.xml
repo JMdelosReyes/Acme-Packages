@@ -24,6 +24,10 @@
 		<put-attribute name="title" value="Edit a message box" />
 		<put-attribute name="body" value="/views/messBox/edit.jsp" />
 	</definition>
+	<definition name="messageBox/create" extends="master.page">	
+		<put-attribute name="title" value="Create a message box" />
+		<put-attribute name="body" value="/views/messBox/edit.jsp" />
+	</definition>
 	<definition name="messageBox/display" extends="master.page">	
 		<put-attribute name="title" value="Messages of the box" />
 		<put-attribute name="body" value="/views/messBox/listMess.jsp" />

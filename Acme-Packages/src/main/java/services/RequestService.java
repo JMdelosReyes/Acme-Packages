@@ -298,7 +298,7 @@ public class RequestService {
 
 		//TODO: Fijo que petardean los formatos de fecha
 		Date estimatedDate = this.findTraverseTownOfDestinationTownByRequestId(req, of).getEstimatedDate();
-		Assert.isTrue(estimatedDate.after(req.getDeadline()) || estimatedDate.equals(req.getDeadline()));
+		Assert.isTrue(estimatedDate.before(req.getDeadline()) || estimatedDate.equals(req.getDeadline()));
 		Assert.isTrue(this.findOffersNotCancelledValidMaxDateFinalMode().contains(of));
 
 		List<Category> catAvailables = new ArrayList<>(this.findCategoriesOfferByOfferId(of));
@@ -307,8 +307,13 @@ public class RequestService {
 		}
 		Request result = (Request) req.clone();
 		result.setStatus(Request.SUBMITTED);
-		this.offService.addRequest(this.reqRepository.save(result), of.getId());
+		if (!result.isFinalMode()) {
+			result.setFinalMode(true);
+		}
+		result.setOffer(of);
+		this.reqRepository.save(result);
 	}
+
 	public void deleteRequestOfOffer(Offer o) {
 		for (Request r : o.getRequests()) {
 			this.reqRepository.findCustomerByRequestId(r.getId()).getRequests().remove(r);
@@ -438,5 +443,10 @@ public class RequestService {
 		res.setTown(crf.getTown());
 		return res;
 	}
-
+	public Collection<Request> findRequestFinalModeNoOffer() {
+		Collection<Request> result;
+		result = this.reqRepository.findRequestFinalModeNoOffer();
+		Assert.notNull(result);
+		return result;
+	}
 }

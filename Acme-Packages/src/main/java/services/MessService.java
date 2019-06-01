@@ -145,7 +145,7 @@ public class MessService {
 		boolean result = false;
 		final Collection<String> tabooWords = new ArrayList<String>(this.confService.findSpamWords());
 		for (final String spam : tabooWords) {
-			if (m.getBody().contains(spam) || m.getSubject().contains(spam)) {
+			if (m.getBody().toLowerCase().contains(spam) || m.getSubject().toLowerCase().contains(spam)) {
 				result = true;
 				//this.actorService.activateSpammer(m.getSender());
 				break;

@@ -24,6 +24,10 @@
 		<put-attribute name="title" value="Editar una carpeta" />
 		<put-attribute name="body" value="/views/messBox/edit.jsp" />
 	</definition>
+	<definition name="messageBox/create" extends="master.page">	
+		<put-attribute name="title" value="Crear una carpeta" />
+		<put-attribute name="body" value="/views/messBox/edit.jsp" />
+	</definition>
 	<definition name="messageBox/display" extends="master.page">	
 		<put-attribute name="title" value="Mensajes de la carpeta" />
 		<put-attribute name="body" value="/views/messBox/listMess.jsp" />
