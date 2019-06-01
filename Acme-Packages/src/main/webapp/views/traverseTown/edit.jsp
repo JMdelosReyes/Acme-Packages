@@ -18,6 +18,7 @@
 	<acme:textbox code="tt.estimatedDate" path="estimatedDate" placeholder="dd/mm/yyyy"/>
 	<acme:select items="${towns}" itemLabel="name" code="tt.town" path="town"/>
 	
+	<jstl:if test="${traverseTown.id!=0 and finalMode}">
 		<form:label path="currentTown">
 			<spring:message code="tt.currentTown" />
 	</form:label>	
@@ -25,7 +26,7 @@
 	
 		<form:errors path="currentTown" cssClass="error" />
 			<br/>
-	
+	</jstl:if>
 		
 	<acme:submit name="save" code="tt.save"/>
 	

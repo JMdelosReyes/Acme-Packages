@@ -8,7 +8,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import domain.Category;
+import domain.Customer;
 import domain.Offer;
+import domain.Request;
+import domain.Town;
 
 @Repository
 public interface OfferRepository extends JpaRepository<Offer, Integer> {
@@ -36,5 +40,23 @@ public interface OfferRepository extends JpaRepository<Offer, Integer> {
 
 	@Query("select distinct o from Carrier c join c.offers o where c.id=?1 AND o.finalMode=1 AND o.canceled=0 AND o.maxDateToRequest<CURRENT_DATE")
 	Collection<Offer> findCarrierPastOffers(int id);
+
+	@Query("select distinct r from Request r where r.finalMode=1 AND r.offer=null AND r.deadline<=?1 AND r.volume<=?2 AND r.weight<=?3 AND (r.town in ?4)")
+	Collection<Request> findRequestsToNotify(Date maxDateToRequest, Double volume, Double Weight, Collection<Town> towns);
+
+	@Query("select distinct c from Request r join r.packages p join p.categories c where r.id=?1")
+	Collection<Category> findRequestCategories(int id);
+
+	@Query("select distinct s.category from Offer o join o.vehicle v join v.solicitations s where o.id=?1")
+	Collection<Category> findOfferCategories(int id);
+
+	@Query("select distinct t.town from Offer o join o.traverseTowns t where o.id=?1")
+	Collection<Town> findOfferTowns(int id);
+
+	@Query("select distinct c from Customer c join c.requests r where r.id=?1")
+	Customer findCustomerOfRequest(int id);
+
+	@Query("select min(f.price) from Offer o join o.fares f where o.id=?1 and f.maxWeight>=?2 and f.maxVolume>=?3")
+	Double findFareForPackage(int id, double weight, double volume);
 
 }

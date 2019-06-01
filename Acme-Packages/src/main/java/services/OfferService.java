@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
+import org.joda.time.DateTime;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,12 +17,17 @@ import org.springframework.validation.Validator;
 
 import repositories.OfferRepository;
 import security.LoginService;
+import security.UserAccount;
+import security.UserAccountService;
 import utilities.Tickers;
+import domain.Actor;
 import domain.Carrier;
 import domain.Evaluation;
 import domain.Fare;
+import domain.Mess;
 import domain.Offer;
 import domain.Request;
+import domain.Town;
 import domain.TraverseTown;
 import forms.OfferForm;
 
@@ -43,6 +49,12 @@ public class OfferService {
 
 	@Autowired
 	private TraverseTownService	traverseTownService;
+
+	@Autowired
+	private MessService			messService;
+
+	@Autowired
+	private UserAccountService	userAccountService;
 
 	@Autowired
 	private Validator			validator;
@@ -135,6 +147,8 @@ public class OfferService {
 			if (offer.isFinalMode() && !old.isFinalMode()) {
 				Assert.isTrue(offer.getFares().size() > 0);
 				Assert.isTrue(offer.getTraverseTowns().size() > 0);
+				this.offerNotification(old);
+
 			}
 
 			result = this.offerRepository.save(offer);
@@ -345,4 +359,49 @@ public class OfferService {
 		return this.offerRepository.findMaxDateTTByOffer(offerId);
 	}
 
+	public void offerNotification(Offer offer) {
+		Mess mess = this.messService.create();
+
+		Collection<Town> towns = this.offerRepository.findOfferTowns(offer.getId());
+
+		Collection<Request> requests = this.offerRepository.findRequestsToNotify(offer.getMaxDateToRequest(), offer.getVehicle().getMaxVolume(), offer.getVehicle().getMaxWeight(), towns);
+
+		for (Request e : requests) {
+			if (!this.offerRepository.findOfferCategories(offer.getId()).containsAll(this.offerRepository.findRequestCategories(e.getId()))) {
+				requests.remove(e);
+			} else {
+				Double price = 0.;
+				for (domain.Package p : e.getPackages()) {
+					Double a = this.offerRepository.findFareForPackage(offer.getId(), p.getWeight(), p.getHeight() * p.getLength() * p.getWidth());
+					if (a == null) {
+						requests.remove(e);
+						break;
+					}
+					price = price + a;
+				}
+				if (e.getMaxPrice() < price) {
+					requests.remove(e);
+				}
+			}
+		}
+
+		Collection<Actor> rec = new ArrayList<>();
+
+		for (Request e : requests) {
+			rec.add(this.offerRepository.findCustomerOfRequest(e.getId()));
+		}
+
+		mess.setRecipients(rec);
+
+		mess.setBody("New offer created that is appropriated for one of your request: " + offer.getTicker());
+		mess.setSubject("New offer notification");
+		mess.setSendDate(DateTime.now().minusMillis(1000).toDate());
+		mess.setPriority("HIGH");
+
+		UserAccount admin = this.userAccountService.findByUsername("admin");
+		mess.setSender(this.actorService.findByUserAccountId(admin.getId()));
+
+		this.messService.send(mess, true);
+
+	}
 }

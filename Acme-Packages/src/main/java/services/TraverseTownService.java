@@ -147,10 +147,10 @@ public class TraverseTownService {
 		TraverseTown result;
 		TraverseTown old = null;
 		TraverseTown clon2 = (null);
+		Offer o = this.offerService.findOne(offerId);
 
 		if (tt.getId() == 0) {
 			result = this.create();
-			result.setCurrentTown(tt.isCurrentTown());
 			result.setEstimatedDate(tt.getEstimatedDate());
 			result.setTown(tt.getTown());
 
@@ -160,12 +160,16 @@ public class TraverseTownService {
 			Assert.notNull(result);
 			final TraverseTown clon = (TraverseTown) result.clone();
 
-			clon.setCurrentTown(tt.isCurrentTown());
+			if (o.isFinalMode()) {
+				clon.setCurrentTown(tt.isCurrentTown());
+			}
 			clon.setEstimatedDate(tt.getEstimatedDate());
 			clon.setTown(tt.getTown());
 
 			if (!old.isCurrentTown() && clon.isCurrentTown()) {
-				clon.setArrivalDate(LocalDateTime.now().toDate());
+				if (o.isFinalMode()) {
+					clon.setArrivalDate(LocalDateTime.now().toDate());
+				}
 				TraverseTown ttToChange = this.findOfferTraverseTownCurrent(offerId);
 				if (ttToChange != null) {
 					clon2 = (TraverseTown) ttToChange.clone();
@@ -177,8 +181,6 @@ public class TraverseTownService {
 		}
 
 		this.validator.validate(result, binding);
-
-		Offer o = this.offerService.findOne(offerId);
 
 		if ((old != null)
 			&& o.isFinalMode()
