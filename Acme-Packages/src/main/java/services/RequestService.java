@@ -39,8 +39,6 @@ public class RequestService {
 	private RequestRepository	reqRepository;
 	//Services
 	@Autowired
-	private OfferService		offService;
-	@Autowired
 	private CustomerService		cusService;
 	@Autowired
 	private CarrierService		carService;
@@ -49,7 +47,8 @@ public class RequestService {
 	@Autowired
 	private PackageService		pacService;
 	@Autowired
-	private TownService			townService;
+	private VehicleService		vehicleService;
+
 	@Autowired
 	private Validator			validator;
 
@@ -227,7 +226,7 @@ public class RequestService {
 		res.retainAll(this.findOffersWithDestinationTownAndEstimatedTime(req));
 		if (res.size() > 0) {
 			for (Offer o : res) {
-				Collection<Category> categoriesOf = this.findCategoriesOfferByOfferId(o);
+				Collection<Category> categoriesOf = this.vehicleService.findValidCategories(o.getVehicle().getId());
 				Collection<Category> categoriesReq = this.findCategoriesPackagesByRequestId(req);
 				if (categoriesOf.containsAll(categoriesReq)) {
 					double acum = 0.0;
@@ -240,6 +239,8 @@ public class RequestService {
 					if (acum > req.getMaxPrice()) {
 						res.remove(o);
 					}
+				} else {
+					res.remove(o);
 				}
 			}
 		} else {
@@ -448,5 +449,11 @@ public class RequestService {
 		result = this.reqRepository.findRequestFinalModeNoOffer();
 		Assert.notNull(result);
 		return result;
+	}
+	public Collection<Package> findPackagesByRequest(Request request) {
+		Collection<Package> res;
+		res = this.reqRepository.findPackagesByRequest(request.getId());
+		Assert.notNull(res);
+		return res;
 	}
 }

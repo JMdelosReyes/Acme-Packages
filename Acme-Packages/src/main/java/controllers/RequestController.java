@@ -146,7 +146,7 @@ public class RequestController extends AbstractController {
 
 		result = new ModelAndView("request/display");
 		result.addObject("request", request);
-		result.addObject("packages", new ArrayList<>(request.getPackages()));
+		result.addObject("packages", new ArrayList<>(this.reqService.findPackagesByRequest(request)));
 		result.addObject("requestURI", "request/carrier,customer,auditor/display.do");
 		result.addObject("owner", owner);
 		result.addObject("es", es);
@@ -252,6 +252,7 @@ public class RequestController extends AbstractController {
 				req = this.reqService.reconstruct(req, binding);
 			} else {
 				pac = this.pacService.save(pac);
+				this.pacService.flush();
 				req.getPackages().add(pac);
 				req = this.reqService.reconstruct(req, binding);
 			}
@@ -263,6 +264,7 @@ public class RequestController extends AbstractController {
 		} else {
 			try {
 				req = this.reqService.save(req);
+				this.reqService.flush();
 				result = new ModelAndView("redirect:/request/carrier,customer,auditor/display.do?id=" + req.getId());
 			} catch (Throwable oops) {
 				result = this.createEditModelAndView(crf, "req.commit.error");

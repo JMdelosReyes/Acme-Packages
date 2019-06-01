@@ -90,7 +90,7 @@ public class RequestServiceTest extends AbstractTest {
 	/*
 	 * Requirement tested: A customer can create a request and save it.
 	 * Sentence coverage: 97.4%
-	 * Data coverage: XX.XX%, we have tested 9 from 540 posibilities
+	 * Data coverage: 1.66%, we have tested 9 from 540 posibilities
 	 */
 	@Test
 	public void driverCreateSave() {

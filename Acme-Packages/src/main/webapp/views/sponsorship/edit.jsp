@@ -52,7 +52,7 @@
 	
 		<acme:submit name="save" code="spon.accept" />
 		<jstl:if test="${sponsorship.id!=0}">
-			<input type="submit" name="delete" value="<spring:message code="cat.delete"/>" onclick="return confirm('<spring:message code="spon.confirm.delete" />')">
+			<acme:submit name="delete" code="spon.decline"/>
 		</jstl:if>
 		<acme:cancel url="sponsorship/administrator/list.do" code="spon.cancel" />
 	

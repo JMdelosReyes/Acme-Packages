@@ -6,6 +6,7 @@ import java.util.Collection;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
@@ -93,7 +94,7 @@ public class Package extends DomainEntity implements Cloneable {
 	}
 
 	@NotEmpty
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	public Collection<Category> getCategories() {
 		return this.categories;
 	}

@@ -64,13 +64,13 @@ public class MessServiceTest extends AbstractTest {
 				//Correct: It is flagged as spam mess
 				"sponsor1", null, "viagra", "sex", "HIGH", "administrator", "tag1,tag2"
 			}, {
-				//Must have a logged user to send a mess
+				//Incorrect: Must have a logged user to send a mess
 				"", IllegalArgumentException.class, "subject6", "body6", "HIGH", "customer1", ""
 			}, {
-				//Must have a subject
+				//Incorrect: Must have a subject
 				"admin", IllegalArgumentException.class, "", "body7", "NEUTRAL", "customer1", ""
 			}, {
-				//Must have a body
+				//Incorrect: Must have a body
 				"admin", IllegalArgumentException.class, "subject8", "", "NEUTRAL", "customer1", ""
 			}
 		};

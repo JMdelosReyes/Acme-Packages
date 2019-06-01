@@ -22,7 +22,8 @@
 	<acme:textbox code="req.comment" path="comment" />
 	<acme:select items="${towns}" itemLabel="name" code="req.town" path="town"/>
 	<acme:submit name="save" code="req.save"/>
-	<acme:submit name="delete" code="req.delete"/>
+	
+	<input type="submit" name="delete"  value = "<spring:message code="req.delete"/>" onclick="return confirm('<spring:message code="mess.confirm.delete" />')"/>
 	<acme:cancel url="request/carrier,customer/list.do" code="req.cancel"/>
 </form:form>
 

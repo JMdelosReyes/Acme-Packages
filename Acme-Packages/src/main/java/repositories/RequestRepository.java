@@ -12,6 +12,7 @@ import domain.Category;
 import domain.Customer;
 import domain.Fare;
 import domain.Offer;
+import domain.Package;
 import domain.Request;
 import domain.Town;
 import domain.TraverseTown;
@@ -78,6 +79,9 @@ public interface RequestRepository extends JpaRepository<Request, Integer> {
 
 	@Query("select r from Request r where r.finalMode=1 and r.offer=null")
 	Collection<Request> findRequestFinalModeNoOffer();
+
+	@Query("select p from Request r join r.packages p where r.id=?1")
+	Collection<Package> findPackagesByRequest(int id);
 	//*******************FILTER OFFER
 
 	@Query("select distinct o from Offer o join o.vehicle v where o.maxDateToRequest>=current_date and o.finalMode=1 and o.canceled=0")

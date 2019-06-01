@@ -48,7 +48,7 @@
 	</jstl:choose>
 	</fieldset>		
 	<acme:submit name="save" code="req.save"/>
-	<acme:cancel url="request/customer/list.do" code="req.cancel"/>
+	<acme:cancel url="request/carrier,customer/list.do" code="req.cancel"/>
 
 
 </form:form>
