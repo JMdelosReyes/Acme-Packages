@@ -56,6 +56,13 @@
 			</jstl:if>
 		</security:authorize>
 	</display:column>
+	<security:authorize  access="hasRole('CUSTOMER')">
+	<display:column title="req.edit">
+			<jstl:if test="${!row.finalMode}">
+				<a href="request/customer/edit.do?id=${row.id}"><spring:message code="req.edit"/></a>
+			</jstl:if>
+	</display:column>
+	</security:authorize>
 	<display:column titleKey="req.request">
 		<security:authorize access="hasRole('CARRIER')">
 	<jstl:if test="${row.status == 'SUBMITTED'}">
@@ -70,12 +77,6 @@
 	</jstl:if>
 </security:authorize>
 	</display:column>
-	<security:authorize  access="hasRole('CUSTOMER')">
-		<display:column title="req.editPackage">
-			<jstl:if test="${!row.finalMode}">
-				<a href="request/customer/edit.do?id=${row.id}"><spring:message code="req.editPackage"/></a>
-			</jstl:if>
-		</display:column>
-	</security:authorize>
+	
 </display:table>
 

@@ -4,7 +4,11 @@ package forms;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import domain.Category;
 import domain.Town;
@@ -42,7 +46,9 @@ public class CreateRequestForm {
 	public void setMaxPrice(double maxPrice) {
 		this.maxPrice = maxPrice;
 	}
-
+	@NotNull
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	public Date getDeadline() {
 		return this.deadline;
 	}

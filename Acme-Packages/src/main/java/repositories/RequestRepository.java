@@ -50,11 +50,11 @@ public interface RequestRepository extends JpaRepository<Request, Integer> {
 	TraverseTown findTraverseTownOfDestinationTownByRequestId(int reqId, int offId);
 
 	//Fares ordenados por precio para la offer de esa request
-	@Query("select f from Request r join r.offer o join o.fares f join r.packages p where f.maxWeight>p.weight and f.maxVolume>(p.length * p.width * p.height) and p.id=?1 order by f.price asc")
+	@Query("select f from Request r join r.offer o join o.fares f join r.packages p where f.maxWeight>=p.weight and f.maxVolume>=(p.length * p.width * p.height) and p.id=?1 order by f.price asc")
 	Collection<Fare> findFaresOrderedByPriceByPackageId(int id);
 
 	//Fares ordenados por precio para la offer de esa request
-	@Query("select f from Request r join r.offer o join o.fares f join r.packages p where f.maxWeight>p.weight and f.maxVolume>(p.length * p.width * p.height) and p.id=?1 and o.id=?2 order by f.price asc")
+	@Query("select f from Request r join r.offer o join o.fares f join r.packages p where f.maxWeight>=p.weight and f.maxVolume>=(p.length * p.width * p.height) and p.id=?1 and o.id=?2 order by f.price asc")
 	Collection<Fare> findFaresOrderedByPriceByPackageIdAndOfferId(int pacId, int offId);
 
 	//Carrier by offer	
