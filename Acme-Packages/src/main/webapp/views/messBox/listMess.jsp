@@ -21,7 +21,7 @@
 	<spring:message code="date.format.column" var="format"/>
 	<display:column titleKey="mess.sendDate" sortable="true"><fmt:formatDate value="${row.sendDate}"  pattern="${format}"/></display:column>
 	<display:column titleKey="mess.priority"><jstl:out value="${row.priority}"/></display:column>
-	<display:column>
+	<display:column titleKey="mess.display">
 		<a href="mess/display.do?messageId=${row.id}">
 			<spring:message code="mess.display"/>
 		</a>

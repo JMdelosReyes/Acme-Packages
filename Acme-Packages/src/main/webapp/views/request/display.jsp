@@ -80,11 +80,11 @@
 			</jstl:forEach>
 		</jstl:if>
 	</display:column>
+	<jstl:if test="${owner && !request.finalMode}">
 	<display:column titleKey="req.edit">
-		<jstl:if test="${owner && !request.finalMode}">
 			<a href="package/customer/edit.do?id=${row.id}"><spring:message code="req.edit"/></a>
-		</jstl:if>
 	</display:column>
+	</jstl:if>
 </display:table>
 	<jstl:if test="${owner && !request.finalMode}">
 		<form:form action="package/customer/create.do">

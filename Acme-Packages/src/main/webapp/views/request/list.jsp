@@ -57,14 +57,15 @@
 		</security:authorize>
 	</display:column>
 	<security:authorize  access="hasRole('CUSTOMER')">
-	<display:column title="req.edit">
+	<display:column titleKey="req.edit">
 			<jstl:if test="${!row.finalMode}">
 				<a href="request/customer/edit.do?id=${row.id}"><spring:message code="req.edit"/></a>
 			</jstl:if>
 	</display:column>
 	</security:authorize>
+	<security:authorize access="hasRole('CARRIER')">
 	<display:column titleKey="req.request">
-		<security:authorize access="hasRole('CARRIER')">
+		
 	<jstl:if test="${row.status == 'SUBMITTED'}">
 		<form:form action="request/carrier,customer,auditor/display.do">
 		<input type="hidden" value="${row.id}" name="id"/>
@@ -75,8 +76,7 @@
 		<acme:submit name="save" code="req.save"/>
 		</form:form>
 	</jstl:if>
-</security:authorize>
 	</display:column>
-	
+	</security:authorize>
 </display:table>
 
