@@ -223,6 +223,36 @@ public class RequestController extends AbstractController {
 		}
 		try {
 			this.reqService.changeStatus(intId, status);
+			this.reqService.flush();
+			this.offService.calculaTotalPrice(req.getOffer().getId());
+			result = new ModelAndView("redirect:/request/carrier,customer/list.do?id=" + req.getOffer().getId());
+		} catch (Throwable oops) {
+			result = new ModelAndView("redirect:/");
+		}
+		return result;
+	}
+	//ACCEPT OR REJECT REQUEST
+	@RequestMapping(value = "/carrier,customer,auditor/display", method = RequestMethod.POST, params = "delivered")
+	public ModelAndView delivered(String id) {
+		ModelAndView result;
+		int intId;
+		int actorId;
+		Offer off;
+		Request req;
+
+		try {
+			Assert.isTrue(this.actorService.findActorType().equals("Carrier"));
+			intId = Integer.valueOf(id);
+			req = this.reqService.findOne(intId);
+			Assert.isTrue(req.getStatus().equals(Request.ACCEPTED));
+			actorId = this.actorService.findByUserAccountId(LoginService.getPrincipal().getId()).getId();
+			Carrier car = this.carService.findOne(actorId);
+			Assert.isTrue(car.getOffers().contains(req.getOffer()));
+		} catch (Throwable oops) {
+			return new ModelAndView("redirect:/");
+		}
+		try {
+			this.reqService.changeToDelivered(intId);
 			result = new ModelAndView("redirect:/request/carrier,customer/list.do?id=" + req.getOffer().getId());
 		} catch (Throwable oops) {
 			result = new ModelAndView("redirect:/");

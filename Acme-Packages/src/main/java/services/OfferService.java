@@ -148,11 +148,11 @@ public class OfferService {
 				Assert.isTrue(offer.getFares().size() > 0);
 				Assert.isTrue(offer.getTraverseTowns().size() > 0);
 				this.offerNotification(old);
-
 			}
 
 			result = this.offerRepository.save(offer);
 			Assert.notNull(result);
+
 		}
 
 		return result;
@@ -404,4 +404,19 @@ public class OfferService {
 		this.messService.send(mess, true);
 
 	}
+
+	public void calculaTotalPrice(int intId) {
+		Offer res;
+		res = this.findOne(intId);
+		UserAccount principal = LoginService.getPrincipal();
+		Carrier car = this.carrierService.findOne(this.actorService.findByUserAccountId(principal.getId()).getId());
+		Assert.isTrue(car.getOffers().contains(res));
+		Offer clon = (Offer) res.clone();
+		Double price = this.offerRepository.calculaPriceTotal(clon.getId());
+		Assert.notNull(price);
+		clon.setTotalPrice(price);
+		res = clon;
+		this.offerRepository.save(res);
+	}
+
 }

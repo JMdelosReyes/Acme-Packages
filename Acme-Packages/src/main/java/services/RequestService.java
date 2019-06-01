@@ -48,7 +48,8 @@ public class RequestService {
 	private PackageService		pacService;
 	@Autowired
 	private VehicleService		vehicleService;
-
+	@Autowired
+	private OfferService		offService;
 	@Autowired
 	private Validator			validator;
 
@@ -401,11 +402,20 @@ public class RequestService {
 		}
 
 	}
+	public void changeToDelivered(int id) {
+		Request r;
+		r = this.findOne(id);
+		Request clon = (Request) r.clone();
+		clon.setStatus(Request.DELIVERED);
+		r = clon;
+		this.reqRepository.save(r);
+	}
 	//Reconstruct TODOOOOOOOOOO
 	public Request reconstruct(Request req, BindingResult binding) {
 		Request result;
 		if (req.getId() == 0) {
 			Assert.isTrue(this.actorService.findActorType().equals("Customer"));
+			Assert.notNull(req.getTown());
 			result = req;
 			req.setTicker(Tickers.generateTicker());
 			if (req.isFinalMode()) {
@@ -429,6 +439,10 @@ public class RequestService {
 		}
 
 		this.validator.validate(result, binding);
+
+		if (result.getDeadline().before(DateTime.now().toDate())) {
+			binding.rejectValue("deadline", "req.err.deadlinePast");
+		}
 
 		return result;
 

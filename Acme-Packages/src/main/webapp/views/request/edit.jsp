@@ -20,7 +20,7 @@
 	<form:errors path="finalMode" cssClass="error" />
 	<acme:textbox code="req.streetAddress" path="streetAddress" />
 	<acme:textbox code="req.comment" path="comment" />
-	<acme:select items="${towns}" itemLabel="name" code="req.town" path="town"/>
+	<acme:selectLuis items="${towns}" itemLabel="name" code="req.town" path="town"/>
 	<acme:submit name="save" code="req.save"/>
 	
 	<input type="submit" name="delete"  value = "<spring:message code="req.delete"/>" onclick="return confirm('<spring:message code="mess.confirm.delete" />')"/>

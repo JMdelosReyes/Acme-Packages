@@ -27,7 +27,7 @@
 	<form:errors path="finalMode" cssClass="error" />
 	<acme:textbox code="req.streetAddress" path="streetAddress" />
 	<acme:textbox code="req.comment" path="comment" />
-	<acme:select items="${towns}" itemLabel="name" code="req.town" path="town"/>
+	<acme:selectLuis items="${towns}" itemLabel="name" code="req.town" path="town"/>
 	</fieldset>
 	
 	<fieldset>
@@ -39,11 +39,11 @@
 	<acme:textarea code="req.details" path="details" />
 	<jstl:choose>
 		<jstl:when test="${es eq true}">
-			<acme:select items="${categories}" itemLabel="spanishName" code="req.category" path="categories"/>
+			<acme:selectLuis items="${categories}" itemLabel="spanishName" code="req.category" path="categories"/>
 		</jstl:when>
 
 		<jstl:otherwise>
-			<acme:select items="${categories}" itemLabel="englishName" code="req.category" path="categories"/>
+			<acme:selectLuis items="${categories}" itemLabel="englishName" code="req.category" path="categories"/>
 		</jstl:otherwise>
 	</jstl:choose>
 	</fieldset>		

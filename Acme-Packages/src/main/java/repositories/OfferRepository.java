@@ -59,4 +59,6 @@ public interface OfferRepository extends JpaRepository<Offer, Integer> {
 	@Query("select min(f.price) from Offer o join o.fares f where o.id=?1 and f.maxWeight>=?2 and f.maxVolume>=?3")
 	Double findFareForPackage(int id, double weight, double volume);
 
+	@Query("select sum(p.price) from Offer o join o.requests r join r.packages p where o.id=?1 and r.status='ACCEPTED'")
+	Double calculaPriceTotal(int id);
 }

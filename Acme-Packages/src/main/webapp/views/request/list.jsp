@@ -76,6 +76,13 @@
 		<acme:submit name="save" code="req.save"/>
 		</form:form>
 	</jstl:if>
+		
+	<jstl:if test="${row.status == 'ACCEPTED'}">
+		<form:form action="request/carrier,customer,auditor/display.do">
+		<input type="hidden" value="${row.id}" name="id"/>
+		<acme:submit name="delivered" code="req.delivered"/>
+		</form:form>
+	</jstl:if>
 	</display:column>
 	</security:authorize>
 </display:table>

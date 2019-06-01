@@ -2034,7 +2034,7 @@
 		<property name="maxDateToRequest" value="10/07/2019" />
 		<property name="canceled" value="false" /> 		
 		<property name="score" value="5" />
-		<property name="totalPrice" value="22.45" />
+		<property name="totalPrice" value="13.9" />
 		<property name="fares">
 			<list>
 				<ref bean="fare1"/>
@@ -2073,7 +2073,7 @@
 		<property name="maxDateToRequest" value="10/07/2019" />
 		<property name="canceled" value="false" /> 		
 		<property name="score" value="5" />
-		<property name="totalPrice" value="25.85" />
+		<property name="totalPrice" value="8.95" />
 		<property name="fares">
 			<list>
 				<ref bean="fare1"/>
