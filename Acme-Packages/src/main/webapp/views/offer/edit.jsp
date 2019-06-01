@@ -36,8 +36,11 @@
 	<acme:submit name="save" code="of.save"/>
 	
 	<jstl:if test="${offerForm.id!=0}" var="hasId">
-		<acme:cancel url="offer/display.do?id=${offerForm.id}" code="of.cancel"/>
-		<acme:delete/>
+		<jstl:if test="${offerForm.finalMode eq false }" >
+			<acme:delete/>
+		</jstl:if>
+				<acme:cancel url="offer/display.do?id=${offerForm.id}" code="of.cancel"/>
+		
 		</jstl:if>
 	<jstl:if test="${!hasId}">
 		<acme:cancel url="offer/carrier/list.do" code="of.cancel"/>
