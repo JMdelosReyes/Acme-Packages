@@ -15,7 +15,9 @@
 	<acme:textbox code="of.maxDateToRequest" path="maxDateToRequest" placeholder="dd/MM/yyyy" />
 	<acme:select items="${vehicles}" itemLabel="plate" code="of.vehicle" path="vehicle"/>
 	<acme:selectMultiple items="${fares}" itemLabel="label" code="of.fares" path="fares"/>
-	<jstl:if test="${offerForm.id!=0 }">
+	
+	<jstl:if test="${offerForm.id!=0 }">	
+	
 			<form:label path="finalMode">
 			<spring:message code="of.finalMode" />
 	</form:label>	
@@ -23,20 +25,23 @@
 	
 		<form:errors path="finalMode" cssClass="error" />
 		<br/>
-			<form:label path="canceled">
-			<spring:message code="of.canceled" />
-	</form:label>	
-		<form:checkbox path="canceled"/>
-	
-		<form:errors path="canceled" cssClass="error" />
+		
+							
+								<form:label path="canceled">
+								<spring:message code="of.canceled" />
+						</form:label>	
+							<form:checkbox path="canceled"/>
+						
+							<form:errors path="canceled" cssClass="error" />
+							<br/>
 		</jstl:if>
-			<br/>
+			
 	
 	
 	<acme:submit name="save" code="of.save"/>
 	
 	<jstl:if test="${offerForm.id!=0}" var="hasId">
-		<jstl:if test="${offerForm.finalMode eq false }" >
+		<jstl:if test="${fm eq false }" >
 			<acme:delete/>
 		</jstl:if>
 				<acme:cancel url="offer/display.do?id=${offerForm.id}" code="of.cancel"/>

@@ -278,9 +278,7 @@ public class OfferService {
 			Assert.isTrue(carrier.getOffers().contains(result));
 
 			final Offer clon = (Offer) result.clone();
-			if (result.isFinalMode()) {
-				clon.setCanceled(of.isCanceled());
-			}
+			clon.setCanceled(of.isCanceled());
 			clon.setFares(of.getFares());
 			clon.setFinalMode(of.isFinalMode());
 			clon.setMaxDateToRequest(of.getMaxDateToRequest());
@@ -303,11 +301,19 @@ public class OfferService {
 			}
 		}
 
+		if (result.isFinalMode() && (result.getTraverseTowns().size() == 0)) {
+			binding.rejectValue("finalMode", "of.error.noTowns");
+		}
+
 		if ((old != null)
 			&& old.isFinalMode()
 			&& (!((old.getFares().size() == result.getFares().size()) && old.getFares().containsAll(result.getFares())) || (old.isFinalMode() != result.isFinalMode())
 				|| !sdf.format(old.getMaxDateToRequest()).equals(sdf.format(result.getMaxDateToRequest())) || !old.getVehicle().equals(result.getVehicle()))) {
 			binding.rejectValue("finalMode", "of.error.finalMode");
+		}
+
+		if ((old != null) && !old.isFinalMode() && (result.isCanceled())) {
+			binding.rejectValue("canceled", "of.error.notFinalMode");
 		}
 
 		return result;

@@ -245,6 +245,8 @@ public class OfferController extends AbstractController {
 			result = new ModelAndView("offer/create");
 		} else {
 			result = new ModelAndView("offer/edit");
+			result.addObject("fm", this.offerService.findOne(of.getId()).isFinalMode());
+
 		}
 
 		final int carrierId;
