@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
+import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -164,6 +165,7 @@ public class TraverseTownService {
 			clon.setTown(tt.getTown());
 
 			if (!old.isCurrentTown() && clon.isCurrentTown()) {
+				clon.setArrivalDate(LocalDateTime.now().toDate());
 				TraverseTown ttToChange = this.findOfferTraverseTownCurrent(offerId);
 				if (ttToChange != null) {
 					clon2 = (TraverseTown) ttToChange.clone();

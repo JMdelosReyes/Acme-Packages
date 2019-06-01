@@ -20,6 +20,7 @@ public class TraverseTown extends DomainEntity implements Cloneable {
 
 	private int		number;
 	private Date	estimatedDate;
+	private Date	arrivalDate;
 	private boolean	currentTown;
 	private Town	town;
 
@@ -70,6 +71,16 @@ public class TraverseTown extends DomainEntity implements Cloneable {
 
 	public void setTown(final Town town) {
 		this.town = town;
+	}
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	public Date getArrivalDate() {
+		return this.arrivalDate;
+	}
+
+	public void setArrivalDate(Date arrivalDate) {
+		this.arrivalDate = arrivalDate;
 	}
 
 }

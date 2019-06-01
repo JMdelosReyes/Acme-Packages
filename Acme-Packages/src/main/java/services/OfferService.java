@@ -1,6 +1,7 @@
 
 package services;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -124,7 +125,6 @@ public class OfferService {
 
 			Assert.isTrue(carrier.getOffers().contains(old));
 			Assert.isTrue(!old.isCanceled());
-			Assert.isTrue(!old.isFinalMode());
 
 			if ((offer.isFinalMode() && !old.isFinalMode()) || (!offer.isFinalMode() && !old.isFinalMode())) {
 				Assert.isTrue(offer.getMaxDateToRequest().after(new Date(System.currentTimeMillis() - 1000)));
@@ -291,14 +291,22 @@ public class OfferService {
 
 		this.validator.validate(result, binding);
 
+		Date now = LocalDateTime.now().toDate();
+
+		final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+		sdf.format(now);
+
 		if ((of.getId() == 0) || !old.isFinalMode()) {
-			if ((result.getMaxDateToRequest() != null) && result.getMaxDateToRequest().before(LocalDateTime.now().toDate())) {
+			if ((result.getMaxDateToRequest() != null) && result.getMaxDateToRequest().before(now)) {
 				binding.rejectValue("maxDateToRequest", "of.error.date");
 			}
 		}
 
-		if ((old != null) && old.isFinalMode()
-			&& (!old.getFares().equals(result.getFares()) || (old.isFinalMode() != result.isFinalMode()) || !old.getMaxDateToRequest().equals(result.getMaxDateToRequest()) || !old.getVehicle().equals(result.getVehicle()))) {
+		if ((old != null)
+			&& old.isFinalMode()
+			&& (!((old.getFares().size() == result.getFares().size()) && old.getFares().containsAll(result.getFares())) || (old.isFinalMode() != result.isFinalMode())
+				|| !sdf.format(old.getMaxDateToRequest()).equals(sdf.format(result.getMaxDateToRequest())) || !old.getVehicle().equals(result.getVehicle()))) {
 			binding.rejectValue("finalMode", "of.error.finalMode");
 		}
 
@@ -317,6 +325,12 @@ public class OfferService {
 	}
 	public Collection<Offer> findCarrierOffers(int carrierId) {
 		final Collection<Offer> offers = this.offerRepository.findCarrierOffers(carrierId);
+		Assert.notNull(offers);
+		return offers;
+	}
+
+	public Collection<Offer> findCarrierPastOffers(int carrierId) {
+		final Collection<Offer> offers = this.offerRepository.findCarrierPastOffers(carrierId);
 		Assert.notNull(offers);
 		return offers;
 	}

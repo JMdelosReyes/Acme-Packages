@@ -143,7 +143,7 @@ public class CarrierService {
 			auth.setAuthority(Authority.CARRIER);
 			uc.addAuthority(auth);
 			uc.setUsername(carrier.getUserAccount().getUsername());
-			uc.setPassword(HashPasswordParameter.generateHashPassword(uc.getPassword()));
+			uc.setPassword(HashPasswordParameter.generateHashPassword(carrier.getUserAccount().getPassword()));
 			uc = this.userAccountService.save(uc);
 			Assert.notNull(uc);
 			carrier.setUserAccount(uc);

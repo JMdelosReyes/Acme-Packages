@@ -35,6 +35,9 @@
 	<a href="evaluation/customer/create.do?offId=<jstl:out value="${offer.id}"/>"><spring:message code="of.newEva"/></a><br>
 </jstl:if>
 
+		<jstl:if test="${owner eq true and offer.canceled eq false}">
+			<a href="offer/carrier/edit.do?id=${offer.id}"><spring:message code="of.edit"/></a>
+	</jstl:if>
 </fieldset>
 
 <br>
@@ -52,12 +55,17 @@
 		<fmt:formatDate value="${row.estimatedDate}" pattern="dd/MM/yy"></fmt:formatDate>
 	</display:column>
 	
+	<display:column titleKey="of.arrivalDate" sortable="true">
+		<fmt:formatDate value="${row.arrivalDate}" pattern="dd/MM/yy"></fmt:formatDate>
+	</display:column>
+	
+	
 	<display:column titleKey="of.currentTown">
 		<jstl:out value="${row.currentTown}"></jstl:out>
 	</display:column>
 	
 	<display:column>
-			<a href="town/display.do?id=<jstl:out value="${row.id}"/>"><jstl:out value="${row.town.name}"></jstl:out></a>
+			<jstl:out value="${row.town.name}"></jstl:out>
 	</display:column>
 	
 		
@@ -80,8 +88,6 @@
 
 
 </fieldset>
-	<jstl:if test="${owner eq true}">
-			<a href="offer/carrier/edit.do?id=${offer.id}"><spring:message code="of.edit"/></a>
-	</jstl:if>
+
 	
 

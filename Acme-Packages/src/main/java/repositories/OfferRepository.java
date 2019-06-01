@@ -19,10 +19,10 @@ public interface OfferRepository extends JpaRepository<Offer, Integer> {
 	@Query("select distinct o from Offer o join o.fares f where f.id=?1")
 	Collection<Offer> findByFare(int id);
 
-	@Query("select distinct o from Offer o join o.traverseTowns tt where o.canceled=0 AND o.maxDateToRequest>=CURRENT_DATE AND (?1='' OR (tt.town.name=?1))")
+	@Query("select distinct o from Offer o join o.traverseTowns tt where o.finalMode=1 AND o.canceled=0 AND o.maxDateToRequest>=CURRENT_DATE AND (?1='' OR (tt.town.name=?1))")
 	Collection<Offer> findOpenOffers(String filter);
 
-	@Query("select distinct o from Carrier c join c.offers o where c.id=?1 AND o.canceled=0 AND o.maxDateToRequest>=CURRENT_DATE")
+	@Query("select distinct o from Carrier c join c.offers o where c.id=?1 AND o.finalMode=1 AND o.canceled=0 AND o.maxDateToRequest>=CURRENT_DATE")
 	Collection<Offer> findCarrierOpenOffers(int id);
 
 	@Query("select distinct o from Carrier c join c.offers o where c.id=?1")
@@ -33,5 +33,8 @@ public interface OfferRepository extends JpaRepository<Offer, Integer> {
 
 	@Query("select max(tt.estimatedDate) from Offer o join o.traverseTowns tt where o.id=?1")
 	Date findMaxDateTTByOffer(int id);
+
+	@Query("select distinct o from Carrier c join c.offers o where c.id=?1 AND o.finalMode=1 AND o.canceled=0 AND o.maxDateToRequest<CURRENT_DATE")
+	Collection<Offer> findCarrierPastOffers(int id);
 
 }

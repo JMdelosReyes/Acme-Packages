@@ -1100,6 +1100,14 @@
 		<property name="description" value="Ha llegado doblado al destinatario"/>
 		<property name="comments">
 			<list>
+				<ref bean="comment1"/>
+				<ref bean="comment2"/>
+				<ref bean="comment3"/>
+				<ref bean="comment4"/>
+				<ref bean="comment5"/>
+				<ref bean="comment6"/>
+				<ref bean="comment7"/>
+				
 			</list>
 		</property>
 		<property name="offer" ref="offer1" />
@@ -1156,6 +1164,50 @@
 		<property name="offer" ref="offer2" />
 		
 	</bean> -->
+	
+	
+	<!-- COMMENT -->
+	<bean id="comment1" class="domain.Comment">
+		<property name="moment" value="05/25/2019 10:00"/>
+		<property name="userComment" value="Eso no es cierto"/>
+		<property name="username" value="carrier1"/>
+	</bean>
+	
+	<bean id="comment2" class="domain.Comment">
+		<property name="moment" value="05/25/2019 10:30"/>
+		<property name="userComment" value="Si que lo es"/>
+		<property name="username" value="customer1"/>
+	</bean>
+	
+	<bean id="comment3" class="domain.Comment">
+		<property name="moment" value="05/25/2019 10:35"/>
+		<property name="userComment" value="Es usted un mentiroso"/>
+		<property name="username" value="carrier1"/>
+	</bean>
+	
+	<bean id="comment4" class="domain.Comment">
+		<property name="moment" value="05/25/2019 10:50"/>
+		<property name="userComment" value="Calmense amigos"/>
+		<property name="username" value="auditor2"/>
+	</bean>
+	
+	<bean id="comment5" class="domain.Comment">
+		<property name="moment" value="05/25/2019 10:52"/>
+		<property name="userComment" value="Como me voy a calmar con semejante calumnia"/>
+		<property name="username" value="carrier1"/>
+	</bean>
+	
+	<bean id="comment6" class="domain.Comment">
+		<property name="moment" value="05/25/2019 10:55"/>
+		<property name="userComment" value="Semejante babuino me ha ido a tocar"/>
+		<property name="username" value="customer1"/>
+	</bean>
+	
+	<bean id="comment7" class="domain.Comment">
+		<property name="moment" value="05/25/2019 10:58"/>
+		<property name="userComment" value="No te voy a responder mas porque me has faltado al respeto"/>
+		<property name="username" value="carrier1"/>
+	</bean>
 	
 	
 	<!-- MESS -->

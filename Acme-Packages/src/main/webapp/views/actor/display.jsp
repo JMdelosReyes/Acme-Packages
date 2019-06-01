@@ -81,6 +81,9 @@
 		value="${da.vat}" />
 	<br>
 	
+		<a href="curriculum/list.do?id=<jstl:out value="${id}"/>"><spring:message code="act.curricula"/></a><br>
+		<a href="offer/list.do?id=<jstl:out value="${id}"/>"><spring:message code="act.offers"/></a><br>
+	
 </jstl:if>
 
 <jstl:if

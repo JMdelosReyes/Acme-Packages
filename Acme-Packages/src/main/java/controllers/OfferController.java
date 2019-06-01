@@ -90,7 +90,7 @@ public class OfferController extends AbstractController {
 
 			if (intId != 0) {
 				result.addObject("showFilter", false);
-				offers = this.offerService.findCarrierOpenOffers(intId);
+				offers = this.offerService.findCarrierPastOffers(intId);
 			} else {
 				result.addObject("showFilter", true);
 				offers = this.offerService.findOpenOffers(filter);

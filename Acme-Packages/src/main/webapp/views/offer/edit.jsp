@@ -16,9 +16,21 @@
 	<acme:select items="${vehicles}" itemLabel="plate" code="of.vehicle" path="vehicle"/>
 	<acme:selectMultiple items="${fares}" itemLabel="label" code="of.fares" path="fares"/>
 	<jstl:if test="${offerForm.id!=0 }">
-		<acme:selectBoolean code="of.finalMode" path="finalMode" id="finalMode"/>
-		<acme:selectBoolean code="of.canceled" path="canceled" id="canceled"/>
-	</jstl:if>
+			<form:label path="finalMode">
+			<spring:message code="of.finalMode" />
+	</form:label>	
+		<form:checkbox path="finalMode"/>
+	
+		<form:errors path="finalMode" cssClass="error" />
+		<br/>
+			<form:label path="canceled">
+			<spring:message code="of.canceled" />
+	</form:label>	
+		<form:checkbox path="canceled"/>
+	
+		<form:errors path="canceled" cssClass="error" />
+		</jstl:if>
+			<br/>
 	
 	
 	<acme:submit name="save" code="of.save"/>
