@@ -99,7 +99,8 @@ public class EvaluationService {
 		evaluation.setMoment(DateTime.now().minusMillis(1000).toDate());
 
 		Assert.isTrue(this.findOffersOfCustomer(id).contains(evaluation.getOffer()));
-		Assert.isTrue(!this.findOffersOfCustomerEvaluated(id).contains(evaluation.getOffer()));
+		Assert.isTrue(this.evaluationRepository.findEvaluableOffersByCustomer(id).contains(evaluation.getOffer()));
+		//Assert.isTrue(!this.findOffersOfCustomerEvaluated(id).contains(evaluation.getOffer()));
 
 		result = this.evaluationRepository.save(evaluation);
 		Assert.notNull(result);
