@@ -121,7 +121,7 @@
 						<li><a href="configuration/administrator/list.do"><spring:message
 									code="master.page.configuration" /></a></li>
 						<li><a href="actor/sign-up.do"><spring:message
-									code="master.page.signup" /></a></li>
+									code="master.page.createActor" /></a></li>
 						<li><a href="ban/administrator/list.do"><spring:message
 									code="master.page.suspicious" /></a></li>
 					</security:authorize>

@@ -545,10 +545,9 @@ public class ActorService {
 
 			this.validator.validate(clon, binding);
 
-			if ((clon.getCreditCard().getExpirationYear() < LocalDateTime.now().getYear())
-				|| ((clon.getCreditCard().getExpirationYear() == LocalDateTime.now().getYear()) && (clon.getCreditCard().getExpirationMonth() < LocalDateTime.now().getMonthOfYear()))) {
-				binding.rejectValue("creditcard.expirationYear", "act.error.dateCredit");
-				binding.rejectValue("creditcard.expirationMonth", "act.error.dateCredit");
+			if (((clon.getCreditCard().getExpirationYear() + 2000) < LocalDateTime.now().getYear())
+				|| (((clon.getCreditCard().getExpirationYear() + 2000) == LocalDateTime.now().getYear()) && (clon.getCreditCard().getExpirationMonth() < LocalDateTime.now().getMonthOfYear()))) {
+				binding.rejectValue("creditCard.expirationYear", "act.error.dateCredit");
 
 			}
 			if (!binding.hasErrors()) {
@@ -571,6 +570,11 @@ public class ActorService {
 			clon.setVat(actor.getVat());
 
 			this.validator.validate(clon, binding);
+			if (((clon.getCreditCard().getExpirationYear() + 2000) < LocalDateTime.now().getYear())
+				|| (((clon.getCreditCard().getExpirationYear() + 2000) == LocalDateTime.now().getYear()) && (clon.getCreditCard().getExpirationMonth() < LocalDateTime.now().getMonthOfYear()))) {
+				binding.rejectValue("creditCard.expirationYear", "act.error.dateCredit");
+
+			}
 			if (!binding.hasErrors()) {
 				this.carrierService.save(clon);
 			}
@@ -591,6 +595,11 @@ public class ActorService {
 			clon.setAddress(actor.getAddress());
 
 			this.validator.validate(clon, binding);
+			if (((clon.getCreditCard().getExpirationYear() + 2000) < LocalDateTime.now().getYear())
+				|| (((clon.getCreditCard().getExpirationYear() + 2000) == LocalDateTime.now().getYear()) && (clon.getCreditCard().getExpirationMonth() < LocalDateTime.now().getMonthOfYear()))) {
+				binding.rejectValue("creditCard.expirationYear", "act.error.dateCredit");
+
+			}
 			if (!binding.hasErrors()) {
 				this.customerService.save(clon);
 			}
@@ -611,6 +620,11 @@ public class ActorService {
 			clon.setAddress(actor.getAddress());
 
 			this.validator.validate(clon, binding);
+			if (((clon.getCreditCard().getExpirationYear() + 2000) < LocalDateTime.now().getYear())
+				|| (((clon.getCreditCard().getExpirationYear() + 2000) == LocalDateTime.now().getYear()) && (clon.getCreditCard().getExpirationMonth() < LocalDateTime.now().getMonthOfYear()))) {
+				binding.rejectValue("creditCard.expirationYear", "act.error.dateCredit");
+
+			}
 			if (!binding.hasErrors()) {
 				this.auditorService.save(clon);
 			}
@@ -632,6 +646,11 @@ public class ActorService {
 			clon.setNif(actor.getNif());
 
 			this.validator.validate(clon, binding);
+			if (((clon.getCreditCard().getExpirationYear() + 2000) < LocalDateTime.now().getYear())
+				|| (((clon.getCreditCard().getExpirationYear() + 2000) == LocalDateTime.now().getYear()) && (clon.getCreditCard().getExpirationMonth() < LocalDateTime.now().getMonthOfYear()))) {
+				binding.rejectValue("creditCard.expirationYear", "act.error.dateCredit");
+
+			}
 			if (!binding.hasErrors()) {
 				this.sponsorService.save(clon);
 			}
