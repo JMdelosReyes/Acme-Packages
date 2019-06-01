@@ -113,7 +113,7 @@ public class FinderController extends AbstractController {
 
 		result.addObject("finder", finder);
 		result.addObject("offers", offers);
-		result.addObject("requestURI", "finder/rookie/search.do");
+		result.addObject("requestURI", "finder/customer/search.do");
 		result.addObject("message", message);
 		result.addObject("enCategories", this.categoryService.englishCategories());
 		result.addObject("esCategories", this.categoryService.spanishCategories());
