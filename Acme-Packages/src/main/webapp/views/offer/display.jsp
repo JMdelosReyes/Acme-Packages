@@ -26,7 +26,6 @@
 <a href="vehicle/display.do?id=<jstl:out value="${offer.vehicle.id}"/>"><spring:message code="of.vehicle"/></a>
 
 <jstl:if test="${owner eq true}">
-	<a href="vehicle/carrier,auditor/display.do?id=<jstl:out value="${offer.vehicle.id}"/>"><spring:message code="of.vehicle"/></a><br>
 	<a href="request/carrier,customer/list.do?id=<jstl:out value="${offer.id}"/>"><spring:message code="of.requests"/></a><br>
 	<spring:message code="of.finalMode"/>: <jstl:out value="${offer.finalMode}"/><br>
 	<spring:message code="of.score"/>: <jstl:out value="${offer.score}"/><br>

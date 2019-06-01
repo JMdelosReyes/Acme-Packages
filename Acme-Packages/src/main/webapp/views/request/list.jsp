@@ -71,9 +71,9 @@
 </security:authorize>
 	</display:column>
 	<security:authorize  access="hasRole('CUSTOMER')">
-		<display:column title="req.edit">
+		<display:column title="req.editPackage">
 			<jstl:if test="${!row.finalMode}">
-				<a href="request/customer/edit.do?id=${row.id}"><spring:message code="req.edit"/></a>
+				<a href="request/customer/edit.do?id=${row.id}"><spring:message code="req.editPackage"/></a>
 			</jstl:if>
 		</display:column>
 	</security:authorize>
