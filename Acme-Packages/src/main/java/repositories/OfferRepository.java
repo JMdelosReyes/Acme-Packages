@@ -41,8 +41,8 @@ public interface OfferRepository extends JpaRepository<Offer, Integer> {
 	@Query("select distinct o from Carrier c join c.offers o where c.id=?1 AND o.finalMode=1 AND o.canceled=0 AND o.maxDateToRequest<CURRENT_DATE")
 	Collection<Offer> findCarrierPastOffers(int id);
 
-	@Query("select distinct r from Request r where r.finalMode=1 AND r.offer=null AND r.deadline<=?1 AND r.volume<=?2 AND r.weight<=?3 AND (r.town in ?4)")
-	Collection<Request> findRequestsToNotify(Date maxDateToRequest, Double volume, Double Weight, Collection<Town> towns);
+	@Query("select distinct r from Request r where r.finalMode=1 AND r.offer=null AND r.volume<=?1 AND r.weight<=?2 AND (select count(tt) from Offer o join o.traverseTowns tt where o.id=?3 and tt.town.id=r.town.id and tt.estimatedDate<=r.deadline)>0")
+	Collection<Request> findRequestsToNotify(Double volume, Double Weight, int offerId);
 
 	@Query("select distinct c from Request r join r.packages p join p.categories c where r.id=?1")
 	Collection<Category> findRequestCategories(int id);

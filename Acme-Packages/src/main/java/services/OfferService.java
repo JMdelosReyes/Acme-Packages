@@ -27,7 +27,6 @@ import domain.Fare;
 import domain.Mess;
 import domain.Offer;
 import domain.Request;
-import domain.Town;
 import domain.TraverseTown;
 import forms.OfferForm;
 
@@ -144,15 +143,22 @@ public class OfferService {
 				Assert.isTrue(offer.getScore() == 0);
 			}
 
+			boolean checks = false;
 			if (offer.isFinalMode() && !old.isFinalMode()) {
+				checks = true;
+			}
+
+			if (checks) {
 				Assert.isTrue(offer.getFares().size() > 0);
 				Assert.isTrue(offer.getTraverseTowns().size() > 0);
-				this.offerNotification(old);
 			}
 
 			result = this.offerRepository.save(offer);
 			Assert.notNull(result);
 
+			if (checks) {
+				this.offerNotification(result);
+			}
 		}
 
 		return result;
@@ -360,11 +366,9 @@ public class OfferService {
 	}
 
 	public void offerNotification(Offer offer) {
-		Mess mess = this.messService.create();
+		//Collection<Town> towns = this.offerRepository.findOfferTowns(offer.getId());
 
-		Collection<Town> towns = this.offerRepository.findOfferTowns(offer.getId());
-
-		Collection<Request> requests = this.offerRepository.findRequestsToNotify(offer.getMaxDateToRequest(), offer.getVehicle().getMaxVolume(), offer.getVehicle().getMaxWeight(), towns);
+		Collection<Request> requests = this.offerRepository.findRequestsToNotify(offer.getVehicle().getMaxVolume(), offer.getVehicle().getMaxWeight(), offer.getId());
 
 		for (Request e : requests) {
 			if (!this.offerRepository.findOfferCategories(offer.getId()).containsAll(this.offerRepository.findRequestCategories(e.getId()))) {
@@ -385,24 +389,22 @@ public class OfferService {
 			}
 		}
 
-		Collection<Actor> rec = new ArrayList<>();
-
 		for (Request e : requests) {
+			Mess mess = this.messService.create();
+			Collection<Actor> rec = new ArrayList<>();
 			rec.add(this.offerRepository.findCustomerOfRequest(e.getId()));
+			mess.setRecipients(rec);
+
+			mess.setBody("New offer created that is appropriated for one of your request: " + offer.getTicker());
+			mess.setSubject("New offer notification");
+			mess.setSendDate(DateTime.now().minusMillis(1000).toDate());
+			mess.setPriority("HIGH");
+
+			UserAccount admin = this.userAccountService.findByUsername("admin");
+			mess.setSender(this.actorService.findByUserAccountId(admin.getId()));
+
+			this.messService.send(mess, true);
 		}
-
-		mess.setRecipients(rec);
-
-		mess.setBody("New offer created that is appropriated for one of your request: " + offer.getTicker());
-		mess.setSubject("New offer notification");
-		mess.setSendDate(DateTime.now().minusMillis(1000).toDate());
-		mess.setPriority("HIGH");
-
-		UserAccount admin = this.userAccountService.findByUsername("admin");
-		mess.setSender(this.actorService.findByUserAccountId(admin.getId()));
-
-		this.messService.send(mess, true);
-
 	}
 
 	public void calculaTotalPrice(int intId) {
