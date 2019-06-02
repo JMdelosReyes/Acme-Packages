@@ -46,7 +46,7 @@ public class CreateRequestForm {
 	public void setMaxPrice(double maxPrice) {
 		this.maxPrice = maxPrice;
 	}
-	@NotNull
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	public Date getDeadline() {
