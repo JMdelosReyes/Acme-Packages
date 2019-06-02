@@ -84,11 +84,12 @@ public class RequestController extends AbstractController {
 					requests = new ArrayList<>(offer.getRequests());
 				} else {
 					requests = new ArrayList<>(this.reqService.findRequestFinalModeNoOffer());
+					carrierView = true;
 				}
 			} catch (final Throwable oops) {
 				return new ModelAndView("redirect:/");
 			}
-			carrierView = true;
+
 		} else {
 			Customer cus = this.cusService.findOne(actorId);
 			requests = new ArrayList<>(cus.getRequests());

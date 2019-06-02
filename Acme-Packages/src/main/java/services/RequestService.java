@@ -430,11 +430,11 @@ public class RequestService {
 			Request clon = (Request) result.clone();
 			clon.setDescription(req.getDescription());
 			clon.setMaxPrice(req.getMaxPrice());
+			clon.setDeadline(req.getDeadline());
 			clon.setFinalMode(req.isFinalMode());
 			clon.setStreetAddress(req.getStreetAddress());
 			clon.setComment(req.getComment());
 			clon.setTown(req.getTown());
-
 			result = clon;
 		}
 

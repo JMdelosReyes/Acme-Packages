@@ -34,11 +34,14 @@
 	<display:column titleKey="req.weight">
 		<jstl:out value="${row.weight}"/>
 	</display:column>
+	<jstl:if test="${!carrierView}">
 	<display:column titleKey="req.status">
 		<jstl:out value="${row.status}"/>
 	</display:column>
-	<display:column titleKey="req.issue">
-		<security:authorize access="hasRole('CUSTOMER')">
+	</jstl:if>
+	<security:authorize access="hasRole('CUSTOMER')">
+		<display:column titleKey="req.issue">
+
 			<jstl:choose>
 				<jstl:when test="${row.issue.ticker eq null}">
 					<jstl:if test="${row.offer ne null}">
@@ -49,13 +52,18 @@
 					<a href="issue/carrier,customer,auditor/display.do?id=${row.issue.id}"><jstl:out value="${row.issue.ticker}"/></a>
 				</jstl:otherwise>
 			</jstl:choose>
-		</security:authorize>
-		<security:authorize access="hasRole('CARRIER')">
+		</display:column>
+	</security:authorize>
+		
+	<jstl:if test="${!carrierView}">
+	<security:authorize access="hasRole('CARRIER')">
+		<display:column titleKey="req.issue">
 			<jstl:if test="${row.issue ne null}">
 				<a href="issue/carrier,customer,auditor/display.do?id=${row.issue.id}"><jstl:out value="${row.issue.ticker}"/></a>
 			</jstl:if>
+		</display:column>
 		</security:authorize>
-	</display:column>
+	</jstl:if>
 	<security:authorize  access="hasRole('CUSTOMER')">
 	<display:column titleKey="req.edit">
 			<jstl:if test="${!row.finalMode}">
@@ -64,26 +72,28 @@
 	</display:column>
 	</security:authorize>
 	<security:authorize access="hasRole('CARRIER')">
-	<display:column titleKey="req.request">
+	<jstl:if test="${!carrierView}">
+		<display:column titleKey="req.request">
 		
-	<jstl:if test="${row.status == 'SUBMITTED'}">
-		<form:form action="request/carrier,customer,auditor/display.do">
-		<input type="hidden" value="${row.id}" name="id"/>
-		<select name="status">
-			<option value='ACCEPTED'><spring:message code="req.accepted"/></option>
-			<option value='REJECTED'><spring:message code="req.rejected"/></option>
-		</select>
-		<acme:submit name="save" code="req.save"/>
-		</form:form>
-	</jstl:if>
+		<jstl:if test="${row.status == 'SUBMITTED'}">
+			<form:form action="request/carrier,customer,auditor/display.do">
+				<input type="hidden" value="${row.id}" name="id"/>
+				<select name="status">
+					<option value='ACCEPTED'><spring:message code="req.accepted"/></option>
+					<option value='REJECTED'><spring:message code="req.rejected"/></option>
+				</select>
+				<acme:submit name="save" code="req.save"/>
+			</form:form>
+		</jstl:if>
 		
-	<jstl:if test="${row.status == 'ACCEPTED'}">
-		<form:form action="request/carrier,customer,auditor/display.do">
-		<input type="hidden" value="${row.id}" name="id"/>
-		<acme:submit name="delivered" code="req.delivered"/>
-		</form:form>
+		<jstl:if test="${row.status == 'ACCEPTED'}">
+			<form:form action="request/carrier,customer,auditor/display.do">
+				<input type="hidden" value="${row.id}" name="id"/>
+				<acme:submit name="delivered" code="req.delivered"/>
+			</form:form>
+		</jstl:if>
+		</display:column>
 	</jstl:if>
-	</display:column>
 	</security:authorize>
 </display:table>
 
