@@ -440,8 +440,10 @@ public class RequestService {
 
 		this.validator.validate(result, binding);
 
-		if (result.getDeadline().before(DateTime.now().toDate())) {
-			binding.rejectValue("deadline", "req.err.deadlinePast");
+		if (binding.getFieldError("deadline") == null) {
+			if (result.getDeadline().before(DateTime.now().toDate())) {
+				binding.rejectValue("deadline", "req.err.deadlinePast");
+			}
 		}
 
 		return result;
