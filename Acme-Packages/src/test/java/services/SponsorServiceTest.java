@@ -70,6 +70,7 @@ public class SponsorServiceTest extends AbstractTest {
 		}
 	}
 	/*
+	 * Requirement tested: Someone tries to create a user account as Sponsor
 	 * Sentence coverage: 91,4%
 	 * Data coverage: 0,2% as we testes 6 out of 256 possibilities
 	 */
@@ -77,22 +78,22 @@ public class SponsorServiceTest extends AbstractTest {
 	public void driverCreateAndSave() {
 		final Object testingData[][] = {
 			{
-				// All the parameters are OK
+				// Correct: All the parameters are OK
 				"name", "surname", "middlename", "https://www.photo.com", "email@gmail.com", "123456789", "address", "sponsor69", "password", 102, "Nombre", "4495840606545807", "VISA", 1, 90, "10709279L", null
 			}, {
-				// NIF cannot be blank
+				//Incorrect: NIF cannot be blank
 				"name", "surname", "middlename", "https://www.photo.com", "email@gmail.com", "123456789", "address", "sponsor69", "password", 102, "Nombre", "4495840606545807", "VISA", 1, 90, "", ConstraintViolationException.class
 			}, {
-				// NIF doen´t match pattern
+				//Incorrect: NIF doen´t match pattern
 				"name", "surname", "middlename", "https://www.photo.com", "email@gmail.com", "123456789", "address", "sponsor69", "password", 102, "Nombre", "4495840606545807", "VISA", 1, 90, "wadawdawd", ConstraintViolationException.class
 			}, {
-				//String Parameters cannot be blank
+				//Incorrect:String Parameters cannot be blank
 				"", "", "middlename", "", "email@gmail.com", "123", "", "", "password", 102, "Nombre", "4495840606545807", "VISA", 1, 90, "wadawdawd", ConstraintViolationException.class
 			}, {
-				// Credit card mut be valid /not expired
+				//Incorrect: Credit card mut be valid /not expired
 				"name", "surname", "middlename", "https://www.photo.com", "email@gmail.com", "123456789", "address", "sponsor69", "password", 102, "Nombre", "", "VISA", 1, 2, "wadawdawd", IllegalArgumentException.class
 			}, {
-				// Credit card cannot be expired
+				//Incorrect: Credit card cannot be expired
 				"name", "surname", "middlename", "https://www.photo.com", "email@gmail.com", "123456789", "address", "sponsor69", "password", 102, "Nombre", "4495840606545807", "VISA", 1, 2, "wadawdawd", IllegalArgumentException.class
 			}
 		};
@@ -114,16 +115,16 @@ public class SponsorServiceTest extends AbstractTest {
 	public void driverUpdate() {
 		final Object testingData[][] = {
 			{
-				// Normal update
+				// Correct:Normal update
 				"sponsor1", "sponsor1", "nameupdate", "surnameupdate", "middleNameUpdate", "https://www.photo.com", "email@gmail.com", "123456789", "address", "usuario", "contraseñaaaa", "46018584T", null
 			}, {
-				// NIF cannot be changed
+				//Incorrect: NIF cannot be changed
 				"sponsor2", "sponsor2", "nameupdate", "surnameupdate", "middleNameUpdate", "https://www.photo.com", "email@gmail.com", "123456789", "address", "usuario", "contraseñaaaa", "46018584T", IllegalArgumentException.class
 			}, {
-				// Carrier cannot update other sponsor
+				// Incorrect:Carrier cannot update other sponsor
 				"carrier1", "sponsor2", "nameupdate", "surnameupdate", "middleNameUpdate", "https://www.photo.com", "email@gmail.com", "123456789", "address", "usuario", "contraseñaaaa", "46018584T", IllegalArgumentException.class
 			}, {
-				// Name cannot be blank and photo mus be an url
+				//Incorrect: Name cannot be blank and photo mus be an url
 				"sponsor2", "sponsor2", "", "", "", "ht://www.photo.com", "email@gmail.com", "123456789", "address", "usuario", "contraseñaaaa", "46038584T", ConstraintViolationException.class
 			}
 		};
@@ -142,13 +143,13 @@ public class SponsorServiceTest extends AbstractTest {
 	@Test
 	public void driverDelete() {
 		final Object testingData[][] = {
-			{	//Correct: Auditor is deleted from database
+			{	//Correct: Sponsor is deleted from database
 				"sponsor1", null
-			}, {//Correct: Auditor is deleted from database
+			}, {//Correct: Sponsor is deleted from database
 				"sponsor2", null
-			}, {//Correct: Auditor is deleted from database
-				"sponsor3", null
-			}, {//Incorrect: Bean must be a Auditor
+			}, {//Incorrect: Carrier is not a sponsor
+				"carrier1", IllegalArgumentException.class
+			}, {//Incorrect: Bean must be a sponsor
 				"customer1", IllegalArgumentException.class
 			}
 		};

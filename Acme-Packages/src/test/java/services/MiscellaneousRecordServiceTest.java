@@ -81,6 +81,9 @@ public class MiscellaneousRecordServiceTest extends AbstractTest {
 			}, {
 				// Incorrect: A sponsor cannot create a miscellaneous data
 				"sponsor1", IllegalArgumentException.class
+			}, {
+				// Correct: The carrier has curriculum, so he or she can create a miscellaneous data
+				"carrier2", null
 			}
 		};
 
@@ -155,13 +158,13 @@ public class MiscellaneousRecordServiceTest extends AbstractTest {
 	/*
 	 * Requirement tested: An actor who is authenticated as a carrier must be able to manage his or her curriculum, which includes deleting its records
 	 * Sentence coverage: 100%
-	 * Data coverage: 100%, as we test to delete using a carrier, other kind of actors and a carrier that doesn't own the data
+	 * Data coverage: 100%, as we test to delete using a carrier, other kind of actors and a carrier that doesn't own the record
 	 */
 	@Test
 	public void driverDelete() {
 		final Object testingData[][] = {
 			{
-				// Incorrect: Only carriers can delete miscellaneous record
+				// correct: Only carriers can delete miscellaneous record
 				"carrier1", "miscellaneousRecord1", null
 			}, {
 				// Incorrect: The carrier is not the owner

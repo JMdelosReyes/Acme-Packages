@@ -83,6 +83,9 @@ public class SponsorshipServiceTest extends AbstractTest {
 			}, {
 				// Incorrect: Actor is not  been   authenticated
 				null, IllegalArgumentException.class
+			}, {
+				// Incorrect: Carrier cannot create sponsorships
+				"carrier1", IllegalArgumentException.class
 			}
 		};
 
@@ -160,13 +163,10 @@ public class SponsorshipServiceTest extends AbstractTest {
 				//Correct delete
 				"sponsor1", "sponsorship1", null
 			}, {
-				//Doesnt own that sponsorship
+				//Incorrect:Doesnt own that sponsorship
 				"sponsor3", "sponsorship2", IllegalArgumentException.class
 			}, {
-				//Can delete as is not valid that sponsorship
-				"admin", "sponsorship2", null
-			}, {
-				//Carrier users cannot delete sponsorships
+				//Incorrect:Carrier users cannot delete sponsorships
 				"carrier1", "sponsorship2", IllegalArgumentException.class
 			}
 		};

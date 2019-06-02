@@ -70,7 +70,7 @@ public class ProfessionalRecordServiceTest extends AbstractTest {
 	}
 
 	/*
-	 * Requirement tested: An actor who is authenticated as a carrier must be able to manage his or her curriculum, which includes creating miscellanous data
+	 * Requirement tested: An actor who is authenticated as a carrier must be able to manage his or her curriculum, which includes creating professional record
 	 * Sentence coverage: 100%
 	 * Data coverage: 100%, as we've tested the method with a carrier, a non carrier actor of the system
 	 */
@@ -83,6 +83,9 @@ public class ProfessionalRecordServiceTest extends AbstractTest {
 			}, {
 				// Incorrect: A sponsor cannot create a professional record
 				"sponsor1", IllegalArgumentException.class
+			}, {
+				// Incorrect: An admin cannot create a professional record
+				"admin", IllegalArgumentException.class
 			}
 		};
 
@@ -92,7 +95,7 @@ public class ProfessionalRecordServiceTest extends AbstractTest {
 	}
 
 	/*
-	 * Requirement tested: An actor who is authenticated as a carrier must be able to manage his or her curriculum, which includes creating and saving professional data
+	 * Requirement tested: An actor who is authenticated as a carrier must be able to manage his or her curriculum, which includes creating and saving professional record
 	 * Sentence coverage: 100%
 	 * Data coverage: 100%, as we've tested the method with a carrier, a non carrier actor of the system
 	 */
@@ -172,7 +175,7 @@ public class ProfessionalRecordServiceTest extends AbstractTest {
 	public void driverDelete() {
 		final Object testingData[][] = {
 			{
-				// Incorrect: Only carriers can delete professional record
+				// Correct: Only carriers can delete professional record
 				"carrier1", "professionalRecord1", null
 			}, {
 				// Incorrect: The carrier is not the owner
