@@ -150,8 +150,12 @@ public class RequestService {
 		return result;
 	}
 	public void actualizaValores(Request req) {
-		req.setVolume(this.reqRepository.calculateVolume(req.getId()));
-		req.setWeight(this.reqRepository.calculateWeight(req.getId()));
+		Request old = this.findOne(req.getId());
+		Request clon = (Request) req.clone();
+		clon.setVolume(this.reqRepository.calculateVolume(req.getId()));
+		clon.setWeight(this.reqRepository.calculateWeight(req.getId()));
+		old = clon;
+		this.reqRepository.save(old);
 	}
 	public void flush() {
 		this.reqRepository.flush();

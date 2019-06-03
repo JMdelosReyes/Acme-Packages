@@ -118,7 +118,6 @@ public class PackageController {
 		Package pac;
 		try {
 			Assert.isTrue(packa.getId() != 0);
-			intId = this.pacService.findRequestByPackageId(packa.getId()).getId();
 			pac = this.pacService.reconstruct(packa, binding);
 		} catch (Throwable oops) {
 			return new ModelAndView("redirect:/");
@@ -128,8 +127,8 @@ public class PackageController {
 		} else {
 			try {
 				pac = this.pacService.save(pac);
-				this.reqService.actualizaValores(this.pacService.findRequestByPackageId(pac.getId()));
-				result = new ModelAndView("redirect:/request/carrier,customer,auditor/display.do?id=" + intId);
+				Request req = this.pacService.findRequestByPackageId(pac.getId());
+				result = new ModelAndView("redirect:/request/carrier,customer,auditor/display.do?id=" + req.getId());
 			} catch (Throwable oops) {
 				result = this.editModelAndView(packa, "pac.error.commit");
 			}

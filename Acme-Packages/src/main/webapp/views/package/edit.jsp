@@ -17,11 +17,11 @@
 	<acme:textarea code="req.details" path="details" />
 	<jstl:choose>
 		<jstl:when test="${es eq true}">
-			<acme:select items="${categories}" itemLabel="spanishName" code="req.category" path="categories"/>
+			<acme:selectLuis items="${categories}" itemLabel="spanishName" code="req.category" path="categories"/>
 		</jstl:when>
 
 		<jstl:otherwise>
-			<acme:select items="${categories}" itemLabel="englishName" code="req.category" path="categories"/>
+			<acme:selectLuis items="${categories}" itemLabel="englishName" code="req.category" path="categories"/>
 		</jstl:otherwise>
 	</jstl:choose>
 	<acme:cancel url="request/carrier,customer,auditor/display.do?id=${request.id}" code="req.cancel"/>

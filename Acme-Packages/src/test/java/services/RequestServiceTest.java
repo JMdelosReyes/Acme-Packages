@@ -90,35 +90,32 @@ public class RequestServiceTest extends AbstractTest {
 	/*
 	 * Requirement tested: A customer can create a request and save it.
 	 * Sentence coverage: 97.4%
-	 * Data coverage: 1.66%, we have tested 9 from 540 posibilities
+	 * Data coverage: 1.66%, we have tested 4 from 540 possibilities
 	 */
 	@Test
 	public void driverCreateSave() {
 		final Object testingData[][] = {
 			{
 				// Correct: The request is saved successfully
-				"customer1", null, "description1", 1000.0, "25/09/2019", false, "Calle pinta", "No comments", super.getEntityId("town1")
-			}, {
-				// Correct: The request is saved successfully
-				"customer1", null, "description1", 1000.0, "25/09/2019", true, "Calle pinta", "No comments", super.getEntityId("town1")
+				"customer1", null, "description1", 1000.0, "25/09/2019", false, "Calle pinta", "No comments", super.getEntityId("town1"), "190925-POLKI"
 			}, {
 				// Incorrect: Deadline cannot be in the past
-				"customer1", ConstraintViolationException.class, "description1", 1000.0, "", false, "Calle pinta", "No comments", super.getEntityId("town1")
+				"customer1", ConstraintViolationException.class, "description1", 1000.0, "", false, "Calle pinta", "No comments", super.getEntityId("town1"), "190925-POLKI"
 			}, {
 				// Incorrect: Description cannot be empty
-				"customer1", ConstraintViolationException.class, "", 1000.0, "25/09/2019", false, "Calle pinta", "No comments", super.getEntityId("town1")
+				"customer1", ConstraintViolationException.class, "", 1000.0, "25/09/2019", false, "Calle pinta", "No comments", super.getEntityId("town1"), "190925-POLKI"
 			}, {
 				// Incorrect: Street comment cannot be empty
-				"customer1", ConstraintViolationException.class, "description1", 1000.0, "25/09/2019", true, "", "No comments", super.getEntityId("town1")
+				"customer1", ConstraintViolationException.class, "description1", 1000.0, "25/09/2019", false, "", "No comments", super.getEntityId("town1"), "190925-POLKI"
 			}
 		};
 
 		for (int i = 0; i < testingData.length; i++) {
 			this.testCreateSave((String) testingData[i][0], (Class<?>) testingData[i][1], (String) testingData[i][2], (double) testingData[i][3], (String) testingData[i][4], (boolean) testingData[i][5], (String) testingData[i][6],
-				(String) testingData[i][7], (int) testingData[i][8]);
+				(String) testingData[i][7], (int) testingData[i][8], (String) testingData[i][9]);
 		}
 	}
-	protected void testCreateSave(String username, Class<?> expected, String desc, double maxPrice, String deadline, boolean finalMode, String streetAddress, String comment, int townId) {
+	protected void testCreateSave(String username, Class<?> expected, String desc, double maxPrice, String deadline, boolean finalMode, String streetAddress, String comment, int townId, String ticker) {
 		Class<?> caught;
 		caught = null;
 		try {
@@ -133,6 +130,7 @@ public class RequestServiceTest extends AbstractTest {
 			} else {
 				res.setDeadline(null);
 			}
+			res.setTicker(ticker);
 			res.setFinalMode(finalMode);
 			res.setStreetAddress(streetAddress);
 			res.setComment(comment);
@@ -163,26 +161,23 @@ public class RequestServiceTest extends AbstractTest {
 	/*
 	 * Requirement tested: A customer can update a request and save it.
 	 * Sentence coverage: 97.4%
-	 * Data coverage: XX.XX%, we have tested Y from Z posibilities
+	 * Data coverage: 5.55%, we have tested 4 from 72 possibilities
 	 */
 	@Test
 	public void driverUpdate() {
 		final Object testingData[][] = {
 			{
 				// Correct: The request is saved successfully
-				"customer1", null, "description1", 1000.0, "25/09/2019", false, "Calle pinta", "No comments", super.getEntityId("town1"), super.getEntityId("request10")
-			}, {
-				// Correct: The request is saved successfully
-				"customer1", null, "description1", 1000.0, "25/09/2019", true, "Calle pinta", "No comments", super.getEntityId("town1"), super.getEntityId("request10")
+				"customer4", null, "description1", 1000.0, "25/09/2019", false, "Calle pinta", "No comments", super.getEntityId("town1"), super.getEntityId("request4")
 			}, {
 				// Incorrect: Deadline cannot be in the past
-				"customer1", ConstraintViolationException.class, "description1", 1000.0, "", false, "Calle pinta", "No comments", super.getEntityId("town1"), super.getEntityId("request10")
+				"customer4", ConstraintViolationException.class, "description1", 1000.0, "", false, "Calle pinta", "No comments", super.getEntityId("town1"), super.getEntityId("request4")
 			}, {
 				// Incorrect: Description cannot be empty
-				"customer1", ConstraintViolationException.class, "", 1000.0, "25/09/2019", false, "Calle pinta", "No comments", super.getEntityId("town1"), super.getEntityId("request10")
+				"customer4", ConstraintViolationException.class, "", 1000.0, "25/09/2019", false, "Calle pinta", "No comments", super.getEntityId("town1"), super.getEntityId("request4")
 			}, {
 				// Incorrect: Street comment cannot be empty
-				"customer1", ConstraintViolationException.class, "description1", 1000.0, "25/09/2019", true, "", "No comments", super.getEntityId("town1"), super.getEntityId("request10")
+				"customer4", ConstraintViolationException.class, "description1", 1000.0, "25/09/2019", false, "", "No comments", super.getEntityId("town1"), super.getEntityId("request4")
 			}
 		};
 
@@ -236,25 +231,23 @@ public class RequestServiceTest extends AbstractTest {
 	}
 
 	/*
-	 * Requirement tested: A customer can update a request and save it.
+	 * Requirement tested: A customer can delete a request if the request is not in final mode.
 	 * Sentence coverage: 100%
-	 * Data coverage: XX.XX%, we have tested Y from Z posibilities
+	 * Data coverage: 100%, we have tested 3 from 3 possibilities
 	 */
 	@Test
 	public void delete() {
 		Object testingData[][] = {
+
 			{
-				// Correct: The package exists in the database
-				"customer1", IllegalArgumentException.class, "request1"
+				// Correct: The request is deleted from the database
+				"customer4", null, "request4"
 			}, {
 				// Incorrect: The request is in final mode
 				"customer1", IllegalArgumentException.class, "request2"
 			}, {
 				// Incorrect: The package is owned by other customer
-				"customer1", IllegalArgumentException.class, "request3"
-			}, {
-				// Correct: The package is owned by other customer
-				"customer4", null, "request200"
+				"customer1", IllegalArgumentException.class, "request4"
 			}
 		};
 		for (int i = 0; i < testingData.length; i++) {

@@ -97,10 +97,10 @@ public class PackageServiceTest extends AbstractTest {
 	public void driverCreateSave() {
 		Object testingData[][] = {
 			{
-				// Correct: The package exists in the database
+				// Correct: The package is created in the database
 				"customer1", null, 1000.0, 2.0, 2.0, 3.0, 0.0, "cuidaito con la play", "category1"
 			}, {
-				// Correct: The package exists in the database
+				// Correct: The package is created in the database
 				"customer1", null, 1000.0, 2.0, 2.0, 3.0, 0.0, "cuidaito con la play2", "category2,category3"
 			}, {
 				// Correct: The package exists in the database
@@ -164,19 +164,16 @@ public class PackageServiceTest extends AbstractTest {
 		Object testingData[][] = {
 			{
 				// Correct: The package exists in the database
-				"customer1", null, 1000.0, 2.0, 2.0, 3.0, 0.0, "cuidaito con la play", "category1", "package10"
+				"customer4", null, 1000.0, 2.0, 2.0, 3.0, 0.0, "cuidaito con la play", "category1", "package4"
 			}, {
 				// Correct: The package exists in the database
-				"customer1", null, 1000.0, 2.0, 2.0, 3.0, 0.0, "cuidaito con la play2", "category2,category3", "package10"
-			}, {
-				// Correct: The package exists in the database
-				"customer1", null, 2000.0, 4.0, 8.0, 10.0, 6.0, "cuidaito con la play3", "category1", "package10"
+				"customer4", null, 1000.0, 2.0, 2.0, 3.0, 0.0, "cuidaito con la play2", "category2,category3", "package4"
 			}, {
 				// Incorrect: The weight cannot be under 100 grams
-				"customer1", ConstraintViolationException.class, 0.0, 2.0, 2.0, 3.0, 0.0, "cuidaito con la play", "category1", "package10"
+				"customer4", ConstraintViolationException.class, 0.0, 2.0, 2.0, 3.0, 0.0, "cuidaito con la play", "category1", "package4"
 			}, {
 				// Incorrect: The height cannot be under 1 cm
-				"customer1", ConstraintViolationException.class, 2000.0, 0.0, 2.0, 3.0, 0.0, "cuidaito con la play", "category1", "package10"
+				"customer4", ConstraintViolationException.class, 2000.0, 0.0, 2.0, 3.0, 0.0, "cuidaito con la play", "category1", "package4"
 			}
 		};
 
@@ -185,7 +182,6 @@ public class PackageServiceTest extends AbstractTest {
 				(String) testingData[i][8], (String) testingData[i][9]);
 		}
 	}
-
 	protected void testUpdate(String username, Class<?> expected, double weight, double height, double width, double length, double price, String desc, String categories, String pac) {
 		Class<?> caught;
 		caught = null;
@@ -224,6 +220,11 @@ public class PackageServiceTest extends AbstractTest {
 	/*
 	 * Requirement tested: A customer can update a request and save it.
 	 * Sentence coverage: 100%
+	 * Data coverage: XX.XX%, we have tested Y from Z possibilities
+	 */
+	/*
+	 * Requirement tested: A customer can update a request and save it.
+	 * Sentence coverage: 100%
 	 * Data coverage: XX.XX%, we have tested Y from Z posibilities
 	 */
 	@Test
@@ -231,7 +232,7 @@ public class PackageServiceTest extends AbstractTest {
 		Object testingData[][] = {
 			{
 				// Correct: The package exists in the database
-				"customer1", null, "package10"
+				"customer1", null, "package"
 			}, {
 				// Incorrect: The request is in final mode
 				"customer1", IllegalArgumentException.class, "package1"

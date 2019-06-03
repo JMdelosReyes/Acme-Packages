@@ -92,7 +92,17 @@ public class PackageService {
 				if (pac.getPrice() != null) {
 					Assert.notNull(this.findRequestByPackageId(old.getId()).getOffer());
 				}
+				//				Package clon = (Package) pac.clone();
+				//				clon.setHeight(pac.getHeight());
+				//				clon.setLength(pac.getLength());
+				//				clon.setWidth(pac.getWidth());
+				//				clon.setWeight(pac.getWeight());
+				//				clon.setDetails(pac.getDetails());
+				//				clon.setCategories(pac.getCategories());
 				res = this.pacRepository.save(pac);
+				Assert.notNull(res);
+				Request r = this.findRequestByPackageId(res.getId());
+				this.computeVolumeWeight(r.getId());
 			} else {
 				res = this.pacRepository.findOne(pac.getId());
 				UserAccount principal = LoginService.getPrincipal();
@@ -104,11 +114,28 @@ public class PackageService {
 				clon.setPrice(pac.getPrice());
 				res = clon;
 				this.pacRepository.save(res);
+				this.flush();
 			}
 		}
 		Assert.notNull(res);
 
 		return res;
+	}
+
+	public void computeVolumeWeight(int id) {
+		Assert.isTrue(id > 0);
+
+		Request req = this.reqService.findOne(id);
+
+		double weight = 0.0;
+		double volume = 0.0;
+
+		for (Package p : req.getPackages()) {
+			weight += p.getWeight();
+			volume += p.getHeight() * p.getWidth() * p.getLength();
+		}
+
+		this.pacRepository.updateWeightVolumeRequest(req.getId(), volume, weight);
 	}
 
 	public void delete(Package pac) {
