@@ -59,7 +59,7 @@ public class Solicitation extends DomainEntity implements Cloneable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	public Date getStartDate() {
 		return this.startDate;
 	}
@@ -69,7 +69,7 @@ public class Solicitation extends DomainEntity implements Cloneable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	public Date getEndDate() {
 		return this.endDate;
 	}

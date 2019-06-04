@@ -33,7 +33,7 @@
 		<h3><spring:message code="req.apply"/></h3>
 		<form:form action="request/carrier,customer,auditor/display.do" modelAttribute="chooseOfferForm">
 		<form:hidden path="id"/>
-		<acme:select items="${offers}" itemLabel="ticker" code="req.offersAvailables" path="idOffer"/>
+		<acme:selectLuis items="${offers}" itemLabel="ticker" code="req.offersAvailables" path="idOffer"/>
 		<acme:submit name="apply" code="req.apply"/>
 		</form:form>
 		</fieldset>
