@@ -124,6 +124,7 @@ public class OfferService {
 			offer.setRequests(new ArrayList<Request>());
 			offer.setTraverseTowns(new ArrayList<TraverseTown>());
 
+			Assert.notNull(offer.getMaxDateToRequest());
 			Assert.isTrue(offer.getMaxDateToRequest().after(new Date(System.currentTimeMillis() - 1000)));
 
 			result = this.offerRepository.save(offer);
@@ -138,6 +139,7 @@ public class OfferService {
 			Assert.isTrue(!old.isCanceled());
 
 			if ((offer.isFinalMode() && !old.isFinalMode()) || (!offer.isFinalMode() && !old.isFinalMode())) {
+				Assert.notNull(offer.getMaxDateToRequest());
 				Assert.isTrue(offer.getMaxDateToRequest().after(new Date(System.currentTimeMillis() - 1000)));
 				Assert.isTrue(offer.getTotalPrice() == 0);
 				Assert.isTrue(offer.getScore() == 0);

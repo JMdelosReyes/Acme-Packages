@@ -78,6 +78,40 @@ public class OfferServiceTest extends AbstractTest {
 	}
 
 	/*
+	 * Requirement tested: Offers can be filtered by town and by its carrier
+	 * Sentence coverage of the methods findOpenOffers and findCarrierOffers: 100%
+	 * Data coverage: 100% as we'v seen cases in which the offer is contained and not contained
+	 */
+	@Test
+	public void driverList() {
+		final Object testingData[][] = {
+			{
+				// Correct: The offer is owned by the specified carrier
+				"carrier1", "offer1", "", true, null
+			}, {
+				// Incorrect: The offer is not owned by the specified carrier
+				"carrier2", "offer1", "", true, IllegalArgumentException.class
+			}, {
+				// Incorrect: Customers don't have offers
+				"customer1", "offer1", "", true, IllegalArgumentException.class
+			}, {
+				// Correct: The offer is found by the entered town
+				"", "offer1", "Huesca", false, null
+			}, {
+				// Incorrect: The offer is not found by the entered town
+				"", "offer1", "Murcia", false, IllegalArgumentException.class
+			}, {
+				// Incorrect: The offer is not in our system
+				"", "offer1", "París", false, IllegalArgumentException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++) {
+			this.testList((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (Boolean) testingData[i][3], (Class<?>) testingData[i][4]);
+		}
+	}
+
+	/*
 	 * Requirement tested: An actor who is authenticated as a carrier must be able to create offers
 	 * Sentence coverage: 100%
 	 * Data coverage: 100%, as we've tested the method with a carrier and with a non carrier user
@@ -91,6 +125,9 @@ public class OfferServiceTest extends AbstractTest {
 			}, {
 				// Incorrect: The user is not a carrier
 				"admin", IllegalArgumentException.class
+			}, {
+				// Incorrect: The user is not a carrier
+				"customer1", IllegalArgumentException.class
 			}
 		};
 
@@ -120,6 +157,9 @@ public class OfferServiceTest extends AbstractTest {
 				// Incorrect: The user is not a carrier
 				"customer1", "25/09/2019", "vehicle1", "fare1,fare2", IllegalArgumentException.class
 			}, {
+				// Incorrect: The user is not a carrier
+				"admin", "25/09/2019", "vehicle1", "fare1,fare2", IllegalArgumentException.class
+			}, {
 				// Incorrect: The vehicle is not owned by this carrier
 				"carrier1", "25/09/2019", "vehicle4", "fare1,fare2", IllegalArgumentException.class
 			}, {
@@ -131,6 +171,9 @@ public class OfferServiceTest extends AbstractTest {
 			}, {
 				// Incorrect: The fares does not belong to this carrier
 				"carrier1", "25/09/2019", "vehicle1", "fare8,fare9", IllegalArgumentException.class
+			}, {
+				// Incorrect: The date cannot be null
+				"carrier1", "", "vehicle1", "fare1,fare2", IllegalArgumentException.class
 			}
 		};
 
@@ -169,8 +212,14 @@ public class OfferServiceTest extends AbstractTest {
 				// Incorrect: The vehicle cannot be null
 				"carrier1", "offer4", "25/09/2019", "", false, "fare1,fare2", IllegalArgumentException.class
 			}, {
-				// Incorrect: TO be in final mode the offer needs at least one fare
+				// Incorrect: To be in final mode the offer needs at least one fare
 				"carrier1", "offer4", "15/08/2019", "vehicle1", true, "", IllegalArgumentException.class
+			}, {
+				// Incorrect: The date cannot be null
+				"carrier1", "offer4", "", "vehicle1", true, "fare1,fare2", IllegalArgumentException.class
+			}, {
+				// Incorrect: The carrier is not the owner of the offer
+				"carrier2", "offer4", "15/08/2019", "vehicle1", false, "fare1,fare2", IllegalArgumentException.class
 			}
 		};
 
@@ -218,6 +267,39 @@ public class OfferServiceTest extends AbstractTest {
 			offer = this.offerService.findOne(id);
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
+		}
+
+		this.checkExceptions(expected, caught);
+	}
+
+	protected void testList(final String userBean, final String offerBean, String townBean, Boolean ownedByCarrier, final Class<?> expected) {
+		Class<?> caught;
+		caught = null;
+		try {
+			super.startTransaction();
+			if (!userBean.equals("")) {
+				super.authenticate(userBean);
+			}
+
+			Offer offer = this.offerService.findOne(super.getEntityId(offerBean));
+			Collection<Offer> offers = new ArrayList<Offer>();
+
+			if (ownedByCarrier) {
+				offers = this.offerService.findCarrierOffers(super.getEntityId(userBean));
+			} else {
+				offers = this.offerService.findOpenOffers(townBean);
+				Assert.isTrue(offers.contains(offer));
+			}
+
+			Assert.isTrue(offers.contains(offer));
+
+			if (!userBean.equals("")) {
+				super.unauthenticate();
+			}
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			super.rollbackTransaction();
 		}
 
 		this.checkExceptions(expected, caught);

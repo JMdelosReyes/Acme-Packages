@@ -88,6 +88,9 @@ public class TraverseTownServiceTest extends AbstractTest {
 			}, {
 				// Incorrect: The user is not a carrier
 				"customer1", IllegalArgumentException.class
+			}, {
+				// Incorrect: The user is not a carrier
+				"sponsor1", IllegalArgumentException.class
 			}
 		};
 

@@ -85,6 +85,9 @@ public class VehicleServiceTest extends AbstractTest {
 			}, {
 				// Incorrect: The user is not a carrier
 				"admin", IllegalArgumentException.class
+			}, {
+				// Incorrect: The user is not a carrier
+				"customer1", IllegalArgumentException.class
 			}
 		};
 

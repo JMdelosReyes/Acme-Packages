@@ -2943,6 +2943,12 @@
 		<property name="county" value="Málaga" />
 	</bean>
 	
+	<bean id="town10" class="domain.Town">
+		<property name="name" value="Murcia" />
+		<property name="zipCode" value="04093"/>
+		<property name="county" value="Murcia" />
+	</bean>
+	
 	<!-- TRAVERSE TOWN -->
 	
 	<bean id="traverseTown1" class="domain.TraverseTown">

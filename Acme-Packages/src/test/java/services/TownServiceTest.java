@@ -84,6 +84,9 @@ public class TownServiceTest extends AbstractTest {
 			}, {
 				// Incorrect: The user is not an administrator
 				"carrier1", IllegalArgumentException.class
+			}, {
+				// Incorrect: The user is not an administrator
+				"customer1", IllegalArgumentException.class
 			}
 		};
 
@@ -176,7 +179,7 @@ public class TownServiceTest extends AbstractTest {
 				"carrier1", "town1", IllegalArgumentException.class
 			}, {
 				// Correct: The administrator can delete towns
-				"admin", "town9", null
+				"admin", "town10", null
 			}
 		};
 

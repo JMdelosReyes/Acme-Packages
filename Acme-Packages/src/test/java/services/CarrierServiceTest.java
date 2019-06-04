@@ -198,6 +198,9 @@ public class CarrierServiceTest extends AbstractTest {
 			}, {
 				// Incorrect: No actor can delete other's actor profile
 				"customer1", "carrier2", IllegalArgumentException.class
+			}, {
+				// Incorrect: The user is not a carrier
+				"customer1", "customer1", IllegalArgumentException.class
 			}
 		};
 
