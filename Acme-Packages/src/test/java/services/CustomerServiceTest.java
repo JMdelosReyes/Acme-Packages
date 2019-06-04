@@ -41,6 +41,7 @@ public class CustomerServiceTest extends AbstractTest {
 		Assert.notNull(customers);
 	}
 	/*
+	 * Requirement tested: An actor who is not authenticated must be able to create a customer account
 	 * Sentence coverage: 100%
 	 * Data coverage: 100% as we have tested valid and invalid ids
 	 */
@@ -84,6 +85,7 @@ public class CustomerServiceTest extends AbstractTest {
 	}
 
 	/*
+	 * Requirement tested: An actor who is not authenticated must be able to register to the system as a customer
 	 * Sentence coverage: 73.1%
 	 * Data coverage: 0.045%, as we have tested 8 of 17496 possibilities
 	 */
@@ -171,6 +173,7 @@ public class CustomerServiceTest extends AbstractTest {
 	}
 
 	/*
+	 * Requirement tested: An authenticated customer must be able to modify his or her profile
 	 * Sentence coverage: 73.1%
 	 * Data coverage: 0.051%, as we have tested 9 of 17496 possibilities
 	 */
@@ -273,9 +276,9 @@ public class CustomerServiceTest extends AbstractTest {
 	}
 
 	/*
-	 * Requirement tested: A customer must be able to manage his personal data
+	 * Requirement tested: A customer must be able to delete
 	 * Sentence coverage: 97.6%
-	 * Data coverage: 100%, as we test customers deleting their profile and non customers trying to delete other kind of actos
+	 * Data coverage: 100%, as we test the method using a customer and a non customer user
 	 */
 	@Test
 	public void driverDelete() {

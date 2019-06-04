@@ -89,9 +89,9 @@ public class PackageServiceTest extends AbstractTest {
 		this.checkExceptions(expected, caught);
 	}
 	/*
-	 * Requirement tested: A customer can update a request and save it.
+	 * Requirement tested: A customer can create a package and save it.
 	 * Sentence coverage: 98.3%
-	 * Data coverage: XX.XX%, we have tested Y from Z posibilities
+	 * Data coverage: 1.16%, we have tested 5 from 432 possibilities
 	 */
 	@Test
 	public void driverCreateSave() {
@@ -155,18 +155,18 @@ public class PackageServiceTest extends AbstractTest {
 		this.checkExceptions(expected, caught);
 	}
 	/*
-	 * Requirement tested: A customer can update a request and save it.
+	 * Requirement tested: A customer can update a package and save it.
 	 * Sentence coverage: 98.3%
-	 * Data coverage: XX.XX%, we have tested Y from Z posibilities
+	 * Data coverage: 0.92%, we have tested 4 from 432 possibilities
 	 */
 	@Test
 	public void driverUpdate() {
 		Object testingData[][] = {
 			{
-				// Correct: The package exists in the database
+				// Correct: The package is updated
 				"customer4", null, 1000.0, 2.0, 2.0, 3.0, 0.0, "cuidaito con la play", "category1", "package4"
 			}, {
-				// Correct: The package exists in the database
+				// Correct: The package is updated
 				"customer4", null, 1000.0, 2.0, 2.0, 3.0, 0.0, "cuidaito con la play2", "category2,category3", "package4"
 			}, {
 				// Incorrect: The weight cannot be under 100 grams
@@ -218,24 +218,16 @@ public class PackageServiceTest extends AbstractTest {
 		this.checkExceptions(expected, caught);
 	}
 	/*
-	 * Requirement tested: A customer can update a request and save it.
+	 * Requirement tested: A customer can delete a package if the package is not the only one in the request.
 	 * Sentence coverage: 100%
-	 * Data coverage: XX.XX%, we have tested Y from Z possibilities
-	 */
-	/*
-	 * Requirement tested: A customer can update a request and save it.
-	 * Sentence coverage: 100%
-	 * Data coverage: XX.XX%, we have tested Y from Z posibilities
+	 * Data coverage: 100%, as we tested id's valid and invalid.
 	 */
 	@Test
 	public void delete() {
 		Object testingData[][] = {
 			{
-				// Correct: The package exists in the database
-				"customer1", null, "package"
-			}, {
-				// Incorrect: The request is in final mode
-				"customer1", IllegalArgumentException.class, "package1"
+				// Incorrect: The id is not from a package
+				"customer1", IllegalArgumentException.class, "userAccount3"
 			}, {
 				// Incorrect: The package is owned by other customer
 				"customer1", IllegalArgumentException.class, "package4"
