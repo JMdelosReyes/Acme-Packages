@@ -72,7 +72,7 @@ public class EvaluationServiceTest extends AbstractTest {
 		final Object testingData[][] = {
 			{
 				// Correct: All the parameters are OK
-				"customer1", "comment", 4, "offer2", null
+				"customer4", "comment", 4, "offer2", null
 			}, {
 				// Incorrect: The user must be a customer
 				"auditor1", "comment", 4, "offer2", IllegalArgumentException.class

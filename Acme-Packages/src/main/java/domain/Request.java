@@ -8,6 +8,7 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -28,7 +29,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
-@Table(uniqueConstraints = {
+@Table(indexes = {
+	@Index(columnList = "deadline, finalMode, volume, weight, status")
+}, uniqueConstraints = {
 	@UniqueConstraint(columnNames = "ticker")
 })
 public class Request extends DomainEntity implements Cloneable {

@@ -4,11 +4,16 @@ package domain;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.Index;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Min;
 
 @Entity
 @Access(AccessType.PROPERTY)
+@Table(indexes = {
+	@Index(columnList = "maxWeight, maxVolume, price")
+})
 public class Fare extends DomainEntity implements Cloneable {
 
 	private double	maxWeight;

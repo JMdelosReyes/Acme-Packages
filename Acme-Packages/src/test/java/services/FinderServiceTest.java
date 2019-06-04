@@ -119,8 +119,8 @@ public class FinderServiceTest extends AbstractTest {
 				// Correct: Normal search expecting no offer to match
 				"customer1", "finder1", "category", "2019/04/15", "2019/04/15", "town", 1., 1., 1., "", null
 			}, {
-				// Correct: Normal search expecting to find a offer
-				"customer1", "finder1", "Fragile", "2019/04/15", "2021/04/15", "Huesca", 4., 1., 1., "offer1", null
+				// Correct: Normal search expecting to not find a town
+				"customer1", "finder1", "category2", "2019/04/15", "2020/06/15", "town3", 50., 1., 1., "offer2", IllegalArgumentException.class
 			}, {
 				// Incorrect: The customer is not using his finder
 				"customer1", "finder2", "category", "2019/04/15", "2019/04/15", "town", 1., 1., 1., "", IllegalArgumentException.class
@@ -145,8 +145,8 @@ public class FinderServiceTest extends AbstractTest {
 	public void driverFindByLoggedCustomer() {
 		final Object testingData[][] = {
 			{
-				// Correct: The customer searched before the test and obtained no result
-				"customer1", "empty", null
+				// Correct: The customer searched before the test and obtained result
+				"customer1", "notEmpty", null
 			}, {
 				// Correct: The customer hasn't use his finder in a while, so when he ask for it, he obtains all the offers by default
 				"customer2", "notEmpty", null

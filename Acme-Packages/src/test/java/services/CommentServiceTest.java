@@ -3,6 +3,7 @@ package services;
 
 import java.util.Collection;
 
+import org.joda.time.DateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +49,7 @@ public class CommentServiceTest extends AbstractTest {
 		final Object testingData[][] = {
 			{
 				// Correct: All the parameters are OK
-				"customer1", "comment", "issue1", null
+				"customer2", "comment", "issue1", null
 			}, {
 				// Correct: All the parameters are OK
 				"carrier1", "comment", "issue1", null
@@ -57,7 +58,7 @@ public class CommentServiceTest extends AbstractTest {
 				"admin", "comment", "issue1", IllegalArgumentException.class
 			}, {
 				// Incorrect: The customer is not the proprietary of the issue
-				"customer2", "des", "issue1", IllegalArgumentException.class
+				"auditor", "des", "issue1", IllegalArgumentException.class
 			}
 		};
 
@@ -92,6 +93,8 @@ public class CommentServiceTest extends AbstractTest {
 			Comment comment = this.commentService.create();
 
 			comment.setUserComment(com);
+			comment.setUsername("un");
+			comment.setMoment(DateTime.now().minusMillis(1000).toDate());
 
 			this.commentService.save(comment, super.getEntityId(issue));
 			this.commentService.flush();
