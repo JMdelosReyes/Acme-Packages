@@ -31,6 +31,30 @@ public class CommentServiceTest extends AbstractTest {
 
 	/*
 	 * Sentence coverage: 100%
+	 * Data coverage: 100% as the method receive only a parameter
+	 */
+	@Test
+	public void driverFindOne() {
+		final Object testingData[][] = {
+			{
+				// Correct: The comment exists in the database
+				super.getEntityId("comment1"), null
+			}, {
+				// Incorrect: The id does not match any issue in the database
+				super.getEntityId("userAccount3"), IllegalArgumentException.class
+			}, {
+				// Incorrect: The id must be higher than zero
+				0, IllegalArgumentException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++) {
+			this.testFindOne((int) testingData[i][0], (Class<?>) testingData[i][1]);
+		}
+	}
+
+	/*
+	 * Sentence coverage: 100%
 	 * Data coverage: 100% as the method does not receive any parameter
 	 */
 	@Test
@@ -41,6 +65,7 @@ public class CommentServiceTest extends AbstractTest {
 	}
 
 	/*
+	 * Requirement tested: An actor can be able to create a comments in his or her issues
 	 * Sentence coverage: 87.7%
 	 * Data coverage: 75% Are tested 3 of 4 possibles actors and if the actor is the propietary or not
 	 */

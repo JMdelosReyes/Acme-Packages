@@ -64,6 +64,7 @@ public class IssueServiceTest extends AbstractTest {
 	}
 
 	/*
+	 * Requirement tested: An customer can be able to create an issue of an offer that he or she is involved
 	 * Sentence coverage: 100%
 	 * Data coverage: 80%, all actors checked, but not other request
 	 */
@@ -88,6 +89,7 @@ public class IssueServiceTest extends AbstractTest {
 	}
 
 	/*
+	 * Requirement tested: An customer can be able to edit the description of an issue
 	 * Sentence coverage: 50.1%
 	 * Data coverage: 40% only checked 2 of 3 actors and the same issue
 	 */

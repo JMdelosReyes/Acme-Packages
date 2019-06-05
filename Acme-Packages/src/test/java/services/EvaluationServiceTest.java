@@ -64,6 +64,7 @@ public class EvaluationServiceTest extends AbstractTest {
 	}
 
 	/*
+	 * Requirement tested: An customer can be able to create a evaluation of an offer
 	 * Sentence coverage: 100%
 	 * Data coverage: 100% is tested with a actor that is allowed to do the evaluation, an incorrect actor and and actor that doesn´t have a request in that offer
 	 */

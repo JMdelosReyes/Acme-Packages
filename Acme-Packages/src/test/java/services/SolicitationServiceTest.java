@@ -74,6 +74,7 @@ public class SolicitationServiceTest extends AbstractTest {
 	}
 
 	/*
+	 * Requirement tested: An carrier can be able to create a solicitation that allow to transport packages that have a category
 	 * Sentence coverage: 100%
 	 * Data coverage: 100% as the method only receive an actor
 	 */
@@ -98,6 +99,7 @@ public class SolicitationServiceTest extends AbstractTest {
 	}
 
 	/*
+	 * Requirement tested: An carrier can be able to create a solicitation that allow to transport packages that have a category
 	 * Sentence coverage: 100%
 	 * Data coverage: 60% the method receive different actor, but the same category and vehicle
 	 */
@@ -121,6 +123,7 @@ public class SolicitationServiceTest extends AbstractTest {
 		}
 	}
 	/*
+	 * Requirement tested: An carrier can be able to edit a solicitation
 	 * Sentence coverage: 70.5%
 	 * Data coverage: 25%, this save receive many parameters, only 1/4 of the possibilities are tested
 	 */
