@@ -151,7 +151,7 @@ public class TownServiceTest extends AbstractTest {
 				"admin", "town1", "Sevilla", "", "Sevilla", ConstraintViolationException.class
 			}, {
 				// Incorrect: The ZIP code is already being used
-				"admin", "town1", "Sevilla", "01000", "Sevilla", DataIntegrityViolationException.class
+				"admin", "town1", "Sevilla", "45678", "Sevilla", DataIntegrityViolationException.class
 			}, {
 				// Incorrect: The county cannot be blank
 				"admin", "town1", "Sevilla", "41001", "", ConstraintViolationException.class

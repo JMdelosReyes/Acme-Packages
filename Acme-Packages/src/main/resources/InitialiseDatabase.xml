@@ -225,256 +225,62 @@
 	<!-- TOWN -->
 	
 	<bean id="town1" class="domain.Town">
-		<property name="name" value="Álava" />
-		<property name="zipCode" value="01000"/>
-		<property name="county" value="Álava" />
-	</bean>
-	<bean id="town2" class="domain.Town">
-		<property name="name" value="Albacete" />
-		<property name="zipCode" value="02000"/>
-		<property name="county" value="Albacete" />
-	</bean>
-	<bean id="town3" class="domain.Town">
-		<property name="name" value="Alicante" />
-		<property name="zipCode" value="03000"/>
-		<property name="county" value="Alicante" />
-	</bean>
-	<bean id="town4" class="domain.Town">
-		<property name="name" value="Almería" />
-		<property name="zipCode" value="04000"/>
-		<property name="county" value="Almería" />
-	</bean>
-	<bean id="town5" class="domain.Town">
-		<property name="name" value="Ávila" />
-		<property name="zipCode" value="05000"/>
-		<property name="county" value="Ávila" />
-	</bean>
-	<bean id="town6" class="domain.Town">
-		<property name="name" value="Badajoz" />
-		<property name="zipCode" value="06000"/>
-		<property name="county" value="Badajoz" />
-	</bean>
-	<bean id="town7" class="domain.Town">
-		<property name="name" value="Barcelona" />
-		<property name="zipCode" value="08000"/>
-		<property name="county" value="Barcelona" />
-	</bean>
-	<bean id="town8" class="domain.Town">
-		<property name="name" value="Burgos" />
-		<property name="zipCode" value="09000"/>
-		<property name="county" value="Burgos" />
-	</bean>
-	<bean id="town9" class="domain.Town">
-		<property name="name" value="Cáceres" />
-		<property name="zipCode" value="10000"/>
-		<property name="county" value="Cáceres" />
-	</bean>
-	<bean id="town10" class="domain.Town">
-		<property name="name" value="Cádiz" />
-		<property name="zipCode" value="11000"/>
-		<property name="county" value="Cádiz" />
-	</bean>
-	<bean id="town11" class="domain.Town">
-		<property name="name" value="Castellón" />
-		<property name="zipCode" value="12000"/>
-		<property name="county" value="Castellón" />
-	</bean>
-	<bean id="town12" class="domain.Town">
-		<property name="name" value="Ciudad Real" />
-		<property name="zipCode" value="13000"/>
-		<property name="county" value="Ciudad Real" />
-	</bean>
-	<bean id="town13" class="domain.Town">
-		<property name="name" value="Córdoba" />
-		<property name="zipCode" value="14000"/>
-		<property name="county" value="Córdoba" />
-	</bean>
-	<bean id="town14" class="domain.Town">
-		<property name="name" value="A Coruña" />
-		<property name="zipCode" value="15000"/>
-		<property name="county" value="A Coruña" />
-	</bean>
-	<bean id="town15" class="domain.Town">
-		<property name="name" value="Cuenca" />
-		<property name="zipCode" value="16000"/>
-		<property name="county" value="Cuenca" />
-	</bean>
-	<bean id="town16" class="domain.Town">
-		<property name="name" value="Gerona" />
-		<property name="zipCode" value="17000"/>
-		<property name="county" value="Gerona" />
-	</bean>
-	<bean id="town17" class="domain.Town">
-		<property name="name" value="Granada" />
-		<property name="zipCode" value="18000"/>
-		<property name="county" value="Granada" />
-	</bean>
-	<bean id="town18" class="domain.Town">
-		<property name="name" value="Guadalajara" />
-		<property name="zipCode" value="19000"/>
-		<property name="county" value="Guadalajara" />
-	</bean>
-	<bean id="town19" class="domain.Town">
-		<property name="name" value="Guipúzcoa" />
-		<property name="zipCode" value="20000"/>
-		<property name="county" value="Guipúzcoa" />
-	</bean>
-	<bean id="town20" class="domain.Town">
-		<property name="name" value="Huelva" />
-		<property name="zipCode" value="21000"/>
-		<property name="county" value="Huelva" />
-	</bean>
-	<bean id="town21" class="domain.Town">
 		<property name="name" value="Huesca" />
-		<property name="zipCode" value="22000"/>
+		<property name="zipCode" value="22001"/>
 		<property name="county" value="Huesca" />
 	</bean>
 	
-	<bean id="town22" class="domain.Town">
-		<property name="name" value="Jaén" />
-		<property name="zipCode" value="23000"/>
-		<property name="county" value="Jaén" />
-	</bean>
-	<bean id="town23" class="domain.Town">
-		<property name="name" value="León" />
-		<property name="zipCode" value="24000"/>
-		<property name="county" value="León" />
-	</bean>
-	<bean id="town24" class="domain.Town">
-		<property name="name" value="Lérida" />
-		<property name="zipCode" value="25000"/>
-		<property name="county" value="Lérida" />
-	</bean>
-	
-	<bean id="town25" class="domain.Town">
-		<property name="name" value="La Rioja" />
-		<property name="zipCode" value="26000"/>
-		<property name="county" value="La Rioja" />
-	</bean>
-	<bean id="town26" class="domain.Town">
-		<property name="name" value="Lugo" />
-		<property name="zipCode" value="27000"/>
-		<property name="county" value="Lugo" />
-	</bean>
-	<bean id="town27" class="domain.Town">
-		<property name="name" value="Madrid" />
-		<property name="zipCode" value="28000"/>
-		<property name="county" value="Madrid" />
-	</bean>
-	<bean id="town28" class="domain.Town">
-		<property name="name" value="Málaga" />
-		<property name="zipCode" value="29000"/>
-		<property name="county" value="Málaga" />
-	</bean>
-	<bean id="town29" class="domain.Town">
-		<property name="name" value="Murcia" />
-		<property name="zipCode" value="30000"/>
-		<property name="county" value="Murcia" />
-	</bean>
-	<bean id="town30" class="domain.Town">
-		<property name="name" value="Navarra" />
-		<property name="zipCode" value="31000"/>
-		<property name="county" value="Navarra" />
-	</bean>
-	<bean id="town31" class="domain.Town">
-		<property name="name" value="Orense" />
-		<property name="zipCode" value="32000"/>
-		<property name="county" value="Orense" />
-	</bean>
-	<bean id="town32" class="domain.Town">
-		<property name="name" value="Asturias" />
-		<property name="zipCode" value="33000"/>
-		<property name="county" value="Asturias" />
-	</bean>
-	<bean id="town33" class="domain.Town">
-		<property name="name" value="Palencia" />
-		<property name="zipCode" value="34000"/>
-		<property name="county" value="Palencia" />
-	</bean>
-	<bean id="town34" class="domain.Town">
-		<property name="name" value="Las Palmas" />
-		<property name="zipCode" value="35000"/>
-		<property name="county" value="Las Palmas" />
-	</bean>
-	<bean id="town35" class="domain.Town">
-		<property name="name" value="Pontevedra" />
-		<property name="zipCode" value="36000"/>
-		<property name="county" value="Pontevedra" />
-	</bean>
-	<bean id="town36" class="domain.Town">
-		<property name="name" value="Salamanca" />
-		<property name="zipCode" value="37000"/>
-		<property name="county" value="Salamanca" />
-	</bean>
-	<bean id="town37" class="domain.Town">
-		<property name="name" value="Santa Cruz de Tenerife" />
-		<property name="zipCode" value="38000"/>
-		<property name="county" value="Santa Cruz de Tenerife" />
-	</bean>
-	<bean id="town38" class="domain.Town">
-		<property name="name" value="Santander" />
-		<property name="zipCode" value="39000"/>
-		<property name="county" value="Santander" />
-	</bean>
-	<bean id="town39" class="domain.Town">
-		<property name="name" value="Segovia" />
-		<property name="zipCode" value="40000"/>
-		<property name="county" value="Segovia" />
-	</bean>
-	<bean id="town40" class="domain.Town">
-		<property name="name" value="Sevilla" />
-		<property name="zipCode" value="41000"/>
-		<property name="county" value="Sevilla" />
-	</bean>
-	<bean id="town41" class="domain.Town">
-		<property name="name" value="Soria" />
-		<property name="zipCode" value="42000"/>
-		<property name="county" value="Soria" />
-	</bean>
-	<bean id="town42" class="domain.Town">
-		<property name="name" value="Tarragona" />
-		<property name="zipCode" value="43000"/>
-		<property name="county" value="Tarragona" />
-	</bean>
-	<bean id="town43" class="domain.Town">
-		<property name="name" value="Teruel" />
-		<property name="zipCode" value="44000"/>
-		<property name="county" value="Teruel" />
-	</bean>
-	<bean id="town44" class="domain.Town">
-		<property name="name" value="Toledo" />
-		<property name="zipCode" value="45000"/>
-		<property name="county" value="Toledo" />
-	</bean>
-	<bean id="town45" class="domain.Town">
-		<property name="name" value="Valencia" />
-		<property name="zipCode" value="46000"/>
-		<property name="county" value="Valencia" />
-	</bean>
-	<bean id="town46" class="domain.Town">
-		<property name="name" value="Valladolid" />
-		<property name="zipCode" value="47000"/>
-		<property name="county" value="Valladolid" />
-	</bean>
-	<bean id="town47" class="domain.Town">
-		<property name="name" value="Vizcaya" />
-		<property name="zipCode" value="48000"/>
-		<property name="county" value="Vizcaya" />
-	</bean>
-	<bean id="town48" class="domain.Town">
-		<property name="name" value="Zamora" />
-		<property name="zipCode" value="49000"/>
-		<property name="county" value="Zamora" />
-	</bean>
-	<bean id="town49" class="domain.Town">
+	<bean id="town2" class="domain.Town">
 		<property name="name" value="Zaragoza" />
-		<property name="zipCode" value="50000"/>
+		<property name="zipCode" value="45678"/>
 		<property name="county" value="Zaragoza" />
 	</bean>
-	<bean id="town50" class="domain.Town">
-		<property name="name" value="Ceuta" />
-		<property name="zipCode" value="51000"/>
-		<property name="county" value="Ceuta" />
+	
+	<bean id="town3" class="domain.Town">
+		<property name="name" value="Madrid" />
+		<property name="zipCode" value="44001"/>
+		<property name="county" value="Madrid" />
 	</bean>
-		
+	
+	<bean id="town4" class="domain.Town">
+		<property name="name" value="Sevilla" />
+		<property name="zipCode" value="45612"/>
+		<property name="county" value="Sevilla" />
+	</bean>
+	
+	<bean id="town5" class="domain.Town">
+		<property name="name" value="Cádiz" />
+		<property name="zipCode" value="98745"/>
+		<property name="county" value="Cádiz" />
+	</bean>
+	
+	<bean id="town6" class="domain.Town">
+		<property name="name" value="Córdoba" />
+		<property name="zipCode" value="62589"/>
+		<property name="county" value="Córdoba" />
+	</bean>
+	
+	<bean id="town7" class="domain.Town">
+		<property name="name" value="Huelva" />
+		<property name="zipCode" value="456954"/>
+		<property name="county" value="Huelva" />
+	</bean>
+	
+	<bean id="town8" class="domain.Town">
+		<property name="name" value="Almería" />
+		<property name="zipCode" value="04001"/>
+		<property name="county" value="Almería" />
+	</bean>
+	
+	<bean id="town9" class="domain.Town">
+		<property name="name" value="Málaga" />
+		<property name="zipCode" value="04081"/>
+		<property name="county" value="Málaga" />
+	</bean>
+	
+	<bean id="town10" class="domain.Town">
+		<property name="name" value="Murcia" />
+		<property name="zipCode" value="04093"/>
+		<property name="county" value="Murcia" />
+	</bean>
 </beans>

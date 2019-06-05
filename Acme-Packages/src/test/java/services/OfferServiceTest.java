@@ -139,7 +139,7 @@ public class OfferServiceTest extends AbstractTest {
 	/*
 	 * Requirement tested: An actor who is authenticated as a carrier must be able to create and save offers
 	 * Sentence coverage: 92.5%
-	 * Data coverage: 22.22%, as we've tested 8 out of 36 possible combinations
+	 * Data coverage: 27.77%, as we've tested 10 out of 36 possible combinations
 	 */
 	@Test
 	public void driverCreateAndSave() {
@@ -185,7 +185,7 @@ public class OfferServiceTest extends AbstractTest {
 	/*
 	 * Requirement tested: An authenticated carrier must be able to modify his offers
 	 * Sentence coverage: 92.5%
-	 * Data coverage: 5.55%, as we've tested 8 out of 144 possible combinations
+	 * Data coverage: 6.94%, as we've tested 10 out of 144 possible combinations
 	 */
 	@Test
 	public void driverSave() {

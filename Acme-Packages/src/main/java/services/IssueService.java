@@ -206,7 +206,9 @@ public class IssueService {
 			if (r.getIssue() != null) {
 				Issue i = r.getIssue();
 				Auditor auditor = this.issueRepository.findAuditorOfIssue(i.getId());
-				auditor.getIssues().remove(i);
+				if (auditor != null) {
+					auditor.getIssues().remove(i);
+				}
 				r.setIssue(null);
 				this.issueRepository.delete(i.getId());
 			}
