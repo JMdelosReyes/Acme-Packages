@@ -20,7 +20,7 @@ public interface EvaluationRepository extends JpaRepository<Evaluation, Integer>
 	@Query("select r.issue.offer from Customer c join c.requests r where c.id=?1")
 	Collection<Offer> offerOfCustomerEvaluateds(int idCustomer);
 
-	@Query("select e from Customer c join c.requests r join r.offer o join o.evaluations e where c.id=?1")
+	@Query("select e from Evaluation e join e.customer c where c.id=?1")
 	Collection<Evaluation> findEvaluationsByCustomer(int id);
 
 	@Query("select e from Carrier c join c.offers o join o.evaluations e where c.id=?1")

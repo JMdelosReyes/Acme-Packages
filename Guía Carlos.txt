@@ -87,26 +87,54 @@ Class:
                    Click in the edit buttom of a traverse town and select "current town"
 	- To keep in mind: You will see now that arrival date is the actual date, to track the offer, if you set the second town to current town, the first town must change to false the current town propierty
 
-  · Cancel a offer: 
+  · Cancel an offer: 
 	- Before testing: Execute it after following the steps in "Edit a traverse towns"
 	- Actor:   carrier1/carrier1
 	- Actions:  We are now in the display of the offer 
                    Click in the edit buttom of the offer and set it to canceled
 	- To keep in mind: Now the offer is canceled, you can still changue the current town of the traverse towns, but other operations are not allowed
 
-
 - Solicitation:
+	· Create solicitation:
+		- As a carrier go to "Vehicles" and enter the display of one of your vehicles
+		by clicking its plate. Inside the display you will see a "New solicitation" link,
+		that will allow you to create a new solicitation for the vehicle.
+	· Delete solicitation:
+		- Solicitations that aren't yet assigned to an auditor can be deleted. So if you
+		created one previously you should be able to delete it.
+	· Assign solicitation:
+		- As an auditor go to "Solicitations", where not assigned solicitations can be found.
+		You can assign one by clicking the "Assign" link.
+	· Accept/Reject solicitation:
+		- As an auditor go to "My Solicitations", where the user can see his assigned solicitations.
+		If the status is still pending, the row of the solicitation will show an "Edit" link. Once
+		clicked the page will redirect to a form where the auditor can decide what to do with the 
+		solicitation.
 
 - Evaluation:
+	· Create evaluation:
+		- A customer that has an accepted request assigned to an offer will see a "New evaluation"
+		link inside the display of that offer. So as customer2/customer2 go to "Offers" and enter
+		the display of the offer with ticker "190523-ASD123". Inside you will see the mentioned
+		link.
+	 · Delete evaluation:
+		- Inside "Evaluations", a customer can see all his evaluations and delete them by clicking
+		the "Delete" button.
 
 - Issue:
-
-
-
-
-
-
-
-
-
-
+	· Create issue:
+		- As customer2/customer2 go to "Requests" and click the "Create an issue" link showed in the
+		row of the offer with ticker "020219-BBCPZ". Create an issue.
+	· Delete issue:
+		- An issue can be deleted as long as it's not been assigned yet to an auditor. The previous
+		issue can be deleted but if you do, you will need to create a new one to continue with the
+		following tests.
+	· Assign issue:
+		- As an auditor go to "Issues" and assign yourself the issue created previously by clicking
+		the "Assign" link. Once assigned the issue will appear in "My issues".
+	· Add a comment:
+		- The involved actors (customer2, carrier1 and the previus auditor) can write comments inside
+		the display of the issue. The display can be accessed by the listing of issues of each actor.
+	· Close issue:
+		- The involved auditor can close the issue by clicking the "Close" button inside the display
+		of the issue. Once closed, no more comments will be added.
