@@ -135,6 +135,8 @@ public class AuditorServiceTest extends AbstractTest {
 				"auditor3", null
 			}, {//Incorrect: Bean must be a Auditor
 				"carrier1", IllegalArgumentException.class
+			}, {//Incorrect: Bean must be a Auditor
+				"customer1", IllegalArgumentException.class
 			}
 		};
 		for (int i = 0; i < testingData.length; i++) {

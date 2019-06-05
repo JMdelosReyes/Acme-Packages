@@ -81,16 +81,16 @@ public class CategoryServiceTest extends AbstractTest {
 	public void driverCreateAndSave() {
 		final Object testingData[][] = {
 			{
-				//Correct create
+				//Correct: create
 				"admin", "hello", "hola", "hello", "hola", null
 			}, {
-				//attributes must not be blank
+				//Incorrect: attributes must not be blank
 				"admin", "hello", "", "hello", "hola", ConstraintViolationException.class
 			}, {
-				//not admin
+				//Incorrect: not admin cant creat category
 				"carrier1", "hello", "hola", "hello", "hola", IllegalArgumentException.class
 			}, {
-				//Unlogged users cannot create socialProfiles
+				//Incorrect: Unlogged users cannot create categories
 				null, "hello", "hola", "hello", "hola", IllegalArgumentException.class
 			}
 		};
@@ -111,10 +111,10 @@ public class CategoryServiceTest extends AbstractTest {
 				//Correct update
 				"admin", super.getEntityId("category1"), "holaeditado", null
 			}, {
-				//cant be blank update
+				//Incorrect: cant be blank 
 				"admin", super.getEntityId("category1"), "", ConstraintViolationException.class
 			}, {
-				//wrong actor 
+				//Incorrect: wrong actor 
 				"carrier1", super.getEntityId("category1"), "holaeditado", IllegalArgumentException.class
 			}
 		};

@@ -90,16 +90,16 @@ public class SocialProfileServiceTest extends AbstractTest {
 				//Correct create
 				"carrier1", "Manuel", "FaceBook", "https://www.facebook.com/", null
 			}, {
-				//Link must not be blank
+				//Incorrect: Link must not be blank
 				"carrier1", "Manuel", "FaceBook", "", ConstraintViolationException.class
 			}, {
-				//SocialNetworkName must not be blank
+				//Incorrect: SocialNetworkName must not be blank
 				"carrier1", "Manuel", "", "https://www.facebook.com/", ConstraintViolationException.class
 			}, {
-				//Nick must not be blank
+				//Incorrect:Nick must not be blank
 				"carrier1", "", "Facebook", "https://www.facebook.com/", ConstraintViolationException.class
 			}, {
-				//Unlogged users cannot create socialProfiles
+				//Incorrect:Unlogged users cannot create socialProfiles
 				null, "", "Facebook", "https://www.facebook.com/", IllegalArgumentException.class
 			}
 		};
@@ -120,16 +120,16 @@ public class SocialProfileServiceTest extends AbstractTest {
 				//Correct update
 				"auditor1", super.getEntityId("socialProfile2"), "Manuel", "FaceBook", "https://www.facebook.com/", null
 			}, {
-				//Link must not be blank
+				//Incorrect: Link must not be blank
 				"auditor1", super.getEntityId("socialProfile2"), "Manuel", "FaceBook", "", ConstraintViolationException.class
 			}, {
-				//SocialNetworkName must not be blank
+				//Incorrect: SocialNetworkName must not be blank
 				"auditor1", super.getEntityId("socialProfile2"), "Manuel", "", "https://www.facebook.com/", ConstraintViolationException.class
 			}, {
-				//Nick must not be blank
+				//Incorrect: Nick must not be blank
 				"auditor1", super.getEntityId("socialProfile2"), "", "Facebook", "https://www.facebook.com/", ConstraintViolationException.class
 			}, {
-				//auditor doesnt own that socialProfile
+				//Incorrect: auditor doesnt own that socialProfile
 				"auditor1", super.getEntityId("socialProfile5"), "Hola", "Facebook", "https://www.facebook.com/", IllegalArgumentException.class
 			}
 		};
@@ -150,10 +150,10 @@ public class SocialProfileServiceTest extends AbstractTest {
 				//Correct delete
 				"auditor1", "socialProfile2", null
 			}, {
-				//Doesnt own that socialProfile
+				//Incorrect: Doesnt own that socialProfile
 				"auditor1", "socialProfile7", IllegalArgumentException.class
 			}, {
-				//Unlogged users cannot delete social profiles
+				//Incorrect:Unlogged users cannot delete social profiles
 				null, "socialProfile5", IllegalArgumentException.class
 			}
 		};

@@ -51,13 +51,13 @@ public class ConfigurationServiceTest extends AbstractTest {
 				//Correct update
 				"admin", "test", "hola", null
 			}, {
-				//Fields must not be blank	
+				//Incorrect: Fields must not be blank	
 				"admin", "", "", ConstraintViolationException.class
 			}, {
-				//carrier cannot update configuration
+				//Incorrect: carrier cannot update configuration
 				"carrier1", "test", "hola", IllegalArgumentException.class
 			}, {
-				//auditor cannot update configuration
+				//Incorrect: auditor cannot update configuration
 				"auditor1", "test", "hola", IllegalArgumentException.class
 			}
 		};
