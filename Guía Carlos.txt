@@ -1,0 +1,62 @@
+Class:
+- Request:
+  · Create a request: 
+	- Actor:   customer1/customer1
+	- Actions: Requests > Click "Create a request" link 
+		   Use the following data to have an offer 
+                   to apply after saving the request:
+     		   - Maximum price: 100 
+     		   - deadline: 20/02/2022
+		   - Final Mode: Not final
+     		   - town: Huesca
+     		   - weight: 5
+     		   - height: 10
+		   - width: 10
+     		   - length: 10
+     		   - category: Fragile / Frágil		   
+  · Edit a request:
+	- Actor:   customer4/customer4
+	- Actions: Requests > Click on "Edit" link under column 
+                   "Edit" and change the deadline to "20/02/2022"
+  		   to have an offer to apply after save the changes
+
+  · Apply to an offer:
+	- Before testing: Execute it after following the steps in "Edit a requests"
+	- Actor:  customer4/customer4
+	- Action: Request > Click on ticker "030319-CMLOZ" to enter into the display.
+		  It will show a select field with an offer "190523-ASD123" to apply.
+  · Delete a request: 
+	- Before testing: Execute it after following the steps in "Create a request"
+	- Actor:   customer1/customer1
+	- Actions:  Requests > Click on "Edit" link under column 
+                   "Edit" and click on "Delete" button.
+
+- Package:
+  · Management of packages:
+	- Before testing: Every action will be done on customer4/customer4
+			  and using request "030319-CMLOZ", which it is not in
+			  final mode by default.
+	- Actions:
+	  · Add a package: Display of request and click on button "Add package".
+	  · Edit a package: Display of request and click on "Edit" link.
+	  · Delete a package: As long as that package is not the only one in the request
+			      edit form will show a button to delete it.
+
+
+- Offer: 
+	
+- Solicitation:
+
+- Evaluation:
+
+- Issue:
+
+
+
+
+
+
+
+
+
+
