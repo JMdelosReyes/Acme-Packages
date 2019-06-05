@@ -44,7 +44,46 @@ Class:
 
 
 - Offer: 
-	
+    · Create an offer: 
+	- Actor:   carrier1/carrier1
+	- Actions: My offers> Click "Create" link 
+		   Use, for example, the following data
+     		   - Max. date to request: 20/02/2021 
+     		   - Vehicle: 4561ASD
+		   - Fares: Vol: 250000 weight: 3 price: 5.95
+
+    · Create a traverse town:
+	- Before testing: Execute it after following the steps in "Create an offer"
+	- Actor:   carrier1/carrier1
+	- Actions: 
+	           We are in the display of the previously created offer
+		   Click in the "create" buttom in the traverse towns fieldset 
+                   Add two towns:
+		   Estimated date must be after 20/02/2021; choose the towns as will
+		
+     		  		   
+  · Edit an offer:
+	- Before testing: Execute it after following the steps in "Create a traverse town"
+	- Actor:   carrier1/carrier1
+	- Actions: We are now in the display of the offer 
+                   Click in the edit buttom and change the offer to final mode
+	- To keep in mind: If you previously created a final mode request that matches with this offer, you will be notified in the customer
+
+ · Edit a traverse town:
+	- Before testing: Execute it after following the steps in "Edit an offer"
+	- Actor:   carrier1/carrier1
+	- Actions: We are now in the display of the offer 
+                   Click in the edit buttom of a traverse town and select "current town"
+	- To keep in mind: You will see now that arrival date is the actual date, to track the offer, if you set the second town to current town, the first town must change to false the current town propierty
+
+  · Cancel a offer: 
+	- Before testing: Execute it after following the steps in "Edit a traverse towns"
+	- Actor:   carrier1/carrier1
+	- Actions:  We are now in the display of the offer 
+                   Click in the edit buttom of the offer and set it to canceled
+	- To keep in mind: Now the offer is canceled, you can still changue the current town of the traverse towns, but other operations are not allowed
+
+
 - Solicitation:
 
 - Evaluation:
