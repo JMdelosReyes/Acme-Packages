@@ -25,6 +25,17 @@ Class:
 	- Actor:  customer4/customer4
 	- Action: Request > Click on ticker "030319-CMLOZ" to enter into the display.
 		  It will show a select field with an offer "190523-ASD123" to apply.
+  · Accept or reject a request: 
+	- Before testing: Execute it after following the steps in Apply to an offer"
+	- Actor:   carrier1/carrier1
+	- Actions:  Offers > Click on "Requests" link of offer with the ticker
+		    "190523-ASD123", then it will show a list of request which applied
+		    to that offer. There will be a dropdown at the end of the row 
+		    where the carrier can choose between Accept or Reject the request.
+		    Then, click on save. If it's accepted, it will show a new button
+		    "Delivered", to mark the request delivered when the carrier delivers 
+		    the packages.
+
   · Delete a request: 
 	- Before testing: Execute it after following the steps in "Create a request"
 	- Actor:   customer1/customer1
