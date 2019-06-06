@@ -1,3 +1,26 @@
+﻿start transaction;
+
+
+
+drop database if exists `Acme-Packages`;
+
+
+
+create database `Acme-Packages`;
+
+
+use `Acme-Packages`;
+
+
+
+
+grant select, insert, update, delete on `Acme-Packages`.* to 'acme-user'@'%';
+
+
+grant select, insert, update, delete, create, drop, references, index, alter, 
+create temporary tables, lock tables, create view, create routine, alter routine,
+execute, trigger, show view on `Acme-Packages`.* to 'acme-manager'@'%';
+
 -- MySQL dump 10.13  Distrib 5.5.29, for Win64 (x86)
 --
 -- Host: localhost    Database: Acme-Packages
@@ -1717,3 +1740,4 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2019-06-05  9:51:04
+commit;
