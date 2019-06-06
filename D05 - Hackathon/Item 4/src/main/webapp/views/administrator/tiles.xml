@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+       
+<tiles-definitions>
+	<!-- Name aqui, el nombre en el model and view -->
+	<definition name="dashboard/administrator" extends="master.page">	
+		<put-attribute name="title" value="Dashboard" />
+		<put-attribute name="body" value="/views/administrator/dash.jsp" />
+	</definition>
+	<definition name="ban/list" extends="master.page">	
+		<put-attribute name="title" value="Ban" />
+		<put-attribute name="body" value="/views/administrator/ban.jsp" />
+	</definition>
+	<!-- <definition name="profile/edit.do" extends="master.page">	
+		<put-attribute name="title" value="Edit of actor" />
+		<put-attribute name="body" value="/views/profile/edit.jsp" />
+	</definition>
+	
+	<definition name="profile/display.do" extends="master.page">	
+		<put-attribute name="title" value="Display of actor" />
+		<put-attribute name="body" value="/views/administrator/display.jsp" />
+	</definition>
+	
+	<definition name="administrator/configuration" extends="master.page">	
+		<put-attribute name="title" value="Configuration" />
+		<put-attribute name="body" value="/views/configuration/display.jsp" />
+	</definition> -->
+	
+	
+</tiles-definitions>

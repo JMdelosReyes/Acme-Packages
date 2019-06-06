@@ -1,0 +1,2 @@
+We chose the test corresponding to the class "Offer".
+The test is in the folder src>test>java>services>OfferServiceTest.java

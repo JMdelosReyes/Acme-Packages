@@ -1,0 +1,37 @@
+version: '3.2' 
+services:
+  mysql:
+    build:
+      context: ./DB
+      dockerfile: Dockerfile
+    container_name: acme_db
+    restart: always
+    networks:
+      acme_network:
+        aliases:
+          - AcmePackageDB
+    volumes:
+      - acme_data:/var/lib/mysql
+
+  tomcat:
+    build:
+      context: ./tomcat
+      dockerfile: Dockerfile
+    container_name: tomcat
+    restart: always
+    networks:
+      acme_network:
+        aliases:
+          - tomcat
+    ports:
+      - target: 8080
+        published: 80
+        protocol: tcp
+        mode: host
+
+volumes:
+  acme_data:
+
+networks:
+  acme_network:
+    driver: bridge

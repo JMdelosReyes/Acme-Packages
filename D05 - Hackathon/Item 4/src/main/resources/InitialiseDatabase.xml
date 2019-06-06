@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+ * PopulateDatabase.xml
+ *
+ * Copyright (C) 2019 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	">
+	
+	<!-- User accounts -->
+
+	<bean id="userAccount1" class="security.UserAccount">
+		<property name="username" value="admin" />
+		<property name="password" value="21232f297a57a5a743894a0e4a801fc3" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="ADMIN" />
+				</bean>
+			</list>
+		</property>
+		<property name="ban" value="false"></property>
+	</bean>
+	<!-- ADMINISTRATOR -->
+	
+	<bean id="administrator" class="domain.Administrator">
+		<property name="name" value="Pepe" />
+		<property name="middleName" value="PV" />
+		<property name="surname" value="Viyuela" />
+		<property name="photo"
+			value="http://i.imgur.com/uGe5LfM.png" />
+		<property name="phoneNumber" value="+034656234123" />
+		<property name="email" value="admin@email.com" />
+		<property name="address" value="Avd Cosa Nº Casa Blq Piso 22ºA" />
+		<property name="spammer" value="false" />
+		<property name="banned" value="false" />
+	    <property name="creditCard" ref="creditcard1" />
+		<property name="socialProfiles">
+			<list>
+			</list>
+		</property>
+		<property name="userAccount" ref="userAccount1" />
+		<property name="messageBoxes">
+			<list>
+				<ref bean="messageBoxAd-inbox" />
+				<ref bean="messageBoxAd-outbox" />
+				<ref bean="messageBoxAd-trashbox" />
+				<ref bean="messageBoxAd-spambox" />
+				<ref bean="messageBoxAd-notibox" />
+				
+			</list>
+		</property>
+	</bean>	
+	<bean id="messageBoxAd-inbox" class="domain.MessBox">
+		<property name="name" value="In box"/>
+		<property name="isSystem" value="true"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	
+	<bean id="messageBoxAd-outbox" class="domain.MessBox">
+		<property name="name" value="Out box"/>
+		<property name="isSystem" value="true"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	
+	<bean id="messageBoxAd-trashbox" class="domain.MessBox">
+		<property name="name" value="Trash box"/>
+		<property name="isSystem" value="true"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	
+	<bean id="messageBoxAd-spambox" class="domain.MessBox">
+		<property name="name" value="Spam box"/>
+		<property name="isSystem" value="true"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	
+	<bean id="messageBoxAd-notibox" class="domain.MessBox">
+		<property name="name" value="Notification box"/>
+		<property name="isSystem" value="true"></property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>	
+		
+	</bean>
+	
+	<!-- CATEGORY -->
+	<bean id="category1" class="domain.Category">
+	    <property name="englishName" value="Heavy" />
+		<property name="spanishName" value="Pesado" />
+		<property name="englishDescription" value="More than 25KG" />
+		<property name="spanishDescription" value="Mas de 25kg" />
+	
+	</bean>
+	
+	<bean id="category2" class="domain.Category">
+	    <property name="englishName" value="Fragile" />
+		<property name="spanishName" value="Fragil" />
+		<property name="englishDescription" value="Package with fragile content" />
+		<property name="spanishDescription" value="Paquete con contenido fragil" />
+	
+	</bean>
+	
+	<bean id="category3" class="domain.Category">
+	    <property name="englishName" value="Urgent" />
+		<property name="spanishName" value="Urgente" />
+		<property name="englishDescription" value="Urgent package" />
+		<property name="spanishDescription" value="Paquete urgente" />
+	
+	</bean>
+	<bean id="category4" class="domain.Category">
+	    <property name="englishName" value="Flammable" />
+		<property name="spanishName" value="Inflamable" />
+		<property name="englishDescription" value="For highly flammable packages" />
+		<property name="spanishDescription" value="Para paquetes altamente inflamables" />
+	
+	</bean>
+	<bean id="category5" class="domain.Category">
+	    <property name="englishName" value="Biohazard" />
+		<property name="spanishName" value="Riesgo biológico" />
+		<property name="englishDescription" value="Packages with biohazard content" />
+		<property name="spanishDescription" value="Paquetes con contenido de riesgo biológico" />
+	
+	</bean>
+	<bean id="category6" class="domain.Category">
+	    <property name="englishName" value="Living animals" />
+		<property name="spanishName" value="Animales vivos" />
+		<property name="englishDescription" value="Transport of live animals" />
+		<property name="spanishDescription" value="Transporte de animales vivos" />
+	
+	</bean>
+	<bean id="category7" class="domain.Category">
+	    <property name="englishName" value="Perishable"/>
+		<property name="spanishName" value="Perecederos" />
+		<property name="englishDescription" value="For transporting perishable goods" />
+		<property name="spanishDescription" value="Para transportar productos perezederos" />
+	
+	</bean>
+	
+	<bean id="configuration1" class="domain.Configuration">
+		<property name="systemName" value="Acme Packages" />
+		<property name="banner" value="https://i.pinimg.com/originals/f2/5f/31/f25f31af942174c11ca74cc55cfa4b1e.png" />
+		<property name="englishMessage"
+			value="Welcome to Acme Packages! We're the fastest and best value for money shipping service of the world!" />
+		<property name="spanishMessage"
+			value="¡Bienvenidos a Acme Packages! ¡Somos el servicio de envio mas rapido y con mejor relación calidad-precio del mundo!" />
+		<property name="spamWords">
+			<list>
+				<value>sex</value>
+				<value>viagra</value>
+				<value>cialis</value>
+				<value>one million</value>
+				<value>you've been selected</value>
+				<value>Nigeria</value>
+				<value>sexo</value>
+				<value>un millón</value>
+				<value>ha sido seleccionado</value>
+			</list>
+		</property>
+		<property name="finderTime" value="1" />
+		<property name="finderResults" value="10" />
+		<property name="makes">
+			<list>
+				<value>VISA</value>
+				<value>MASTER</value>
+				<value>AMEX</value>
+				<value>DINNERS</value>
+				
+			</list>
+		</property>
+		<property name="countryCode" value="+34" />
+		
+		<property name="vat" value="21" />
+		<property name="fare" value="5" />
+		<property name="messPriorities">
+			<list>
+				<value>HIGH</value>
+				<value>NEUTRAL</value>
+				<value>LOW</value>
+
+			</list>
+		</property>
+	
+
+	</bean>
+	
+	<!-- CREDIT CARD -->
+	<bean id="creditcard1" class="domain.CreditCard">
+		<property name="make" value="VISA"/>
+		<property name="holderName" value="José Mel Pérez"/>
+		<property name="expirationMonth" value="1"/>
+		<property name="expirationYear" value="30"/>
+		<property name="cvv" value="102"/>
+		<property name="number" value="4495840606545807"/>
+	</bean>
+		
+		<!-- TOWN -->
+	
+	<!-- TOWN -->
+	
+	<bean id="town1" class="domain.Town">
+		<property name="name" value="Huesca" />
+		<property name="zipCode" value="22001"/>
+		<property name="county" value="Huesca" />
+	</bean>
+	
+	<bean id="town2" class="domain.Town">
+		<property name="name" value="Zaragoza" />
+		<property name="zipCode" value="45678"/>
+		<property name="county" value="Zaragoza" />
+	</bean>
+	
+	<bean id="town3" class="domain.Town">
+		<property name="name" value="Madrid" />
+		<property name="zipCode" value="44001"/>
+		<property name="county" value="Madrid" />
+	</bean>
+	
+	<bean id="town4" class="domain.Town">
+		<property name="name" value="Sevilla" />
+		<property name="zipCode" value="45612"/>
+		<property name="county" value="Sevilla" />
+	</bean>
+	
+	<bean id="town5" class="domain.Town">
+		<property name="name" value="Cádiz" />
+		<property name="zipCode" value="98745"/>
+		<property name="county" value="Cádiz" />
+	</bean>
+	
+	<bean id="town6" class="domain.Town">
+		<property name="name" value="Córdoba" />
+		<property name="zipCode" value="62589"/>
+		<property name="county" value="Córdoba" />
+	</bean>
+	
+	<bean id="town7" class="domain.Town">
+		<property name="name" value="Huelva" />
+		<property name="zipCode" value="456954"/>
+		<property name="county" value="Huelva" />
+	</bean>
+	
+	<bean id="town8" class="domain.Town">
+		<property name="name" value="Almería" />
+		<property name="zipCode" value="04001"/>
+		<property name="county" value="Almería" />
+	</bean>
+	
+	<bean id="town9" class="domain.Town">
+		<property name="name" value="Málaga" />
+		<property name="zipCode" value="04081"/>
+		<property name="county" value="Málaga" />
+	</bean>
+	
+	<bean id="town10" class="domain.Town">
+		<property name="name" value="Murcia" />
+		<property name="zipCode" value="04093"/>
+		<property name="county" value="Murcia" />
+	</bean>
+</beans>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+      
+<tiles-definitions>
+	<!-- Name aqui, el nombre en el model and view -->
+	<definition name="dashboard/administrator" extends="master.page">	
+		<put-attribute name="title" value="Tablero" />
+		<put-attribute name="body" value="/views/administrator/dash.jsp" />
+	</definition>
+	<definition name="ban/list" extends="master.page">	
+		<put-attribute name="title" value="Bloquear" />
+		<put-attribute name="body" value="/views/administrator/ban.jsp" />
+	</definition>
+	
+	
+	
+</tiles-definitions>
